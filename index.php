@@ -10,7 +10,7 @@ $login = $_SESSION['login'];
     //Abfrage an Datenbank senden
     $query = $db->prepare("SELECT*FROM Lebensmittel, Lieferung, Foodsaver WHERE Lieferung.LMkey=Lebensmittel.LMkey AND Lieferung.FSkey=Foodsaver.FSkey AND Foodsaver.Vorname='Julia'");
     $erfolg = $query->execute();
-
+  
     //Fehlertest
     if(!$erfolg) {
         $fehler = $query->errorInfo();
