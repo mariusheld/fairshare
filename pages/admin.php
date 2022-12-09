@@ -3,7 +3,7 @@
     require_once("../dbconnect/dbconnect.inc.php");
 
     //Abfrage an Datenbank senden
-$query = $db->prepare("SELECT*FROM Lebensmittel WHERE LMkey=5 OR  LMkey=11");
+$query = $db->prepare("SELECT*FROM Lebensmittel WHERE LMkey=5 OR  LMkey=11"); //Wenn Datenbank final befüllt ist, dann WHERE Attribut löschen. Footer anpassen
     $erfolg = $query->execute();
 
     //Fehlertest
