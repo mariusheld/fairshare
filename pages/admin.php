@@ -11,6 +11,19 @@ $query = $db->prepare("SELECT*FROM Lebensmittel WHERE LMkey=5 OR  LMkey=11");
         $fehler = $query->errorInfo();
         die("Folgender Datenbankfehler ist aufgetreten:" .$fehler[2]);
         }
+
+        //Array für die Icons in der Lagerübersicht
+$icons = array(
+    1 => "../media/kategorien/icon_backwaren-salzig.svg",
+    2 => "../media/kategorien/icon_backwaren-suess.svg",
+    3 => "../media/kategorien/icon_gemuese.svg",
+    4 => "../media/kategorien/icon_konserven.svg",
+    5 => "../media/kategorien/icon_kuehlprodukte.svg",
+    6 => "../media/kategorien/icon_obst.svg",
+    7 => "../media/kategorien/sonstiges.svg",
+    8 => "../media/kategorien/icon_trockenprodukte.svg",
+);
+
 ?> 
 
 <!DOCTYPE html>
@@ -85,7 +98,7 @@ $query = $db->prepare("SELECT*FROM Lebensmittel WHERE LMkey=5 OR  LMkey=11");
 			<table>
 				<!--Tabellenkopf-->
 				<tr>
-					<th style="width: 25%;" >Lebensmittel</th><th style="width: 20%;" >Kistennr</th><th style="width: 20%;">Menge</th><th>Genießbar</th><th style="width: 50px;"></th><th style="width: 50px;"></th>
+					<th style="width: 25%;" >Lebensmittel</th><th style="width: 20%;" >Kistennr</th><th style="width: 20%;">Menge (in kg)</th><th>Genießbar</th><th style="width: 50px;"></th><th style="width: 50px;"></th>
 				</tr>
 				<!--Tabelleninhalt-->
 
@@ -98,7 +111,8 @@ $query = $db->prepare("SELECT*FROM Lebensmittel WHERE LMkey=5 OR  LMkey=11");
 
                 foreach($result as $zeile){
                     echo "<tr>";
-                    echo "<td style='font-weight: bold'>" . $zeile['Bezeichnung'] . "</td>";
+                     //echo "<td> <img alt='icon' width='48' src='" . $icons[$zeile['OKatKey']] . "'></td>";
+                    echo "<td class='lmicon'><div class='tablecontainer'><img alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'><div style='font-weight: 600; padding-left: 16px;'>" . $zeile['Bezeichnung'] . "</div></div></td>";
                 if ($zeile['Kuehlware'] == 0) {
                             echo "<td>5</td>";    /* . $zeile['BoxID'] . */
                             } else {
