@@ -500,3 +500,480 @@ Foodsaver Übersicht
 .check-item input:checked~img {
     opacity: 1;
 }
+
+
+
+
+/*-----------------------------------------------------Pop-ups Foodsaver-------------------------------------------*/
+/*------------------Allgemein-------------------------*/
+
+h3{
+font-family: 'Londrina Solid';
+font-style: normal;
+font-weight: 400;
+font-size: 28px;
+line-height: 33px;
+text-transform: uppercase;
+}
+	
+h5{
+font-family: 'Fira Sans';
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 26px;
+/* identical to box height, or 144% */
+text-align: center;
+}
+	
+p {
+font-family: 'Fira Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 26px;
+color: #1E212B;
+}
+	
+li {
+font-family: 'Fira Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 26px;
+color: #1E212B;
+}
+
+ul {
+padding-inline-start: 0;
+}
+
+	
+/*-----------------------Buttons Fs-pop-ups-----------------------*/
+/*Weiter Button, z.B. "Ja, zur Übersicht" oder "Ja, zur Startseite" kommt vor in: fs-uebersicht-abbr, fs-hinzufuegen-abbr*/
+.next-button {
+display: flex;
+justify-content: center;
+align-items: center;
+		
+height: 54px;
+width: 228px;
+margin-right: 32px;
+	
+/* apple-green */
+background: #99BB44;
+border: solid 0px #99BB44;
+border-radius: 16px;
+box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+/* text apple  */
+color: #FFFDFD;
+font-weight: 600;
+font-size: 18px;
+cursor: pointer;
+	
+text-decoration: none;
+
+margin-top: 40px;
+margin-bottom: 32px;
+}	
+
+/*Abbruch-/Exit-Button, z.B. "Nein, doch nicht" kommt vor in: fs-uebersicht-abbr, fs-hinzufuegen-abbr, fs-lm-loeschen*/
+.exit-button {
+display: flex;
+justify-content: center;
+align-items: center;
+	
+height: 54px;
+width: 228px;
+margin-left: 32px;
+	
+/* apple-green */
+border: 2px solid #E6E5E3;
+border-radius: 16px;
+/* text apple  */
+color: #FFFDFD;
+font-weight: 600;
+font-size: 18px;
+cursor: pointer;
+	
+text-decoration: none;
+color: #99BB44;
+	
+margin-top: 40px;
+margin-bottom: 32px;
+}
+	
+/*Löschen-Button, kommt vor in fs-lm-loeschen*/
+.delete-button {
+display: flex;
+justify-content: center;
+align-items: center;
+		
+height: 54px;
+width: 228px;
+margin-right: 32px;
+	
+/* apple-green */
+background: #E97878;;
+border: solid 0px #E97878;;
+border-radius: 16px;
+/* box-shadow */
+box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+border-radius: 16px;
+/* text apple */
+color: #FFFDFD;
+font-weight: 600;
+font-size: 18px;
+cursor: pointer;
+		
+text-decoration: none;
+	
+margin-top: 40px;
+margin-bottom: 32px;
+}
+	
+	
+/*Bestätigen-Button, kommt vor in fs-nicht-erlaubte-lm, fs-lm-verstauen*/
+.allesklarButton {
+display: flex;
+justify-content: center;
+align-items: center;
+			
+width: 310px;
+height: 54px;
+			
+/* apple-green */
+background: #99BB44;
+border: solid 0px #99BB44;
+border-radius: 16px;
+box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+/* text apple  */
+color: #FFFDFD;
+font-weight: 600;
+font-size: 18px;
+cursor: pointer;
+			
+text-decoration: none;
+}
+	
+	
+/*------------------------Button Spacing-------------------->*/
+/*Button spacing wenn 2 Buttons unten rechts*/
+.button-spacing-popup {
+display: flex;
+flex-direction: row;
+gap: 16px;
+margin: 0;
+}
+	
+/*Button spacing wenn 1 Button in der Mitte*/
+.buttoncenter {
+display: flex;
+justify-content: center;
+flex-direction: row;
+width: 100%;   
+margin-top: 40px;
+padding-bottom: 32px;
+}
+	
+	
+/*------------------------Pop ups Allgemein-------------------->*/
+/* Überschrift bei Pop-ups*/
+.popupheader {
+padding-left: 32px;
+padding-top: 32px;
+padding-bottom: 0;
+color: #1E212B;
+margin: 0;
+}
+	
+/*Pop-up größe klein (genutz in fs-uebersicht-abbr, fs-hinzufuegen-abbr)*/
+.popupklein{
+display: flex;
+flex-direction: column;
+width: 536px;
+height: 256px;
+background: #FFFDFD;
+box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+border-radius: 20px;
+}
+	
+	
+/*Pop-up für fs-lm-loeschen*/
+.popup-lebensmittel-löschen{
+display: flex;
+flex-direction: column;
+width: 536px;
+height: 270px;
+background: #FFFDFD;
+box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+border-radius: 20px;
+}
+	
+/*Einleitungstext auf Pop-up, genutz in fs-uebersicht-abbr, fs-hinzufügen-abbrechen, fs-nicht-erlaubte-lm, fs-lm-verstauen, fs-lm-löschen*/
+.textpopup {
+width: 424px;
+margin: 0;
+padding-left: 32px;
+padding-top: 16px;
+font-family: 'Fira Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 26px;
+color: #1E212B;
+}
+	
+	
+/*-----------------fs-lm-loeschen-----------------*/
+.lebensmittel-zum-löschen-popup {
+padding-left: 32px;
+display: flex;
+flex-direction: row;
+align-items: center;
+padding-top: 20px;
+}
+	
+/*Lebensmitteltitel wird angezeit im Pop-up fs-lm-löschen*/
+.popupheaderklein {
+padding-left: 32px;
+padding-top: 0px;
+padding-bottom: 0;
+color: #1E212B;
+margin: 0;
+}
+	
+	
+/*-------------------- Pop-up fs-nicht-erlaubte-lm --------------------*/
+/*pop-up*/
+.nichtErlaubteLebensmittel {
+width: 536px;
+height: auto;
+	
+/* white */
+background: #FFFDFD;
+box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+border-radius: 20px;
+}
+	
+/*liste pop-up ul*/
+.listpopup {
+display: block; 
+list-style-type: disc; 
+padding: 0;
+margin-left: 20px;
+margin-top: 20px;
+}
+	
+/*text in li*/
+.listpopup > li {
+display: list-item;
+width: 441px;
+margin-left: 32px;
+padding: 0;
+}
+	
+/*div das die ganze Tabelle beinhaltet -> ul und li dabie*/
+.help-popup{
+display: flex;
+flex-direction: row;
+align-items: center;
+padding-top: 32px;
+padding-left: 32px;
+	}
+	
+/*Formation .popupheader und neue Ausrichtung wegen Icon neben Überschrift .header-help*/
+.popupheader.header-help{
+margin: 0cm;
+padding-left: 16px;
+padding-top: 0;
+}
+	
+/*Icon neben der Überschirft*/
+.help-popup > img {
+width: 32px;
+height: 32px;
+}
+	
+/*-------------------- Pop-up Lebensmittel richtig abgeben fs-hilfe --------------------*/
+		
+/*Überschrift der Schritte, grün*/
+.steps-hilfe {
+color: #99BB44;
+text-align: left;
+padding-top: 24px;
+padding-bottom: 8px;
+margin: 0;
+}
+
+/*Pop-up*/
+.fs-hilfe {
+width: 927px;
+height: auto;
+
+/* white */
+background: #FFFDFD;
+box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+border-radius: 20px;
+margin-top: 32%;
+margin-left: 50px;
+
+}
+
+/*div schrittliste-popup umfasst ul und li*/
+.schrittliste-popup {
+display: flex;
+flex-direction: row;
+gap: 16px;
+margin-left: 32px;
+margin-right: 24px;
+padding-left: 0;
+}
+
+/*text in der Liste*/
+.listpopup > li { 
+width: 424px;
+margin-left: 32px;
+}
+
+.listpopupHilfe > li { 
+width: 180px;
+margin-left: 21px;
+
+/*Silbentrennung*/
+-moz-hyphens: auto;
+-o-hyphens: auto;
+-webkit-hyphens: auto;
+-ms-hyphens: auto;
+hyphens: auto;
+}
+
+.icon-help-popup {
+    margin-top: 24px;
+}
+	
+	/*---------------fs-uebersicht-bearbeiten-----------------*/
+	
+.popup-uebersicht-bearbeiten {
+display: flex;
+flex-direction: column;
+justify-items: center;
+justify-content: center;
+
+width: 173px;
+height: auto;
+	
+/* white */
+background: #FFFDFD;
+/* drop-shadow */
+box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+border-radius: 8px;
+}
+	
+.trennlinie > img {
+width: 145px;
+margin: 0;
+}
+	
+.trennlinie {
+display: flex;
+justify-content: center;
+}
+	
+.bearbeiten {
+display: flex;
+flex-direction: row;
+justify-items: center;
+align-items: center;
+margin-left: 8px;
+margin: 4px 0 4px 8px;
+}
+	
+.bearbeiten > h5 {
+margin: 0;
+color: #99BB44;
+}
+	
+.loeschen {
+display: flex;
+flex-direction: row;
+justify-items: center;
+margin-bottom: 4px;
+align-items: center;
+margin: 4px 0 4px 8px;
+}
+	
+.loeschen > h5 {
+margin: 0;
+color: #E97878;
+}
+	
+.close {
+width: 48px;
+height: 48px;
+	
+margin: 0 0 8px 0;
+	
+/* white */
+background: #FFFDFD;
+/* sand */
+border: 2px solid #E6E5E3;
+border-radius: 8px; 
+}
+	
+.close > img {
+margin: 15px;
+}
+	
+.fs-uebersicht-bearbeiten {
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+}
+	
+/*--------------------- fs-anmerkung und fs-anmerkung-allergene-----------------*/
+	
+/*Overlay für anmerkung und allergene*/
+.popup-anmerkung {
+display: flex;
+flex-direction: column;
+justify-items: center;
+justify-content: center;
+	
+width: 285px;
+height: auto;
+	
+/* white */
+background: #FFFDFD;
+/* drop-shadow */
+box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+border-radius: 8px;
+}
+	
+/*Ausrichtung h5 und p in anmerkung und allergene*/
+.popup-anmerkung > h5 {
+margin: 20px 20px 4px 20px;
+text-align: left;
+}
+	
+.popup-anmerkung > p {
+margin: 0px 20px 20px 20px;
+}
+	
+.popup-allergene > h5{
+text-align: left;
+}
+	
+.header2 {
+margin: 32px 20px 4px 20px;
+}
+	
+/*--------------------layout für wenn Pop-ups aufplopen--------------------*/
+#fsHilfe, #fs-hinzufuegen-abbr, #fs-uebersicht-abbr, #fs-nicht-erlaubte-lm, #fs-lm-verstauen, #fs-lm-loeschen, #fs-uebersicht-bearbeiten, #fs-anmerkung, #fs-anmerkung-allergene {
+display: none; 
+position: fixed;
+z-index: 1;
+width: 100%;
+height: 100%;
+/*background-color: rgba(0,0,0,0.25);*/
+}

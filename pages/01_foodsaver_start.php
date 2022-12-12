@@ -26,16 +26,108 @@ $_SESSION["dbeintrag"] = array();
 </head>
 
 <body>
-  <div class="container">
-    <header>
+  <div class="container" >
+<header>
       <a>
         <img src="../media/logo.svg" alt="logo" />
       </a>
       <!-- OVERLAY -->
-      <a href="/raupeimmersatt">
-        <img src="../media/icon_help.svg" alt="icon_help" />
-      </a>
-    </header>
+<a>
+      <img id="openHelp" src="../media/icon_help.svg" alt="icon_help"/>
+</a>
+      <div id="fsHilfe">
+        <div class="fs-hilfe">
+          <h3 class="popupheader">LEBENSMITTEL RICHTIG ABGEBEN</h3>
+          <div class="schrittliste-popup">
+            <div>
+                <ul class="listpopupHilfe">
+                    <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                    <h5 class="steps-hilfe">1. Hygiene</h5>
+                    <li>
+                        Hände waschen
+                    </li>
+                    <li>
+                        Verwende das rechte Waschbecken
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <ul class="listpopupHilfe">
+                    <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                    <h5 class="steps-hilfe">2. Boxen</h5>
+                    <li>
+                        Hol dir genügend Boxen unter der Theke
+                    </li>
+                    <li>
+                        Boxen nicht auf den Boden stellen!
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <ul class="listpopupHilfe">
+                    <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                    <h5 class="steps-hilfe">3. Vorbereitung</h5>
+                    <li>
+                        Sortiere Verdorbenes aus
+                    </li>
+                    <li>
+                        Wasche dreckige Lebensmittel (linkes Becken)
+                    </li>
+                    <li>
+                        Entferne unnötige Verpackungen
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <ul class="listpopupHilfe">
+                    <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                    <h5 class="steps-hilfe">4. Lebensmittelabgabe</h5>
+                    <li>
+                        Packe die Lebensmittel in die Boxen
+                    </li>
+                    <li>
+                        Trage die Lebensmittel ins System ein
+                    </li>
+                    <li>
+                        Verstaue die Lebensmittel
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="buttoncenter">
+            <a class="allesklarButton" href=""><h5>Alles klar</h5></a>
+        </div>
+    </div>
+    </div>
+
+    <!-- Script Overlay fs-hilfe -->
+    <?php
+    echo '<script>
+    
+        console.log("Hello world!");
+        //Overlay auswählen
+        var fsHilfe = document.getElementById("fsHilfe");
+        
+        //Das öffnet das Overlay
+        var openHelp = document.getElementById("openHelp");
+        
+        //Das schließt das Overlay
+        var exitHilfe = document.getElementsByClassName("allesklarButton")[0];
+        
+        //Öffnen wenn icon geklickt wird
+        openHelp.onclick = function() {
+            fsHilfe.style.display = "block";
+        }
+        
+        //Schließen nach Button drücken
+            exitHilfe.onclick = function() {
+            fsHilfe.style.display = "none";
+        }
+        </script>
+        ';    
+    ?>
+</header>
+  
     <div class="content">
       <img src="../media/background.svg" alt="background_image" class="background"></img>
       <div class="wrap-title">
