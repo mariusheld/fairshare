@@ -360,7 +360,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="action-container">
             <div>
                 <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
-                <a href="/"> <img src="../media/icon_help_mini.svg" alt="icon_help" /></a>
+                <a> <img id="helpGrey" src="../media/icon_help_mini.svg" alt="icon_help" /></a>
                 <p>Nicht erlaubte Lebensmittel</p>
             </div>
             <div class="action-wrap">
@@ -440,8 +440,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+    
+    <!-- OVERLAY fsNichtErlaubteLm -->
+    <div id="fsNichtErlaubteLm">
+        <div class="nichtErlaubteLebensmittel">
+            <div class="help-popup">        
+                <img src="../media/help_grey.svg">
+                <h3 class="popupheader header-help">NICHT ERLAUBTE LEBENSMITTEL</h3>
+            </div>
+            <p class="textpopup">Folgende Lebensmittel dürfen wir aus hygienetechnischen Gründen nicht annehmen:</p>
+            <ul class="listpopup">
+                <li>
+                    Brühwurstprodukte nach Ablauf des MHDs (z.B. Wurststreifen für Salat, Wiener, Mortadella, Lyoner, Leberkäse)
+                </li>
+                <li>
+                    Keine Lebensmittel mit Verbrauchsdatum
+                </li>
+                <li>
+                    Keine rohen Eier oder Speisen mit rohen Eiern (z.B. Mousse au Chocolat)
+                </li>
+                <li>
+                    Kein gekochter Reis
+                </li>
+                <li>
+                    Keine selbstzubereiteten Speisen
+                </li>
+                <li>
+                    Keine Produkte aus nicht erhitzter Rohmilch
+                </li>
+            </ul>
+            <div class="buttoncenter">
+                <a class="allesklarButton" href=""><h5>Alles klar</h5></a>
+            </div>
+        </div>
+    </div>
 
-  <!-- Script Overlay fs-hilfe -->
+  <!-- Script Overlays -->
   <?php
   echo '<script type="text/javascript" src="../script/foodsaver.js">
         </script>
