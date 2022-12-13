@@ -238,29 +238,9 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
     </div>
   </div>
 
-  <!-- Script Overlay fs-help -->
+  <!-- Script Overlay fs-hilfe -->
   <?php
-  echo '<script>
-    
-        console.log("Hello world!");
-        //Overlay auswählen
-        var fsHilfe = document.getElementById("fsHilfe");
-        
-        //Das öffnet das Overlay
-        var openHelp = document.getElementById("openHelp");
-        
-        //Das schließt das Overlay
-        var exitHilfe = document.getElementsByClassName("allesklarButton")[0];
-        
-        //Öffnen wenn icon geklickt wird
-        openHelp.onclick = function() {
-            fsHilfe.style.display = "block";
-        }
-        
-        //Schließen nach Button drücken
-            exitHilfe.onclick = function() {
-            fsHilfe.style.display = "none";
-        }
+  echo '<script type="text/javascript" src="../script/foodsaver.js">
         </script>
         ';
   ?>

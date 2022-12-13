@@ -129,29 +129,7 @@ $_SESSION["dbeintrag"] = array();
 
   <!-- Script Overlay fs-hilfe -->
   <?php
-  echo '<script>
-    
-        console.log("Hello world!");
-        //Overlay auswählen
-        var fsHilfe = document.getElementById("fsHilfe");
-        
-        //Das öffnet das Overlay
-        var openHelp = document.getElementById("openHelp");
-        
-        //Das schließt das Overlay
-        var exitHilfe = document.getElementsByClassName("allesklarButton")[0];
-        
-        //Öffnen wenn icon geklickt wird
-        openHelp.onclick = function() {
-          console.log("Button geklickt");
-            fsHilfe.style.display = "block";
-        }
-        
-        //Schließen nach Button drücken
-            exitHilfe.onclick = function() {
-              console.log("Button geklickt");
-            fsHilfe.style.display = "none";
-        }
+  echo '<script type="text/javascript" src="../script/foodsaver.js">
         </script>
         ';
   ?>
