@@ -1,163 +1,196 @@
 @charset "UTF-8";
+
 /*Basis Formatierungen*/
 html {
-    background-color: white;
+	background-color: white;
 }
+
 body {
 	font-family: 'Fira Sans', Roboto, Arial, sans-serif;
-    line-height:150%;
-    margin: 0;
-    background-color: white;
-    color: black;
-    font-size: 13pt;
-    font-style: normal
+	line-height: 150%;
+	margin: 0;
+	background-color: white;
+	color: black;
+	font-size: 13pt;
+	font-style: normal
 }
+
+button {
+	cursor: pointer;
+}
+
 /*Formatierung Navigationsleiste*/
 div.navbar {
-    background-color: #99BB44;
-    width: 100%;
-    height: 88px;
+	background-color: #99BB44;
+	width: 100%;
+	height: 88px;
 }
+
 div.navbar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
 }
+
 a.navlink {
-    text-decoration: none;  
-    display: block;
-    box-sizing: border-box;
+	text-decoration: none;
+	display: block;
+	box-sizing: border-box;
 }
+
 div.navlink {
-    text-decoration: none;  
-    display: block;
-    box-sizing: border-box;
+	text-decoration: none;
+	display: block;
+	box-sizing: border-box;
 }
+
 div.navbar ul li {
-    display: inline-block;
-    width: 49%;
+	display: inline-block;
+	width: 49%;
 }
-#logo  {
-    padding-top: 25px;
-    padding-left: 32px;
+
+#logo {
+	padding-top: 25px;
+	padding-left: 32px;
 }
+
 #question {
-position: absolute;
-    margin-top: -43px;
-    right: 32px;
+	position: absolute;
+	margin-top: -43px;
+	right: 32px;
 }
+
 /*Formatierung des Inhalts*/
 
 /*Grundformatierung des Footers*/
 div.footer {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    height: 96px;
-    box-shadow: 0px -10px 50px 1px #edebeb;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 96px;
+	box-shadow: 0px -10px 50px 1px #edebeb;
 }
+
 /*Formatierung der Footer Navigation*/
 /*Anlegen Listenstruktur*/
 div.footer ul {
-    list-style-type: none;
+	list-style-type: none;
 }
+
 div.footer ul li div {
-    display: block;
-    box-sizing: border-box;
+	display: block;
+	box-sizing: border-box;
 }
+
 div.footer ul li {
-    display: inline-block;
-    width: 40%;
+	display: inline-block;
+	width: 40%;
 }
+
 /*Gestaltung Abrechen/Absenden Buttons*/
 div.buttons {
 	padding-top: 16px;
 }
+
 div.button {
-    display: block;
-    box-sizing: border-box;
-    background: lightgrey;
-    width: 228px;
-    height: 56px;
-    text-align: center;
-    border-radius: 20px;
-    background-color: #99BB44;
-    font-size: 15pt;
-    color: white;
-    box-shadow: 0px 0px 20px 5px #edebeb;
+	display: block;
+	box-sizing: border-box;
+	background: lightgrey;
+	width: 228px;
+	height: 56px;
+	text-align: center;
+	border-radius: 20px;
+	background-color: #99BB44;
+	font-size: 15pt;
+	color: white;
+	box-shadow: 0px 0px 20px 5px #edebeb;
 }
+
 div.button:hover {
-    color: white;
-    background-color: #BEBEB9;
-    box-shadow: 0px 0px 80px 5px #edebeb;
+	color: white;
+	background-color: #BEBEB9;
+	box-shadow: 0px 0px 80px 5px #edebeb;
 }
+
 #breakup {
-    color: #99BB44;
-    background-color: white;
-    box-shadow: 0px 0px 80px 5px #edebeb;
-    border-color: #E5E5E3;
+	color: #99BB44;
+	background-color: white;
+	box-shadow: 0px 0px 80px 5px #edebeb;
+	border-color: #E5E5E3;
 }
+
 #breakup:hover {
-    color: white;
-    background-color: #BEBEB9;
+	color: white;
+	background-color: #BEBEB9;
 }
+
 p.buttontext {
-    padding-top: 14px;
+	padding-top: 14px;
 }
+
 div.buttons {
-    position: absolute;
-    right:20px;
-    margin-top: -35px;
+	position: absolute;
+	right: 20px;
+	margin-top: -35px;
 }
+
 div.footer ul li ul li {
-    display: inline-block;
-    width: 250px;
+	display: inline-block;
+	width: 250px;
 }
+
 /*Support Gestaltung*/
 div.support {
-    position: absolute;
+	position: absolute;
 }
+
 p.supporttext {
-    position: absolute;
-    width: 1000%;
-    left: 50px;
-    top: -12px;
-    color: #BEBEB9;
-    font-weight: bold;
+	position: absolute;
+	width: 1000%;
+	left: 50px;
+	top: -12px;
+	color: #BEBEB9;
+	font-weight: bold;
 }
+
 p.supporttext:hover {
-    color: #99BB44;
+	color: #99BB44;
 }
+
 /*Tabellengestaltung*/
 table {
-    margin-left: 2%;
-    margin-right: 2%;
-    width: 96%;
-    font-size: 20px;
-    table-layout: fixed;
+	margin-left: 2%;
+	margin-right: 2%;
+	width: 96%;
+	font-size: 20px;
+	table-layout: fixed;
 }
+
 th {
-    text-align: left;
-    border-bottom: 2px solid #E5E5E3;
-    border-collapse: collapse;
-    padding-top: 27px;
-    padding-bottom: 27px;
-    color: #BEBEB9;
-    
-    
+	text-align: left;
+	border-bottom: 2px solid #E5E5E3;
+	border-collapse: collapse;
+	padding-top: 27px;
+	padding-bottom: 27px;
+	color: #BEBEB9;
+
+
 }
+
 td {
-    border-bottom: 2px solid #E5E5E3;
-    border-collapse: collapse;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    color: #1E212B;
+	border-bottom: 2px solid #E5E5E3;
+	border-collapse: collapse;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	color: #1E212B;
 }
+
 /*Pluszeichen*/
 div.PlusBus {
-    text-align: center;
-    margin-top: 50px;
+	text-align: center;
+	margin-top: 50px;
 }
+
 /*Formatierung des Overlays*/
 /*Seiteninhalt & Grundpositionierung*/
 div.helper {
@@ -165,50 +198,57 @@ div.helper {
 	display: flex;
 	justify-content: center;
 }
+
 div.overlayparent {
 	display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
+
 /*Das eigentliche PopUp*/
 div.overlaychild {
-    width: 536px;
-    height: 287px;
-    background: #FFFDFD;
-    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-    border-radius: 16px;
+	width: 536px;
+	height: 287px;
+	background: #FFFDFD;
+	box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+	border-radius: 16px;
 	margin-top: 0;
-    /*Positionierung der inneren Elemente*/
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+	/*Positionierung der inneren Elemente*/
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
+
 /*Headline im PopUp*/
 p.olhead {
-    margin: 0;
-    font-family: "Londrina Solid";
-    font-size: 36px;
+	margin: 0;
+	font-family: "Londrina Solid";
+	font-size: 36px;
 	text-transform: uppercase;
 	padding-top: 6px;
 }
+
 /*Kennworteingabe*/
 div.eingabe {
-    padding-top: 24px;  
+	padding-top: 24px;
 }
+
 input.eingabefeld {
-    width: 472px;
-    height: 46px;
-    background: #F2F1F0;
-    border: none;
-    border-radius: 8px;
+	width: 472px;
+	height: 46px;
+	background: #F2F1F0;
+	border: none;
+	border-radius: 8px;
 }
+
 input[type=text] {
 	font-family: "Fira Sans";
 	font-size: 16px;
 	text-align: center;
 }
+
 p.vergessen {
 	font-family: 'Fira Sans';
 	font-style: normal;
@@ -222,6 +262,7 @@ p.vergessen {
 	padding-top: 9px;
 	order: -1;
 }
+
 /*Positionierung der Buttons*/
 div.buttonscontainer {
 	display: flex;
@@ -231,10 +272,11 @@ div.buttonscontainer {
 	padding-top: 24px;
 	order: 0;
 }
+
 /*Formatierung der Buttons*/
 input.buttongreen {
 	height: 54px;
-	width:228px;
+	width: 228px;
 	background: #99BB44;
 	box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
 	border-radius: 16px;
@@ -243,35 +285,40 @@ input.buttongreen {
 	font-family: 'Fira Sans';
 	font-weight: 600;
 	font-size: 18px;
-	margin:0;
+	margin: 0;
 }
+
 input.buttongreen:hover {
 	background-color: #7F9D32;
 	color: white;
 }
+
 div.buttonwhite {
 	height: 54px;
-	width:228px;
+	width: 228px;
 	border: 2px solid #E6E5E3;
 	border-radius: 16px;
 }
+
 div.buttonwhite:hover {
-    border: 2px solid #7F9D32;
-    color: #7F9D32;
+	border: 2px solid #7F9D32;
+	color: #7F9D32;
 }
+
 p.buttontext {
 	text-align: center;
 	font-family: 'Fira Sans';
 	font-weight: 600;
 	font-size: 18px;
-	margin:0;
+	margin: 0;
 	padding-top: 15px;
 }
+
 /*Logout Buttons*/
 /*Formatierung der Buttons*/
 button.buttongreen {
 	height: 54px;
-	width:228px;
+	width: 228px;
 	background: #99BB44;
 	box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
 	border-radius: 16px;
@@ -280,12 +327,14 @@ button.buttongreen {
 	font-family: 'Fira Sans';
 	font-weight: 600;
 	font-size: 18px;
-	margin:0;
+	margin: 0;
 }
+
 button.buttongreen:hover {
 	background-color: #7F9D32;
 	color: white;
 }
+
 button.buttonwhite {
 	height: 54px;
 	width: 228px;
@@ -295,27 +344,37 @@ button.buttonwhite {
 	font-family: 'Fira Sans';
 	font-weight: 600;
 	font-size: 18px;
-	margin:0;
+	margin: 0;
 	color: #99BB44;
 	background-color: white;
 }
+
 button.buttonwhite:hover {
 	color: #7F9D32;
 	border: 2px solid #7F9D32;
 }
+
 /*Modalisierung
 /* The Modal (background) */
 #overtrigger {
-  	display: none; /* Hidden by default */
-  	position: fixed; /* Stay in place */
-  	z-index: 1; /* Sit on top */
-  	left: 0;
-  	top: 0;
-  	width: 100%; /* Full width */
-  	height: 100%; /* Full height */
-  	overflow: auto; /* Enable scroll if needed */
-  	background-color: rgb(0,0,0); /* Fallback color */
-	background-color: rgba(0,0,0,0.3); /* Black w/ opacity */
+	display: none;
+	/* Hidden by default */
+	position: fixed;
+	/* Stay in place */
+	z-index: 1;
+	/* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%;
+	/* Full width */
+	height: 100%;
+	/* Full height */
+	overflow: auto;
+	/* Enable scroll if needed */
+	background-color: rgb(0, 0, 0);
+	/* Fallback color */
+	background-color: rgba(0, 0, 0, 0.3);
+	/* Black w/ opacity */
 }
 
 /*Admin Seiten  Formatierungen*/
@@ -324,8 +383,9 @@ div.navcontainer {
 	display: flex;
 	flex-direction: row;
 	width: 100vw;
-	height:100%;
+	height: 100%;
 }
+
 p.navbarhead {
 	margin: 0px;
 	font-family: "Londrina Solid";
@@ -337,6 +397,7 @@ p.navbarhead {
 	padding-top: 23px;
 	line-height: 42px;
 }
+
 div.logout {
 	display: flex;
 	flex-direction: row;
@@ -345,20 +406,25 @@ div.logout {
 	align-items: center;
 	justify-content: flex-end;
 	padding-right: 32px;
+
+	cursor: pointer;
 }
+
 p.logouttext {
 	font-size: 16px;
 	line-height: 19px;
 	color: white;
 	font-weight: 600;
 }
+
 footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-    height: 96px;
+	height: 96px;
 }
-div.footerbg{
+
+div.footerbg {
 	height: 94px;
 	background-color: white;
 	box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
@@ -368,50 +434,56 @@ div.footerbg{
 	align-items: center;
 	padding-right: 32px;
 }
+
 button.refreshbutton {
 	width: 228px;
 	height: 54px;
 	background: #99BB44;
 	box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
 	border-radius: 16px;
-	border:none;
+	border: none;
 	color: white;
 	font-family: 'Fira Sans';
 	font-weight: 600;
 	font-size: 18px;
 	line-height: 26px;
 }
+
 /*Lagerübersicht*/
 *Lagerübersicht Formatierung*/
+
 /*Tabellengestaltung*/
 table {
-    margin-left: 2%;
-    margin-right: 2%;
-    width: 96%;
-    table-layout: fixed;
+	margin-left: 2%;
+	margin-right: 2%;
+	width: 96%;
+	table-layout: fixed;
 	border-spacing: 0px;
 }
+
 th {
-    text-align: left;
-    border-bottom: 2px solid #E5E5E3;
-    border-collapse: collapse;
-    padding-top: 27px;
-    padding-bottom: 27px;
-    color: #BEBEB9;
-    font-size: 16px;
+	text-align: left;
+	border-bottom: 2px solid #E5E5E3;
+	border-collapse: collapse;
+	padding-top: 27px;
+	padding-bottom: 27px;
+	color: #BEBEB9;
+	font-size: 16px;
 	font-weight: 600;
 	line-height: 19.2px;
-    
+
 }
+
 td {
-    border-bottom: 2px solid #E5E5E3;
-    border-collapse: collapse;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    color: #1E212B;
+	border-bottom: 2px solid #E5E5E3;
+	border-collapse: collapse;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	color: #1E212B;
 	font-size: 18px;
 	line-height: 26px;
 }
+
 div.tablecontainer {
 	display: flex;
 	flex-direction: row;

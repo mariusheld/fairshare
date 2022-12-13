@@ -1,18 +1,18 @@
 <?php
-    //Datenbankverbindung aufbauen
-    require_once("../dbconnect/dbconnect.inc.php");
+//Datenbankverbindung aufbauen
+require_once("../dbconnect/dbconnect.inc.php");
 
-    //Abfrage an Datenbank senden
+//Abfrage an Datenbank senden
 $query = $db->prepare("SELECT*FROM Lebensmittel WHERE LMkey=5 OR  LMkey=11"); //Wenn Datenbank final befüllt ist, dann WHERE Attribut löschen. Footer anpassen
-    $erfolg = $query->execute();
+$erfolg = $query->execute();
 
-    //Fehlertest
-    if(!$erfolg) {
-        $fehler = $query->errorInfo();
-        die("Folgender Datenbankfehler ist aufgetreten:" .$fehler[2]);
-        }
+//Fehlertest
+if (!$erfolg) {
+    $fehler = $query->errorInfo();
+    die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
+}
 
-        //Array für die Icons in der Lagerübersicht
+//Array für die Icons in der Lagerübersicht
 $icons = array(
     1 => "../media/kategorien/icon_backwaren-salzig.svg",
     2 => "../media/kategorien/icon_backwaren-suess.svg",
@@ -24,21 +24,25 @@ $icons = array(
     8 => "../media/kategorien/icon_trockenprodukte.svg",
 );
 
-?> 
+$_SESSION['password'] = array();
+
+?>
 
 <!DOCTYPE html>
 <html lang=de>
-       <head>
-        <meta charset="UTF-8"/>
-        <meta name="author" content="Marius Held"/>
-        <title>Abgabeübersicht</title>
-        <link rel="stylesheet" href="../css/foodsaver.css"/> 
-        <style>
-           @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&family=Londrina+Solid:wght@300;400&display=swap');
-        </style>
-        </head>
-        <body>
-<?php
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Marius Held" />
+    <title>Abgabeübersicht</title>
+    <link rel="stylesheet" href="../css/adminstyle.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&family=Londrina+Solid:wght@300;400&display=swap');
+    </style>
+</head>
+
+<body>
+    <?php
     //Session eröffnen
     session_name("adminbereich");
     session_start();
@@ -47,110 +51,115 @@ $icons = array(
     $passwort = $_SESSION['password'];
 
     //Login Daten Prüfen
-    if($passwort != "raupe" OR $passwort != "raupenkönigin") {
+    if ($passwort != "raupe" or $passwort != "raupenkönigin") {
         //Passwort aus Post-Übermittlung bekommen
         $passwort = $_POST['password'];
         $_SESSION['password'] = $passwort;
     }
     //
-    //Zugang zur Lagerübersicht
+//Zugang zur Lagerübersicht
     if ($passwort == "raupe") {
-        ?>
-        <div class="seiteninhalt">
-              <!--Logout Overlay-->
-        <div class="helper"  id="overtrigger" >
-        <div class="overlayparent">
-            <div class="overlaychild" style="height: 191px; ">
-                <p class="olhead">
-                    Abmelden?
-                </p>
-                <div class="eingabe">
-						<div class="buttonscontainer">
-							<button class="buttonwhite">
-								Abrechen
-							</button>
-							<div class="buttongreen" >
-								<button class="buttongreen" id="btnlogout" style="color: white" value="Abmelden">
-									Abmelden
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+    ?>
+    <div class="seiteninhalt">
         <!--Logout Overlay-->
-            <div class="navbar">
-			<div class="navcontainer">
-				<p class="navbarhead">
-					Lagerübersicht
-				</p>
-				<div class="logout" id="logout" >
-					<p class="logouttext">
-						Ausloggen
-					</p>
-					<img class="logouticon" alt="ausloggen" src="../media/lock_icon.png" width="48" height="48"/>
-				</div>
-			</div>
-		</div>
-		<!--Seiteninhalt-->
-		<div class="seiteninhalt">
-			<table>
-				<!--Tabellenkopf-->
-				<tr>
-					<th style="width: 25%;" >Lebensmittel</th><th style="width: 20%;" >Kistennr</th><th style="width: 20%;">Menge (in kg)</th><th>Genießbar</th><th style="width: 50px;"></th><th style="width: 50px;"></th>
-				</tr>
-				<!--Tabelleninhalt-->
+        <div class="helper" id="overtrigger">
+            <div class="overlayparent">
+                <div class="overlaychild" style="height: 191px; ">
+                    <p class="olhead">
+                        Abmelden?
+                    </p>
+                    <div class="eingabe">
+                        <div class="buttonscontainer">
+                            <button class="buttonwhite">
+                                Abrechen
+                            </button>
+                            <div class="buttongreen">
+                                <button class="buttongreen" id="btnlogout" style="color: white" value="Abmelden">
+                                    Abmelden
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Logout Overlay-->
+        <div class="navbar">
+            <div class="navcontainer">
+                <p class="navbarhead">
+                    Lagerübersicht
+                </p>
+                <div class="logout" id="logout">
+                    <p class="logouttext">
+                        Ausloggen
+                    </p>
+                    <img alt="ausloggen" src="../media/lock_icon.svg" width="48" height="48" />
+                </div>
+            </div>
+        </div>
+        <!--Seiteninhalt-->
+        <div class="seiteninhalt">
+            <table>
+                <!--Tabellenkopf-->
+                <tr>
+                    <th style="width: 25%;">Lebensmittel</th>
+                    <th style="width: 20%;">Kistennr</th>
+                    <th style="width: 20%;">Menge (in kg)</th>
+                    <th>Genießbar</th>
+                    <th style="width: 50px;"></th>
+                    <th style="width: 50px;"></th>
+                </tr>
+                <!--Tabelleninhalt-->
 
                 <?php
-                    //Zellenweise Verarbeitung der Datenbankabfrage
-                    $result = $query->fetchAll();
+        //Zellenweise Verarbeitung der Datenbankabfrage
+        $result = $query->fetchAll();
 
-                    //Konsolenausgabe der Datenbankabfrage (nur möglich nach einem fetchAll() befehl der Abfrage)
-                echo "<script>console.log(" . json_encode($result) . ");</script>";
+        //Konsolenausgabe der Datenbankabfrage (nur möglich nach einem fetchAll() befehl der Abfrage)
+        echo "<script>console.log(" . json_encode($result) . ");</script>";
 
-                foreach($result as $zeile){
-                    echo "<tr>";
-                     //echo "<td> <img alt='icon' width='48' src='" . $icons[$zeile['OKatKey']] . "'></td>";
-                    echo "<td class='lmicon'><div class='tablecontainer'><img alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'><div style='font-weight: 600; padding-left: 16px;'>" . $zeile['Bezeichnung'] . "</div></div></td>";
-                if ($zeile['Kuehlware'] == 0) {
-                            echo "<td>5</td>";    /* . $zeile['BoxID'] . */
-                            } else {
-                                  echo "<td><div class='tablecontainer'><div>4</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/Frame.png' width='32'></div></td>";
-                            }
-                    echo "<td>" . $zeile['Gewicht'] ."</td>";
-                    echo "<td>" . $zeile['VerteilDeadline'] . "</td>"; 
-                    if ($zeile['Anmerkung']) {
-                        echo "<td style='text-align: right'><img id='bubble' alt='dots' src='../media/bubble.jpg' width='48px;'/></td>";
-                    } else {
-                        echo "<td style='text-align: right'><img id='bubble' style='visibility:hidden'  alt='dots' src='../media/bubble.jpg' width='48px;'/></td>";
-                    }
-                    echo "<td style='text-align: right'><img alt='dots' src='../media/dots.jpg' width='48px;'/></td>";
-                    echo "</tr>\n";
-                        }
+        foreach ($result as $zeile) {
+            echo "<tr>";
+            //echo "<td> <img alt='icon' width='48' src='" . $icons[$zeile['OKatKey']] . "'></td>";
+            echo "<td class='lmicon'><div class='tablecontainer'><img alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'><div style='font-weight: 600; padding-left: 16px;'>" . $zeile['Bezeichnung'] . "</div></div></td>";
+            if ($zeile['Kuehlware'] == 0) {
+                echo "<td>5</td>"; /* . $zeile['BoxID'] . */
+            } else {
+                echo "<td><div class='tablecontainer'><div>4</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'></div></td>";
+            }
+            echo "<td>" . $zeile['Gewicht'] . "</td>";
+            echo "<td>" . $zeile['VerteilDeadline'] . "</td>";
+            if ($zeile['Anmerkung']) {
+                echo "<td style='text-align: right'><img id='bubble' alt='dots' src='../media/comment_icon.svg' width='48px;'/></td>";
+            } else {
+                echo "<td style='text-align: right'><img id='bubble' style='visibility:hidden' alt='dots' src='../media/comment_icon.svg' width='48px;'/></td>";
+            }
+            echo "<td style='text-align: right'><img alt='dots' src='../media/edit_icon.svg' width='48px;'/></td>";
+            echo "</tr>\n";
+        }
                 ?>
                 <!--Tabelle hardgecodet
 				<tr>
-					<td class="lmicon"><div class="tablecontainer"><img alt="lmicon" src="../media/icon_obst.png" width="48"><div style="font-weight: 600; padding-left: 16px;">Banana</div></div></td>
-					<td><div class="tablecontainer"><div>4</div> <img style="padding-left: 16px;" alt="coolicnon" src="../media/Frame.png" width="32"></div></td>
+					<td class="lmicon"><div class="tablecontainer"><img alt="lmicon" src="../media/kategorien/icon_obst.svg" width="48"><div style="font-weight: 600; padding-left: 16px;">Banana</div></div></td>
+					<td><div class="tablecontainer"><div>4</div> <img style="padding-left: 16px;" alt="coolicnon" src="../media/comment_icon.svg" width="32"></div></td>
 					<td>2 kg</td>
 					<td>3 Tage</td>
-					<td class="kommentaricon"><div class="tablecontainer" style="justify-content: flex-end; gap: 16px;"><img alt="dots" src="../media/bubble.jpg" width="48"><img alt="dots" src="../media/dots.jpg" width="48"></div></td>
+					<td class="kommentaricon"><div class="tablecontainer" style="justify-content: flex-end; gap: 16px;"><img alt="dots" src="../media/bubble.jpg" width="48"><img alt="dots" src="../media/edit_icon.svg" width="48"></div></td>
 			</tr>
             Tabelle hardgecodet-->
-		</div>
-		<!--Seiteninhalt-->
-		<footer>
-			<div class="footerbg">
-				<button class="refreshbutton" id="refreshdash">
-					Liste Aktualisieren
-				</button>
-			</div>
-		</footer>
-		</div>
-		</div>
-        <?php
-         echo "
+        </div>
+        <!--Seiteninhalt-->
+        <footer>
+            <div class="footerbg">
+                <button class="refreshbutton" id="refreshdash">
+                    Liste Aktualisieren
+                </button>
+            </div>
+        </footer>
+    </div>
+    </div>
+    <?php
+        echo "
          <script>
              // Modale Box ansprechen
              var modal = document.getElementById('overtrigger');
@@ -196,58 +205,58 @@ $icons = array(
         //Zugang zum Dashboard
     } else if ($passwort == "raupenkönigin") {
         //Dashboard Seite
-        ?>
-        <!--Logout Overlay-->
-        <div class="helper"  id="overtrigger" >
+    ?>
+    <!--Logout Overlay-->
+    <div class="helper" id="overtrigger">
         <div class="overlayparent">
             <div class="overlaychild" style="height: 191px; ">
                 <p class="olhead">
                     Abmelden?
                 </p>
                 <div class="eingabe">
-						<div class="buttonscontainer">
-							<button class="buttonwhite">
-								Abrechen
-							</button>
-							<div class="buttongreen" >
-								<button class="buttongreen" id="btnlogout" style="color: white" value="Anmelden">
-									Abmelden
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-        <!--Logout Overlay-->
-            <div class="navbar">
-			<div class="navcontainer">
-				<p class="navbarhead">
-					Dashboard
-				</p>
-				<div class="logout" id="logout">
-					<p class="logouttext">
-						Ausloggen
-					</p>
-					<img class="logouticon" alt="ausloggen" src="../media/lock_icon.png" width="48" height="48"/>
-				</div>
-			</div>
-		</div>
-		<!--Seiteninhalt-->
-		<div class="seiteninhalt">
-			<!--hier Dashboard einfügen-->
-		</div>
-		<!--Seiteninhalt-->
-		<footer>
-			<div class="footerbg">
-				<button class="refreshbutton" id="refreshdash">
-					Aktualisieren
-				</button>
-			</div>
-		</footer>
-		</div>
-        <?php
-         echo "
+                    <div class="buttonscontainer">
+                        <button class="buttonwhite">
+                            Abrechen
+                        </button>
+                        <div class="buttongreen">
+                            <button class="buttongreen" id="btnlogout" style="color: white" value="Anmelden">
+                                Abmelden
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Logout Overlay-->
+    <div class="navbar">
+        <div class="navcontainer">
+            <p class="navbarhead">
+                Dashboard
+            </p>
+            <div class="logout" id="logout">
+                <p class="logouttext">
+                    Ausloggen
+                </p>
+                <img alt="ausloggen" src="../media/lock_icon.png" width="48" height="48" />
+            </div>
+        </div>
+    </div>
+    <!--Seiteninhalt-->
+    <div class="seiteninhalt">
+        <!--hier Dashboard einfügen-->
+    </div>
+    <!--Seiteninhalt-->
+    <footer>
+        <div class="footerbg">
+            <button class="refreshbutton" id="refreshdash">
+                Aktualisieren
+            </button>
+        </div>
+    </footer>
+    </div>
+    <?php
+        echo "
          <script>
              // Modale Box ansprechen
              var modal = document.getElementById('overtrigger');
@@ -291,11 +300,12 @@ $icons = array(
         $_SESSION['login'] = $login;
     }
     //Keine Login-Daten vorhanden oder falsche Daten
-    if($passwort != "raupe" AND $passwort != "raupenkönigin") {
-           echo"<script>window.location.href = 'https://mars.iuk.hdm-stuttgart.de/~mh341/foodsaver/index.php'</script>";
+    if ($passwort != "raupe" and $passwort != "raupenkönigin") {
+        echo "<script>window.location.href = 'https://mars.iuk.hdm-stuttgart.de/~mh341/foodsaver/index.php'</script>";
         $login = true;
         $_SESSION['login'] = $login;
     }
-?>
+    ?>
 </body>
+
 </html>

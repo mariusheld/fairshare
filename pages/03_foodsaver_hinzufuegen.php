@@ -1,17 +1,16 @@
 <!-- --------- PHP --------- -->
 
 <?php
-// TEMPORÄR ABGESCHALTET
-// require_once("../scripts/dbcontroller.php");
-// $db_handle = new DBController();
-
+//Datenbankverbindung aufbauen
+require_once("../dbconnect/dbconnect.inc.php");
+$db_handle = new DBController();
 session_start();
 
 // ----------- VARIABLES ----------
 
 $LMkey = session_create_id();
 $LMBez = "";
-$LKkey = 0;
+$OKatKey = 0;
 $kuehlcheck = false;
 $kiste = null;
 $menge = null;
@@ -36,9 +35,8 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 
 // ----------- QUERYS -----------
 
-// TEMPORÄR ABGESCHALTET
-// $kategorien = $db_handle->runQuery("SELECT * FROM `lkategorie`");
-$kategorien = array();
+$_SESSION["kategorien"] = $db_handle->runQuery("SELECT * FROM `oberkategorie`");
+$kategorien = $_SESSION["kategorien"];
 
 // ------- FORM VALIDATION ----------
 function test_input($data)
@@ -60,9 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if(isset($_POST['kuehlcheck']) && 
-        $_POST['kuehlcheck'] == 'true') 
-    {
+    if (
+        isset($_POST['kuehlcheck']) &&
+        $_POST['kuehlcheck'] == 'true'
+    ) {
         $kuehlcheck = true;
     }
 
@@ -84,12 +83,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $herkunft = test_input($_POST["herkunft"]);
     }
 
-    // TEMPORÄR ABGESCHALTET
-    // if (empty($_POST["LKkey"])) {
-    //     $kategorieErr = "Erforderlich";
-    // } else {
-    //     $LKkey = test_input($_POST["LKkey"]);
-    // }
+    if (empty($_POST["OKatKey"])) {
+        $kategorieErr = "Erforderlich";
+    } else {
+        $OKatKey = test_input($_POST["OKatKey"]);
+    }
 
     if (empty($_POST["haltbarkeit"])) {
         $haltbarkeitErr = "Erforderlich";
@@ -107,8 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ---- CREATE OBJECTS -------
 
-    $stufen = ["","unkritisch","1 Tag","2 Tage","3 Tage","4 Tage","5 Tage","6 Tage", "1 Woche"];
-    for($i = 0;$i < count($stufen);$i++) {
+    $stufen = ["", "unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
+    for ($i = 0; $i < count($stufen); $i++) {
         if ($i == $haltbarkeit) {
             $haltbarkeit = $stufen[$i];
         }
@@ -121,10 +119,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'Bezeichnung' => $LMBez,
         'VerteilDeadline' => $haltbarkeit,
         'Anmerkung' => $comment,
-        'Kuehlware'  => $kuehlcheck,
+        'Kuehlware' => $kuehlcheck,
         'Gewicht' => $menge,
         'Herkunft' => $herkunft,
-        // 'OKatKey' => $LKkey,
+        'OKatKey' => $OKatKey,
     ];
 
     $box = (object) [
@@ -138,23 +136,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Wenn es keine Errors gibt und keine Variablen leer sind, wird das Objekt zur Übersicht übertragen und man wird zur Überischt weitergeleitet
     if (
         empty($lmbezErr) && empty($kisteErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
-         !empty( /*$lebensmittel->OKatKey && */ $lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)
+        !empty( /*$lebensmittel->OKatKey && */$lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)
     ) {
         $eintrag = (object) [
             'session_id' => session_id(),
             'id' => session_create_id(),
-            // 'Kategorie' => $lebensmittel->OKatKey,
+            'Kategorie' => $lebensmittel->OKatKey,
             'Lebensmittel' => $lebensmittel->Bezeichnung,
             'Menge' => $lebensmittel->Gewicht,
             'Kistennr' => $box->BoxID,
-            'Kuehlen' => $lebensmittel->Kuehlware, 
+            'Kuehlen' => $lebensmittel->Kuehlware,
             'Genießbar' => $lebensmittel->VerteilDeadline,
             'Allergene' => $allergene,
             'Anmerkungen' => $comment
         ];
         array_push($_SESSION["array"], $eintrag);
         array_push($_SESSION["dbeintrag"], $lebensmittel);
-        header("Location: ./03_foodsaver_uebersicht.php");
+        header("Location: ./04_foodsaver_uebersicht.php");
         exit();
     }
 }
@@ -169,7 +167,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foodsaver Lebensmittel Hinzufügen</title>
+    <title>
+        FAIRSHARE
+    </title>
     <!-- Fonts  -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -183,106 +183,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="font-fira">
     <div class="container">
         <header>
-            <a>
-                <h1 id="devlink" class="font-londrina">
-                    BOX PACKEN
-                </h1>
-            </a>
-            <!-- OVERLAY -->
-            <a>
-      			<img id="openHelp" src="../media/icon_help.svg" alt="icon_help"/>
-			</a>
-      		<div id="fsHilfe">
-        		<div class="fs-hilfe">
-          			<h3 class="popupheader">LEBENSMITTEL RICHTIG ABGEBEN</h3>
-          			<div class="schrittliste-popup">
-            		<div>
-                		<ul class="listpopupHilfe">
-                    		<img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
-                    		<h5 class="steps-hilfe">1. Hygiene</h5>
-                    		<li>
-                        		Hände waschen
-                    		</li>
-                    		<li>
-                        		Verwende das rechte Waschbecken
-                    		</li>
-                		</ul>
-            		</div>
-            		<div>
-                		<ul class="listpopupHilfe">
-                    		<img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
-                    		<h5 class="steps-hilfe">2. Boxen</h5>
-                    		<li>
-                        		Hol dir genügend Boxen unter der Theke
-                    		</li>
-                    		<li>
-                        		Boxen nicht auf den Boden stellen!
-                    		</li>
-                		</ul>
-            		</div>
-            		<div>
-                		<ul class="listpopupHilfe">
-                    		<img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
-                    		<h5 class="steps-hilfe">3. Vorbereitung</h5>
-                    		<li>
-                        		Sortiere Verdorbenes aus
-                    		</li>
-                    		<li>
-                        		Wasche dreckige Lebensmittel (linkes Becken)
-                    		</li>
-                    		<li>
-                        		Entferne unnötige Verpackungen
-                    		</li>
-                		</ul>
-            		</div>
-            		<div>
-                		<ul class="listpopupHilfe">
-                    		<img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
-                    		<h5 class="steps-hilfe">4. Lebensmittelabgabe</h5>
-                    		<li>
-                        		Packe die Lebensmittel in die Boxen
-                    		</li>
-                    		<li>
-                        		Trage die Lebensmittel ins System ein
-                    		</li>
-                    		<li>
-                        		Verstaue die Lebensmittel
-                    		</li>
-                		</ul>
-            		</div>
-        		</div>
-        		<div class="buttoncenter">
-            		<a class="allesklarButton" href=""><h5>Alles klar</h5></a>
-        		</div>
-    		</div>
-    	</div>
-        
-    <!-- Script Overlay fs-help -->
-    <?php
-    echo '<script>
-    
-        console.log("Hello world!");
-        //Overlay auswählen
-        var fsHilfe = document.getElementById("fsHilfe");
-        
-        //Das öffnet das Overlay
-        var openHelp = document.getElementById("openHelp");
-        
-        //Das schließt das Overlay
-        var exitHilfe = document.getElementsByClassName("allesklarButton")[0];
-        
-        //Öffnen wenn icon geklickt wird
-        openHelp.onclick = function() {
-            fsHilfe.style.display = "block";
-        }
-        
-        //Schließen nach Button drücken
-            exitHilfe.onclick = function() {
-            fsHilfe.style.display = "none";
-        }
-        </script>
-        ';    
-    ?>
+            <h1 class="font-londrina">
+                BOX PACKEN
+            </h1>
+            <!-- fsHilfe Trigger -->
+            <img id="openHelp" src="../media/icon_help.svg" alt="icon_help" />
         </header>
         <div class="content">
             <form id="myform" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
@@ -320,33 +225,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </span>
                                 </label>
                                 <!-- OVERLAY -->
-                                <a href="/raupeimmersatt">
+                                <a href="/">
                                     <img height="22px" src="../media/icon_help_mini.svg" alt="icon_help" />
                                 </a>
                             </div>
                             <div class="category-grid">
                                 <?php
                                 // LOOP TILL END OF DATA
-                                foreach ($kategorien as $key => $row ) {
-                                    
+                                foreach ($kategorien as $key => $row) {
+
                                     $iconList = array(
-                                        $icon_obst_url,
-                                        $icon_gemuese_url,
-                                        $icon_backwaren_suess_url,
                                         $icon_backwaren_salzig_url,
-                                        $icon_kuehlprodukte_url,
-                                        $icon_trockenprodukte_url,
+                                        $icon_backwaren_suess_url,
+                                        $icon_gemuese_url,
                                         $icon_konserven_url,
-                                        $icon_sonstiges_url
+                                        $icon_kuehlprodukte_url,
+                                        $icon_obst_url,
+                                        $icon_sonstiges_url,
+                                        $icon_trockenprodukte_url,
                                     );
                                 ?>
                                 <div class="radio-container kategorie">
-                                    <input type="radio" name="LKkey" value="<?php echo $row['LKkey'] ?>" <?php if (
-                                        isset($LKkey) && $LKkey==$row['LKkey'] ) echo "checked"; ?> >
+                                    <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php if (
+                                        isset($OKatKey) && $OKatKey == $row['OKatKey']
+                                    )
+                                        echo "checked"; ?> >
                                     <div class="category-item">
-                                        <?php echo "<img src='". $iconList[$key] . "'>" ?>
+                                        <?php echo "<img src='" . $iconList[$key] . "'>" ?>
                                         <p>
-                                            <?php echo $row['KatName'] ?>
+                                            <?php echo $row['OKatName'] ?>
                                         </p>
                                     </div>
                                 </div>
@@ -374,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     Menge (in kg)
                                 </label>
                                 <!-- OVERLAY -->
-                                <a href="/raupeimmersatt">
+                                <a href="/">
                                     <img height="22px" src="../media/icon_help_mini.svg" alt="icon_help" />
                                 </a>
                                 <span class="error">*
@@ -417,7 +324,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     Wo gerettet?
                                 </label>
                                 <!-- OVERLAY -->
-                                <a href="/raupeimmersatt">
+                                <a href="/">
                                     <img height="22px" src="../media/icon_help_mini.svg" alt="icon_help" />
                                 </a>
                                 <span class="error">*
@@ -433,7 +340,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     Allergene und Inhaltsstoffe
                                 </label>
                                 <!-- OVERLAY -->
-                                <a href="/raupeimmersatt">
+                                <a href="/">
                                     <img height="22px" src="../media/icon_help_mini.svg" alt="icon_help" />
                                 </a>
                             </div>
@@ -452,24 +359,114 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="action-container">
             <div>
-                <!-- OVERLAY -->
-                <a href="/raupeimmersatt"> <img src="../media/icon_help_mini.svg" alt="icon_help" /></a>
+                <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
+                <a href="/"> <img src="../media/icon_help_mini.svg" alt="icon_help" /></a>
                 <p>Nicht erlaubte Lebensmittel</p>
             </div>
             <div class="action-wrap">
-                <!-- NICHT ÄNDERN -->
-                <a href="./01_foodsaver_start.php">Abbrechen</a>
-                <input class="next-button" type="submit" form="myform" value="Hinzufügen">
+                <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
+                <a href="./02_foodsaver_start.php">Abbrechen</a>
+                <input class="continue-button" type="submit" form="myform" value="Hinzufügen">
             </div>
         </div>
     </div>
+
+    <!-- ------------------ ALLE OVERLAYS ------------------ -->
+
+    <!-- OVERLAY fsHilfe -->
+    <div id="fsHilfe">
+        <div class="fs-hilfe">
+            <h3 class="popupheader">LEBENSMITTEL RICHTIG ABGEBEN</h3>
+            <div class="schrittliste-popup">
+                <div>
+                    <ul class="listpopupHilfe">
+                        <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                        <h5 class="steps-hilfe">1. Hygiene</h5>
+                        <li>
+                            Hände waschen
+                        </li>
+                        <li>
+                            Verwende das rechte Waschbecken
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="listpopupHilfe">
+                        <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                        <h5 class="steps-hilfe">2. Boxen</h5>
+                        <li>
+                            Hol dir genügend Boxen unter der Theke
+                        </li>
+                        <li>
+                            Boxen nicht auf den Boden stellen!
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="listpopupHilfe">
+                        <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                        <h5 class="steps-hilfe">3. Vorbereitung</h5>
+                        <li>
+                            Sortiere Verdorbenes aus
+                        </li>
+                        <li>
+                            Wasche dreckige Lebensmittel (linkes Becken)
+                        </li>
+                        <li>
+                            Entferne unnötige Verpackungen
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="listpopupHilfe">
+                        <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                        <h5 class="steps-hilfe">4. Lebensmittelabgabe</h5>
+                        <li>
+                            Packe die Lebensmittel in die Boxen
+                        </li>
+                        <li>
+                            Trage die Lebensmittel ins System ein
+                        </li>
+                        <li>
+                            Verstaue die Lebensmittel
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="buttoncenter">
+                <a class="allesklarButton" href="">
+                    <h5>Alles klar</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Overlay fs-help -->
+    <?php
+    echo '<script>
+    
+        console.log("Hello world!");
+        //Overlay auswählen
+        var fsHilfe = document.getElementById("fsHilfe");
+        
+        //Das öffnet das Overlay
+        var openHelp = document.getElementById("openHelp");
+        
+        //Das schließt das Overlay
+        var exitHilfe = document.getElementsByClassName("allesklarButton")[0];
+        
+        //Öffnen wenn icon geklickt wird
+        openHelp.onclick = function() {
+            fsHilfe.style.display = "block";
+        }
+        
+        //Schließen nach Button drücken
+            exitHilfe.onclick = function() {
+            fsHilfe.style.display = "none";
+        }
+        </script>
+        ';
+    ?>
 </body>
-  <?php
-    echo "<script>
-                    //DevLink um Formular zu überspringen
-                    document.getElementById('devlink').onclick = function() {
-                        window.location.href = '03_foodsaver_uebersicht.php';
-                    }                
-             </script>"
-  ?>
+
 </html>

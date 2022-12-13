@@ -1,15 +1,60 @@
+/* Allgemein  */
+/*------------------Allgemein-------------------------*/
+
 body {
-    height: 768px;
+    height: 100vh;
     margin: 0;
-    background: #858585;
 }
 
-a,
+h3 {
+    font-family: 'Londrina Solid';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 33px;
+    text-transform: uppercase;
+}
+
+h5 {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+    text-align: center;
+}
+
 p {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    color: #1E212B;
     margin: 0;
     text-decoration: none;
 }
 
+li {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    color: #1E212B;
+}
+
+ul {
+    padding-inline-start: 0;
+}
+
+a {
+    margin: 0;
+    text-decoration: none;
+}
+
+/* Fonts definieren  */
 .font-londrina {
     font-family: 'Londrina Solid', cursive;
 }
@@ -18,16 +63,20 @@ p {
     font-family: 'Fira Sans', sans-serif;
 }
 
+/* Base Struktur  */
+/* Container umschließt alles  */
 .container {
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
     height: 100%;
 }
 
+/* Header ist das oberste Element */
 header {
     /* positioning */
     height: 88px;
-    width: 1024px;
+    /* width: 1024px; */
+    width: 100%;
     margin: auto;
     margin-top: 0;
     margin-bottom: 0;
@@ -46,33 +95,49 @@ header h1 {
     font-weight: 400;
     font-size: 36px;
     color: #FFFDFD;
+    padding-left: 32px;
 }
 
-header a {
+header img {
     padding-left: 32px;
     padding-right: 32px;
+    height: 37px;
 }
 
+header img:last-child {
+    height: 48px;
+    cursor: pointer;
+}
+
+/* Content ist das mittlere Element und beinhaltet die eigentliche Anwendung */
 .content {
     /* positioning */
     position: relative;
     flex: 1;
-    width: 1024px;
+    height: 100%;
+    width: 100%;
     margin: auto;
     background: #FFFDFD;
+
+    display: flex;
+    justify-content: center;
+    align-items: start;
 }
 
 .content form {
+    /* fixe breite ist variabel und kann auch entfernt werden. Auf 1024px wird das Formular aber immer so aussehen wie in den Designs */
+    width: 960px;
     padding: 32px;
 }
 
-
+/* Action Container ist das untereste Element und beinhaltet die Aktionsfelder (buttons) */
 .action-container {
     /* positioning */
     height: 94px;
-    width: 1024px;
+    /* width: 1024px; */
+    width: 100%;
     margin: auto;
-    z-index: 10;
+    z-index: 1;
     /* white */
     background: #FFFDFD;
     /* button_hover */
@@ -91,10 +156,11 @@ header a {
     padding-right: 32px;
 }
 
+/* Gridsystem definieren */
 
 .grid-col-1 {
     font-weight: 500;
-    text-align: start;
+    text-align: end;
     grid-column: span 1 / span 1;
 }
 
@@ -122,11 +188,13 @@ header a {
     grid-column: span 6 / span 6;
 }
 
+/* Error styling */
 .error {
     color: red;
     font-size: 10px;
 }
 
+/* Allgemeine Flex Klasse */
 .flex {
     display: flex;
     justify-content: start;
@@ -134,15 +202,96 @@ header a {
     gap: 16px;
 }
 
+/* Action Container Styling  */
+.action-container div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* text concrete  */
+    color: #BEBEB9;
+    font-weight: 600;
+}
+
+.action-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* text concrete  */
+    color: #BEBEB9;
+
+    height: 94px;
+    width: 456px;
+}
+
+.action-wrap a:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 54px;
+    width: 100%;
+
+    /* border sand  */
+    box-sizing: border-box;
+    border: solid 2px #E5E5E3;
+    border-radius: 16px;
+    /* text apple  */
+    color: #99BB44;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.continue-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 54px;
+    width: 100%;
+    /* apple-green */
+    background: #99BB44;
+    border: solid 0px #99BB44;
+    border-radius: 16px;
+    /* text apple  */
+    color: #FFFDFD;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.final-button {
+    margin-top: 42px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 54px;
+    width: 100%;
+
+    /* apple-green */
+    background: #99BB44;
+    border: solid 0px #99BB44;
+    border-radius: 16px;
+    /* text apple  */
+    color: #FFFDFD;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 /* ------- 
 Foodsaver start
  --------- */
-
+/* Hintergrund Bild  */
 .background {
     position: absolute;
-    left: 55px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
+/* Titel Styling */
 .wrap-title {
     margin: 0;
     position: absolute;
@@ -163,6 +312,7 @@ Foodsaver start
     text-align: center;
 }
 
+/* Abbrechen button  */
 .cancel-on-start {
     position: absolute;
     bottom: 0;
@@ -177,7 +327,7 @@ Foodsaver start
 /* ------- 
 Foodsaver Hinzufügen
  --------- */
-
+/* Content Aufbau Styling */
 .wrapper {
     display: flex;
 }
@@ -201,6 +351,7 @@ Foodsaver Hinzufügen
     height: 100%;
 }
 
+/* Grid Titel Styling */
 .grid-title {
     height: 22px;
     display: flex;
@@ -209,6 +360,7 @@ Foodsaver Hinzufügen
     margin-bottom: 6px;
 }
 
+/* Input Felder Styling */
 .input {
     width: 100%;
     /* height: 46px; */
@@ -229,6 +381,7 @@ Foodsaver Hinzufügen
     outline: none;
 }
 
+/* Checkbox für Kühlchek Styling */
 .kuehlcheck {
     height: 100%;
     display: flex;
@@ -236,6 +389,7 @@ Foodsaver Hinzufügen
     align-items: end;
 }
 
+/* Kategorie Grid und Grid-Item Styling */
 .category-grid {
     /* handle items  */
     display: grid;
@@ -260,8 +414,16 @@ Foodsaver Hinzufügen
     gap: 8px;
 }
 
+.category-item p {
+    font-weight: 400;
+    font-size: 14px;
+    /* apple green */
+    color: #99BB44;
+}
+
+/* Kategorie Auswahl funktionalität via radio buttons */
 .radio-container.kategorie input {
-    height: 109px;
+    height: 118px;
     width: 141px;
     position: absolute;
     opacity: 0;
@@ -274,6 +436,7 @@ Foodsaver Hinzufügen
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
+/* Haltbarkeit Rangeslider Styling */
 .rangeslider {
     width: 100%;
     margin-top: 12px;
@@ -292,7 +455,7 @@ Foodsaver Hinzufügen
     -webkit-transition: .2s;
     transition: opacity .2s;
     /* background-color: #BEBEB9; */
-    background-image: url("./assets/range-thumb.svg");
+    background-image: url("../media/range-thumb.svg");
     margin: 0;
 }
 
@@ -327,7 +490,8 @@ Foodsaver Übersicht
     display: flex;
     flex-direction: column;
     padding: 32px;
-    height: 522px;
+    height: 100%;
+    width: 100%;
     overflow-y: scroll;
 }
 
@@ -340,6 +504,7 @@ Foodsaver Übersicht
     justify-content: center;
 }
 
+/* Tabelle Styling */
 .table {
     width: 100%;
 }
@@ -374,85 +539,8 @@ Foodsaver Übersicht
     grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
-.action-container div:first-child {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    /* text concrete  */
-    color: #BEBEB9;
-    font-weight: 600;
-}
-
-.action-wrap {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    /* text concrete  */
-    color: #BEBEB9;
-
-    width: 456px;
-}
-
-.action-wrap a:first-child {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 54px;
-    width: 100%;
-
-    /* border sand  */
-    box-sizing: border-box;
-    border: solid 2px #E5E5E3;
-    border-radius: 16px;
-    /* text apple  */
-    color: #99BB44;
-    font-weight: 600;
-    font-size: 18px;
-}
-
-.next-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 54px;
-    width: 100%;
-
-    /* apple-green */
-    background: #99BB44;
-    border: solid 0px #99BB44;
-    border-radius: 16px;
-    /* text apple  */
-    color: #FFFDFD;
-    font-weight: 600;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.final-button {
-    margin-top: 42px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 54px;
-    width: 100%;
-
-    /* apple-green */
-    background: #99BB44;
-    border: solid 0px #99BB44;
-    border-radius: 16px;
-    /* text apple  */
-    color: #FFFDFD;
-    font-weight: 600;
-    font-size: 18px;
-    cursor: pointer;
-}
-
 /* -------- Final Check ---------- */
-
+/* Erinnerung Textblock Styling */
 .reminder {
     display: flex;
     flex-direction: column;
@@ -472,6 +560,7 @@ Foodsaver Übersicht
     font-weight: 600;
 }
 
+/* Erinnerung Checkbox Styling */
 .check-item {
     display: flex;
     align-items: center;
@@ -502,478 +591,448 @@ Foodsaver Übersicht
 }
 
 
-
-
 /*-----------------------------------------------------Pop-ups Foodsaver-------------------------------------------*/
-/*------------------Allgemein-------------------------*/
 
-h3{
-font-family: 'Londrina Solid';
-font-style: normal;
-font-weight: 400;
-font-size: 28px;
-line-height: 33px;
-text-transform: uppercase;
-}
-	
-h5{
-font-family: 'Fira Sans';
-font-style: normal;
-font-weight: 600;
-font-size: 18px;
-line-height: 26px;
-/* identical to box height, or 144% */
-text-align: center;
-}
-	
-p {
-font-family: 'Fira Sans';
-font-style: normal;
-font-weight: 400;
-font-size: 18px;
-line-height: 26px;
-color: #1E212B;
-}
-	
-li {
-font-family: 'Fira Sans';
-font-style: normal;
-font-weight: 400;
-font-size: 18px;
-line-height: 26px;
-color: #1E212B;
-}
 
-ul {
-padding-inline-start: 0;
-}
-
-	
 /*-----------------------Buttons Fs-pop-ups-----------------------*/
 /*Weiter Button, z.B. "Ja, zur Übersicht" oder "Ja, zur Startseite" kommt vor in: fs-uebersicht-abbr, fs-hinzufuegen-abbr*/
 .next-button {
-display: flex;
-justify-content: center;
-align-items: center;
-		
-height: 54px;
-width: 228px;
-margin-right: 32px;
-	
-/* apple-green */
-background: #99BB44;
-border: solid 0px #99BB44;
-border-radius: 16px;
-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-/* text apple  */
-color: #FFFDFD;
-font-weight: 600;
-font-size: 18px;
-cursor: pointer;
-	
-text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-margin-top: 40px;
-margin-bottom: 32px;
-}	
+    height: 54px;
+    width: 228px;
+    margin-right: 32px;
+
+    /* apple-green */
+    background: #99BB44;
+    border: solid 0px #99BB44;
+    border-radius: 16px;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    /* text apple  */
+    color: #FFFDFD;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+
+    text-decoration: none;
+
+    margin-top: 40px;
+    margin-bottom: 32px;
+}
 
 /*Abbruch-/Exit-Button, z.B. "Nein, doch nicht" kommt vor in: fs-uebersicht-abbr, fs-hinzufuegen-abbr, fs-lm-loeschen*/
 .exit-button {
-display: flex;
-justify-content: center;
-align-items: center;
-	
-height: 54px;
-width: 228px;
-margin-left: 32px;
-	
-/* apple-green */
-border: 2px solid #E6E5E3;
-border-radius: 16px;
-/* text apple  */
-color: #FFFDFD;
-font-weight: 600;
-font-size: 18px;
-cursor: pointer;
-	
-text-decoration: none;
-color: #99BB44;
-	
-margin-top: 40px;
-margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 54px;
+    width: 228px;
+    margin-left: 32px;
+
+    /* apple-green */
+    border: 2px solid #E6E5E3;
+    border-radius: 16px;
+    /* text apple  */
+    color: #FFFDFD;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+
+    text-decoration: none;
+    color: #99BB44;
+
+    margin-top: 40px;
+    margin-bottom: 32px;
 }
-	
+
 /*Löschen-Button, kommt vor in fs-lm-loeschen*/
 .delete-button {
-display: flex;
-justify-content: center;
-align-items: center;
-		
-height: 54px;
-width: 228px;
-margin-right: 32px;
-	
-/* apple-green */
-background: #E97878;;
-border: solid 0px #E97878;;
-border-radius: 16px;
-/* box-shadow */
-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-border-radius: 16px;
-/* text apple */
-color: #FFFDFD;
-font-weight: 600;
-font-size: 18px;
-cursor: pointer;
-		
-text-decoration: none;
-	
-margin-top: 40px;
-margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 54px;
+    width: 228px;
+    margin-right: 32px;
+
+    /* apple-green */
+    background: #E97878;
+    ;
+    border: solid 0px #E97878;
+    ;
+    border-radius: 16px;
+    /* box-shadow */
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 16px;
+    /* text apple */
+    color: #FFFDFD;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+
+    text-decoration: none;
+
+    margin-top: 40px;
+    margin-bottom: 32px;
 }
-	
-	
+
+
 /*Bestätigen-Button, kommt vor in fs-nicht-erlaubte-lm, fs-lm-verstauen*/
 .allesklarButton {
-display: flex;
-justify-content: center;
-align-items: center;
-			
-width: 310px;
-height: 54px;
-			
-/* apple-green */
-background: #99BB44;
-border: solid 0px #99BB44;
-border-radius: 16px;
-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-/* text apple  */
-color: #FFFDFD;
-font-weight: 600;
-font-size: 18px;
-cursor: pointer;
-			
-text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 310px;
+    height: 54px;
+
+    /* apple-green */
+    background: #99BB44;
+    border: solid 0px #99BB44;
+    border-radius: 16px;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    /* text apple  */
+    color: #FFFDFD;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+
+    text-decoration: none;
 }
-	
-	
+
+
 /*------------------------Button Spacing-------------------->*/
 /*Button spacing wenn 2 Buttons unten rechts*/
 .button-spacing-popup {
-display: flex;
-flex-direction: row;
-gap: 16px;
-margin: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    margin: 0;
 }
-	
+
 /*Button spacing wenn 1 Button in der Mitte*/
 .buttoncenter {
-display: flex;
-justify-content: center;
-flex-direction: row;
-width: 100%;   
-margin-top: 40px;
-padding-bottom: 32px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 40px;
+    padding-bottom: 32px;
 }
-	
-	
+
+
 /*------------------------Pop ups Allgemein-------------------->*/
 /* Überschrift bei Pop-ups*/
 .popupheader {
-padding-left: 32px;
-padding-top: 32px;
-padding-bottom: 0;
-color: #1E212B;
-margin: 0;
+    padding-left: 32px;
+    padding-top: 32px;
+    padding-bottom: 0;
+    color: #1E212B;
+    margin: 0;
 }
-	
+
 /*Pop-up größe klein (genutz in fs-uebersicht-abbr, fs-hinzufuegen-abbr)*/
-.popupklein{
-display: flex;
-flex-direction: column;
-width: 536px;
-height: 256px;
-background: #FFFDFD;
-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-border-radius: 20px;
+.popupklein {
+    display: flex;
+    flex-direction: column;
+    width: 536px;
+    height: 256px;
+    background: #FFFDFD;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 20px;
 }
-	
-	
+
+
 /*Pop-up für fs-lm-loeschen*/
-.popup-lebensmittel-löschen{
-display: flex;
-flex-direction: column;
-width: 536px;
-height: 270px;
-background: #FFFDFD;
-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-border-radius: 20px;
+.popup-lebensmittel-löschen {
+    display: flex;
+    flex-direction: column;
+    width: 536px;
+    height: 270px;
+    background: #FFFDFD;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 20px;
 }
-	
+
 /*Einleitungstext auf Pop-up, genutz in fs-uebersicht-abbr, fs-hinzufügen-abbrechen, fs-nicht-erlaubte-lm, fs-lm-verstauen, fs-lm-löschen*/
 .textpopup {
-width: 424px;
-margin: 0;
-padding-left: 32px;
-padding-top: 16px;
-font-family: 'Fira Sans';
-font-style: normal;
-font-weight: 400;
-font-size: 18px;
-line-height: 26px;
-color: #1E212B;
+    width: 424px;
+    margin: 0;
+    padding-left: 32px;
+    padding-top: 16px;
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    color: #1E212B;
 }
-	
-	
+
+
 /*-----------------fs-lm-loeschen-----------------*/
 .lebensmittel-zum-löschen-popup {
-padding-left: 32px;
-display: flex;
-flex-direction: row;
-align-items: center;
-padding-top: 20px;
+    padding-left: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 20px;
 }
-	
+
 /*Lebensmitteltitel wird angezeit im Pop-up fs-lm-löschen*/
 .popupheaderklein {
-padding-left: 32px;
-padding-top: 0px;
-padding-bottom: 0;
-color: #1E212B;
-margin: 0;
+    padding-left: 32px;
+    padding-top: 0px;
+    padding-bottom: 0;
+    color: #1E212B;
+    margin: 0;
 }
-	
-	
+
+
 /*-------------------- Pop-up fs-nicht-erlaubte-lm --------------------*/
 /*pop-up*/
 .nichtErlaubteLebensmittel {
-width: 536px;
-height: auto;
-	
-/* white */
-background: #FFFDFD;
-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-border-radius: 20px;
+    width: 536px;
+    height: auto;
+
+    /* white */
+    background: #FFFDFD;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 20px;
 }
-	
+
 /*liste pop-up ul*/
 .listpopup {
-display: block; 
-list-style-type: disc; 
-padding: 0;
-margin-left: 20px;
-margin-top: 20px;
+    display: block;
+    list-style-type: disc;
+    padding: 0;
+    margin-left: 20px;
+    margin-top: 20px;
 }
-	
+
 /*text in li*/
-.listpopup > li {
-display: list-item;
-width: 441px;
-margin-left: 32px;
-padding: 0;
+.listpopup>li {
+    display: list-item;
+    width: 441px;
+    margin-left: 32px;
+    padding: 0;
 }
-	
+
 /*div das die ganze Tabelle beinhaltet -> ul und li dabie*/
-.help-popup{
-display: flex;
-flex-direction: row;
-align-items: center;
-padding-top: 32px;
-padding-left: 32px;
-	}
-	
+.help-popup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 32px;
+    padding-left: 32px;
+}
+
 /*Formation .popupheader und neue Ausrichtung wegen Icon neben Überschrift .header-help*/
-.popupheader.header-help{
-margin: 0cm;
-padding-left: 16px;
-padding-top: 0;
+.popupheader.header-help {
+    margin: 0cm;
+    padding-left: 16px;
+    padding-top: 0;
 }
-	
+
 /*Icon neben der Überschirft*/
-.help-popup > img {
-width: 32px;
-height: 32px;
+.help-popup>img {
+    width: 32px;
+    height: 32px;
 }
-	
+
 /*-------------------- Pop-up Lebensmittel richtig abgeben fs-hilfe --------------------*/
-		
+
 /*Überschrift der Schritte, grün*/
 .steps-hilfe {
-color: #99BB44;
-text-align: left;
-padding-top: 24px;
-padding-bottom: 8px;
-margin: 0;
+    color: #99BB44;
+    text-align: left;
+    padding-top: 24px;
+    padding-bottom: 8px;
+    margin: 0;
 }
 
 /*Pop-up*/
 .fs-hilfe {
-width: 927px;
-height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-/* white */
-background: #FFFDFD;
-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-border-radius: 20px;
-margin-top: 32%;
-margin-left: 50px;
+    width: 927px;
+    height: auto;
 
+    /* white */
+    background: #FFFDFD;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 20px;
 }
 
 /*div schrittliste-popup umfasst ul und li*/
 .schrittliste-popup {
-display: flex;
-flex-direction: row;
-gap: 16px;
-margin-left: 32px;
-margin-right: 24px;
-padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    margin-left: 32px;
+    margin-right: 24px;
+    padding-left: 0;
 }
 
 /*text in der Liste*/
-.listpopup > li { 
-width: 424px;
-margin-left: 32px;
+.listpopup>li {
+    width: 424px;
+    margin-left: 32px;
 }
 
-.listpopupHilfe > li { 
-width: 180px;
-margin-left: 21px;
+.listpopupHilfe>li {
+    width: 180px;
+    margin-left: 21px;
 
-/*Silbentrennung*/
--moz-hyphens: auto;
--o-hyphens: auto;
--webkit-hyphens: auto;
--ms-hyphens: auto;
-hyphens: auto;
+    /*Silbentrennung*/
+    -moz-hyphens: auto;
+    -o-hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
 }
 
 .icon-help-popup {
     margin-top: 24px;
 }
-	
-	/*---------------fs-uebersicht-bearbeiten-----------------*/
-	
-.popup-uebersicht-bearbeiten {
-display: flex;
-flex-direction: column;
-justify-items: center;
-justify-content: center;
 
-width: 173px;
-height: auto;
-	
-/* white */
-background: #FFFDFD;
-/* drop-shadow */
-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-border-radius: 8px;
+/*---------------fs-uebersicht-bearbeiten-----------------*/
+
+.popup-uebersicht-bearbeiten {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: center;
+
+    width: 173px;
+    height: auto;
+
+    /* white */
+    background: #FFFDFD;
+    /* drop-shadow */
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
 }
-	
-.trennlinie > img {
-width: 145px;
-margin: 0;
+
+.trennlinie>img {
+    width: 145px;
+    margin: 0;
 }
-	
+
 .trennlinie {
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
 }
-	
+
 .bearbeiten {
-display: flex;
-flex-direction: row;
-justify-items: center;
-align-items: center;
-margin-left: 8px;
-margin: 4px 0 4px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    margin-left: 8px;
+    margin: 4px 0 4px 8px;
 }
-	
-.bearbeiten > h5 {
-margin: 0;
-color: #99BB44;
+
+.bearbeiten>h5 {
+    margin: 0;
+    color: #99BB44;
 }
-	
+
 .loeschen {
-display: flex;
-flex-direction: row;
-justify-items: center;
-margin-bottom: 4px;
-align-items: center;
-margin: 4px 0 4px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    margin-bottom: 4px;
+    align-items: center;
+    margin: 4px 0 4px 8px;
 }
-	
-.loeschen > h5 {
-margin: 0;
-color: #E97878;
+
+.loeschen>h5 {
+    margin: 0;
+    color: #E97878;
 }
-	
+
 .close {
-width: 48px;
-height: 48px;
-	
-margin: 0 0 8px 0;
-	
-/* white */
-background: #FFFDFD;
-/* sand */
-border: 2px solid #E6E5E3;
-border-radius: 8px; 
+    width: 48px;
+    height: 48px;
+
+    margin: 0 0 8px 0;
+
+    /* white */
+    background: #FFFDFD;
+    /* sand */
+    border: 2px solid #E6E5E3;
+    border-radius: 8px;
 }
-	
-.close > img {
-margin: 15px;
+
+.close>img {
+    margin: 15px;
 }
-	
+
 .fs-uebersicht-bearbeiten {
-display: flex;
-flex-direction: column;
-align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
-	
+
 /*--------------------- fs-anmerkung und fs-anmerkung-allergene-----------------*/
-	
+
 /*Overlay für anmerkung und allergene*/
 .popup-anmerkung {
-display: flex;
-flex-direction: column;
-justify-items: center;
-justify-content: center;
-	
-width: 285px;
-height: auto;
-	
-/* white */
-background: #FFFDFD;
-/* drop-shadow */
-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: center;
+
+    width: 285px;
+    height: auto;
+
+    /* white */
+    background: #FFFDFD;
+    /* drop-shadow */
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
 }
-	
+
 /*Ausrichtung h5 und p in anmerkung und allergene*/
-.popup-anmerkung > h5 {
-margin: 20px 20px 4px 20px;
-text-align: left;
+.popup-anmerkung>h5 {
+    margin: 20px 20px 4px 20px;
+    text-align: left;
 }
-	
-.popup-anmerkung > p {
-margin: 0px 20px 20px 20px;
+
+.popup-anmerkung>p {
+    margin: 0px 20px 20px 20px;
 }
-	
-.popup-allergene > h5{
-text-align: left;
+
+.popup-allergene>h5 {
+    text-align: left;
 }
-	
+
 .header2 {
-margin: 32px 20px 4px 20px;
+    margin: 32px 20px 4px 20px;
 }
-	
+
 /*--------------------layout für wenn Pop-ups aufplopen--------------------*/
-#fsHilfe, #fs-hinzufuegen-abbr, #fs-uebersicht-abbr, #fs-nicht-erlaubte-lm, #fs-lm-verstauen, #fs-lm-loeschen, #fs-uebersicht-bearbeiten, #fs-anmerkung, #fs-anmerkung-allergene {
-display: none; 
-position: fixed;
-z-index: 1;
-width: 100%;
-height: 100%;
-/*background-color: rgba(0,0,0,0.25);*/
+#fsHilfe,
+#fs-hinzufuegen-abbr,
+#fs-uebersicht-abbr,
+#fs-nicht-erlaubte-lm,
+#fs-lm-verstauen,
+#fs-lm-loeschen,
+#fs-uebersicht-bearbeiten,
+#fs-anmerkung,
+#fs-anmerkung-allergene {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
 }
