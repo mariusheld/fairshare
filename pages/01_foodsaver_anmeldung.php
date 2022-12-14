@@ -427,29 +427,29 @@ $login = false;
 
     <!-- Anmeldemaske -->
     <main>
-        <form class="Anmeldeformular" action="02_foodsaver_start.php">
+        <form class="Anmeldeformular" method="POST" action="02_foodsaver_start.php">
             <div class="col-3">
-                <label for="">Vorname</label>
-                <input type="text">
+                <label id="labelvorname" for="">Vorname</label>
+                <input type="text" required id="vorname" name="vorname">
             </div>
-            <div class="col-3">
+            <div class="col-3" id="dummy">
                 <label for="">Nachname (optional)</label>
-                <input type="text">
+                <input type="text" name="nachname">
             </div>
             <div class="col-6">
-                <label for="">Deine Foodsaver-ID (optional)</label>
-                <input type="text">
+                <label for="">Deine Foodsaver-ID (optional /  6-stellige Nummer)</label>
+                <input type="text" name="foodID" pattern="[0-9]{6}" >
             </div>
             <div class="col-3">
                 <label for="">E-Mail</label>
-                <input type="email">
+                <input type="email" id="email" name="email">
             </div>
             <div class="col-3">
                 <label for="">Telefonnummer</label>
-                <input type="tel">
+                <input type="tel" id="tel" name="tel">
             </div>
 
-            <p class="col-6">Trage deine E-Mail oder deine Telefonnummer ein.</p>
+            <p id="telormail" class="col-6">Trage deine E-Mail oder deine Telefonnummer ein.</p>
 
             <button formaction="../index.php" class="button secondary col-3" id="breakupbtn">Abbrechen</button>
             <input type="submit" value="Weiter" class="button primary col-3" id="weiter">
@@ -458,6 +458,19 @@ $login = false;
 </body>
 <?php
 echo "<script>
+                //Funktion zur Formularüberprüfung
+                document.getElementById('weiter').onclick = function() {
+                    console.log(document.getElementById('email').value);
+                    if(document.getElementById('email').value == '' && document.getElementById('tel').value =='') {
+                        window.alert('you screwed up');
+                        document.getElementById('telormail').style.color = 'red';
+                    } else if(document.getElementyById('vorname').value != '') {
+                        window.location.href = '02_foodsaver_start.php';
+                    };
+                    if (document.getElementyById('vorname').value == ''){
+                        document.getElementyById('labelvorname').style.color = 'red';
+                    }
+                }
                 //Button Abbrechen leitet auf Startseite zurück
                 //document.getElementById('breakupbtn').onclick = function(){
                   //  window.location.href = '../index.php';
