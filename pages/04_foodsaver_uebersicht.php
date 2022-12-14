@@ -20,8 +20,6 @@ function consolelog($data, bool $quotes = false)
   }
 }
 
-consolelog($array);
-
 $kategorien = $_SESSION["kategorien"];
 
 // TEMPORÄR ABGESCHALTET
@@ -154,9 +152,9 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
       </div>
     </div>
     <div class="action-container">
+      <!-- OVERLAY Trigger Lebensmittel verstauen, id im div-tag setzen ist besser -->
       <div>
-        <!-- OVERLAY Trigger Lebensmittel verstauen -->
-        <a href="/"> <img src="../media/icon_help_mini.svg" alt="icon_help" /></a>
+        <img src="../media/icon_help_mini.svg" alt="icon_help" />
         <p>Verstauen von Lebensmitteln</p>
       </div>
       <div class="action-wrap">

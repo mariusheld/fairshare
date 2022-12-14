@@ -224,10 +224,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <?php echo $kategorieErr; ?>
                                     </span>
                                 </label>
-                                <!-- OVERLAY -->
-                                <a href="/">
-                                    <img height="22px" src="../media/icon_help_mini.svg" alt="icon_help" />
-                                </a>
+                                <!-- OVERLAY Trigger -->
+                                <div>
+                                    <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
+                                        alt="icon_help" />
+                                    <img class="open_icon hilfeKategorien" height="22px"
+                                        src="../media/icon_help_mini.svg" alt="icon_help" />
+                                </div>
+                                <!-- OVERLAY hilfeKategorien -->
+                                <div id="hilfeKategorien">
+                                    <div class="outline">
+                                        <p>Bei Lebensmitteln verschiedener Kategorien, bitte Sonstiges auswählen.</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="category-grid">
                                 <?php
@@ -247,9 +256,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                                 <div class="radio-container kategorie">
                                     <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php if (
-                                        isset($OKatKey) && $OKatKey == $row['OKatKey']
-                                    )
-                                        echo "checked"; ?> >
+                                        isset($OKatKey) && $OKatKey==$row['OKatKey'] ) echo "checked"; ?> >
                                     <div class="category-item">
                                         <?php echo "<img src='" . $iconList[$key] . "'>" ?>
                                         <p>
@@ -280,10 +287,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label>
                                     Menge (in kg)
                                 </label>
-                                <!-- OVERLAY -->
-                                <a href="/">
-                                    <img height="22px" src="../media/icon_help_mini.svg" alt="icon_help" />
-                                </a>
+                                <!-- OVERLAY Trigger-->
+                                <div>
+                                    <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
+                                        alt="icon_help" />
+                                    <img class="open_icon hilfeMenge" height="22px" src="../media/icon_help_mini.svg"
+                                        alt="icon_help" />
+                                </div>
+                                <!-- OVERLAY hilfeMenge -->
+                                <div id="hilfeMenge">
+                                    <div class="outline">
+                                        <p>Unter dem Waschbecken findest Du die Waage.</p>
+                                    </div>
+                                </div>
                                 <span class="error">*
                                     <?php echo $mengeErr; ?>
                                 </span>
@@ -323,10 +339,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label>
                                     Wo gerettet?
                                 </label>
-                                <!-- OVERLAY -->
-                                <a href="/">
-                                    <img height="22px" src="../media/icon_help_mini.svg" alt="icon_help" />
-                                </a>
                                 <span class="error">*
                                     <?php echo $herkunftErr; ?>
                                 </span>
@@ -339,10 +351,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label>
                                     Allergene und Inhaltsstoffe
                                 </label>
-                                <!-- OVERLAY -->
-                                <a href="/">
-                                    <img height="22px" src="../media/icon_help_mini.svg" alt="icon_help" />
-                                </a>
+                                <!-- OVERLAY Trigger-->
+                                <div>
+                                    <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
+                                        alt="icon_help" />
+                                    <img class="open_icon hilfeAllergene" height="22px"
+                                        src="../media/icon_help_mini.svg" alt="icon_help" />
+                                </div>
+                                <!-- OVERLAY hilfeAllergene -->
+                                <div id="hilfeAllergene">
+                                    <div class="outline">
+                                        <p>Bei Lebensmitteln mit Allergenen oder anderen kritischen Inhaltsstoffen,
+                                            diese bitte angeben.</p>
+                                    </div>
+                                </div>
                             </div>
                             <input name="allergene" class="input" type="text" value="<?php echo $allergene; ?>" />
                         </div>
@@ -358,9 +380,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
         </div>
         <div class="action-container">
-            <div>
-                <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
-                <a> <img id="helpGrey" src="../media/icon_help_mini.svg" alt="icon_help" /></a>
+            <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
+            <div id="helpGrey">
+                <img src="../media/icon_help_mini.svg" alt="icon_help" />
                 <p>Nicht erlaubte Lebensmittel</p>
             </div>
             <div class="action-wrap">
@@ -440,18 +462,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-    
+
     <!-- OVERLAY fsNichtErlaubteLm -->
     <div id="fsNichtErlaubteLm">
         <div class="nichtErlaubteLebensmittel">
-            <div class="help-popup">        
-                <img src="../media/help_grey.svg">
+            <div class="help-popup">
+                <img src="../media/help_grey.svg" alt="help_grey_icon">
                 <h3 class="popupheader header-help">NICHT ERLAUBTE LEBENSMITTEL</h3>
             </div>
             <p class="textpopup">Folgende Lebensmittel dürfen wir aus hygienetechnischen Gründen nicht annehmen:</p>
             <ul class="listpopup">
                 <li>
-                    Brühwurstprodukte nach Ablauf des MHDs (z.B. Wurststreifen für Salat, Wiener, Mortadella, Lyoner, Leberkäse)
+                    Brühwurstprodukte nach Ablauf des MHDs (z.B. Wurststreifen für Salat, Wiener, Mortadella, Lyoner,
+                    Leberkäse)
                 </li>
                 <li>
                     Keine Lebensmittel mit Verbrauchsdatum
@@ -470,17 +493,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </li>
             </ul>
             <div class="buttoncenter">
-                <a class="allesklarButton" href=""><h5>Alles klar</h5></a>
+                <a class="allesklarButton" href="">
+                    <h5>Alles klar</h5>
+                </a>
             </div>
         </div>
     </div>
 
-  <!-- Script Overlays -->
-  <?php
-  echo '<script type="text/javascript" src="../script/foodsaver.js">
+    <!-- Script Overlays -->
+    <?php
+    echo '<script type="text/javascript" src="../script/foodsaver.js">
         </script>
         ';
-  ?>s
+    ?>
 </body>
 
 </html>

@@ -150,6 +150,7 @@ header img:last-child {
 
 .action-container div:first-child {
     padding-left: 32px;
+    cursor: pointer;
 }
 
 .action-container div:last-child {
@@ -801,7 +802,7 @@ Foodsaver Übersicht
     background: #FFFDFD;
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
     border-radius: 20px;
-    
+
     /*Positionierung*/
     position: absolute;
     top: 50%;
@@ -861,7 +862,7 @@ Foodsaver Übersicht
 
 /*Pop-up*/
 .fs-hilfe {
-	/*Positionierung*/
+    /*Positionierung*/
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1024,11 +1025,38 @@ Foodsaver Übersicht
     margin: 32px 20px 4px 20px;
 }
 
+/*-------------------- Formular Helper Pop-ups--------------------*/
+.grid-title img {
+    position: absolute;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.outline {
+    /*Positionierung*/
+    position: absolute;
+    transform: translate(10%, -10%);
+
+    width: 220px;
+    padding: 20px;
+    /* white */
+    background: #FFFDFD;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 20px;
+}
+
+#hilfeKategorien,
+#hilfeMenge,
+#hilfeAllergene {
+    display: none;
+    z-index: 1;
+}
+
 /*--------------------layout für wenn Pop-ups aufplopen--------------------*/
 #fsHilfe,
 #fs-hinzufuegen-abbr,
 #fs-uebersicht-abbr,
-#fsNichtErlaubtelm,
+#fsNichtErlaubteLm,
 #fs-lm-verstauen,
 #fs-lm-loeschen,
 #fs-uebersicht-bearbeiten,
