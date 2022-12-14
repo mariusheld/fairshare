@@ -381,7 +381,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="action-container">
             <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
-            <div id="helpGrey">
+            <div id="openNichtErlaubteLm">
                 <img src="../media/icon_help_mini.svg" alt="icon_help" />
                 <p>Nicht erlaubte Lebensmittel</p>
             </div>

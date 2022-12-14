@@ -154,22 +154,20 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
     <div class="action-container">
       <!-- OVERLAY Trigger Lebensmittel verstauen, id im div-tag setzen ist besser -->
       <div>
-        <img src="../media/icon_help_mini.svg" alt="icon_help" />
+      <img id="openLmVerstauen" src="../media/icon_help_mini.svg" alt="icon_help" />
         <p>Verstauen von Lebensmitteln</p>
       </div>
       <div class="action-wrap">
         <!-- OVERLAY Trigger Hinzufügen Abbrechen -->
-        <a href="/">Abbrechen</a>
+        <a id="openUebersichtAbbr">Abbrechen</a>
         <!-- Datenbank schreiben und WEITERLEITUNG zum Final Check -->
         <a href='04_foodsaver_uebersicht.php?send=true' class="continue-button">Abschließen</a>
       </div>
     </div>
   </div>
 
-  <!-- ------------------ ALLE OVERLAYS ------------------ -->
-
-  <!-- OVERLAY fsHilfe -->
-  <div id="fsHilfe">
+<!-- OVERLAY fsHilfe -->
+<div id="fsHilfe">
     <div class="fs-hilfe">
       <h3 class="popupheader">LEBENSMITTEL RICHTIG ABGEBEN</h3>
       <div class="schrittliste-popup">
@@ -235,10 +233,54 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
       </div>
     </div>
   </div>
+  
+      <!-- Overlay fs-uebersicht-abbr -->
+      <div id="fsUebersichtAbbr">
+      <div class="popupklein">
+        <h3 class="popupheader">Zurück zur STARTSEITE</h3>
+        <p class="textpopup">Deine Angaben werden nicht gespeichert.
+            <br/>Bist du sicher, dass du zurück zur Startseite willst?</p>
+            <div class="button-spacing-popup">
+            <a class="exitButton" href=""><h5>Nein, doch nicht</h5></a>
+            <a class="nextButton" href=""><h5>Ja, zur Startseite</h5></a>
+            </div>  
+      </div>
+    </div>
+    
+    <!-- Overlay fs-lm-verstauen -->
+        <div id="fsLmVerstauen">
+        <div class="nichtErlaubteLebensmittel">
+            <div class="help-popup">        
+                <img src="../media/help_grey.svg">
+                <h3 class="popupheader header-help">LEBENSMITTEL verstauen</h3>
+            </div>
+            <p class="textpopup">Bitte beachte Folgendes beim Verstauen der Lebensmittel:</p>
+            <ul class="listpopup">
+                <li>
+                    Lebensmittel, die gekühlt werden müssen bitte unbedingt im Kühlschrank verstauen.
+                </li>
+                <li>
+                    Regel 2
+                </li>
+                <li>
+                    Regel 3
+                </li>
+                <li>
+                    Regel 4
+                </li>
+                <li>
+                    Regel 5
+                </li>
+            </ul>
+            <div class="buttoncenter">
+                <a class="allesklarButton" href=""><h5>Alles klar</h5></a>
+            </div>
+        </div>
+    </div>
 
   <!-- Script Overlay fs-hilfe -->
   <?php
-  echo '<script type="text/javascript" src="../script/foodsaver.js">
+  echo '<script type="text/javascript" src="../script/04.js">
         </script>
         ';
   ?>

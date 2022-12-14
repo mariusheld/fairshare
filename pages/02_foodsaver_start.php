@@ -76,7 +76,7 @@ $eintragFS->execute(array($foodID, $vorname, $nachname, $tel, $email));
     </div>
   </div>
 
-  <!-- ------------------ ALLE OVERLAYS ------------------ -->
+    <!-- ------------------ ALLE OVERLAYS ------------------ -->
 
   <!-- Overlay fs-hilfe -->
   <div id="fsHilfe">
@@ -145,8 +145,22 @@ $eintragFS->execute(array($foodID, $vorname, $nachname, $tel, $email));
       </div>
     </div>
   </div>
+  
+    <!-- Overlay fs-uebersicht-abbr -->
+      <div id="fsUebersichtAbbr">
+      <div class="popupklein">
+        <h3 class="popupheader">Zurück zur STARTSEITE</h3>
+        <p class="textpopup">Deine Angaben werden nicht gespeichert.
+            <br/>Bist du sicher, dass du zurück zur Startseite willst?</p>
+            <div class="button-spacing-popup">
+            <a class="exitButton" href=""><h5>Nein, doch nicht</h5></a>
+            <a class="nextButton" href=""><h5>Ja, zur Startseite</h5></a>
+            </div>  
+      </div>
+    </div>
+  
 
-  <!-- Script Overlay fs-hilfe -->
+  <!-- Script Overlays -->
   <?php
   echo '<script type="text/javascript" src="../script/foodsaver.js">
         </script>

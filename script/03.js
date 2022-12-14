@@ -32,7 +32,7 @@ exitHilfe.onclick = function () {
 var fsNichtErlaubteLm = document.getElementById("fsNichtErlaubteLm");
 
 //Das öffnet das Overlay
-var openNichtErlaubteLm = document.getElementById("helpGrey");
+var openNichtErlaubteLm = document.getElementById("openNichtErlaubteLm");
 
 //Das schließt das Overlay
 var exitNichtErlaubteLm = document.getElementsByClassName("allesklarButton")[0];
