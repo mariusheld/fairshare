@@ -7,6 +7,25 @@ if (session_status() == PHP_SESSION_NONE) {
 $_SESSION["kategorien"] = array();
 $_SESSION["array"] = array();
 $_SESSION["dbeintrag"] = array();
+
+// --- DATENBANKANBINDUNG FOODSAVER ANMELDUNG ---
+// Datenbank verbinden
+require_once("../dbconnect/dbconnect.inc.php");
+
+//Variablen aus POST holen
+$vorname = $_POST['vorname'];
+$nachname = $_POST['nachname'];
+$foodID = $_POST['foodID'];
+$email = $_POST['email'];
+$tel = $_POST['tel'];
+
+//Konsolen Kontrolle ob POST liefert
+echo "<script>console.log('{$vorname}', '{$nachname}', '{$foodID}', '{$email}', '{$tel}');</script>";
+
+//Insert in die Datenbank
+$eintragFS = $db->prepare("INSERT INTO Foodsaver (FoodsharingID, Vorname, Nachname, TelNr, Email)
+VALUES (?, ?, ?, ?, ?)"); //$foodID, $vorname, $nachname, $tel, $email
+$eintragFS->execute(array($foodID, $vorname, $nachname, $tel, $email));
 ?>
 
 
