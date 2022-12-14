@@ -21,11 +21,11 @@ exitHilfe.onclick = function () {
 };
 
 // Schließen wenn außerhalb des Pop-ups gedrückt wird
-window.onclick = function (event) {
-  if (event.target == fsHilfe) {
-    fsHilfe.style.display = "none";
-  }
-};
+//window.onclick = function (event) {
+  //if (event.target == fsHilfe) {
+    //fsHilfe.style.display = "none";
+  //}
+//};
 
 //----------------JavaScript für fs-nicht-erlaubte-lm Overlay, genutzt in 03-----------------------------//
 //Overlay auswählen
@@ -48,11 +48,11 @@ exitNichtErlaubteLm.onclick = function () {
 };
 
 // Schließen wenn außerhalb des Pop-ups gedrückt wird
-window.onclick = function (event) {
-  if (event.target == fsNichtErlaubteLm) {
-    fsNichtErlaubteLm.style.display = "none";
-  }
-};
+//window.onclick = function (event) {
+  //if (event.target == fsNichtErlaubteLm) {
+    //fsNichtErlaubteLm.style.display = "none";
+  //}
+//};
 
 //----------------JavaScript für Formular-InfoPopups, genutzt in 03-----------------------------//
 //List of OpenIcon HTML Elements
