@@ -452,25 +452,29 @@ $login = false;
             <p id="telormail" class="col-6">Trage deine E-Mail oder deine Telefonnummer ein.</p>
 
             <button formaction="../index.php" class="button secondary col-3" id="breakupbtn">Abbrechen</button>
-            <input type="submit" value="Weiter" class="button primary col-3" id="weiter">
+            <input type="submit" value="Weiter" class="button primary col-3" id="weiter" onclick="return formcheck()">
         </form>
     </main>
 </body>
 <?php
 echo "<script>
                 //Funktion zur Formularüberprüfung
-                document.getElementById('weiter').onclick = function() {
-                    console.log(document.getElementById('email').value);
-                    if(document.getElementById('email').value == '' && document.getElementById('tel').value =='') {
-                        window.alert('you screwed up');
-                        document.getElementById('telormail').style.color = 'red';
-                    } else if(document.getElementyById('vorname').value != '') {
-                        window.location.href = '02_foodsaver_start.php';
-                    };
-                    if (document.getElementyById('vorname').value == ''){
-                        document.getElementyById('labelvorname').style.color = 'red';
+                function formcheck(){
+                    var email = document.getElementById('email').value;
+                    var tel = document.getElementById('tel').value;
+                    var vorname = document.getElementById('vorname').value;
+                    console.log(email, tel, vorname);
+                    if (email == '' && tel ==  '' && vorname == '' ) {
+                        window.alert('nichts eingegeben');
+                        return false;
+                    } else if  (email == '' && tel ==  '') {
+                        window.alert('kontakt fehlt');
+                        return false;
+                    } else {
+                        return true;
                     }
                 }
+
                 //Button Abbrechen leitet auf Startseite zurück
                 //document.getElementById('breakupbtn').onclick = function(){
                   //  window.location.href = '../index.php';
