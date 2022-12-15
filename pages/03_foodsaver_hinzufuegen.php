@@ -427,7 +427,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="action-wrap">
                 <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
-                <a href="./02_foodsaver_start.php">Abbrechen</a>
+                <a id="openHinzufuegenAbbr">Abbrechen</a>
                 <input class="continue-button" type="submit" form="myform" value="Hinzufügen">
             </div>
         </div>
@@ -538,6 +538,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </a>
             </div>
         </div>
+    </div>
+
+    <!-- OVERLAY fsHinzufuegenAbbr -->
+    <div id="fsHinzufuegenAbbr">
+      <div class="popupklein">
+        <h3 class="popupheader">Zurück zur Übersicht</h3>
+        <p class="textpopup">Deine Angaben werden nicht gespeichert.
+            <br/>Bist du sicher, dass du zurück zur Übersicht willst?</p>
+            <div class="button-spacing-popup">
+            <a class="exit-button" href=""><h5>Nein, doch nicht</h5></a>
+            <a class="next-button" href=""><h5>Ja, zur Übersicht</h5></a>
+            </div>  
+      </div>
     </div>
 
     <!-- Script Overlays -->

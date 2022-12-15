@@ -70,7 +70,7 @@ $eintragFS->execute(array($foodID, $vorname, $nachname, $tel, $email));
       <div class="cancel-on-start">
         <div class="action-wrap font-fira">
           <!-- WEITERLEITUNG zum Startscreen -->
-          <a href="../index.php">Abbrechen</a>
+          <a id="openUebersichtAbbr">Abbrechen</a>
         </div>
       </div>
     </div>

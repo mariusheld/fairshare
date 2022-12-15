@@ -54,6 +54,36 @@ exitNichtErlaubteLm.onclick = function () {
   //}
 //};
 
+
+//----------------JavaScript für fs-hinzufuegen-abbr Overlay, genutzt in 03-----------------------------//
+//Overlay auswählen
+var fsHinzufuegenAbbr = document.getElementById("fsHinzufuegenAbbr");
+      
+//Das öffnet das Overlay
+var openHinzufuegenAbbr = document.getElementById("openHinzufuegenAbbr");
+      
+//Das schließt das Overlay
+var exitHinzufuegenAbbr = document.getElementsByClassName("exitButton")[0];
+
+//Leitet auf Startseite weiter
+var nextHinzufuegenAbbr = document.getElementsByClassName("nextButton")[0];
+      
+//Öffnen wenn icon geklickt wird
+openHinzufuegenAbbr.onclick = function() {
+fsHinzufuegenAbbr.style.display = "block";
+}
+      
+//Schließen nach Button drücken
+exitHinzufuegenAbbr.onclick = function() {
+fsHinzufuegenAbbr.style.display = "none";
+}
+
+//Weiterleitung zur Startseite
+nextHinzufuegenAbbr.onclick = function() {
+fsHinzufuegenAbbr.style.display = "none";
+window.open('https://forum.selfhtml.org/');
+}
+
 //----------------JavaScript für Formular-InfoPopups, genutzt in 03-----------------------------//
 //List of OpenIcon HTML Elements
 var openIcon = document.getElementsByClassName("open_icon");
