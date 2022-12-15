@@ -547,8 +547,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p class="textpopup">Deine Angaben werden nicht gespeichert.
             <br/>Bist du sicher, dass du zurück zur Übersicht willst?</p>
             <div class="button-spacing-popup">
-            <a class="exit-button" href=""><h5>Nein, doch nicht</h5></a>
-            <a class="next-button" href=""><h5>Ja, zur Übersicht</h5></a>
+            <a class="exitButton" href=""><h5>Nein, doch nicht</h5></a>
+            <a class="nextButton" href=""><h5>Ja, zur Übersicht</h5></a>
             </div>  
       </div>
     </div>

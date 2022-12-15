@@ -651,7 +651,7 @@ Foodsaver Übersicht
 
 /*-----------------------Buttons Fs-pop-ups-----------------------*/
 /*Weiter Button, z.B. "Ja, zur Übersicht" oder "Ja, zur Startseite" kommt vor in: fs-uebersicht-abbr, fs-hinzufuegen-abbr*/
-.next-button {
+.nextButton {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -678,7 +678,7 @@ Foodsaver Übersicht
 }
 
 /*Abbruch-/Exit-Button, z.B. "Nein, doch nicht" kommt vor in: fs-uebersicht-abbr, fs-hinzufuegen-abbr, fs-lm-loeschen*/
-.exit-button {
+.exitButton {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -704,7 +704,7 @@ Foodsaver Übersicht
 }
 
 /*Löschen-Button, kommt vor in fs-lm-loeschen*/
-.delete-button {
+.deleteButton {
     display: flex;
     justify-content: center;
     align-items: center;
