@@ -22,72 +22,70 @@ exitHilfe.onclick = function () {
 
 // Schließen wenn außerhalb des Pop-ups gedrückt wird
 //window.onclick = function (event) {
-  //if (event.target == fsHilfe) {
-    //fsHilfe.style.display = "none";
-  //}
+//if (event.target == fsHilfe) {
+//fsHilfe.style.display = "none";
+//}
 //};
 
 //----------------JavaScript für fs-uebersicht-abbr Overlay, genutzt in 02, 04 -----------------------------//
 //Overlay auswählen
 var fsUebersichtAbbr = document.getElementById("fsUebersichtAbbr");
-      
+
 //Das öffnet das Overlay
 var openUebersichtAbbr = document.getElementById("openUebersichtAbbr");
-      
+
 //Das schließt das Overlay
 var exitUebersichtAbbr = document.getElementsByClassName("exitButton")[0];
 
 //Leitet auf Startseite weiter
 var nextUebersichtAbbr = document.getElementsByClassName("nextButton")[0];
-      
+
 //Öffnen wenn icon geklickt wird
-openUebersichtAbbr.onclick = function() {
-fsUebersichtAbbr.style.display = "block";
-}
-      
+openUebersichtAbbr.onclick = function () {
+  fsUebersichtAbbr.style.display = "block";
+};
+
 //Schließen nach Button drücken
-exitUebersichtAbbr.onclick = function() {
-fsUebersichtAbbr.style.display = "none";
-}
+exitUebersichtAbbr.onclick = function () {
+  fsUebersichtAbbr.style.display = "none";
+};
 
 //Weiterleitung zur Startseite
-nextUebersichtAbbr.onclick = function() {
-fsUebersichtAbbr.style.display = "none";
-window.open(href="../index.php");
-}
+nextUebersichtAbbr.onclick = function () {
+  fsUebersichtAbbr.style.display = "none";
+  window.open(href = "../index.php");
+};
 
 // Schließen wenn außerhalb des Pop-ups gedrückt wird
 //window.onclick = function (event) {
-  //if (event.target == fsUebersichtAbbr) {
-    //fsUebersichtAbbr.style.display = "none";
-  //}
+//if (event.target == fsUebersichtAbbr) {
+//fsUebersichtAbbr.style.display = "none";
+//}
 //};
-
 
 //----------------JavaScript für fs-lm-verstauen Overlay, genutzt in 04 -----------------------------//
 //Overlay auswählen
 var fsLmVerstauen = document.getElementById("fsLmVerstauen");
-      
+
 //Das öffnet das Overlay
 var openLmVerstauen = document.getElementById("openLmVerstauen");
-      
+
 //Das schließt das Overlay
 var exitLmVerstauen = document.getElementsByClassName("allesklarButton")[0];
-      
-//Öffnen wenn icon geklickt wird
-openLmVerstauen.onclick = function() {
-fsLmVerstauen.style.display = "block";
-}
-      
-//Schließen nach Button drücken
-exitLmVerstauen.onclick = function() {
-fsLmVerstauen.style.display = "none";
-}
 
-      
+//Öffnen wenn icon geklickt wird
+openLmVerstauen.onclick = function () {
+  fsLmVerstauen.style.display = "block";
+};
+
+//Schließen nach Button drücken
+exitLmVerstauen.onclick = function () {
+  fsLmVerstauen.style.display = "none";
+};
+
 // Schließen wenn außerhalb des Pop-ups gedrückt wird
-//window.onclick = function (event) {
-  //if (event.target == fsLmVerstauen) {
-    //sLmVerstauen.style.display = "none";
-  //}
-//};
+// window.onclick = function (event) {
+//   if (event.target == fsLmVerstauen) {
+//     fsLmVerstauen.style.display = "none";
+//   }
+// };

@@ -138,7 +138,7 @@ session_destroy();
 
   <!-- Script Overlay fs-hilfe -->
   <?php
-  echo '<script type="text/javascript" src="../script/foodsaver.js">
+  echo '<script type="text/javascript" src="../script/05.js">
         </script>
         ';
   ?>

@@ -14,7 +14,7 @@ $OKatKey = 0;
 $kuehlcheck = false;
 $kiste = null;
 $menge = null;
-$herkunft = "";
+$HerkunftKey = "";
 $verbrDatum = date(0);
 $haltbarkeit = "";
 $comment = "";
@@ -35,8 +35,34 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 
 // ----------- QUERYS -----------
 
-$_SESSION["kategorien"] = $db_handle->runQuery("SELECT * FROM `oberkategorie`");
+$HerkunftQuery = "SELECT*FROM HerkunftsKategorie";
+$KategorieQuery = "SELECT*FROM OberKategorie";
+$conn = $db_handle->connectDB();
+$KategorieResult = mysqli_query($conn, $KategorieQuery);
+$HerkunftResult = mysqli_query($conn, $HerkunftQuery);
+
+while ($row = mysqli_fetch_assoc($KategorieResult)) {
+    $kategorieresultset[] = $row;
+}
+while ($row = mysqli_fetch_assoc($HerkunftResult)) {
+    $herkunftresultset[] = $row;
+}
+
+$_SESSION["kategorien"] = $kategorieresultset;
 $kategorien = $_SESSION["kategorien"];
+$herkunftkategorien = $herkunftresultset;
+
+function consolelog($data, bool $quotes = false)
+{
+    $output = json_encode($data);
+    if ($quotes) {
+        echo "<script>console.log('{$output}' );</script>";
+    } else {
+        echo "<script>console.log({$output} );</script>";
+    }
+}
+
+consolelog($herkunftresultset);
 
 // ------- FORM VALIDATION ----------
 function test_input($data)
@@ -77,10 +103,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $menge = test_input($_POST["menge"]);
     }
 
-    if (empty($_POST["herkunft"])) {
+    if (empty($_POST["HerkunftKey"])) {
         $herkunftErr = "Erforderlich";
     } else {
-        $herkunft = test_input($_POST["herkunft"]);
+        $HerkunftKey = test_input($_POST["HerkunftKey"]);
     }
 
     if (empty($_POST["OKatKey"])) {
@@ -121,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'Anmerkung' => $comment,
         'Kuehlware' => $kuehlcheck,
         'Gewicht' => $menge,
-        'Herkunft' => $herkunft,
+        'Herkunft' => $HerkunftKey,
         'OKatKey' => $OKatKey,
     ];
 
@@ -136,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Wenn es keine Errors gibt und keine Variablen leer sind, wird das Objekt zur Übersicht übertragen und man wird zur Überischt weitergeleitet
     if (
         empty($lmbezErr) && empty($kisteErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
-        !empty( /*$lebensmittel->OKatKey && */$lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)
+        !empty($lebensmittel->OKatKey && $lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)
     ) {
         $eintrag = (object) [
             'session_id' => session_id(),
@@ -147,6 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'Kistennr' => $box->BoxID,
             'Kuehlen' => $lebensmittel->Kuehlware,
             'Genießbar' => $lebensmittel->VerteilDeadline,
+            'Herkunft' => $lebensmittel->Herkunft,
             'Allergene' => $allergene,
             'Anmerkungen' => $comment
         ];
@@ -335,15 +362,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <!-- Herkunft INPUT -->
                         <div class="grid-col-6">
-                            <div class="grid-title">
-                                <label>
-                                    Wo gerettet?
-                                </label>
+                            <label class="grid-title">
+                                Wo gerettet?
                                 <span class="error">*
                                     <?php echo $herkunftErr; ?>
                                 </span>
+                            </label>
+                            <div class="haltbarkeit-grid">
+                            <?php
+                                // LOOP TILL END OF DATA
+                                foreach ($herkunftkategorien as $key => $row) {
+                                ?>
+                                <div class="radio-container haltbarkeit">
+                                    <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>" <?php if (
+                                        isset($HerkunftKey) && $HerkunftKey==$row['HerkunftKey'] ) echo "checked"; ?>>
+                                    <div class="haltbarkeit-item">
+                                        <p><?php echo $row['HerkunftName'] ?></p>
+                                    </div>
+                                </div>
+                                <?php
+                                }
+                                ?>
                             </div>
-                            <input name="herkunft" class="input" type="text" value="<?php echo $herkunft; ?>" />
                         </div>
                         <!-- Allergene INPUT  -->
                         <div class="grid-col-6">
@@ -373,7 +413,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label class="grid-title">
                                 Anmerkungen
                             </label>
-                            <textarea name="comment" rows="2" class="input"><?php echo $comment; ?></textarea>
+                            <textarea name="comment" rows="1" class="input"><?php echo $comment; ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -502,7 +542,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Script Overlays -->
     <?php
-    echo '<script type="text/javascript" src="../script/foodsaver.js">
+    echo '<script type="text/javascript" src="../script/03.js">
         </script>
         ';
     ?>

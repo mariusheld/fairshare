@@ -3,6 +3,7 @@
 session_name("adminbereich");
 session_start();
 $_SESSION['login'] = "";
+$_SESSION['password'] = "";
 $login = $_SESSION['login'];
 
 //Datenbankverbindung aufbauen

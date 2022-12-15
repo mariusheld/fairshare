@@ -37,6 +37,7 @@ $login = false;
             margin: 0;
             padding: 0;
             font-family: Fira Sans;
+            text-decoration: none;
         }
 
         /* CSS für den Header */
@@ -451,7 +452,7 @@ $login = false;
 
             <p id="telormail" class="col-6">Trage deine E-Mail oder deine Telefonnummer ein.</p>
 
-            <button formaction="../index.php" class="button secondary col-3" id="breakupbtn">Abbrechen</button>
+            <a href="../index.php" class="button secondary col-3" id="breakupbtn">Abbrechen</a>
             <input type="submit" value="Weiter" class="button primary col-3" id="weiter" onclick="return formcheck()">
         </form>
     </main>

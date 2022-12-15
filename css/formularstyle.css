@@ -114,7 +114,7 @@ header img:last-child {
     /* positioning */
     position: relative;
     flex: 1;
-    height: 100%;
+    height: 50%;
     width: 100%;
     margin: auto;
     background: #FFFDFD;
@@ -155,6 +155,7 @@ header img:last-child {
 
 .action-container div:last-child {
     padding-right: 32px;
+    cursor: pointer;
 }
 
 /* Gridsystem definieren */
@@ -334,7 +335,6 @@ Foodsaver Hinzufügen
 }
 
 .grid-spacing {
-    height: 100%;
     display: flex;
     gap: 48px;
 }
@@ -346,25 +346,25 @@ Foodsaver Hinzufügen
 
     /* handle items  */
     display: grid;
-    justify-content: center;
+    align-items: start;
     grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 24px 16px;
-    height: 100%;
+    height: 50%;
 }
 
 /* Grid Titel Styling */
 .grid-title {
-    height: 22px;
+    height: 17px;
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 /* Input Felder Styling */
 .input {
     width: 100%;
-    /* height: 46px; */
+    height: 45px;
     /* alabaster */
     background: #F2F1F0;
     border: none;
@@ -374,7 +374,7 @@ Foodsaver Hinzufügen
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     /* onyx */
     color: #1E212B;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 500;
 }
 
@@ -386,7 +386,6 @@ Foodsaver Hinzufügen
 .kuehlcheck {
     height: 100%;
     display: flex;
-    justify-content: center;
     align-items: end;
 }
 
@@ -424,8 +423,8 @@ Foodsaver Hinzufügen
 
 /* Kategorie Auswahl funktionalität via radio buttons */
 .radio-container.kategorie input {
-    height: 118px;
-    width: 141px;
+    height: 118px !important;
+    width: 141px !important;
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -433,6 +432,61 @@ Foodsaver Hinzufügen
 }
 
 .radio-container input:checked~.category-item {
+    border: solid 2px #99BB44;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.radio-container.kategorie input {
+    height: 125px;
+    width: 155px;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+}
+
+.radio-container input:checked~.category-item {
+    border: solid 2px #99BB44;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Herkunft Grid und Grid-Item Styling */
+
+.haltbarkeit-grid {
+    /* handle items  */
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.haltbarkeit-item {
+    margin: 0;
+    /* onyx */
+    color: #1E212B;
+    /* sand  */
+    border: solid 2px #E5E5E3;
+    border-radius: 8px;
+    padding: 8px 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.radio-container.haltbarkeit input {
+    height: 46px;
+    width: 141px;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+}
+
+.radio-container input:checked~.haltbarkeit-item {
     border: solid 2px #99BB44;
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
@@ -712,6 +766,7 @@ Foodsaver Übersicht
     flex-direction: row;
     gap: 16px;
     margin: 0;
+    justify-content: center;
 }
 
 /*Button spacing wenn 1 Button in der Mitte*/
@@ -744,6 +799,12 @@ Foodsaver Übersicht
     background: #FFFDFD;
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
     border-radius: 20px;
+
+    /*Positionierung*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 
@@ -1055,9 +1116,9 @@ Foodsaver Übersicht
 /*--------------------layout für wenn Pop-ups aufplopen--------------------*/
 #fsHilfe,
 #fs-hinzufuegen-abbr,
-#fs-uebersicht-abbr,
+#fsUebersichtAbbr,
 #fsNichtErlaubteLm,
-#fs-lm-verstauen,
+#fsLmVerstauen,
 #fs-lm-loeschen,
 #fs-uebersicht-bearbeiten,
 #fs-anmerkung,
@@ -1066,7 +1127,7 @@ Foodsaver Übersicht
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 3;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.25);

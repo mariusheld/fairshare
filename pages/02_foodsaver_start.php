@@ -162,7 +162,7 @@ $eintragFS->execute(array($foodID, $vorname, $nachname, $tel, $email));
 
   <!-- Script Overlays -->
   <?php
-  echo '<script type="text/javascript" src="../script/foodsaver.js">
+  echo '<script type="text/javascript" src="../script/02.js">
         </script>
         ';
   ?>
