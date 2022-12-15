@@ -81,7 +81,7 @@ fsHinzufuegenAbbr.style.display = "none";
 //Weiterleitung zur Startseite
 nextHinzufuegenAbbr.onclick = function() {
 fsHinzufuegenAbbr.style.display = "none";
-window.open('https://forum.selfhtml.org/');
+window.open(href = '../pages/foodsaver_start.php');
 }
 
 //----------------JavaScript für Formular-InfoPopups, genutzt in 03-----------------------------//
