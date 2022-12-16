@@ -12,7 +12,8 @@ body {
 	background-color: white;
 	color: black;
 	font-size: 13pt;
-	font-style: normal
+	font-style: normal;
+	height: 100%;
 }
 
 button {
@@ -419,10 +420,20 @@ p.logouttext {
 
 footer {
 	position: absolute;
-	bottom: 0;
+	bottom: 0px;
 	width: 100%;
 	height: 96px;
 }
+
+div.pagewrap {
+	min-height: 100vh;
+	position: relative;
+}
+
+div.seiteninhalt {
+	padding-bottom: 96px;
+}
+
 
 div.footerbg {
 	height: 94px;
