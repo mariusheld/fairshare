@@ -59,7 +59,7 @@ $_SESSION['password'] = array();
     }
     //
 //Zugang zur Lagerübersicht
-    if ($passwort == "raupe") {
+    if ($passwort == "raupe" or $_GET['set']== true) {
     ?>
     <div class="pagewrap">
         <!--Logout Overlay-->
@@ -144,9 +144,9 @@ $_SESSION['password'] = array();
         <!--Seiteninhalt-->
         <footer>
             <div class="footerbg">
-                <button class="refreshbutton" id="refreshdash">
+              <a href="admin.php?set=true"><button class="refreshbutton" id="refreshdash">
                     Liste Aktualisieren
-                </button>
+                </button></a>
             </div>
         </footer>
     </div>
