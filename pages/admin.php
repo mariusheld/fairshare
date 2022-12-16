@@ -188,6 +188,29 @@ $_SESSION['password'] = array();
         </div>
     </div>
 
+    <!-- Popup "Lebensmittel fairteilen" -->
+    <div class="overlay" id="popup_lebensmittel_fairteilen">
+        <div class="popup-wrapper">
+            <div class="popup active">
+                <div class="popup-header">
+                    <img src="../media/kategorien/icon_backwaren-suess.svg" alt="Backwaren Süß">
+                    <h5>Karottenkuchen</h5>
+                </div>
+                <p>Welche Menge des Lebensmittels möchtest du als fairteilt markieren?</p>
+        
+                <form action="" class="popup-form">
+                    <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
+                    <input type="number" id="fairteil-menge">
+                    <div id="bestand">/ 1 kg</div>
+                </form>
+                
+
+                <button class="secondary-btn" id="fairteilen-abbrechen">Abbrechen</button>
+                <button class="primary-btn" id="fairteilen">Fairteilen</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Script zum Öffnen der Pop-Ups -->
     <script type="text/javascript" src="../script/open_popups_mitarbeiter.js"></script>
 

@@ -45,3 +45,19 @@ function open_close_options(options_btn) {
     }
 }
 
+// Pop-Up: "Lebensmittel fairteilen"-------------------------------------------------------------------
+
+function open_lebensmittel_fairteilen(fairteilen_btn) {
+    document.getElementById('popup_lebensmittel_fairteilen').style.display = 'flex';
+    open_close_options(fairteilen_btn.parentElement.previousElementSibling);
+}
+
+document.getElementById('fairteilen-abbrechen').addEventListener('click', () => {
+    document.getElementById('popup_lebensmittel_fairteilen').style.display = 'none';
+});
+
+document.getElementById('fairteilen').addEventListener('click', () => {
+    document.getElementById('popup_lebensmittel_fairteilen').style.display = 'none';
+    document.getElementById('popup_lebensmittel_fairteilt').style.display = 'flex';
+});
+
