@@ -12,6 +12,7 @@ function close_NichtGenießbar() {
     document.getElementById('popup_nicht_genießbar').style.display = 'none';
 }
 
+
 // Pop-Up: "Keine Boxen"-------------------------------------------------------------------
 
 document.getElementById('open_keine_boxen').addEventListener('click', open_KeineBoxen);
@@ -25,4 +26,22 @@ function close_KeineBoxen() {
     document.getElementById('popup_keine_boxen').style.display = 'none';
 }
 
+
+// Kontextmenü
+
+let visible = false;
+
+
+
+function open_close_options(options_btn) {
+    if (visible == false) {
+        options_btn.src = '../media/cross.svg';
+        options_btn.nextElementSibling.style.display = 'block';
+        visible = true;
+    } else {
+        options_btn.src = '../media/edit_icon.svg';
+        options_btn.nextElementSibling.style.display = 'none';
+        visible = false;
+    }
+}
 

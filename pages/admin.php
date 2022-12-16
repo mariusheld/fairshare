@@ -135,7 +135,15 @@ $_SESSION['password'] = array();
             } else {
                 echo "<td style='text-align: right'><img id='bubble' style='visibility:hidden' alt='dots' src='../media/comment_icon.svg' width='48px;'/></td>";
             }
-            echo "<td style='text-align: right'><img alt='dots' src='../media/edit_icon.svg' width='48px;'/></td>";
+            echo 
+            "<td style='text-align: right; position: relative'>
+                <img onclick='open_close_options(this)' alt='dots' src='../media/edit_icon.svg' width='48px;'/>
+                <ul class='options'>
+                    <li><img src='../media/eye.svg' alt=''><span>Ansehen</span></li>
+                    <li onclick='open_lebensmittel_fairteilen(this)'><img src='../media/arrows.svg' alt=''><span>Fairteilen</span></li>
+                    <li><img src='../media/trashbin.svg' alt=''><span>Entsorgen</span></li>
+                </ul>
+            </td>";
             echo "</tr>\n";
         }
                 ?>
