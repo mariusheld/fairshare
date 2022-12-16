@@ -326,7 +326,7 @@ $_SESSION['password'] = array();
     }
     //Keine Login-Daten vorhanden oder falsche Daten
     if ($passwort != "raupe" and $passwort != "raupenkönigin") {
-        echo "<script>window.location.href = 'https://mars.iuk.hdm-stuttgart.de/~mh341/foodsaver/index.php'</script>";
+        echo "<script>window.location.href = '../index.php'</script>";
         $login = true;
         $_SESSION['login'] = $login;
     }
