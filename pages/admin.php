@@ -36,6 +36,7 @@ $_SESSION['password'] = array();
     <meta name="author" content="Marius Held" />
     <title>Abgabeübersicht</title>
     <link rel="stylesheet" href="../css/adminstyle.css" />
+    <link rel="stylesheet" href="../css/popup_styles.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&family=Londrina+Solid:wght@300;400&display=swap');
     </style>
@@ -158,6 +159,38 @@ $_SESSION['password'] = array();
         </footer>
     </div>
     </div>
+
+    <!-- Nur zu Testzwecken, später entfernen -->
+    <button id="open_nicht_genießbar">Nicht genießbar</button>
+    <button id="open_keine_boxen">Keine Boxen</button>
+
+    <!-- Popup "Nicht genießbar" -->
+    <div class="overlay" id="popup_nicht_genießbar">
+        <div class="popup-wrapper">
+            <div class="popup active">
+                <h3>HOPPLA!</h3>
+                <p>Das Produkt <span class="marked-red">Laugenbrezeln (Kiste 4)</span> ist vermutlich nicht mehr genießbar. Bitte sieh dir das Lebensmittel im Lager an und entsorge oder verlängere es gegebenenfalls.</p>
+                <button id="close_nicht_genießbar" class="secondary-btn">Produkt behalten</button>
+                <button class="primary-btn">Produkt prüfen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup "Keine Boxen" -->
+    <div class="overlay" id="popup_keine_boxen">
+        <div class="popup-wrapper">
+            <div class="popup active">
+                <h3>HOPPLA!</h3>
+                <p>Jemand hat gerade die letzte Box genommen. <br> Sieh nach und sorge für Nachschub.</p>
+                <button id="close_keine_boxen" class="secondary-btn">Später erinnern</button>
+                <button class="primary-btn">Boxen nachgefüllt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script zum Öffnen der Pop-Ups -->
+    <script type="text/javascript" src="../script/open_popups_mitarbeiter.js"></script>
+
     <?php
         echo "
          <script>
