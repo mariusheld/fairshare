@@ -7,8 +7,6 @@ $db_handle = new DBController();
 session_start();
 
 // ----------- VARIABLES ----------
-
-$LMkey = session_create_id();
 $LMBez = "";
 $OKatKey = 0;
 $kuehlcheck = false;
@@ -34,11 +32,12 @@ $icon_trockenprodukte_url = '../media/kategorien/icon_trockenprodukte.svg';
 $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 
 // ----------- QUERYS -----------
-
-$HerkunftQuery = "SELECT*FROM HerkunftsKategorie";
-$KategorieQuery = "SELECT*FROM OberKategorie";
 $conn = $db_handle->connectDB();
+$FSkeyQuery = "SELECT FSkey FROM Foodsaver ORDER BY FSkey DESC LIMIT 1";
+$FSkeyResult = mysqli_query($conn, $FSkeyQuery);
+$KategorieQuery = "SELECT*FROM OberKategorie";
 $KategorieResult = mysqli_query($conn, $KategorieQuery);
+$HerkunftQuery = "SELECT*FROM HerkunftsKategorie";
 $HerkunftResult = mysqli_query($conn, $HerkunftQuery);
 
 while ($row = mysqli_fetch_assoc($KategorieResult)) {
@@ -47,9 +46,17 @@ while ($row = mysqli_fetch_assoc($KategorieResult)) {
 while ($row = mysqli_fetch_assoc($HerkunftResult)) {
     $herkunftresultset[] = $row;
 }
+while ($row = mysqli_fetch_assoc($FSkeyResult)) {
+    $latestFSkey[] = $row;
+}
 
-$_SESSION["kategorien"] = $kategorieresultset;
-$kategorien = $_SESSION["kategorien"];
+// SET LMKEY -------------
+$LMkey = $_SESSION["latestLMkey"] + 1;
+// SET FSKEY -------------
+$FSkey = $latestFSkey[0]['FSkey'];
+// SET KATEGORIEN -------------
+$kategorien = $kategorieresultset;
+// SET HERKUNFTSKATEGORIEN -------------
 $herkunftkategorien = $herkunftresultset;
 
 function consolelog($data, bool $quotes = false)
@@ -62,7 +69,7 @@ function consolelog($data, bool $quotes = false)
     }
 }
 
-consolelog($herkunftresultset);
+consolelog($LMkey);
 
 // ------- FORM VALIDATION ----------
 function test_input($data)
@@ -130,32 +137,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // ---- CREATE OBJECTS -------
+    $unkritisch = date("Y-m-d", time() + 1000000);
+    $one = date("Y-m-d", time() + 86400);
+    $two = date("Y-m-d", time() + 172800);
+    $three = date("Y-m-d", time() + 259200);
+    $four = date("Y-m-d", time() + 345600);
+    $five = date("Y-m-d", time() + 432000);
+    $six = date("Y-m-d", time() + 518400);
+    $week = date("Y-m-d", time() + 604800);
 
+    $daten = ["", $unkritisch, $one, $two, $three, $four, $five, $six, $week];
     $stufen = ["", "unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
     for ($i = 0; $i < count($stufen); $i++) {
         if ($i == $haltbarkeit) {
             $haltbarkeit = $stufen[$i];
+            $VerteilDeadline = $daten[$i];
         }
     }
 
     // Objekt, dass die Daten für die Übersicht speichert
+    $lieferung = (object) [
+        'FSkey' => $FSkey,
+        'LMkey' => $LMkey,
+        'LieferDatum' => date('Y-m-d'),
+    ];
+
     $lebensmittel = (object) [
-        // 'session_id' => session_id(),
         'LMkey' => $LMkey,
         'Bezeichnung' => $LMBez,
-        'VerteilDeadline' => $haltbarkeit,
+        'VerteilDeadline' => $VerteilDeadline,
         'Anmerkung' => $comment,
         'Kuehlware' => $kuehlcheck,
         'Gewicht' => $menge,
-        'Herkunft' => $HerkunftKey,
         'OKatKey' => $OKatKey,
+        'Herkunft' => $HerkunftKey,
     ];
 
     $box = (object) [
-        'session_id' => session_id(),
         'BoxID' => $kiste,
         'LMkey' => $LMkey,
+        'BStatusKey' => 5,
     ];
+
+    $dbeintrag = array($lieferung, $lebensmittel, $box);
 
 
     // ----------- add Object to Uebersicht --------
@@ -172,13 +196,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'Menge' => $lebensmittel->Gewicht,
             'Kistennr' => $box->BoxID,
             'Kuehlen' => $lebensmittel->Kuehlware,
-            'Genießbar' => $lebensmittel->VerteilDeadline,
+            'Genießbar' => $haltbarkeit,
             'Herkunft' => $lebensmittel->Herkunft,
             'Allergene' => $allergene,
             'Anmerkungen' => $comment
         ];
         array_push($_SESSION["array"], $eintrag);
-        array_push($_SESSION["dbeintrag"], $lebensmittel);
+        array_push($_SESSION["dbeintragArray"], $dbeintrag);
+        $_SESSION["latestLMkey"] = $_SESSION["latestLMkey"] + 1;
         header("Location: ./04_foodsaver_uebersicht.php");
         exit();
     }
@@ -369,15 +394,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </span>
                             </label>
                             <div class="haltbarkeit-grid">
-                            <?php
+                                <?php
                                 // LOOP TILL END OF DATA
                                 foreach ($herkunftkategorien as $key => $row) {
                                 ?>
                                 <div class="radio-container haltbarkeit">
-                                    <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>" <?php if (
-                                        isset($HerkunftKey) && $HerkunftKey==$row['HerkunftKey'] ) echo "checked"; ?>>
+                                    <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
+                                        <?php if (isset($HerkunftKey) && $HerkunftKey==$row['HerkunftKey']) echo
+                                        "checked"; ?>>
                                     <div class="haltbarkeit-item">
-                                        <p><?php echo $row['HerkunftName'] ?></p>
+                                        <p>
+                                            <?php echo $row['HerkunftName'] ?>
+                                        </p>
                                     </div>
                                 </div>
                                 <?php
@@ -542,15 +570,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- OVERLAY fsHinzufuegenAbbr -->
     <div id="fsHinzufuegenAbbr">
-      <div class="popupklein">
-        <h3 class="popupheader">Zurück zur Übersicht</h3>
-        <p class="textpopup">Deine Angaben werden nicht gespeichert.
-            <br/>Bist du sicher, dass du zurück zur Übersicht willst?</p>
+        <div class="popupklein">
+            <h3 class="popupheader">Zurück zur Übersicht</h3>
+            <p class="textpopup">Deine Angaben werden nicht gespeichert.
+                <br />Bist du sicher, dass du zurück zur Übersicht willst?
+            </p>
             <div class="button-spacing-popup">
-            <a class="exitButton" href=""><h5>Nein, doch nicht</h5></a>
-            <a class="nextButton" href=""><h5>Ja, zur Übersicht</h5></a>
-            </div>  
-      </div>
+                <a class="exitButton" href="">
+                    <h5>Nein, doch nicht</h5>
+                </a>
+                <a class="nextButton" href="../index.php">
+                    <h5>Ja, zur Übersicht</h5>
+                </a>
+            </div>
+        </div>
     </div>
 
     <!-- Script Overlays -->

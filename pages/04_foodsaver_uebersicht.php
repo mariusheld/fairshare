@@ -1,15 +1,14 @@
 <!-- ----------- PHP ---------- -->
 <?php
 session_start();
-// TEMPORÄR ABGESCHALTET
-// require_once("../scripts/dbcontroller.php");
-// $db_handle = new DBController();
-// $connection = $db_handle->connectDB();
+// Datenbankverbindung
+require_once("../dbconnect/dbconnect.inc.php");
+$db_handle = new DBController();
+$conn = $db_handle->connectDB();
 
 // Session Objekt wird lokal gespeichert
 $array = json_decode(json_encode($_SESSION["array"]), true);
-$dbeintrag = json_decode(json_encode($_SESSION["dbeintrag"]), true);
-
+$dbeintragArray = json_decode(json_encode($_SESSION["dbeintragArray"]), true);
 function consolelog($data, bool $quotes = false)
 {
   $output = json_encode($data);
@@ -20,23 +19,53 @@ function consolelog($data, bool $quotes = false)
   }
 }
 
-$kategorien = $_SESSION["kategorien"];
+consolelog($dbeintragArray);
 
-// TEMPORÄR ABGESCHALTET
-// Vollständiger Array mit allen Einträgen wird an die Datenbank übertragen. Hier kommen die Querys hin 
-// function sendList($dbeintrag, $connection) {
-//   foreach ($dbeintrag as $key => $value) {
-//     $LMbez = $value['Bezeichnung'];
-//     $LMHer = $value['Herkunft'];
-//     mysqli_select_db($connection, "raupeimmersatt");
-//     $query = "INSERT INTO `lebensmittel`(`Bezeichnung`,`Herkunft`) VALUES ('$LMbez','$LMHer') ";
-//     mysqli_query($connection, $query);
-//     header("Location: ./05_foodsaver_finalcheck.php");
-//   };
-// }
+// Vollständiger Array mit allen Einträgen wird an die Datenbank übertragen. -------------------
+function sendList($dbeintragArray, $conn)
+{
+  mysqli_select_db($conn, "u-projraupe");
+  foreach ($dbeintragArray as $dbEintrag) {
+    // LIEFERUNG QUERY
+    $lieferungEintrag = $dbEintrag[0];
+
+    $FSkey = $lieferungEintrag['FSkey'];
+    $LMkeyLieferung = $lieferungEintrag['LMkey'];
+    $LieferDatum = $lieferungEintrag['LieferDatum'];
+
+    $lieferungQuery = "INSERT INTO `Lieferung` (`FSkey`, `LMkey`, `LieferDatum`) VALUES ('$FSkey', '$LMkeyLieferung', '$LieferDatum')";
+    mysqli_query($conn, $lieferungQuery);
+
+    // LEBENSMITTEL QUERY
+    $lebensmittelEintrag = $dbEintrag[1];
+
+    $LMkey = $lebensmittelEintrag['LMkey'];
+    $Bezeichnung = $lebensmittelEintrag['Bezeichnung'];
+    $VerteilDeadline = $lebensmittelEintrag['VerteilDeadline'];
+    $Anmerkung = $lebensmittelEintrag['Anmerkung'];
+    $Kuehlware = $lebensmittelEintrag['Kuehlware'];
+    $Gewicht = $lebensmittelEintrag['Gewicht'];
+    $OKatKey = $lebensmittelEintrag['OKatKey'];
+    $HerkunftKey = $lebensmittelEintrag['Herkunft'];
+
+    $lebensmittelQuery = "INSERT INTO `Lebensmittel` (`LMkey`, `Bezeichnung`, `VerteilDeadline`, `Anmerkung`, `Kuehlware`, `Gewicht`, `OKatKey`, `HerkunftKey`) VALUES ('$LMkey', '$Bezeichnung', '$VerteilDeadline', '$Anmerkung', '$Kuehlware', '$Gewicht', '$OKatKey', '$HerkunftKey')";
+    mysqli_query($conn, $lebensmittelQuery);
+
+    // BOX QUERY
+    $boxEintrag = $dbEintrag[2];
+
+    $BoxID = $boxEintrag['BoxID'];
+    $LMkeyBox = $boxEintrag['LMkey'];
+    $BStatusKey = $boxEintrag['BStatusKey'];
+
+    $boxQuery = "UPDATE `Box` SET `Box`.`LMkey` = '$LMkeyBox', `Box`.`BStatusKey` = '$BStatusKey' WHERE `Box`.`BoxID` = '$BoxID'";
+    mysqli_query($conn, $boxQuery);
+  }
+  ;
+}
 // Datenbank Query Trigger
 if (isset($_GET['send'])) {
-  // sendList($dbeintrag, $connection);
+  sendList($dbeintragArray, $conn);
   header("Location: ./05_foodsaver_finalcheck.php");
 }
 
@@ -61,7 +90,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
   <title>
     FAIRSHARE
   </title>
-  <!-- Fonts  -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -166,6 +195,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
     </div>
   </div>
 
+  <!-- ----------------- ALLE OVERLAYS ---------------- -->
   <!-- OVERLAY fsHilfe -->
   <div id="fsHilfe">
     <div class="fs-hilfe">
@@ -245,7 +275,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         <a class="exitButton" href="">
           <h5>Nein, doch nicht</h5>
         </a>
-        <a class="nextButton" href="">
+        <a class="nextButton" href="../index.php">
           <h5>Ja, zur Startseite</h5>
         </a>
       </div>

@@ -241,6 +241,8 @@ header img:last-child {
     color: #99BB44;
     font-weight: 600;
     font-size: 18px;
+
+    cursor: pointer;
 }
 
 .continue-button {

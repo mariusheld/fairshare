@@ -4,13 +4,22 @@ if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 // Session Arrays initialisieren 
-$_SESSION["kategorien"] = array();
 $_SESSION["array"] = array();
-$_SESSION["dbeintrag"] = array();
+$_SESSION["dbeintragArray"] = array();
 
 // --- DATENBANKANBINDUNG FOODSAVER ANMELDUNG ---
 // Datenbank verbinden
 require_once("../dbconnect/dbconnect.inc.php");
+$db_handle = new DBController();
+$conn = $db_handle->connectDB();
+
+// Letzten LMkey aus der Datenbank bekommen
+$LMkeyQuery = "SELECT LMkey FROM Lebensmittel ORDER BY LMkey DESC LIMIT 1";
+$LMkeyResult = mysqli_query($conn, $LMkeyQuery);
+while ($row = mysqli_fetch_assoc($LMkeyResult)) {
+  $key[] = $row;
+  $_SESSION["latestLMkey"] = $key[0]['LMkey'];
+}
 
 //Variablen aus POST holen
 $vorname = $_POST['vorname'];
@@ -76,7 +85,7 @@ $eintragFS->execute(array($foodID, $vorname, $nachname, $tel, $email));
     </div>
   </div>
 
-    <!-- ------------------ ALLE OVERLAYS ------------------ -->
+  <!-- ------------------ ALLE OVERLAYS ------------------ -->
 
   <!-- Overlay fs-hilfe -->
   <div id="fsHilfe">
@@ -145,20 +154,25 @@ $eintragFS->execute(array($foodID, $vorname, $nachname, $tel, $email));
       </div>
     </div>
   </div>
-  
-    <!-- Overlay fs-uebersicht-abbr -->
-      <div id="fsUebersichtAbbr">
-      <div class="popupklein">
-        <h3 class="popupheader">Zurück zur STARTSEITE</h3>
-        <p class="textpopup">Deine Angaben werden nicht gespeichert.
-            <br/>Bist du sicher, dass du zurück zur Startseite willst?</p>
-            <div class="button-spacing-popup">
-            <a class="exitButton" href=""><h5>Nein, doch nicht</h5></a>
-            <a class="nextButton" href=""><h5>Ja, zur Startseite</h5></a>
-            </div>  
+
+  <!-- Overlay fs-uebersicht-abbr -->
+  <div id="fsUebersichtAbbr">
+    <div class="popupklein">
+      <h3 class="popupheader">Zurück zur STARTSEITE</h3>
+      <p class="textpopup">Deine Angaben werden nicht gespeichert.
+        <br />Bist du sicher, dass du zurück zur Startseite willst?
+      </p>
+      <div class="button-spacing-popup">
+        <a class="exitButton" href="">
+          <h5>Nein, doch nicht</h5>
+        </a>
+        <a class="nextButton" href="../index.php">
+          <h5>Ja, zur Startseite</h5>
+        </a>
       </div>
     </div>
-  
+  </div>
+
 
   <!-- Script Overlays -->
   <?php
