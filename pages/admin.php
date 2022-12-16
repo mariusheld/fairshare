@@ -3,7 +3,7 @@
 require_once("../dbconnect/dbconnect.inc.php");
 
 //Abfrage an Datenbank senden
-$query = $db->prepare("SELECT*FROM Lebensmittel WHERE LMkey >= 13"); //Wenn Datenbank final befüllt ist, dann WHERE Attribut löschen. Footer anpassen
+$query = $db->prepare("SELECT*FROM Lebensmittel, Box WHERE  Lebensmittel.LMkey = Box.LMkey"); //Wenn Datenbank alles Anzeigen soll wegen Kisten Bug: "SELECT*FROM Lebensmittel WHERE LMkey >= 13"
 $erfolg = $query->execute();
 
 //Fehlertest
@@ -105,7 +105,7 @@ $_SESSION['password'] = array();
                 <tr>
                     <th style="width: 25%;">Lebensmittel</th>
                     <th style="width: 20%;">Kistennr</th>
-                    <th style="width: 20%;">Menge (in kg)</th>
+                    <th style="width: 20%;">Menge</th>
                     <th>Genießbar</th>
                     <th style="width: 50px;"></th>
                     <th style="width: 50px;"></th>
@@ -124,11 +124,11 @@ $_SESSION['password'] = array();
             //echo "<td> <img alt='icon' width='48' src='" . $icons[$zeile['OKatKey']] . "'></td>";
             echo "<td class='lmicon'><div class='tablecontainer'><img alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'><div style='font-weight: 600; padding-left: 16px;'>" . $zeile['Bezeichnung'] . "</div></div></td>";
             if ($zeile['Kuehlware'] == 0) {
-                echo "<td>5</td>"; /* . $zeile['BoxID'] . */
+                echo "<td>" . $zeile['BoxID'] . "</td>"; 
             } else {
                 echo "<td><div class='tablecontainer'><div>4</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'></div></td>";
             }
-            echo "<td>" . $zeile['Gewicht'] . "</td>";
+            echo "<td>" . $zeile['Gewicht'] . " kg</td>";
             echo "<td>" . $zeile['VerteilDeadline'] . "</td>";
             if ($zeile['Anmerkung']) {
                 echo "<td style='text-align: right'><img id='bubble' alt='dots' src='../media/comment_icon.svg' width='48px;'/></td>";
