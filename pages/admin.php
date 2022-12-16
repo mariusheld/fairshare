@@ -139,15 +139,7 @@ $_SESSION['password'] = array();
             echo "</tr>\n";
         }
                 ?>
-                <!--Tabelle hardgecodet
-				<tr>
-					<td class="lmicon"><div class="tablecontainer"><img alt="lmicon" src="../media/kategorien/icon_obst.svg" width="48"><div style="font-weight: 600; padding-left: 16px;">Banana</div></div></td>
-					<td><div class="tablecontainer"><div>4</div> <img style="padding-left: 16px;" alt="coolicnon" src="../media/comment_icon.svg" width="32"></div></td>
-					<td>2 kg</td>
-					<td>3 Tage</td>
-					<td class="kommentaricon"><div class="tablecontainer" style="justify-content: flex-end; gap: 16px;"><img alt="dots" src="../media/bubble.jpg" width="48"><img alt="dots" src="../media/edit_icon.svg" width="48"></div></td>
-			</tr>
-            Tabelle hardgecodet-->
+                
         </div>
         <!--Seiteninhalt-->
         <footer>
