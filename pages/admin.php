@@ -60,7 +60,7 @@ $_SESSION['password'] = array();
 //Zugang zur Lagerübersicht
     if ($passwort == "raupe") {
     ?>
-    <div class="seiteninhalt">
+    <div class="pagewrap">
         <!--Logout Overlay-->
         <div class="helper" id="overtrigger">
             <div class="overlayparent">
