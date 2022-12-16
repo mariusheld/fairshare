@@ -92,6 +92,11 @@
     font-weight: 600;
     color: var(--onyx);
     line-height: 26px;
+    margin: 0;
+}
+
+#popup_lebensmittel_fairteilen .popup {
+    padding: 24px 32px 32px;
 }
 
 .popup-header {
