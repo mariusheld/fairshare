@@ -62,32 +62,6 @@ div.navbar ul li {
 }
 
 /*Formatierung des Inhalts*/
-
-/*Grundformatierung des Footers*/
-div.footer {
-	position: absolute;
-	bottom: 0px;
-	width: 100%;
-	height: 96px;
-	box-shadow: 0px -10px 50px 1px #edebeb;
-}
-
-/*Formatierung der Footer Navigation*/
-/*Anlegen Listenstruktur*/
-div.footer ul {
-	list-style-type: none;
-}
-
-div.footer ul li div {
-	display: block;
-	box-sizing: border-box;
-}
-
-div.footer ul li {
-	display: inline-block;
-	width: 40%;
-}
-
 /*Gestaltung Abrechen/Absenden Buttons*/
 div.buttons {
 	padding-top: 16px;
