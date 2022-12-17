@@ -121,8 +121,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
             <th class="grid-col-2">Kistennr</th>
             <th class="grid-col-2">Menge</th>
             <th class="grid-col-3">Genießbar</th>
-            <th class="grid-col-1"></th>
-            <th class="grid-col-1"></th>
+            <th class="grid-col-2"></th>
           </tr>
           <?php
           // Tabelleneintrag
@@ -153,9 +152,9 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
               </div>
             </td>
             <td class="grid-col-2 flex">
-              <?php echo $row['Kistennr'];?>
+              <?php echo $row['Kistennr']; ?>
               <?php if ($row['Kuehlen'] == true)
-              echo "<img src='../media/freeze_icon.svg' alt='freeze_icon' />";?>
+              echo "<img src='../media/freeze_icon.svg' alt='freeze_icon' />"; ?>
             </td>
             <td class="grid-col-2">
               <?php echo $row['Menge'] ?> Kg
@@ -163,13 +162,13 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
             <td class="grid-col-3">
               <?php echo $row['Genießbar'] ?>
             </td>
-            <td class="grid-col-1">
-              <!-- OVERLAY TRIGGER -->
-              <img src='../media/comment_icon.svg' alt='comment_icon' />
-            </td>
-            <td class="grid-col-1">
-              <!-- OVERLAY TRIGGER -->
-              <img id="editButton" src="../media/edit_icon.svg" alt="edit_icon" />
+            <td class="grid-col-2">
+              <div class="interaktion-buttons">
+                <!-- OVERLAY TRIGGER -->
+                <img src='../media/comment_icon.svg' alt='comment_icon' />
+                <!-- OVERLAY TRIGGER -->
+                <img id="editButton" src="../media/edit_icon.svg" alt="edit_icon" />
+              </div>
             </td>
           </tr>
           <script>

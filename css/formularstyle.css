@@ -391,6 +391,13 @@ Foodsaver Hinzufügen
     align-items: end;
 }
 
+.grid-col-2:has(.kuehlcheck) {
+    font-weight: 500;
+    text-align: start;
+    grid-column: span 2 / span 2;
+    height: 100%;
+}
+
 /* Kategorie Grid und Grid-Item Styling */
 .category-grid {
     /* handle items  */
@@ -645,6 +652,13 @@ Foodsaver Übersicht
 
 .check-item input:checked~img {
     opacity: 1;
+}
+
+.interaktion-buttons {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    gap: 16px;
 }
 
 
