@@ -1,9 +1,8 @@
 <?php
 // --- CREATE SESSION --- 
-if (session_status() == PHP_SESSION_NONE) {
-  session_start();
-}
-// Session Arrays initialisieren 
+session_start();
+
+// Session Arrays initialisieren
 $_SESSION["array"] = array();
 $_SESSION["dbeintragArray"] = array();
 
@@ -21,20 +20,25 @@ while ($row = mysqli_fetch_assoc($LMkeyResult)) {
   $_SESSION["latestLMkey"] = $key[0]['LMkey'];
 }
 
-//Variablen aus POST holen
-$vorname = $_POST['vorname'];
-$nachname = $_POST['nachname'];
-$foodID = $_POST['foodID'];
-$email = $_POST['email'];
-$tel = $_POST['tel'];
+if (!empty($_POST['vorname'])) {
+  //Variablen aus POST holen
+  $_SESSION["vorname"] = $_POST['vorname'];
+  $_SESSION["nachname"] = $_POST['nachname'];
+  $_SESSION["foodID"] = $_POST['foodID'];
+  $_SESSION["email"] = $_POST['email'];
+  $_SESSION["tel"] = $_POST['tel'];
+  $_SESSION["foodsaverLogin"] = true;
+} else {
+  header("Location: ../index.php");
+}
 
 //Konsolen Kontrolle ob POST liefert
-echo "<script>console.log('{$vorname}', '{$nachname}', '{$foodID}', '{$email}', '{$tel}');</script>";
+echo "<script>console.log('{$_SESSION["vorname"]}', '{$_SESSION["nachname"]}', '{$_SESSION["foodID"]}', '{$_SESSION["email"]}', '{$_SESSION["tel"]}');</script>";
 
 //Insert in die Datenbank
 $eintragFS = $db->prepare("INSERT INTO Foodsaver (FoodsharingID, Vorname, Nachname, TelNr, Email)
 VALUES (?, ?, ?, ?, ?)"); //$foodID, $vorname, $nachname, $tel, $email
-$eintragFS->execute(array($foodID, $vorname, $nachname, $tel, $email));
+$eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["tel"], $_SESSION["email"]));
 ?>
 
 
@@ -175,12 +179,7 @@ $eintragFS->execute(array($foodID, $vorname, $nachname, $tel, $email));
 
 
   <!-- Script Overlays -->
-  <?php
-  echo '<script type="text/javascript" src="../script/02.js">
-        </script>
-        ';
-  ?>
-
+  <script type="text/javascript" src="../script/02.js"></script>
 </body>
 
 </html>

@@ -2,8 +2,15 @@
 //Datenbankverbindung aufbauen
 require_once("../dbconnect/dbconnect.inc.php");
 
+//Session eröffnen
+session_start();
+
+//Sessionlogin lokal speichern
+$login = $_SESSION['login'];
+
 //Abfrage an Datenbank senden
-$query = $db->prepare("SELECT*FROM Lebensmittel, Box WHERE  Lebensmittel.LMkey = Box.LMkey"); //Wenn Datenbank alles Anzeigen soll wegen Kisten Bug: "SELECT*FROM Lebensmittel WHERE LMkey >= 13"
+//Wenn Datenbank alles Anzeigen soll wegen Kisten Bug: "SELECT*FROM Lebensmittel WHERE LMkey >= 13"
+$query = $db->prepare("SELECT*FROM Lebensmittel, Box WHERE  Lebensmittel.LMkey = Box.LMkey");
 $erfolg = $query->execute();
 
 //Fehlertest
@@ -24,8 +31,6 @@ $icons = array(
     8 => "../media/kategorien/icon_trockenprodukte.svg",
 );
 
-$_SESSION['password'] = array();
-
 ?>
 
 <!DOCTYPE html>
@@ -44,47 +49,11 @@ $_SESSION['password'] = array();
 
 <body>
     <?php
-    //Session eröffnen
-    session_name("adminbereich");
-    session_start();
-
-    //In der Session gespeicherte Login-Daten übernehmen
-    $passwort = $_SESSION['password'];
-
-    //Login Daten Prüfen
-    if ($passwort != "raupe" or $passwort != "raupenkönigin") {
-        //Passwort aus Post-Übermittlung bekommen
-        $passwort = $_POST['password'];
-        $_SESSION['password'] = $passwort;
-    }
-    //
-//Zugang zur Lagerübersicht
-    if ($passwort == "raupe" or $_GET['set']== true) {
+    //Zugang zur Lagerübersicht
+    if ($login == true) {
     ?>
     <div class="pagewrap">
-        <!--Logout Overlay-->
-        <div class="helper" id="overtrigger">
-            <div class="overlayparent">
-                <div class="overlaychild" style="height: 191px; ">
-                    <p class="olhead">
-                        Abmelden?
-                    </p>
-                    <div class="eingabe">
-                        <div class="buttonscontainer">
-                            <button class="buttonwhite">
-                                Abrechen
-                            </button>
-                            <div class="buttongreen">
-                                <button class="buttongreen" id="btnlogout" style="color: white" value="Abmelden">
-                                    Abmelden
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Logout Overlay-->
+        <!--Logout Button -->
         <div class="navbar">
             <div class="navcontainer">
                 <p class="navbarhead">
@@ -124,7 +93,7 @@ $_SESSION['password'] = array();
             //echo "<td> <img alt='icon' width='48' src='" . $icons[$zeile['OKatKey']] . "'></td>";
             echo "<td class='lmicon'><div class='tablecontainer'><img alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'><div style='font-weight: 600; padding-left: 16px;'>" . $zeile['Bezeichnung'] . "</div></div></td>";
             if ($zeile['Kuehlware'] == 0) {
-                echo "<td>" . $zeile['BoxID'] . "</td>"; 
+                echo "<td>" . $zeile['BoxID'] . "</td>";
             } else {
                 echo "<td><div class='tablecontainer'><div>4</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'></div></td>";
             }
@@ -135,9 +104,9 @@ $_SESSION['password'] = array();
             } else {
                 echo "<td style='text-align: right'><img id='bubble' style='visibility:hidden' alt='dots' src='../media/comment_icon.svg' width='48px;'/></td>";
             }
-            echo 
-            "<td style='text-align: right; position: relative'>
-                <img onclick='open_close_options(this)' alt='dots' src='../media/edit_icon.svg' width='48px;'/>
+            echo
+                "<td style='text-align: right; position: relative;' >
+                <img onclick='open_close_options(this)' alt='dots' src='../media/edit_icon.svg' width='48px;' style='cursor: pointer;'/>
                 <ul class='options'>
                     <li><img src='../media/eye.svg' alt=''><span>Ansehen</span></li>
                     <li onclick='open_lebensmittel_fairteilen(this)'><img src='../media/arrows.svg' alt=''><span>Fairteilen</span></li>
@@ -147,17 +116,42 @@ $_SESSION['password'] = array();
             echo "</tr>\n";
         }
                 ?>
-                
+
         </div>
         <!--Seiteninhalt-->
         <footer>
             <div class="footerbg">
-              <a href="admin.php?set=true"><button class="refreshbutton" id="refreshdash">
-                    Liste Aktualisieren
-                </button></a>
+                <a href="admin.php"><button class="refreshbutton" id="refreshdash">
+                        Liste Aktualisieren
+                    </button></a>
             </div>
         </footer>
     </div>
+    </div>
+
+    <!-- ----------- OVERLAYS ------------ -->
+
+    <!--Logout Overlay-->
+    <div class="helper" id="overtrigger">
+        <div class="overlayparent">
+            <div class="overlaychild" style="height: 191px; ">
+                <p class="olhead">
+                    Abmelden?
+                </p>
+                <div class="eingabe">
+                    <div class="buttonscontainer">
+                        <button class="buttonwhite">
+                            Abrechen
+                        </button>
+                        <div class="buttongreen">
+                            <button class="buttongreen" id="btnlogout" style="color: white" value="Abmelden">
+                                Abmelden
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Nur zu Testzwecken, später entfernen -->
@@ -169,7 +163,9 @@ $_SESSION['password'] = array();
         <div class="popup-wrapper">
             <div class="popup active">
                 <h3>HOPPLA!</h3>
-                <p>Das Produkt <span class="marked-red">Laugenbrezeln (Kiste 4)</span> ist vermutlich nicht mehr genießbar. Bitte sieh dir das Lebensmittel im Lager an und entsorge oder verlängere es gegebenenfalls.</p>
+                <p>Das Produkt <span class="marked-red">Laugenbrezeln (Kiste 4)</span> ist vermutlich nicht mehr
+                    genießbar. Bitte sieh dir das Lebensmittel im Lager an und entsorge oder verlängere es
+                    gegebenenfalls.</p>
                 <button id="close_nicht_genießbar" class="secondary-btn">Produkt behalten</button>
                 <button class="primary-btn">Produkt prüfen</button>
             </div>
@@ -197,13 +193,13 @@ $_SESSION['password'] = array();
                     <h5>Karottenkuchen</h5>
                 </div>
                 <p>Welche Menge des Lebensmittels möchtest du als fairteilt markieren?</p>
-        
+
                 <form action="" class="popup-form">
                     <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
                     <input type="number" id="fairteil-menge">
                     <div id="bestand">/ 1 kg</div>
                 </form>
-                
+
 
                 <button class="secondary-btn" id="fairteilen-abbrechen">Abbrechen</button>
                 <button class="primary-btn" id="fairteilen">Fairteilen</button>
@@ -211,155 +207,43 @@ $_SESSION['password'] = array();
         </div>
     </div>
 
+
     <!-- Script zum Öffnen der Pop-Ups -->
     <script type="text/javascript" src="../script/open_popups_mitarbeiter.js"></script>
+    <!-- Script zum Öffnen und Schließen des Logout Overlays -->
+    <script>
+        // Modale Box ansprechen
+        var modal = document.getElementById('overtrigger');
 
-    <?php
-        echo "
-         <script>
-             // Modale Box ansprechen
-             var modal = document.getElementById('overtrigger');
-     
-             // Buttons definieren, welche die modale Box triggern
-             var btn = document.getElementById('logout');
-     
-             // <span> Element ansprechen, welches den Schließbutton anspricht
-             var span = document.getElementsByClassName('buttonwhite')[0];
-     
-             // Funktion, dass sich die modale Box öffnet, wenn der Button getriggert wird
-             btn.onclick = function() {
-               modal.style.display = 'flex';
-             }
-             // Bei Klick auf Abbrechen -> Fenster schließen
-             span.onclick = function() {
-             modal.style.display = 'none';
-             eingabe.value ='';
-             eingabe.style.border='none';
-             }
-             // Fenster schließen beim Klick außerhalb des Fensters
-             window.onclick = function(event) {
-                 if (event.target == modal) {
-                     modal.style.display = 'none';
-                     eingabe.value ='';
-                     eingabe.style.border='none';
-                 }
-             }
-             //User drückt auf Abmelden
-            btnlogout.onclick = function(){
-                window.location.href = '../index.php'
+        // Buttons definieren, welche die modale Box triggern
+        var btn = document.getElementById('logout');
+
+        // <span> Element ansprechen, welches den Schließbutton anspricht
+        var span = document.getElementsByClassName('buttonwhite')[0];
+
+        // Funktion, dass sich die modale Box öffnet, wenn der Button getriggert wird
+        btn.onclick = function () {
+            modal.style.display = 'flex';
+        }
+        // Bei Klick auf Abbrechen -> Fenster schließen
+        span.onclick = function () {
+            modal.style.display = 'none';
+        }
+        // Fenster schließen beim Klick außerhalb des Fensters
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
             }
-             //LogIn fehlgeschlagen
-             if(login==false) {
-                 document.getElementsById('eingabe').style.border = '2px red';
-             }
-         </script>
-         <!--Skript Ende-->
-         ";
-        $login = false;
-        $_SESSION['login'] = $login;
-        //
-        //Zugang zum Dashboard
-    } else if ($passwort == "raupenkönigin") {
-        //Dashboard Seite
-    ?>
-    <!--Logout Overlay-->
-    <div class="helper" id="overtrigger">
-        <div class="overlayparent">
-            <div class="overlaychild" style="height: 191px; ">
-                <p class="olhead">
-                    Abmelden?
-                </p>
-                <div class="eingabe">
-                    <div class="buttonscontainer">
-                        <button class="buttonwhite">
-                            Abrechen
-                        </button>
-                        <div class="buttongreen">
-                            <button class="buttongreen" id="btnlogout" style="color: white" value="Anmelden">
-                                Abmelden
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Logout Overlay-->
-    <div class="navbar">
-        <div class="navcontainer">
-            <p class="navbarhead">
-                Dashboard
-            </p>
-            <div class="logout" id="logout">
-                <p class="logouttext">
-                    Ausloggen
-                </p>
-                <img alt="ausloggen" src="../media/lock_icon.png" width="48" height="48" />
-            </div>
-        </div>
-    </div>
-    <!--Seiteninhalt-->
-    <div class="seiteninhalt">
-        <!--hier Dashboard einfügen-->
-    </div>
-    <!--Seiteninhalt-->
-    <footer>
-        <div class="footerbg">
-            <button class="refreshbutton" id="refreshdash">
-                Aktualisieren
-            </button>
-        </div>
-    </footer>
-    </div>
+        }
+        //User drückt auf Abmelden
+        btnlogout.onclick = function () {
+            window.location.href = '../index.php'
+        }
+    </script>
     <?php
-        echo "
-         <script>
-             // Modale Box ansprechen
-             var modal = document.getElementById('overtrigger');
-     
-             // Buttons definieren, welche die modale Box triggern
-             var btn = document.getElementById('logout');
-     
-             // <span> Element ansprechen, welches den Schließbutton anspricht
-             var span = document.getElementsByClassName('buttonwhite')[0];
-     
-             // Funktion, dass sich die modale Box öffnet, wenn der Button getriggert wird
-             btn.onclick = function() {
-               modal.style.display = 'flex';
-             }
-             // Bei Klick auf Abbrechen -> Fenster schließen
-             span.onclick = function() {
-             modal.style.display = 'none';
-             eingabe.value ='';
-             eingabe.style.border='none';
-             }
-             // Fenster schließen beim Klick außerhalb des Fensters
-             window.onclick = function(event) {
-                 if (event.target == modal) {
-                     modal.style.display = 'none';
-                     eingabe.value ='';
-                     eingabe.style.border='none';
-                 }
-             }
-             //User drückt auf Abmelden
-            btnlogout.onclick = function(){
-                window.location.href = '../index.php'
-            }
-             //LogIn fehlgeschlagen
-             if(login==false) {
-                 document.getElementsById('eingabe').style.border = '2px red';
-             }
-         </script>
-         <!--Skript Ende-->
-         ";
-        $login = false;
-        $_SESSION['login'] = $login;
-    }
-    //Keine Login-Daten vorhanden oder falsche Daten
-    if ($passwort != "raupe" and $passwort != "raupenkönigin") {
-        echo "<script>window.location.href = '../index.php'</script>";
-        $login = true;
-        $_SESSION['login'] = $login;
+    } else {
+        session_destroy();
+        header("Location: ../index.php");
     }
     ?>
 </body>

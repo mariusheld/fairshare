@@ -53,7 +53,7 @@ exitUebersichtAbbr.onclick = function () {
 //Weiterleitung zur Startseite
 nextUebersichtAbbr.onclick = function () {
   fsUebersichtAbbr.style.display = "none";
-  window.open(href = "../index.php");
+  // window.open(href = "../index.php");
 };
 
 // Schließen wenn außerhalb des Pop-ups gedrückt wird

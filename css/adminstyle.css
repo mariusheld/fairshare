@@ -61,6 +61,137 @@ div.navbar ul li {
 	right: 32px;
 }
 
+/*Formatierung des Inhalts*/
+
+/*Grundformatierung des Footers*/
+div.footer {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 96px;
+	box-shadow: 0px -10px 50px 1px #edebeb;
+}
+
+/*Formatierung der Footer Navigation*/
+/*Anlegen Listenstruktur*/
+div.footer ul {
+	list-style-type: none;
+}
+
+div.footer ul li div {
+	display: block;
+	box-sizing: border-box;
+}
+
+div.footer ul li {
+	display: inline-block;
+	width: 40%;
+}
+
+/*Gestaltung Abrechen/Absenden Buttons*/
+div.buttons {
+	padding-top: 16px;
+}
+
+div.button {
+	display: block;
+	box-sizing: border-box;
+	background: lightgrey;
+	width: 228px;
+	height: 56px;
+	text-align: center;
+	border-radius: 20px;
+	background-color: #99BB44;
+	font-size: 15pt;
+	color: white;
+	box-shadow: 0px 0px 20px 5px #edebeb;
+}
+
+div.button:hover {
+	color: white;
+	background-color: #BEBEB9;
+	box-shadow: 0px 0px 80px 5px #edebeb;
+}
+
+#breakup {
+	color: #99BB44;
+	background-color: white;
+	box-shadow: 0px 0px 80px 5px #edebeb;
+	border-color: #E5E5E3;
+}
+
+#breakup:hover {
+	color: white;
+	background-color: #BEBEB9;
+}
+
+p.buttontext {
+	padding-top: 14px;
+}
+
+div.buttons {
+	position: absolute;
+	right: 20px;
+	margin-top: -35px;
+}
+
+div.footer ul li ul li {
+	display: inline-block;
+	width: 250px;
+}
+
+/*Support Gestaltung*/
+div.support {
+	position: absolute;
+}
+
+p.supporttext {
+	position: absolute;
+	width: 1000%;
+	left: 50px;
+	top: -12px;
+	color: #BEBEB9;
+	font-weight: bold;
+}
+
+p.supporttext:hover {
+	color: #99BB44;
+}
+
+/*Tabellengestaltung*/
+table {
+	margin-left: 2%;
+	margin-right: 2%;
+	width: 96%;
+	font-size: 20px;
+	table-layout: fixed;
+}
+
+th {
+	text-align: left;
+	border-bottom: 2px solid #E5E5E3;
+	border-collapse: collapse;
+	padding-top: 27px;
+	padding-bottom: 27px;
+	color: #BEBEB9;
+
+
+}
+
+td {
+	border-bottom: 2px solid #E5E5E3;
+	border-collapse: collapse;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	color: #1E212B;
+}
+
+/*Pluszeichen*/
+div.PlusBus {
+	text-align: center;
+	margin-top: 50px;
+}
+
 /*Formatierung des Overlays*/
 /*Seiteninhalt & Grundpositionierung*/
 div.helper {
@@ -252,6 +383,7 @@ button.buttonwhite:hover {
 div.navcontainer {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
 	width: 100vw;
 	height: 100%;
 }
@@ -271,12 +403,10 @@ p.navbarhead {
 div.logout {
 	display: flex;
 	flex-direction: row;
-	width: 100%;
 	gap: 12px;
 	align-items: center;
-	justify-content: flex-end;
 	padding-right: 32px;
-
+	
 	cursor: pointer;
 }
 
@@ -287,9 +417,8 @@ p.logouttext {
 	font-weight: 600;
 }
 
-/*Formatierung Footer*/
 footer {
-	position: fixed;
+	position: absolute;
 	bottom: 0px;
 	width: 100%;
 	height: 96px;

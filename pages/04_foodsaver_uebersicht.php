@@ -1,14 +1,20 @@
 <!-- ----------- PHP ---------- -->
 <?php
 session_start();
-// Datenbankverbindung
+// Datenbankverbindung aufbauen
 require_once("../dbconnect/dbconnect.inc.php");
 $db_handle = new DBController();
 $conn = $db_handle->connectDB();
 
+if ($_SESSION["foodsaverLogin"] == false) {
+  session_destroy();
+  header("Location: ../index.php");
+}
+
 // Session Objekt wird lokal gespeichert
 $array = json_decode(json_encode($_SESSION["array"]), true);
 $dbeintragArray = json_decode(json_encode($_SESSION["dbeintragArray"]), true);
+
 function consolelog($data, bool $quotes = false)
 {
   $output = json_encode($data);
@@ -61,7 +67,6 @@ function sendList($dbeintragArray, $conn)
     $boxQuery = "UPDATE `Box` SET `Box`.`LMkey` = '$LMkeyBox', `Box`.`BStatusKey` = '$BStatusKey' WHERE `Box`.`BoxID` = '$BoxID'";
     mysqli_query($conn, $boxQuery);
   }
-  ;
 }
 // Datenbank Query Trigger
 if (isset($_GET['send'])) {
@@ -122,7 +127,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
           <?php
           // Tabelleneintrag
           // LOOP TILL END OF DATA
-          foreach ($array as $row) {
+          foreach ($array as $key => $row) {
           ?>
           <tr class="table-items">
             <td class="grid-col-3">
@@ -148,9 +153,9 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
               </div>
             </td>
             <td class="grid-col-2 flex">
-              <?php echo $row['Kistennr'] ?>
+              <?php echo $row['Kistennr'];?>
               <?php if ($row['Kuehlen'] == true)
-              echo "<img src='../media/freeze_icon.svg' alt='freeze_icon' />"; ?>
+              echo "<img src='../media/freeze_icon.svg' alt='freeze_icon' />";?>
             </td>
             <td class="grid-col-2">
               <?php echo $row['Menge'] ?> Kg
@@ -164,9 +169,13 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
             </td>
             <td class="grid-col-1">
               <!-- OVERLAY TRIGGER -->
-              <img src="../media/edit_icon.svg" alt="edit_icon" />
+              <img id="editButton" src="../media/edit_icon.svg" alt="edit_icon" />
             </td>
           </tr>
+          <script>
+            let key = <?php echo json_encode($key); ?>;
+            let array = <?php echo json_encode($array); ?>;
+          </script>
           <?php
           }
           ?>
@@ -316,11 +325,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
   </div>
 
   <!-- Script Overlay fs-hilfe -->
-  <?php
-  echo '<script type="text/javascript" src="../script/04.js">
-        </script>
-        ';
-  ?>
+  <script type="text/javascript" src="../script/04.js"></script>
 </body>
 
 </html>

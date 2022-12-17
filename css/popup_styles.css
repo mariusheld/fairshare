@@ -353,6 +353,8 @@
     padding: 16px 8px;
     width: 144px;
     box-sizing: border-box;
+
+    cursor: pointer;
 }
 
 .options li:last-child {

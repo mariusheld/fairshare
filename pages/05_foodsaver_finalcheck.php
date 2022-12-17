@@ -2,6 +2,10 @@
 // --- CREATE SESSION --- 
 session_start();
 
+if ($_SESSION["foodsaverLogin"] == false) {
+    session_destroy();
+    header("Location: ../index.php");
+}
 // Array wird geleert 
 $_SESSION["array"] = array();
 // Session wird zerstört und resettet
@@ -136,12 +140,8 @@ session_destroy();
         </div>
     </div>
 
-  <!-- Script Overlay fs-hilfe -->
-  <?php
-  echo '<script type="text/javascript" src="../script/05.js">
-        </script>
-        ';
-  ?>
+    <!-- Script Overlay fs-hilfe -->
+    <script type="text/javascript" src="../script/05.js"></script>
 </body>
 
 </html>

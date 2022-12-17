@@ -1,14 +1,13 @@
 <?php
 //Session 
-session_name("adminbereich");
 session_start();
-$login = $_SESSION['login'];
-
+$_SESSION['passwordErr'] = false;
+$_SESSION['login'] = false;
 //Datenbankverbindung aufbauen
 require_once("dbconnect/dbconnect.inc.php");
 
-//Abfrage an Datenbank senden
-$query = $db->prepare("SELECT*FROM Lebensmittel, Lieferung, Foodsaver WHERE Lieferung.LMkey=Lebensmittel.LMkey AND Lieferung.FSkey=Foodsaver.FSkey AND Foodsaver.Vorname='Julia'");
+//Test-Abfrage an Datenbank senden
+$query = $db->prepare("SELECT*FROM Lebensmittel");
 $erfolg = $query->execute();
 
 //Fehlertest
@@ -69,7 +68,7 @@ if (!$erfolg) {
     <!-- Overlay-->
     <div id="startscreen-header">
         <img id="logo" src="media/logo.svg" alt="fairshare" width="200px">
-        <div id="startscreen-mitarbeiter-login">
+        <!-- <div id="startscreen-mitarbeiter-login">
             <p id="startscreen-mitarbeiter">Mitarbeiter*in</p>
             <button id="startscreen-mitarbeiter-button"><svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
                     width="28px" height="28px" fill="#99BB44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF"
@@ -77,7 +76,7 @@ if (!$erfolg) {
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
                 </svg></button>
-        </div>
+        </div> -->
     </div>
 
     <div id="startscreen-content">
@@ -91,58 +90,53 @@ if (!$erfolg) {
     <div id="startscreen-footer">
         <p id="startscreen-footer-text">Raupe Immersatt, Stuttgart 2023</p>
     </div>
-    <?php
-    echo "
-	<script>
-		// Modales Fenster 
-		var modal = document.getElementById('overtrigger');
+    
+    <script>
+        //Weiterleitung zum Foodsaver Anmeldeprozess
+        var startscreenButton = document.getElementById('startscreen-button');
+        startscreenButton.onclick = function () {
+            window.location.href = 'pages/01_foodsaver_anmeldung.php';
+        }
+        // Modales Fenster 
+        var modal = document.getElementById('overtrigger');
 
-		// Button der modale Fenster triggert
-		var btn = document.getElementById('startscreen-mitarbeiter-login');
+        // Button der modale Fenster triggert
+        var btn = document.getElementById('startscreen-mitarbeiter-login');
 
         // Button der das modale Fenster schließst
         var span = document.getElementsByClassName('buttonwhite')[0];
 
-		// Modales Fenster öffnen 
-		btn.onclick = function() {
-  		modal.style.display = 'flex';
-		}
-        // Modales Fenster schließen wenn auf Abbrechen geklickt wird
-        span.onclick = function() {
-        modal.style.display = 'none';
-        eingabe.value ='';
-        eingabe.style.border='none';
-        vergessen.style.display = 'none';
-        bcontainer.style.paddingtop = '64px';
-        eingabe.style.height = '46px';
-        eingabe.style.width = '472px';
+        // Modales Fenster öffnen 
+        btn.onclick = function () {
+            modal.style.display = 'flex';
         }
-		// Modales Fenster schließen wenn außerhalb der Box geklickt wird
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = 'none';
-				eingabe.value ='';
-                eingabe.style.border='none';
+        // Modales Fenster schließen wenn auf Abbrechen geklickt wird
+        span.onclick = function () {
+            modal.style.display = 'none';
+            eingabe.value = '';
+            eingabe.style.border = 'none';
+            vergessen.style.display = 'none';
+            bcontainer.style.paddingtop = '64px';
+            eingabe.style.height = '46px';
+            eingabe.style.width = '472px';
+        }
+        // Modales Fenster schließen wenn außerhalb der Box geklickt wird
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                eingabe.value = '';
+                eingabe.style.border = 'none';
                 vergessen.style.display = 'none';
                 bcontainer.style.paddingtop = '64px';
                 eingabe.style.height = '46px';
                 eingabe.style.width = '472px';
-			}
-		}
+            }
+        }
         //Ausblenden des Overlays beim Laden der Seite
-        document.onload = function(event){
+        document.onload = function (event) {
             modal.style.display = 'none';
         }
-
-        //Weiterleitung zum Foodsaver Anmeldeprozess
-        document.getElementById('startscreen-button').onclick = function() {
-            window.location.href = 'pages/01_foodsaver_anmeldung.php';
-        }
-
-	</script>
-	<!--Skript Ende-->
-    "
-        ?>
+    </script>
 </body>
 
 </html>

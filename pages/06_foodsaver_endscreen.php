@@ -32,15 +32,12 @@
     <div id="endscreen-footer">
         <p id="endscreen-footer-text">Raupe Immersatt, Stuttgart 2023</p>
     </div>
-
+    <script>
+        //Weiterleitung auf Startscreen
+        document.getElementById('endscreen-button').onclick = function () {
+            window.location.href = '../index.php'
+        }
+    </script>
 </body>
-<?php
-echo "<script>
-            //Weiterleitung auf Startscreen
-            document.getElementById('endscreen-button').onclick = function() {
-                window.location.href = '../index.php'
-            }
-        </script>"
-    ?>
 
 </html>

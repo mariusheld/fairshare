@@ -81,7 +81,7 @@ fsHinzufuegenAbbr.style.display = "none";
 //Weiterleitung zur Startseite
 nextHinzufuegenAbbr.onclick = function() {
 fsHinzufuegenAbbr.style.display = "none";
-window.open(href = '../pages/foodsaver_start.php');
+// window.open(href = '../pages/02_foodsaver_start.php');
 }
 
 //----------------JavaScript für Formular-InfoPopups, genutzt in 03-----------------------------//

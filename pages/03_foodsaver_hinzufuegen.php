@@ -1,15 +1,20 @@
 <!-- --------- PHP --------- -->
 
 <?php
+session_start();
 //Datenbankverbindung aufbauen
 require_once("../dbconnect/dbconnect.inc.php");
 $db_handle = new DBController();
-session_start();
 
-// ----------- VARIABLES ----------
+if ($_SESSION["foodsaverLogin"] == false) {
+    session_destroy();
+    header("Location: ../index.php");
+}
+
+// ----------- VARIABLEN ----------
 $LMBez = "";
 $OKatKey = 0;
-$kuehlcheck = false;
+$kuehlcheck = 0;
 $kiste = null;
 $menge = null;
 $HerkunftKey = "";
@@ -58,18 +63,6 @@ $FSkey = $latestFSkey[0]['FSkey'];
 $kategorien = $kategorieresultset;
 // SET HERKUNFTSKATEGORIEN -------------
 $herkunftkategorien = $herkunftresultset;
-
-function consolelog($data, bool $quotes = false)
-{
-    $output = json_encode($data);
-    if ($quotes) {
-        echo "<script>console.log('{$output}' );</script>";
-    } else {
-        echo "<script>console.log({$output} );</script>";
-    }
-}
-
-consolelog($LMkey);
 
 // ------- FORM VALIDATION ----------
 function test_input($data)
@@ -179,8 +172,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'BStatusKey' => 5,
     ];
 
+    // Datenbankeintrag erstellen
     $dbeintrag = array($lieferung, $lebensmittel, $box);
-
 
     // ----------- add Object to Uebersicht --------
     // Wenn es keine Errors gibt und keine Variablen leer sind, wird das Objekt zur Übersicht übertragen und man wird zur Überischt weitergeleitet
@@ -308,7 +301,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                                 <div class="radio-container kategorie">
                                     <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php if (
-                                        isset($OKatKey) && $OKatKey==$row['OKatKey'] ) echo "checked"; ?> >
+                                        isset($OKatKey) && $OKatKey == $row['OKatKey']
+                                    )
+                                        echo "checked"; ?> >
                                     <div class="category-item">
                                         <?php echo "<img src='" . $iconList[$key] . "'>" ?>
                                         <p>
@@ -400,8 +395,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                                 <div class="radio-container haltbarkeit">
                                     <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
-                                        <?php if (isset($HerkunftKey) && $HerkunftKey==$row['HerkunftKey']) echo
-                                        "checked"; ?>>
+                                        <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey'])
+                                        echo
+                                            "checked"; ?>>
                                     <div class="haltbarkeit-item">
                                         <p>
                                             <?php echo $row['HerkunftName'] ?>
@@ -587,11 +583,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <!-- Script Overlays -->
-    <?php
-    echo '<script type="text/javascript" src="../script/03.js">
-        </script>
-        ';
-    ?>
+    <script type="text/javascript" src="../script/03.js"></script>
 </body>
 
 </html>
