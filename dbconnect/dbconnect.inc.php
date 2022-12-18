@@ -1,4 +1,4 @@
-<?php
+<?php 
 // Datenbank Zugangsdaten
 $DSN = "mysql:host=localhost;dbname=u-ProjRaupe";
 $benutzer = "ProjRaupe";
@@ -45,4 +45,14 @@ class DBController
 	}
 }
 
+?>
+
+/* Nur zu Testzwecken */
+<?php
+/*
+	$servername = "localhost";
+	$user = "root";
+	$passwort = "";
+	$db = new PDO('mysql:host=localhost; dbname=u-projraupe', $user, $passwort);
+*/
 ?>

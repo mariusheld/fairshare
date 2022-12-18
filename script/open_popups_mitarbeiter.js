@@ -48,6 +48,12 @@ function open_close_options(options_btn) {
 // Pop-Up: "Lebensmittel fairteilen"-------------------------------------------------------------------
 
 function open_lebensmittel_fairteilen(fairteilen_btn) {
+    let bezeichnung = document.getElementById('bezeichnung-' + fairteilen_btn.id).innerHTML;
+    let gewicht = document.getElementById('gewicht-' + fairteilen_btn.id).innerHTML;
+    
+    $('#popup_lebensmittel_fairteilen h5').html(bezeichnung);
+    $('#popup_lebensmittel_fairteilen #bestand').html("/ " + gewicht);
+
     document.getElementById('popup_lebensmittel_fairteilen').style.display = 'flex';
     open_close_options(fairteilen_btn.parentElement.previousElementSibling);
 }

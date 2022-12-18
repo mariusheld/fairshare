@@ -40,6 +40,7 @@ $icons = array(
     <meta charset="UTF-8" />
     <meta name="author" content="Marius Held" />
     <title>Abgabeübersicht</title>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/adminstyle.css" />
     <link rel="stylesheet" href="../css/popup_styles.css">
     <style>
@@ -88,16 +89,27 @@ $icons = array(
         //Konsolenausgabe der Datenbankabfrage (nur möglich nach einem fetchAll() befehl der Abfrage)
         echo "<script>console.log(" . json_encode($result) . ");</script>";
 
+        $zähler = 0;
+
         foreach ($result as $zeile) {
+            $zähler += 1;
             echo "<tr>";
             //echo "<td> <img alt='icon' width='48' src='" . $icons[$zeile['OKatKey']] . "'></td>";
-            echo "<td class='lmicon'><div class='tablecontainer'><img alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'><div style='font-weight: 600; padding-left: 16px;'>" . $zeile['Bezeichnung'] . "</div></div></td>";
+            echo 
+                "<td class='lmicon'>
+                    <div class='tablecontainer'>
+                        <img alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'>
+                        <div id='bezeichnung-" . $zähler. "' style='font-weight: 600; padding-left: 16px;'>"
+                            . $zeile['Bezeichnung'] . "
+                        </div>
+                    </div>
+                </td>";
             if ($zeile['Kuehlware'] == 0) {
                 echo "<td>" . $zeile['BoxID'] . "</td>";
             } else {
                 echo "<td><div class='tablecontainer'><div>4</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'></div></td>";
             }
-            echo "<td>" . $zeile['Gewicht'] . " kg</td>";
+            echo "<td id='gewicht-" . $zähler. "'>" . $zeile['Gewicht'] . " kg</td>";
             echo "<td>" . $zeile['VerteilDeadline'] . "</td>";
             if ($zeile['Anmerkung']) {
                 echo "<td style='text-align: right'><img id='bubble' alt='dots' src='../media/comment_icon.svg' width='48px;'/></td>";
@@ -109,7 +121,7 @@ $icons = array(
                 <img onclick='open_close_options(this)' alt='dots' src='../media/edit_icon.svg' width='48px;' style='cursor: pointer;'/>
                 <ul class='options'>
                     <li><img src='../media/eye.svg' alt=''><span>Ansehen</span></li>
-                    <li onclick='open_lebensmittel_fairteilen(this)'><img src='../media/arrows.svg' alt=''><span>Fairteilen</span></li>
+                    <li id='" . $zähler. "' onclick='open_lebensmittel_fairteilen(this)'><img src='../media/arrows.svg' alt=''><span>Fairteilen</span></li>
                     <li><img src='../media/trashbin.svg' alt=''><span>Entsorgen</span></li>
                 </ul>
             </td>";
@@ -190,14 +202,14 @@ $icons = array(
             <div class="popup active">
                 <div class="popup-header">
                     <img src="../media/kategorien/icon_backwaren-suess.svg" alt="Backwaren Süß">
-                    <h5>Karottenkuchen</h5>
+                    <h5>Lebensmittel</h5>
                 </div>
                 <p>Welche Menge des Lebensmittels möchtest du als fairteilt markieren?</p>
 
                 <form action="" class="popup-form">
                     <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
                     <input type="number" id="fairteil-menge">
-                    <div id="bestand">/ 1 kg</div>
+                    <div id="bestand"></div>
                 </form>
 
 
