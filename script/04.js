@@ -104,20 +104,58 @@ editButton.onclick = function() {
 
 //----------------JavaScript für fs-anmerkungen-allergene Overlay, genutzt in 04 -----------------------------//
 //Overlay auswählen
-var fsAnmerkungAllergene = document.getElementById("fsAnmerkungAllergene");
+
       
 //Das öffnet das Overlay
-var openAnmerkungAllergene = document.getElementById("openAnmerkungAllergene");
+//var openAnmerkungAllergene = document.getElementById("openAnmerkungAllergene");
       
 //Das schließt das Overlay
-var exitAnmerkungAllergene = document.getElementsByClassName("close")[0];
+//var exitAnmerkungAllergene = document.getElementsByClassName("close")[0];
       
 //Öffnen wenn icon geklickt wird
-openAnmerkungAllergene.onclick = function() {
-fsAnmerkungAllergene.style.display = "block";
-}
+//openAnmerkungAllergene.onclick = function() {
+//fsAnmerkungAllergene.style.display = "block";
+//}
       
 //Schließen nach Button drücken
-exitAnmerkungAllergene.onclick = function() {
-fsAnmerkungAllergene.style.display = "none";
+//exitAnmerkungAllergene.onclick = function() {
+//fsAnmerkungAllergene.style.display = "none";
+//}
+
+var fsAnmerkungAllergene = document.getElementById("fsAnmerkungAllergene");
+var fsLmLoeschen = document.getElementById("fsAnmerkungAllergene");
+
+let anmerkungen = false
+let bearbeiten = false
+
+function changeAnmerkung(){
+  if (anmerkungen == false){
+    anmerkungen = true;
+    document.getElementById("openAnmerkungAllergene").setAttribute("src", "../media/cross.svg");
+    fsAnmerkungAllergene.style.display = "block";
+  } else {
+    anmerkungen = false;
+    document.getElementById("openAnmerkungAllergene").setAttribute("src", "../media/comment_icon.svg");
+    fsAnmerkungAllergene.style.display = "none";
+  }
+}
+
+
+
+
+
+
+
+
+
+function changeBearbeiten(){
+  if (bearbeiten == false){
+    bearbeiten = true;
+    document.getElementById("editButton").setAttribute("src", "../media/cross.svg");
+    fsLmLoeschen.style.display = "block";
+  } else {
+    bearbeiten = false;
+    document.getElementById("editButton").setAttribute("src", "../media/comment_icon.svg");
+    fsLmLoeschen.style.display = "none";
+  }
 }

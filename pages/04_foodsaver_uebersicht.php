@@ -166,9 +166,9 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
               <div class="interaktion-buttons">
                 <!-- OVERLAY TRIGGER -->
                 <?php if ($row['Anmerkungen'] == true || $row['Allergene'] == true )
-              echo "<img src='../media/comment_icon.svg' alt='comment_icon' id='openAnmerkungAllergene'/>"; ?>
+              echo "<img src='../media/comment_icon.svg' alt='comment_icon' id='openAnmerkungAllergene' onClick='changeAnmerkung()'/>"; ?>
                 <!-- OVERLAY TRIGGER -->
-                <img id="editButton" src="../media/edit_icon.svg" alt="edit_icon" />
+                <img id="editButton" src="../media/edit_icon.svg" alt="edit_icon" onClick="changeBearbeiten()"/>
               </div>
             </td>
           </tr>
@@ -326,9 +326,6 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 
   <!-- Overlay fs-anmerkung-allergene -->
   <div id="fsAnmerkungAllergene" class="fs-uebersicht-bearbeiten">
-        <div class="close">
-            <img src="../media/cross.svg" alt="Schließen Icon">
-        </div>
         <div class="popup-anmerkung">
           <?php if ($row['Anmerkungen'] == true)
           echo "<h5>Anmerkung:</h5>";
@@ -346,6 +343,21 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
             echo $row['Allergene'];?>
           </p>
        </div>
+    </div>
+
+    <!-- Overlay fs-lm-loeschen -->
+    <div id="fsLmLoeschen">
+      <div class="popup-lebensmittel-löschen">
+        <div class="lebensmittel-zum-löschen-popup">
+          <img src="../media/gemüse_icon.svg">
+          <h5 class="popupheaderklein">Bananen</h5>
+        </div>
+        <p class="textpopup">Möchtest Du das ausgewählte Lebensmittel wirklich aus der Liste löschen?</p>
+            <div class="button-spacing-popup">
+              <a class="exitButton" href=""><h5>Abbrechen</h5></a>
+              <a class="deleteButton" href=""><h5>Löschen</h5></a>
+            </div>  
+      </div>
     </div>
 
   <!-- Script Overlay fs-hilfe -->

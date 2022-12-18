@@ -1074,6 +1074,11 @@ Foodsaver Übersicht
     justify-items: center;
     justify-content: center;
 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(10%, -10%);
+
     width: 285px;
     height: auto;
 
@@ -1135,8 +1140,7 @@ Foodsaver Übersicht
 #fsUebersichtAbbr,
 #fsNichtErlaubteLm,
 #fsLmVerstauen,
-#fs-lm-loeschen,
-#fsAnmerkungAllergene,
+#fsLmLoeschen,
 #fs-uebersicht-bearbeiten,
 #fs-anmerkung {
     display: none;
@@ -1147,4 +1151,9 @@ Foodsaver Übersicht
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.25);
+}
+
+#fsAnmerkungAllergene{
+    display: none;
+    background-color: none;
 }
