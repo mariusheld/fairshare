@@ -11,8 +11,8 @@ body {
 
 #startscreen,
 #endscreen {
-    background-color: #99BB44;
-    width: 100%;
+    background-image: url('../media/startscreen.gif');
+    background-size: cover;
 }
 
 #startscreen-header,
