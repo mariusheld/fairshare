@@ -152,7 +152,7 @@ $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["
         </div>
       </div>
       <div class="buttoncenter">
-        <a class="allesklarButton" href="">
+        <a class="allesklarButton">
           <h5>Alles klar</h5>
         </a>
       </div>

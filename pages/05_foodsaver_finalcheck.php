@@ -133,7 +133,7 @@ session_destroy();
                 </div>
             </div>
             <div class="buttoncenter">
-                <a class="allesklarButton" href="">
+                <a class="allesklarButton">
                     <h5>Alles klar</h5>
                 </a>
             </div>
