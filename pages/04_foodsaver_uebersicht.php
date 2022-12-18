@@ -324,7 +324,11 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
   </div>
 
   <!-- Script Overlay fs-hilfe -->
-  <script type="text/javascript" src="../script/04.js"></script>
+  <?php
+    echo '<script type="text/javascript" src="../script/04.js">
+        </script>
+        ';
+    ?>
 </body>
 
 </html>

@@ -179,7 +179,11 @@ $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["
 
 
   <!-- Script Overlays -->
-  <script type="text/javascript" src="../script/02.js"></script>
+  <?php
+  echo '<script type="text/javascript" src="../script/02.js">
+        </script>
+        ';
+  ?>
 </body>
 
 </html>

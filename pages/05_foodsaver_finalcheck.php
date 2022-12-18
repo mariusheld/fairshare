@@ -141,7 +141,11 @@ session_destroy();
     </div>
 
     <!-- Script Overlay fs-hilfe -->
-    <script type="text/javascript" src="../script/05.js"></script>
+    <?php
+    echo '<script type="text/javascript" src="../script/05.js">
+        </script>
+        ';
+    ?>
 </body>
 
 </html>

@@ -583,7 +583,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <!-- Script Overlays -->
-    <script type="text/javascript" src="../script/03.js"></script>
+    <?php
+    echo '<script type="text/javascript" src="../script/03.js">
+        </script>
+        ';
+    ?>
 </body>
 
 </html>
