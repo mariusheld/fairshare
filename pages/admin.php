@@ -119,9 +119,9 @@ $icons = array(
             echo
                 "<td style='text-align: right; position: relative;' >
                 <img onclick='open_close_options(this)' alt='dots' src='../media/edit_icon.svg' width='48px;' style='cursor: pointer;'/>
-                <ul class='options'>
+                <ul class='options' id='" . $zähler. "'>
                     <li><img src='../media/eye.svg' alt=''><span>Ansehen</span></li>
-                    <li id='" . $zähler. "' onclick='open_lebensmittel_fairteilen(this)'><img src='../media/arrows.svg' alt=''><span>Fairteilen</span></li>
+                    <li onclick='open_lebensmittel_fairteilen(this)'><img src='../media/arrows.svg' alt=''><span>Fairteilen</span></li>
                     <li><img src='../media/trashbin.svg' alt=''><span>Entsorgen</span></li>
                 </ul>
             </td>";
