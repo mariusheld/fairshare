@@ -1136,9 +1136,9 @@ Foodsaver Übersicht
 #fsNichtErlaubteLm,
 #fsLmVerstauen,
 #fs-lm-loeschen,
+#fsAnmerkungAllergene,
 #fs-uebersicht-bearbeiten,
-#fs-anmerkung,
-#fs-anmerkung-allergene {
+#fs-anmerkung {
     display: none;
     position: absolute;
     top: 0;

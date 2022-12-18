@@ -100,3 +100,24 @@ editButton.onclick = function() {
   var itemKistennr = item.Kistennr;
   console.log(itemName);
 }
+
+
+//----------------JavaScript für fs-anmerkungen-allergene Overlay, genutzt in 04 -----------------------------//
+//Overlay auswählen
+var fsAnmerkungAllergene = document.getElementById("fsAnmerkungAllergene");
+      
+//Das öffnet das Overlay
+var openAnmerkungAllergene = document.getElementById("openAnmerkungAllergene");
+      
+//Das schließt das Overlay
+var exitAnmerkungAllergene = document.getElementsByClassName("close")[0];
+      
+//Öffnen wenn icon geklickt wird
+openAnmerkungAllergene.onclick = function() {
+fsAnmerkungAllergene.style.display = "block";
+}
+      
+//Schließen nach Button drücken
+exitAnmerkungAllergene.onclick = function() {
+fsAnmerkungAllergene.style.display = "none";
+}

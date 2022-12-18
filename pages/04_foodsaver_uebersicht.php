@@ -165,7 +165,8 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
             <td class="grid-col-2">
               <div class="interaktion-buttons">
                 <!-- OVERLAY TRIGGER -->
-                <img src='../media/comment_icon.svg' alt='comment_icon' />
+                <?php if ($row['Anmerkungen'] == true || $row['Allergene'] == true )
+              echo "<img src='../media/comment_icon.svg' alt='comment_icon' id='openAnmerkungAllergene'/>"; ?>
                 <!-- OVERLAY TRIGGER -->
                 <img id="editButton" src="../media/edit_icon.svg" alt="edit_icon" />
               </div>
@@ -322,6 +323,30 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
       </div>
     </div>
   </div>
+
+  <!-- Overlay fs-anmerkung-allergene -->
+  <div id="fsAnmerkungAllergene" class="fs-uebersicht-bearbeiten">
+        <div class="close">
+            <img src="../media/cross.svg" alt="Schließen Icon">
+        </div>
+        <div class="popup-anmerkung">
+          <?php if ($row['Anmerkungen'] == true)
+          echo "<h5>Anmerkung:</h5>";
+          ?>
+          <p>
+          <?php if ($row['Anmerkungen'] == true)
+          echo $row['Anmerkungen'];?>
+          </p>
+
+          <?php if ($row['Allergene'] == true)
+          echo "<h5 class='header2'>Allergene und Inhaltsstoffe:</h5>"; ?>
+
+          <p>
+            <?php if ($row['Allergene'] == true)
+            echo $row['Allergene'];?>
+          </p>
+       </div>
+    </div>
 
   <!-- Script Overlay fs-hilfe -->
   <?php
