@@ -10,13 +10,11 @@ var exitHilfe = document.getElementsByClassName("allesklarButton")[0];
 
 //Öffnen wenn icon geklickt wird
 openHelp.onclick = function () {
-  console.log("Button geklickt");
   fsHilfe.style.display = "block";
 };
 
 //Schließen nach Button drücken
 exitHilfe.onclick = function () {
-  console.log("Button geklickt");
   fsHilfe.style.display = "none";
 };
 

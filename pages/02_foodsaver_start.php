@@ -167,7 +167,7 @@ $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["
         <br />Bist du sicher, dass du zurück zur Startseite willst?
       </p>
       <div class="button-spacing-popup">
-        <a class="exitButton" href="">
+        <a class="exitButton">
           <h5>Nein, doch nicht</h5>
         </a>
         <a class="nextButton" href="../index.php">
