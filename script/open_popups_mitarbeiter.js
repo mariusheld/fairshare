@@ -67,3 +67,19 @@ document.getElementById('fairteilen').addEventListener('click', () => {
     document.getElementById('popup_lebensmittel_fairteilt').style.display = 'flex';
 });
 
+
+// Pop-Up: "Lebensmittel entsorgen"-------------------------------------------------------------------
+
+function open_lebensmittel_entsorgen(entsorgen_btn) {
+    let bezeichnung = document.getElementById('bezeichnung-' + entsorgen_btn.parentElement.id).innerHTML;
+    let gewicht = document.getElementById('gewicht-' + entsorgen_btn.parentElement.id).innerHTML;
+    
+    $('#popup_lebensmittel_entsorgen h5').html(bezeichnung);
+    $('#popup_lebensmittel_entsorgen .bestand').html(gewicht);
+    document.getElementById('popup_lebensmittel_entsorgen').style.display = 'flex';
+    open_close_options(entsorgen_btn.parentElement.previousElementSibling);
+}
+
+document.getElementById('entsorgen-abbrechen').addEventListener('click', () => {
+    document.getElementById('popup_lebensmittel_entsorgen').style.display = 'none';
+});

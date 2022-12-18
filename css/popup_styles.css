@@ -95,7 +95,7 @@
     margin: 0;
 }
 
-#popup_lebensmittel_fairteilen .popup {
+#popup_lebensmittel_fairteilen .popup, #popup_lebensmittel_entsorgen .popup {
     padding: 24px 32px 32px;
 }
 
@@ -166,7 +166,7 @@
     grid-column: span 2;
 }
 
-#fairteil-menge {
+#fairteil-menge, #entsorgen-menge {
     padding: 10px 12px;
     background-color: var(--alabaster);
     border: none;
@@ -177,7 +177,7 @@
     min-width: 50px;
 }
 
-#bestand {
+.bestand {
     font-family: Fira Sans;
     font-size: 18px;
     color: var(--onyx);

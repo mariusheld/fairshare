@@ -122,7 +122,7 @@ $icons = array(
                 <ul class='options' id='" . $zähler. "'>
                     <li><img src='../media/eye.svg' alt=''><span>Ansehen</span></li>
                     <li onclick='open_lebensmittel_fairteilen(this)'><img src='../media/arrows.svg' alt=''><span>Fairteilen</span></li>
-                    <li><img src='../media/trashbin.svg' alt=''><span>Entsorgen</span></li>
+                    <li onclick='open_lebensmittel_entsorgen(this)'><img src='../media/trashbin.svg' alt=''><span>Entsorgen</span></li>
                 </ul>
             </td>";
             echo "</tr>\n";
@@ -209,7 +209,7 @@ $icons = array(
                 <form action="" class="popup-form">
                     <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
                     <input type="number" id="fairteil-menge">
-                    <div id="bestand"></div>
+                    <div class="bestand"></div>
                 </form>
 
 
@@ -219,6 +219,28 @@ $icons = array(
         </div>
     </div>
 
+    <!-- Popup "Lebensmittel entsorgen" -->
+    <div class="overlay" id="popup_lebensmittel_entsorgen">
+        <div class="popup-wrapper">
+            <div class="popup active">
+                <div class="popup-header">
+                    <img src="../media/kategorien/icon_backwaren-suess.svg" alt="Backwaren Süß">
+                    <h5>Karottenkuchen</h5>
+                </div>
+                <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge des Lebensmittels möchtest du entsorgen?</p>
+        
+                <form action="" class="popup-form">
+                    <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
+                    <input type="number" id="entsorgen-menge">
+                    <div class="bestand">/ 1 kg</div>
+                </form>
+                
+
+                <button class="secondary-btn" id="entsorgen-abbrechen">Abbrechen</button>
+                <button class="primary-btn-red">Entsorgen</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Script zum Öffnen der Pop-Ups -->
     <script type="text/javascript" src="../script/open_popups_mitarbeiter.js"></script>
