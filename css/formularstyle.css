@@ -655,6 +655,7 @@ Foodsaver Übersicht
 }
 
 .interaktion-buttons {
+    position: relative;
     display: flex;
     justify-content: end;
     align-items: end;
@@ -1060,9 +1061,19 @@ Foodsaver Übersicht
 }
 
 .fs-uebersicht-bearbeiten {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    display: none;
+    position: absolute;
+    top: 35%;
+    left: -70%;
+    /* transform: translate(-70%, 70%); */
+}
+
+.fs-uebersicht-loeschen {
+    display: none;
+    position: absolute;
+    top: 35%;
+    left: -50%;
+    transform: translateX(-50%);
 }
 
 /*--------------------- fs-anmerkung und fs-anmerkung-allergene-----------------*/
@@ -1141,7 +1152,6 @@ Foodsaver Übersicht
 #fsNichtErlaubteLm,
 #fsLmVerstauen,
 #fsLmLoeschen,
-#fs-uebersicht-bearbeiten,
 #fs-anmerkung {
     display: none;
     position: absolute;
@@ -1153,7 +1163,7 @@ Foodsaver Übersicht
     background-color: rgba(0, 0, 0, 0.25);
 }
 
-#fsAnmerkungAllergene{
+#fsAnmerkungAllergene {
     display: none;
     background-color: none;
 }

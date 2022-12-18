@@ -93,13 +93,13 @@ function abbr() {
   header("Location: ../index.php");
 }
 
-var editButton = document.getElementById("editButton");
-editButton.onclick = function() {
-  var item = array[key];
-  var itemName = item.Lebensmittel;
-  var itemKistennr = item.Kistennr;
-  console.log(itemName);
-}
+// var editButton = document.getElementById("editButton");
+// editButton.onclick = function() {
+//   var item = array[key];
+//   var itemName = item.Lebensmittel;
+//   var itemKistennr = item.Kistennr;
+//   console.log(itemName);
+// }
 
 
 //----------------JavaScript für fs-anmerkungen-allergene Overlay, genutzt in 04 -----------------------------//
@@ -122,40 +122,33 @@ editButton.onclick = function() {
 //fsAnmerkungAllergene.style.display = "none";
 //}
 
-var fsAnmerkungAllergene = document.getElementById("fsAnmerkungAllergene");
-var fsLmLoeschen = document.getElementById("fsAnmerkungAllergene");
+var fsLmLoeschen = document.getElementById("fsLmLoeschen");
 
 let anmerkungen = false
 let bearbeiten = false
 
-function changeAnmerkung(){
+// console.log(array[1].id);
+
+function changeAnmerkung(id){
   if (anmerkungen == false){
     anmerkungen = true;
-    document.getElementById("openAnmerkungAllergene").setAttribute("src", "../media/cross.svg");
-    fsAnmerkungAllergene.style.display = "block";
+    document.getElementById(id).setAttribute("src", "../media/cross.svg");
+    document.getElementById("overlay:" + id).style.display = "block";
   } else {
     anmerkungen = false;
-    document.getElementById("openAnmerkungAllergene").setAttribute("src", "../media/comment_icon.svg");
-    fsAnmerkungAllergene.style.display = "none";
+    document.getElementById(id).setAttribute("src", "../media/comment_icon.svg");
+    document.getElementById("overlay:" + id).style.display = "none";
   }
 }
 
-
-
-
-
-
-
-
-
-function changeBearbeiten(){
+function changeBearbeiten(id){
   if (bearbeiten == false){
     bearbeiten = true;
-    document.getElementById("editButton").setAttribute("src", "../media/cross.svg");
-    fsLmLoeschen.style.display = "block";
+    document.getElementById("editButton:" + id).setAttribute("src", "../media/cross.svg");
+    document.getElementById("overlayLoeschen:" + id).style.display = "block";
   } else {
     bearbeiten = false;
-    document.getElementById("editButton").setAttribute("src", "../media/comment_icon.svg");
-    fsLmLoeschen.style.display = "none";
+    document.getElementById("editButton:" + id).setAttribute("src", "../media/edit_icon.svg");
+    document.getElementById("overlayLoeschen:" + id).style.display = "none";
   }
 }
