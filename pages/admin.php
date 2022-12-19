@@ -40,7 +40,8 @@ $icons = array(
     <meta charset="UTF-8" />
     <meta name="author" content="Marius Held" />
     <title>Abgabeübersicht</title>
-    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"
+        integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/adminstyle.css" />
     <link rel="stylesheet" href="../css/popup_styles.css">
     <style>
@@ -95,12 +96,12 @@ $icons = array(
             $zähler += 1;
             echo "<tr>";
             //echo "<td> <img alt='icon' width='48' src='" . $icons[$zeile['OKatKey']] . "'></td>";
-            echo 
+            echo
                 "<td class='lmicon'>
                     <div class='tablecontainer'>
                         <img alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'>
-                        <div id='bezeichnung-" . $zähler. "' style='font-weight: 600; padding-left: 16px;'>"
-                            . $zeile['Bezeichnung'] . "
+                        <div id='bezeichnung-" . $zähler . "' style='font-weight: 600; padding-left: 16px;'>"
+                . $zeile['Bezeichnung'] . "
                         </div>
                     </div>
                 </td>";
@@ -109,7 +110,7 @@ $icons = array(
             } else {
                 echo "<td><div class='tablecontainer'><div>4</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'></div></td>";
             }
-            echo "<td id='gewicht-" . $zähler. "'>" . $zeile['Gewicht'] . " kg</td>";
+            echo "<td id='gewicht-" . $zähler . "'>" . $zeile['Gewicht'] . " kg</td>";
             echo "<td>" . $zeile['VerteilDeadline'] . "</td>";
             if ($zeile['Anmerkung']) {
                 echo "<td style='text-align: right'><img id='bubble' alt='dots' src='../media/comment_icon.svg' width='48px;'/></td>";
@@ -119,7 +120,7 @@ $icons = array(
             echo
                 "<td style='text-align: right; position: relative;' >
                 <img onclick='open_close_options(this)' alt='dots' src='../media/edit_icon.svg' width='48px;' style='cursor: pointer;'/>
-                <ul class='options' id='" . $zähler. "'>
+                <ul class='options' id='" . $zähler . "'>
                     <li><img src='../media/eye.svg' alt=''><span>Ansehen</span></li>
                     <li onclick='open_lebensmittel_fairteilen(this)'><img src='../media/arrows.svg' alt=''><span>Fairteilen</span></li>
                     <li onclick='open_lebensmittel_entsorgen(this)'><img src='../media/trashbin.svg' alt=''><span>Entsorgen</span></li>
@@ -227,14 +228,15 @@ $icons = array(
                     <img src="../media/kategorien/icon_backwaren-suess.svg" alt="Backwaren Süß">
                     <h5>Karottenkuchen</h5>
                 </div>
-                <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge des Lebensmittels möchtest du entsorgen?</p>
-        
+                <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge des Lebensmittels
+                    möchtest du entsorgen?</p>
+
                 <form action="" class="popup-form">
                     <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
                     <input type="number" id="entsorgen-menge">
                     <div class="bestand">/ 1 kg</div>
                 </form>
-                
+
 
                 <button class="secondary-btn" id="entsorgen-abbrechen">Abbrechen</button>
                 <button class="primary-btn-red">Entsorgen</button>
@@ -245,35 +247,38 @@ $icons = array(
     <!-- Script zum Öffnen der Pop-Ups -->
     <script type="text/javascript" src="../script/open_popups_mitarbeiter.js"></script>
     <!-- Script zum Öffnen und Schließen des Logout Overlays -->
-    <script>
-        // Modale Box ansprechen
-        var modal = document.getElementById('overtrigger');
+    <?php
+    echo "
+        <script>
+            // Modale Box ansprechen
+            var modal = document.getElementById('overtrigger');
 
-        // Buttons definieren, welche die modale Box triggern
-        var btn = document.getElementById('logout');
+            // Buttons definieren, welche die modale Box triggern
+            var btn = document.getElementById('logout');
 
-        // <span> Element ansprechen, welches den Schließbutton anspricht
-        var span = document.getElementsByClassName('buttonwhite')[0];
+            // <span> Element ansprechen, welches den Schließbutton anspricht
+            var span = document.getElementsByClassName('buttonwhite')[0];
 
-        // Funktion, dass sich die modale Box öffnet, wenn der Button getriggert wird
-        btn.onclick = function () {
-            modal.style.display = 'flex';
-        }
-        // Bei Klick auf Abbrechen -> Fenster schließen
-        span.onclick = function () {
-            modal.style.display = 'none';
-        }
-        // Fenster schließen beim Klick außerhalb des Fensters
-        window.onclick = function (event) {
-            if (event.target == modal) {
+            // Funktion, dass sich die modale Box öffnet, wenn der Button getriggert wird
+            btn.onclick = function () {
+                modal.style.display = 'flex';
+            }
+            // Bei Klick auf Abbrechen -> Fenster schließen
+            span.onclick = function () {
                 modal.style.display = 'none';
             }
-        }
-        //User drückt auf Abmelden
-        btnlogout.onclick = function () {
-            window.location.href = '../index.php'
-        }
-    </script>
+            // Fenster schließen beim Klick außerhalb des Fensters
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+            //User drückt auf Abmelden
+            btnlogout.onclick = function () {
+                window.location.href = '../index.php'
+            }
+        </script>"
+        ?>
     <?php
     } else {
         session_destroy();
