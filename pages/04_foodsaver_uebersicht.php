@@ -164,7 +164,8 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
             <td class="grid-col-2">
               <div class="interaktion-buttons">
                 <!-- OVERLAY TRIGGER -->
-                <?php if ($array[$key]['Anmerkungen'] == true || $array[$key]['Anmerkungen'] == true) { ?>
+                <?php
+            if ($array[$key]['Anmerkungen'] == true || $array[$key]['Allergene'] == true) { ?>
                 <img src='../media/comment_icon.svg' alt='comment_icon' id="<?php echo $array[$key]['id'] ?>"
                   onClick='changeAnmerkung("<?php echo $array[$key]['id'] ?>")' />
                 <?php
@@ -180,17 +181,18 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                     <?php if ($row['Anmerkungen'] == true)
               echo "<h5>Anmerkung:</h5>";
                     ?>
-                    <p>
-                      <?php if ($row['Anmerkungen'] == true)
-              echo ($array[$key]['Anmerkungen']) ?>
-                    </p>
 
+                    <?php if ($row['Anmerkungen'] == true) { ?>
+                    <p>
+                      <?php echo ($array[$key]['Anmerkungen']) ?>
+                    </p>
+                    <?php } ?>
                     <?php if ($row['Allergene'] == true)
               echo "<h5 class='header2'>Allergene und Inhaltsstoffe:</h5>"; ?>
 
                     <p>
                       <?php if ($row['Allergene'] == true)
-              echo $row['Allergene']; ?>
+              echo $array[$key]['Allergene']; ?>
                     </p>
                   </div>
                 </div>

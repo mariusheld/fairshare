@@ -584,10 +584,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br />Bist du sicher, dass du zurück zur Übersicht willst?
             </p>
             <div class="button-spacing-popup">
-                <a class="exitButton" href="">
+                <a class="exitButton" id="exit-fsHinzufuegenAbbr">
                     <h5>Nein, doch nicht</h5>
                 </a>
-                <a class="nextButton" href="../02_foodsaver_start.php">
+                <a class="nextButton" href="../pages/02_foodsaver_start.php">
                     <h5>Ja, zur Übersicht</h5>
                 </a>
             </div>
@@ -607,6 +607,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("fsNichtErlaubteLm").style.display = "none";
             };
         }
+        document.getElementById("exit-fsHinzufuegenAbbr").onclick = function () {
+            document.getElementById("fsHinzufuegenAbbr").style.display = "none";
+        };
     </script>
 </body>
 
