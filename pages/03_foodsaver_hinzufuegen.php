@@ -587,7 +587,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a class="exitButton" href="">
                     <h5>Nein, doch nicht</h5>
                 </a>
-                <a class="nextButton" href="../02_foodsaver-start.php">
+                <a class="nextButton" href="../02_foodsaver_start.php">
                     <h5>Ja, zur Übersicht</h5>
                 </a>
             </div>
