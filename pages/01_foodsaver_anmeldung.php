@@ -1,7 +1,7 @@
 <?php
 session_start();
 $passwordErr = $_SESSION['passwordErr'];
-
+$_SESSION["foodsaverLogin"] = false;
 // Passwort Formular Validierung
 function test_input($data)
 {

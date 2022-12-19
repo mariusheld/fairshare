@@ -25,8 +25,6 @@ function consolelog($data, bool $quotes = false)
   }
 }
 
-consolelog($array);
-
 // Vollständiger Array mit allen Einträgen wird an die Datenbank übertragen. -------------------
 function sendList($dbeintragArray, $conn)
 {
@@ -316,7 +314,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         </div>
       </div>
       <div class="buttoncenter">
-        <a class="allesklarButton" href="">
+        <a class="allesklarButton">
           <h5>Alles klar</h5>
         </a>
       </div>
@@ -331,7 +329,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         <br />Bist du sicher, dass du zurück zur Startseite willst?
       </p>
       <div class="button-spacing-popup">
-        <a class="exitButton" href="">
+        <a class="exitButton" id="exit-uebersicht">
           <h5>Nein, doch nicht</h5>
         </a>
         <a class="nextButton" href="../index.php">
@@ -367,7 +365,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         </li>
       </ul>
       <div class="buttoncenter">
-        <a class="allesklarButton" href="">
+        <a class="allesklarButton">
           <h5>Alles klar</h5>
         </a>
       </div>
@@ -380,6 +378,18 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         </script>
         ';
   ?>
+  <script>
+    //Öffnen wenn icon geklickt wird
+    for (let item of document.getElementsByClassName("allesklarButton")) {
+      item.onclick = function (event) {
+        document.getElementById("fsHilfe").style.display = "none";
+        document.getElementById("fsLmVerstauen").style.display = "none";
+      };
+    }
+    document.getElementById("exit-uebersicht").onclick = function () {
+      document.getElementById("fsUebersichtAbbr").style.display = "none";
+    };
+  </script>
 </body>
 
 </html>

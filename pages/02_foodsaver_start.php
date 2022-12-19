@@ -5,6 +5,7 @@ session_start();
 // Session Arrays initialisieren
 $_SESSION["array"] = array();
 $_SESSION["dbeintragArray"] = array();
+$_SESSION["kuehlcheck"] = 0;
 
 // --- DATENBANKANBINDUNG FOODSAVER ANMELDUNG ---
 // Datenbank verbinden
@@ -33,7 +34,7 @@ if (!empty($_POST['vorname'])) {
 }
 
 //Konsolen Kontrolle ob POST liefert
-echo "<script>console.log('{$_SESSION["vorname"]}', '{$_SESSION["nachname"]}', '{$_SESSION["foodID"]}', '{$_SESSION["email"]}', '{$_SESSION["tel"]}');</script>";
+// echo "<script>console.log('{$_SESSION["vorname"]}', '{$_SESSION["nachname"]}', '{$_SESSION["foodID"]}', '{$_SESSION["email"]}', '{$_SESSION["tel"]}');</script>";
 
 //Insert in die Datenbank
 $eintragFS = $db->prepare("INSERT INTO Foodsaver (FoodsharingID, Vorname, Nachname, TelNr, Email)

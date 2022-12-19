@@ -14,7 +14,7 @@ if ($_SESSION["foodsaverLogin"] == false) {
 // ----------- VARIABLEN ----------
 $LMBez = "";
 $OKatKey = 0;
-$kuehlcheck = 0;
+$kuehlcheck = $_SESSION["kuehlcheck"];
 $kiste = null;
 $menge = null;
 $HerkunftKey = "";
@@ -74,21 +74,28 @@ function test_input($data)
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // if (empty($_POST["LMBez"])) {
+    //     $lmbezErr = "Erforderlich";
+    // } else {
+    //     $LMBez = test_input($_POST["LMBez"]);
+    //     // check if LMBez only contains letters and whitespace
+    //     if (!preg_match("/^[a-zA-Z-' ]*$/", $LMBez)) {
+    //         $lmbezErr = "Only letters and white space allowed";
+    //     }
+    // }
+
     if (empty($_POST["LMBez"])) {
         $lmbezErr = "Erforderlich";
     } else {
         $LMBez = test_input($_POST["LMBez"]);
-        // check if LMBez only contains letters and whitespace
-        if (!preg_match("/^[a-zA-Z-' ]*$/", $LMBez)) {
-            $lmbezErr = "Only letters and white space allowed";
-        }
     }
 
     if (
         isset($_POST['kuehlcheck']) &&
         $_POST['kuehlcheck'] == 'true'
     ) {
-        $kuehlcheck = true;
+        $_SESSION["kuehlcheck"] = 1;
+        $kuehlcheck = 1;
     }
 
     if (empty($_POST["kiste"])) {
@@ -197,6 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         array_push($_SESSION["array"], $eintrag);
         array_push($_SESSION["dbeintragArray"], $dbeintrag);
         $_SESSION["latestLMkey"] = $_SESSION["latestLMkey"] + 1;
+        $_SESSION["kuehlcheck"] = 0;
         header("Location: ./04_foodsaver_uebersicht.php");
         exit();
     }
@@ -253,10 +261,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="grid-col-2">
                             <div class="kuehlcheck">
                                 <div class="check-item">
-                                    <input name="kuehlcheck" type="checkbox" value="true">
-                                    <img src="../media/checkbox.svg" alt="checkbox" />
-                                    <img src="../media/checkbox_checked.svg" alt="checkbox_checked" />
-                                    In den Kühlschrank?
+                                    <input name="kuehlcheck" type="checkbox" value="true" id="kuehlen">
+                                    <?php
+                                    if ($kuehlcheck == "0") {
+                                        echo "<img src='../media/checkbox.svg' alt='checkbox' />";
+                                        echo "<img src='../media/checkbox_checked.svg' alt='checkbox_checked' />";
+                                    } else {
+                                        echo "<img src='../media/checkbox_checked.svg' alt='checkbox_checked' />";
+                                        echo "<img src='../media/checkbox_checked.svg' alt='checkbox_checked' />";
+                                    } ?>
+                                    In den Kühlschrank
                                 </div>
                             </div>
                         </div>
@@ -285,6 +299,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="category-grid">
                                 <?php
+
                                 // LOOP TILL END OF DATA
                                 foreach ($kategorien as $key => $row) {
 
@@ -301,9 +316,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                                 <div class="radio-container kategorie">
                                     <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php if (
-                                        isset($OKatKey) && $OKatKey == $row['OKatKey']
-                                    )
-                                        echo "checked"; ?> >
+                                        isset($OKatKey) && $OKatKey==$row['OKatKey'] ) echo "checked"; ?> >
                                     <div class="category-item">
                                         <?php echo "<img src='" . $iconList[$key] . "'>" ?>
                                         <p>
@@ -334,6 +347,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label>
                                     Menge (in kg)
                                 </label>
+                                <span class="error">*
+                                    <?php echo $mengeErr; ?>
+                                </span>
                                 <!-- OVERLAY Trigger-->
                                 <div>
                                     <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
@@ -347,9 +363,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <p>Unter dem Waschbecken findest Du die Waage.</p>
                                     </div>
                                 </div>
-                                <span class="error">*
-                                    <?php echo $mengeErr; ?>
-                                </span>
                             </div>
                             <input name="menge" class="input" type="number" step="0.1" value="<?php echo $menge; ?>"
                                 min="0" />
@@ -395,9 +408,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                                 <div class="radio-container haltbarkeit">
                                     <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
-                                        <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey'])
-                                        echo
-                                            "checked"; ?>>
+                                        <?php if (isset($HerkunftKey) && $HerkunftKey==$row['HerkunftKey']) echo
+                                        "checked"; ?>>
                                     <div class="haltbarkeit-item">
                                         <p>
                                             <?php echo $row['HerkunftName'] ?>
@@ -520,7 +532,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="buttoncenter">
-                <a class="allesklarButton" href="">
+                <a class="allesklarButton">
                     <h5>Alles klar</h5>
                 </a>
             </div>
@@ -557,7 +569,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </li>
             </ul>
             <div class="buttoncenter">
-                <a class="allesklarButton" href="">
+                <a class="allesklarButton">
                     <h5>Alles klar</h5>
                 </a>
             </div>
@@ -575,19 +587,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a class="exitButton" href="">
                     <h5>Nein, doch nicht</h5>
                 </a>
-                <a class="nextButton" href="../index.php">
+                <a class="nextButton" href="../02_foodsaver-start.php">
                     <h5>Ja, zur Übersicht</h5>
                 </a>
             </div>
         </div>
     </div>
-
     <!-- Script Overlays -->
     <?php
     echo '<script type="text/javascript" src="../script/03.js">
         </script>
         ';
     ?>
+    <script>
+        //Öffnen wenn icon geklickt wird
+        for (let item of document.getElementsByClassName("allesklarButton")) {
+            item.onclick = function (event) {
+                document.getElementById("fsHilfe").style.display = "none";
+                document.getElementById("fsNichtErlaubteLm").style.display = "none";
+            };
+        }
+    </script>
 </body>
 
 </html>
