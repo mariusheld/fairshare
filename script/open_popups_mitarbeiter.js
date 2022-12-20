@@ -29,19 +29,26 @@ function close_KeineBoxen() {
 
 // Kontextmenü
 
-let visible = false;
-
-
+var old = null;
 
 function open_close_options(options_btn) {
-    if (visible == false) {
+    
+    if (old == null) {
         options_btn.src = '../media/cross.svg';
         options_btn.nextElementSibling.style.display = 'block';
-        visible = true;
-    } else {
+        old = options_btn.id;
+
+    } else if (old == options_btn.id){
         options_btn.src = '../media/edit_icon.svg';
         options_btn.nextElementSibling.style.display = 'none';
-        visible = false;
+        old = null;
+
+    } else if (old != options_btn.id) {
+        document.getElementById(old).nextElementSibling.style.display = 'none';
+        document.getElementById(old).src = '../media/edit_icon.svg';
+        options_btn.nextElementSibling.style.display = 'block';
+        options_btn.src = '../media/cross.svg';
+        old = options_btn.id;
     }
 }
 
