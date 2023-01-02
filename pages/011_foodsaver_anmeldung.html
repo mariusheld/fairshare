@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang=de>
+       <head>
+        <meta charset="UTF-8"/>
+        <meta name="author" content="Marius Held"/>
+        <title>Abgabeübersicht</title>
+        <link rel="stylesheet" href="../css/adminstyle.css"/> 
+        <link rel="stylesheet" href="../css/formularstyle.css"/> 
+        <link rel="stylesheet" href="../css/foodsaver_anmeldung.css"/> 
+        <style>
+           @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&family=Londrina+Solid:wght@300;400&display=swap');
+        </style>
+        </head>
+        <body>
+        <header style="padding-left: 0;">
+            <img src="../media/logo.svg" style="margin-left:0">
+            <a href="#" class="MitarbeiterLogin" id="login">
+                <span>Mitarbeiter*in</span>
+                <button id="startscreen-mitarbeiter-button"><svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
+                        width="28px" height="28px" fill="#99BB44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF"
+                        class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+                    </svg></button>
+            </a>
+        </header>
+		<!--Seiteninhalt-->
+		<div class="seiteninhalt">
+			<form class="emailco" method="POST" >
+                <div class="header">
+                    Anmelden per...
+                </div>
+                <div class="radiocontainer">
+                    <button class="btn">E-Mail</button>
+                    <button class="btn">Telefonummer</button>
+                    <button class="btn">Foodsaver-ID</button>
+                </div>
+            </form>
+            <div class="regcontainer">
+            <div class="header" style="margin-top: 48px;">
+                Zum ersten mal hier?
+            </div>
+            <a href="01_foodsaver_anmeldung.php">
+            <button class="reg">Registrieren</button>
+            </a>
+        </div>
+        <div class="formvariabel" style="text-align: left;">
+            <form class="anmeldung" method="POST">
+                <div class="anmeldungmail ">
+                    <label  for="mail">Deine E-Mail</label></br>
+                    <input type="email" name="mail"  style="width:310px; height: 46px;"/>
+                </div>
+                <div class="anmeldungtel ">
+                    <label  for="tel">Deine Telefonnummer</label></br>
+                    <input type="tel" name="tel"  style="width:310px; height: 46px;"/>
+                </div>
+                <div class="anmeldungid">
+                    <label  for="ID">Deine Foodsaver-ID</label></br>
+                    <input type="text" name="ID"  style="width:310px; height: 46px;"/>
+                </div>
+            </form>
+        </div>
+    </div>
+		<!--Seiteninhalt-->
+		<footer>
+			<div class="action-container">
+                <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
+                <div id="openNichtErlaubteLm" style="visibility:hidden">
+                    <img src="../media/icon_help_mini.svg" alt="icon_help" />
+                    <p>Nicht erlaubte Lebensmittel</p>
+                </div>
+                <div class="action-wrap">
+                    <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
+                    <a id="openHinzufuegenAbbr">Abbrechen</a>
+                    <input class="continue-button" type="submit" form="myform" value="Anmeldung">
+                </div>
+            </div>
+		</footer>
+		</div>
+        
+         <script>
+             // Modale Box ansprechen
+             var modal = document.getElementById('overtrigger');
+     
+             // Buttons definieren, welche die modale Box triggern
+             var btn = document.getElementById('logout');
+     
+             // <span> Element ansprechen, welches den Schließbutton anspricht
+             var span = document.getElementsByClassName('buttonwhite')[0];
+     
+             // Funktion, dass sich die modale Box öffnet, wenn der Button getriggert wird
+             btn.onclick = function() {
+               modal.style.display = 'flex';
+             }
+             // Bei Klick auf Abbrechen -> Fenster schließen
+             span.onclick = function() {
+             modal.style.display = 'none';
+             eingabe.value ='';
+             eingabe.style.border='none';
+             }
+             // Fenster schließen beim Klick außerhalb des Fensters
+             window.onclick = function(event) {
+                 if (event.target == modal) {
+                     modal.style.display = 'none';
+                     eingabe.value ='';
+                     eingabe.style.border='none';
+                 }
+             }
+             //User drückt auf Abmelden
+            btnlogout.onclick = function(){
+                window.location.href = '../index.php'
+            }
+             //LogIn fehlgeschlagen
+             if(login==false) {
+                 document.getElementsById('eingabe').style.border = '2px red';
+             }
+         </script>
+         <!--Skript Ende-->
+         </body>
+</html>
