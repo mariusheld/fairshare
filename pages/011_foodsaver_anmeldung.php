@@ -31,12 +31,12 @@
                     Anmelden per...
                 </div>
                 <div class="radiocontainer">
-                    <button class="btn">E-Mail</button>
-                    <button class="btn">Telefonummer</button>
-                    <button class="btn">Foodsaver-ID</button>
+                    <button id="btnmail" type="button" onclick="buttoncheck(this)" class="btn">E-Mail</button>
+                    <button id="btntel" type="button" onclick="buttoncheck(this)" class="btn">Telefonummer</button>
+                    <button id="btnid" type="button" onclick="buttoncheck(this)" class="btn">Foodsaver-ID</button>
                 </div>
             </form>
-            <div class="regcontainer">
+            <div id="regcontainer" class="regcontainer">
             <div class="header" style="margin-top: 48px;">
                 Zum ersten mal hier?
             </div>
@@ -46,15 +46,15 @@
         </div>
         <div class="formvariabel" style="text-align: left;">
             <form class="anmeldung" method="POST">
-                <div class="anmeldungmail ">
+                <div class="anmeldungmail" id="anmail">
                     <label  for="mail">Deine E-Mail</label></br>
                     <input type="email" name="mail"  style="width:310px; height: 46px;"/>
                 </div>
-                <div class="anmeldungtel ">
+                <div class="anmeldungtel" id="antel">
                     <label  for="tel">Deine Telefonnummer</label></br>
                     <input type="tel" name="tel"  style="width:310px; height: 46px;"/>
                 </div>
-                <div class="anmeldungid">
+                <div class="anmeldungid" id="anid">
                     <label  for="ID">Deine Foodsaver-ID</label></br>
                     <input type="text" name="ID"  style="width:310px; height: 46px;"/>
                 </div>
@@ -79,6 +79,73 @@
 		</div>
         
          <script>
+            //JavaScript Funktionen für die Buttons
+            function buttoncheck(btn) {
+                //Speichern der Button ID in eine Variable
+                var x = btn.id;
+                // If/else Funktion für die Buttons
+                if (x == "btnmail"){
+                    //CSS zum Button Styling
+                    var mailclick = document.getElementById("btnmail");
+                    mailclick.style.border = "solid 2px #99BB44";
+                    mailclick.style.boxShadow = "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)";
+
+                    //Reset Styling der anderen Buttons
+                    var telclick = document.getElementById("btntel");
+                    var idclick = document.getElementById("btnid");
+                    telclick.style.border ="solid 2px #E5E5E3";
+                    idclick.style.border ="solid 2px #E5E5E3";
+                    telclick.style.boxShadow = "none";
+                    idclick.style.boxShadow = "none";
+
+                    //CSS Anweisungen zur Ein-/Ausblendung der einzelnen Elemente
+                    document.getElementById("regcontainer").style.display = "none";
+                    document.getElementById("antel").style.display = "none";
+                    document.getElementById("anid").style.display = "none";
+                    document.getElementById("anmail").style.display = "block";
+                    
+                } else if (x == "btntel") {
+                     //CSS zum Button Styling
+                     var telclick = document.getElementById("btntel");
+                    telclick.style.border = "solid 2px #99BB44";
+                    telclick.style.boxShadow = "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)";
+
+                    //Reset Styling der anderen Buttons
+                    var mailclick = document.getElementById("btnmail");
+                    var idclick = document.getElementById("btnid");
+                    mailclick.style.border ="solid 2px #E5E5E3";
+                    idclick.style.border ="solid 2px #E5E5E3";
+                    mailclick.style.boxShadow = "none";
+                    idclick.style.boxShadow = "none";
+
+                    //CSS Anweisungen zur Ein-/Ausblendung der einzelnen Elemente
+                    document.getElementById("regcontainer").style.display = "none";
+                    document.getElementById("antel").style.display = "block";
+                    document.getElementById("anid").style.display = "none";
+                    document.getElementById("anmail").style.display = "none";
+
+                }else if (x == "btnid") {
+                     //CSS zum Button Styling
+                     var idclick = document.getElementById("btnid");
+                    idclick.style.border = "solid 2px #99BB44";
+                    idclick.style.boxShadow = "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)";
+
+                     //Reset Styling der anderen Buttons
+                     var mailclick = document.getElementById("btnmail");
+                    var telclick = document.getElementById("btntel");
+                    mailclick.style.border ="solid 2px #E5E5E3";
+                    telclick.style.border ="solid 2px #E5E5E3";
+                    mailclick.style.boxShadow = "none";
+                    telclick.style.boxShadow = "none";
+
+                    //CSS Anweisungen zur Ein-/Ausblendung der einzelnen Elemente
+                    document.getElementById("regcontainer").style.display = "none";
+                    document.getElementById("antel").style.display = "none";
+                    document.getElementById("anid").style.display = "block";
+                    document.getElementById("anmail").style.display = "none";
+                }
+            }
+
              // Modale Box ansprechen
              var modal = document.getElementById('overtrigger');
      

@@ -433,3 +433,9 @@ button:hover {
 div.formvariabel {
     width: 310px;
 }
+
+/*Display None für Formularfelder*/
+div.anmeldungmail, div.anmeldungtel, div.anmeldungid {
+    display:none;
+    margin-top: 48px;
+}
