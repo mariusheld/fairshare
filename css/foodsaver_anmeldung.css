@@ -376,6 +376,46 @@ div.header {
     font-size: 18px;
     line-height: 26px;
 }
+#btnbreakup {
+    margin: 0;
+    /* onyx */
+    color: #1E212B;
+    /* sand  */
+    border: solid 2px #E5E5E3;
+    border-radius: 16px;
+    padding: 8px 12px;
+    width: 228px;
+    height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #99BB44;
+    background-color: white;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Fira Sans";
+    line-height: 26px;
+}
+#btnallesklar {
+    margin: 0;
+    /* onyx */ 
+    border-radius: 16px;
+    padding: 8px 12px;
+    width: 310px;
+    height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    background-color: #99BB44;;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Fira Sans";
+    line-height: 26px;
+    margin-top: 41px;
+}
 button.btn {
     margin: 0;
     /* onyx */
