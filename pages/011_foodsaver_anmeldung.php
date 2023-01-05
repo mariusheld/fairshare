@@ -141,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="action-wrap">
                     <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
-                    <button style="margin-top:0px" id="btnbreakup" type="button" onclick="buttoncheck(this)" >Abrechen</button>
+                    <button style="margin-top:0px" id="btnbreakup" type="button" onclick="buttoncheck(this)" >Abbrechen</button>
                     <input class="continue-button" type="submit" form="myform" value="Anmeldung" style="width: 228px">
                 </div>
             </div>
