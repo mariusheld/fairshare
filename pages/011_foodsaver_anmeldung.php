@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 		<!--Seiteninhalt-->
-		<footer>
+		<footer id="footer">
 			<div class="action-container">
                 <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
                 <div id="openNichtErlaubteLm" style="visibility:hidden">
@@ -173,6 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById("antel").style.display = "none";
                     document.getElementById("anid").style.display = "none";
                     document.getElementById("anmail").style.display = "block";
+                    document.getElementById("footer").style.visibility = "visible";
                     
                 } else if (x == "btntel") {
                      //CSS zum Button Styling
@@ -193,6 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById("antel").style.display = "block";
                     document.getElementById("anid").style.display = "none";
                     document.getElementById("anmail").style.display = "none";
+                    document.getElementById("footer").style.visibility = "visible";
 
                 }else if (x == "btnid") {
                      //CSS zum Button Styling
@@ -213,6 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById("antel").style.display = "none";
                     document.getElementById("anid").style.display = "block";
                     document.getElementById("anmail").style.display = "none";
+                    document.getElementById("footer").style.visibility = "visible";
                 }
             }
 
