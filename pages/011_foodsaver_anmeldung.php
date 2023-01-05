@@ -141,8 +141,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="action-wrap">
                     <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
-                    <a id="openHinzufuegenAbbr">Abbrechen</a>
-                    <input class="continue-button" type="submit" form="myform" value="Anmeldung">
+                    <button style="margin-top:0px" id="btnbreakup" type="button" onclick="buttoncheck(this)" >Abrechen</button>
+                    <input class="continue-button" type="submit" form="myform" value="Anmeldung" style="width: 228px">
                 </div>
             </div>
 		</footer>
@@ -216,6 +216,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById("anid").style.display = "block";
                     document.getElementById("anmail").style.display = "none";
                     document.getElementById("footer").style.visibility = "visible";
+                } else if (x == "btnbreakup") {
+                    //CSS zum Zurücksetzen der geklickten Buttons
+                    var mailclick = document.getElementById("btnmail");
+                    var telclick = document.getElementById("btntel");
+                    var idclick = document.getElementById("btnid");
+                    mailclick.style.border ="solid 2px #E5E5E3";
+                    telclick.style.border ="solid 2px #E5E5E3";
+                    mailclick.style.boxShadow = "none";
+                    telclick.style.boxShadow = "none";
+                    idclick.style.border ="solid 2px #E5E5E3";
+                    idclick.style.boxShadow = "none";
+                    //CSS Anweisungen zum Ausblenden aller Elemente
+                    document.getElementById("regcontainer").style.display = "block";
+                    document.getElementById("antel").style.display = "none";
+                    document.getElementById("anid").style.display = "none";
+                    document.getElementById("anmail").style.display = "none";
+                    document.getElementById("footer").style.visibility = "hidden";
+
                 }
             }
 
