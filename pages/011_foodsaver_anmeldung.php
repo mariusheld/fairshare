@@ -1,3 +1,30 @@
+<?php
+session_start();
+$passwordErr = $_SESSION['passwordErr'];
+$_SESSION["foodsaverLogin"] = false;
+// Passwort Formular Validierung
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (test_input($_POST["password"]) == "raupe") {
+        // Login auf True setzen 
+        $_SESSION['login'] = true;
+        // Weiterleiten
+        header("Location: ./admin.php");
+    } else {
+        $_SESSION['passwordErr'] = true;
+        header("Location: ./01_foodsaver_anmeldung.php");
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang=de>
        <head>
@@ -24,6 +51,49 @@
                     </svg></button>
             </a>
         </header>
+
+
+    <!-- ---------- OVERLAYS ----------- -->
+    <!-- Anmelde Overlay -->
+    <div class="helper" id="overtrigger">
+        <div class="overlayparent">
+            <div class="overlaychild">
+                <p class="olhead">
+                    Kennwort
+                </p>
+                <div class="eingabe">
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+                        autocomplete="off">
+                        <?php
+                        if ($passwordErr == false) { ?>
+                        <input class="eingabefeld" name="password" id="eingabe" type="password"
+                            style='text-align: center; font-size: 20px;'>
+                        <?php }
+                        if ($passwordErr == true) {
+                        ?>
+                        <input class="eingabefeld" name="password" id="eingabe" type="password"
+                            style='border: 2px solid red; width: 468; height: 42px;'>
+                        <p class="vergessen" id="vergessen" style='color: red; display: block;'>
+                            Kennwort falsch
+                        </p>
+                        <?php } ?>
+
+                        <div class="buttonscontainer" id="bcontainer">
+                            <div class="buttonwhite" id="breakup">
+                                <p class="buttontext" style="color: #99BB44">
+                                    Abrechen
+                                </p>
+                            </div>
+                            <div class="buttongreen">
+                                <input type="submit" class="buttongreen" style="color: white" value="Anmelden">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 		<!--Seiteninhalt-->
 		<div class="seiteninhalt">
 			<form class="emailco" method="POST" >
@@ -146,41 +216,53 @@
                 }
             }
 
-             // Modale Box ansprechen
-             var modal = document.getElementById('overtrigger');
-     
-             // Buttons definieren, welche die modale Box triggern
-             var btn = document.getElementById('logout');
-     
-             // <span> Element ansprechen, welches den Schließbutton anspricht
-             var span = document.getElementsByClassName('buttonwhite')[0];
-     
-             // Funktion, dass sich die modale Box öffnet, wenn der Button getriggert wird
-             btn.onclick = function() {
-               modal.style.display = 'flex';
-             }
-             // Bei Klick auf Abbrechen -> Fenster schließen
-             span.onclick = function() {
-             modal.style.display = 'none';
-             eingabe.value ='';
-             eingabe.style.border='none';
-             }
-             // Fenster schließen beim Klick außerhalb des Fensters
-             window.onclick = function(event) {
-                 if (event.target == modal) {
-                     modal.style.display = 'none';
-                     eingabe.value ='';
-                     eingabe.style.border='none';
-                 }
-             }
-             //User drückt auf Abmelden
-            btnlogout.onclick = function(){
-                window.location.href = '../index.php'
+            //Variable für Fehlermeldung
+           let passwordErr = <?php echo json_encode($passwordErr); ?>;
+
+             //JavaScript für das PopUp
+        // Modales Fenster 
+        var modal = document.getElementById('overtrigger');
+
+            // Button der modale Fenster triggert
+            var btn = document.getElementById('login');
+
+            // Button der das modale Fenster schließst
+            var span = document.getElementsByClassName('buttonwhite')[0];
+
+            // Modales Fenster öffnen 
+            if (passwordErr == true) {
+                modal.style.display = 'flex';
             }
-             //LogIn fehlgeschlagen
-             if(login==false) {
-                 document.getElementsById('eingabe').style.border = '2px red';
-             }
+            btn.onclick = function () {
+                modal.style.display = 'flex';
+            }
+            // Modales Fenster schließen wenn auf Abbrechen geklickt wird
+            span.onclick = function () {
+                modal.style.display = 'none';
+                eingabe.value = '';
+                eingabe.style.border = 'none';
+                vergessen.style.display = 'none';
+                bcontainer.style.paddingtop = '64px';
+                eingabe.style.height = '46px';
+                eingabe.style.width = '472px';
+            }
+            // Modales Fenster schließen wenn außerhalb der Box geklickt wird
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                    eingabe.value = '';
+                    eingabe.style.border = 'none';
+                    vergessen.style.display = 'none';
+                    bcontainer.style.paddingtop = '64px';
+                    eingabe.style.height = '46px';
+                    eingabe.style.width = '472px';
+                }
+            }
+            //Ausblenden des Overlays beim Laden der Seite
+            document.onload = function (event) {
+                modal.style.display = 'none';
+            }
+            
          </script>
          <!--Skript Ende-->
          </body>
