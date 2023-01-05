@@ -97,7 +97,7 @@ if (!$erfolg) {
         //Weiterleitung zum Foodsaver Anmeldeprozess
         var startscreenButton = document.getElementById('startscreen-button');
         startscreenButton.onclick = function () {
-            window.location.href = 'pages/01_foodsaver_anmeldung.php';
+            window.location.href = 'pages/011_foodsaver_anmeldung.php';
         }
         // Modales Fenster 
         var modal = document.getElementById('overtrigger');
