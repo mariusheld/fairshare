@@ -126,7 +126,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
           // LOOP TILL END OF DATA
           foreach ($array as $key => $row) {
           ?>
-          <tr class="table-items">
+          <tr class="table-items" id="<?php echo $array[$key]['id'] ?>">
             <td class="grid-col-3">
               <?php
 
@@ -166,7 +166,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                 <!-- OVERLAY TRIGGER -->
                 <?php
             if ($array[$key]['Anmerkungen'] == true || $array[$key]['Allergene'] == true) { ?>
-                <img src='../media/comment_icon.svg' alt='comment_icon' id="<?php echo $array[$key]['id'] ?>"
+                <img src='../media/comment_icon.svg' alt='comment_icon' id="anmerkungButton:<?php echo $array[$key]['id'] ?>"
                   onClick='changeAnmerkung("<?php echo $array[$key]['id'] ?>")' />
                 <?php
             }
@@ -176,7 +176,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                   onClick="changeBearbeiten('<?php echo $array[$key]['id'] ?>')" />
 
                 <!-- Overlay fs-anmerkung-allergene -->
-                <div id="overlay:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-bearbeiten">
+                <div id="overlay:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-anmerkungen">
                   <div class="popup-anmerkung">
                     <?php if ($row['Anmerkungen'] == true)
               echo "<h5>Anmerkung:</h5>";
@@ -198,6 +198,23 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                 </div>
 
 
+                <!-- Overlay fs-lm-optionen -->
+                <div id="overlayBearbeiten:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-bearbeiten">
+                  <div class="popup-uebersicht-bearbeiten">
+                    <div class="bearbeiten">
+                      <img src="../media/bearbeiten.svg" alt="Stift zum Bearbeiten">
+                      <h5>Bearbeiten</h5>
+                    </div>
+                  <div class="trennlinie">
+                    <img src="../media/trennlinie.svg" alt="Trennlinie">
+                  </div>
+                  <div class="loeschen" onClick="openLoeschen('<?php echo $array[$key]['id'] ?>')" >
+                    <img src="../media/loeschen.svg" alt="Müllerimer zum Löschen">
+                    <h5>Löschen</h5>
+                  </div>
+                </div>
+              </div>
+
                 <!-- Overlay fs-lm-loeschen -->
                 <div id="overlayLoeschen:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-loeschen">
                   <div class="popup-lebensmittel-löschen">
@@ -207,12 +224,15 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                         <?php echo $array[$key]['Lebensmittel'] ?>
                       </h5>
                     </div>
-                    <p class="textpopup">Möchtest Du das ausgewählte Lebensmittel wirklich aus der Liste löschen?</p>
+                    <p class="textpopup">
+                    <?php echo $key?>
+                    <?php echo $array[$key]['key']?>
+                    Möchtest Du das ausgewählte Lebensmittel wirklich aus der Liste löschen?</p>
                     <div class="button-spacing-popup">
                       <a class="exitButton" href="">
                         <h5>Abbrechen</h5>
                       </a>
-                      <a class="deleteButton" href="">
+                      <a class="deleteButton" onClick="loeschen2('<?php echo $array[$key]['id'] ?>');">
                         <h5>Löschen</h5>
                       </a>
                     </div>
@@ -374,7 +394,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
     </div>
   </div>
 
-  <!-- Script Overlay fs-hilfe -->
+  <!-- Script Overlays -->
   <?php
   echo '<script type="text/javascript" src="../script/04.js">
         </script>

@@ -1020,7 +1020,6 @@ Foodsaver Übersicht
     flex-direction: row;
     justify-items: center;
     align-items: center;
-    margin-left: 8px;
     margin: 4px 0 4px 8px;
 }
 
@@ -1033,7 +1032,6 @@ Foodsaver Übersicht
     display: flex;
     flex-direction: row;
     justify-items: center;
-    margin-bottom: 4px;
     align-items: center;
     margin: 4px 0 4px 8px;
 }
@@ -1060,19 +1058,27 @@ Foodsaver Übersicht
     margin: 15px;
 }
 
+.fs-uebersicht-anmerkungen {
+    display: none;
+    position: absolute;
+    top: 35%;
+    left: -50%;
+    transform: translateY(50%);
+}
+
 .fs-uebersicht-bearbeiten {
     display: none;
     position: absolute;
     top: 35%;
-    left: -70%;
-    /* transform: translate(-70%, 70%); */
+    left: 25%;
+    transform: translateY(50%);
 }
 
 .fs-uebersicht-loeschen {
     display: none;
     position: absolute;
-    top: 35%;
-    left: -50%;
+    top: 50%;
+    left: -200%;
     transform: translateX(-50%);
 }
 
@@ -1084,11 +1090,6 @@ Foodsaver Übersicht
     flex-direction: column;
     justify-items: center;
     justify-content: center;
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(10%, -10%);
 
     width: 285px;
     height: auto;

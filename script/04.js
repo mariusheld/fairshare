@@ -81,13 +81,6 @@ exitLmVerstauen.onclick = function () {
   fsLmVerstauen.style.display = "none";
 };
 
-// Schließen wenn außerhalb des Pop-ups gedrückt wird
-// window.onclick = function (event) {
-//   if (event.target == fsLmVerstauen) {
-//     fsLmVerstauen.style.display = "none";
-//   }
-// };
-
 function abbr() {
   session_destroy();
   header("Location: ../index.php");
@@ -101,27 +94,6 @@ function abbr() {
 //   console.log(itemName);
 // }
 
-
-//----------------JavaScript für fs-anmerkungen-allergene Overlay, genutzt in 04 -----------------------------//
-//Overlay auswählen
-
-      
-//Das öffnet das Overlay
-//var openAnmerkungAllergene = document.getElementById("openAnmerkungAllergene");
-      
-//Das schließt das Overlay
-//var exitAnmerkungAllergene = document.getElementsByClassName("close")[0];
-      
-//Öffnen wenn icon geklickt wird
-//openAnmerkungAllergene.onclick = function() {
-//fsAnmerkungAllergene.style.display = "block";
-//}
-      
-//Schließen nach Button drücken
-//exitAnmerkungAllergene.onclick = function() {
-//fsAnmerkungAllergene.style.display = "none";
-//}
-
 var fsLmLoeschen = document.getElementById("fsLmLoeschen");
 
 let anmerkungen = false
@@ -130,25 +102,42 @@ let bearbeiten = false
 // console.log(array[1].id);
 
 function changeAnmerkung(id){
-  if (anmerkungen == false){
-    anmerkungen = true;
-    document.getElementById(id).setAttribute("src", "../media/cross.svg");
-    document.getElementById("overlay:" + id).style.display = "block";
-  } else {
-    anmerkungen = false;
-    document.getElementById(id).setAttribute("src", "../media/comment_icon.svg");
-    document.getElementById("overlay:" + id).style.display = "none";
+  if (bearbeiten == false) {
+    if (anmerkungen == false){
+      anmerkungen = true;
+      document.getElementById("anmerkungButton:" + id).setAttribute("src", "../media/cross.svg");
+      document.getElementById("overlay:" + id).style.display = "block";
+    } else {
+      anmerkungen = false;
+      document.getElementById("anmerkungButton:" + id).setAttribute("src", "../media/comment_icon.svg");
+      document.getElementById("overlay:" + id).style.display = "none";
+    }
   }
 }
 
 function changeBearbeiten(id){
-  if (bearbeiten == false){
-    bearbeiten = true;
-    document.getElementById("editButton:" + id).setAttribute("src", "../media/cross.svg");
-    document.getElementById("overlayLoeschen:" + id).style.display = "block";
-  } else {
-    bearbeiten = false;
-    document.getElementById("editButton:" + id).setAttribute("src", "../media/edit_icon.svg");
-    document.getElementById("overlayLoeschen:" + id).style.display = "none";
+  if (anmerkungen == false){
+    if (bearbeiten == false){
+      bearbeiten = true;
+      document.getElementById("editButton:" + id).setAttribute("src", "../media/cross.svg");
+      document.getElementById("overlayBearbeiten:" + id).style.display = "block";
+    } else {
+      bearbeiten = false;
+      document.getElementById("editButton:" + id).setAttribute("src", "../media/edit_icon.svg");
+      document.getElementById("overlayBearbeiten:" + id).style.display = "none";
+    }
   }
 }
+
+
+function openLoeschen (id){
+  document.getElementById("overlayLoeschen:" + id).style.display = "block"
+}
+
+function loeschen2(id){
+  document.getElementById(id).onclick = function () {
+    this.remove ();
+}
+} 
+
+
