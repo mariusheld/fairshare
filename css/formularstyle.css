@@ -423,6 +423,11 @@ Foodsaver Hinzufügen
     gap: 8px;
 }
 
+.category-item > img {
+	width: 56px;
+	height: 56px;
+}
+
 .category-item p {
     font-weight: 400;
     font-size: 14px;
