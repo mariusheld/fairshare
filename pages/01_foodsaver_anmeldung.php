@@ -81,7 +81,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <p id="telormail" class="col-6">Trage deine E-Mail oder deine Telefonnummer ein.</p>
-
+            <div class="col-6 datenschutz" style="display: flex; flex-direction: row; padding-top: 32px;">
+                <input type="checkbox" name="datacheck" id="datacheck" value="true" style="margin-top: -14px"/>
+                <img alt="nocheck" src="../media/checkbox.svg" class="checkbox" style="margin-left: -23px; margin-top: -14px;">
+                <img alt="check" src="../media/checkbox_checked.svg" class="checkboxchecked"/ style="margin-left: -23px; margin-top: -14px;">
+                <p class="dataschutz">
+                Ich stimme zu, dass die Raupe meine Daten zur Auswertung 
+                der Wirkungsmessung verwendet. Persönliche Daten werden 
+                nicht an Dritte weitergegeben.
+                </p>
+            </div>
             <a href="../index.php" class="button secondary col-3" id="breakupbtn">Abbrechen</a>
             <input type="submit" value="Weiter" class="button primary col-3" id="weiter" onclick="return formcheck()">
         </form>

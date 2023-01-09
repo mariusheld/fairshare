@@ -480,3 +480,26 @@ div.anmeldungmail, div.anmeldungtel, div.anmeldungid {
     display:none;
     margin-top: 48px;
 }
+/*Datenschutztext*/
+p.dataschutz{
+    font-family: "Fira Sans";
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #BEBEB9;
+    padding-left: 15px;
+}
+img.checkboxchecked {
+    display: none;
+}
+div.datenschutz input:checked~img.checkboxchecked {
+   display: block;
+}
+div.datenschutz input:checked~img.checkbox {
+   display: none;
+}
+#datacheck {
+    width: 50px !important;
+    height: 50px !important;
+    opacity: 0;
+}
