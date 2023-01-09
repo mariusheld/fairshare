@@ -415,6 +415,7 @@ div.header {
     font-family: "Fira Sans";
     line-height: 26px;
     margin-top: 41px;
+    border: none;
 }
 button.btn {
     margin: 0;
