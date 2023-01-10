@@ -17,9 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['login'] = true;
         // Weiterleiten
         header("Location: ./admin.php");
+    } else if (test_input($_POST["password"]) == "raupenkönigin") {
+        // Login auf True setzen 
+        $_SESSION['login'] = true;
+        // Weiterleiten
+        header("Location: ./dashboard.php");
     } else {
         $_SESSION['passwordErr'] = true;
-        header("Location: ./01_foodsaver_anmeldung.php");
+        header("Location: ./011_foodsaver_anmeldung.php");
     }
 }
 
