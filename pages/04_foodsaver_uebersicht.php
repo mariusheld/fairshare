@@ -1,6 +1,7 @@
 <!-- ----------- PHP ---------- -->
 <?php
 session_start();
+ob_start();
 // Datenbankverbindung aufbauen
 require_once("../dbconnect/dbconnect.inc.php");
 $db_handle = new DBController();
@@ -24,6 +25,9 @@ function consolelog($data, bool $quotes = false)
     echo "<script>console.log({$output} );</script>";
   }
 }
+
+consolelog($array);
+consolelog($dbeintragArray);
 
 // Vollständiger Array mit allen Einträgen wird an die Datenbank übertragen. -------------------
 function sendList($dbeintragArray, $conn)
@@ -66,10 +70,17 @@ function sendList($dbeintragArray, $conn)
     mysqli_query($conn, $boxQuery);
   }
 }
+
 // Datenbank Query Trigger
 if (isset($_GET['send'])) {
   sendList($dbeintragArray, $conn);
   header("Location: ./05_foodsaver_finalcheck.php");
+}
+
+if (isset($_GET['key'])) {
+  unset($_SESSION["array"][$_GET['key']]);
+  unset($_SESSION["dbeintragArray"][$_GET['key']]);
+  header("Location: ./04_foodsaver_uebersicht.php");
 }
 
 // ---- KategorieIcons 
@@ -125,129 +136,129 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
           // Tabelleneintrag
           // LOOP TILL END OF DATA
           foreach ($array as $key => $row) {
-          ?>
-          <tr class="table-items" id="<?php echo $array[$key]['id'] ?>">
-            <td class="grid-col-3">
-              <?php
-
-            $iconList = array(
-              "0",
-              $icon_backwaren_salzig_url,
-              $icon_backwaren_suess_url,
-              $icon_gemuese_url,
-              $icon_konserven_url,
-              $icon_kuehlprodukte_url,
-              $icon_obst_url,
-              $icon_sonstiges_url,
-              $icon_trockenprodukte_url,
-            );
-
-              ?>
-              <div class="flex">
-                <?php echo "<img src='" . $iconList[$row['Kategorie']] . "'>" ?>
-                <p>
-                  <?php echo $row['Lebensmittel'] ?>
-                </p>
-              </div>
-            </td>
-            <td class="grid-col-2 flex">
-              <?php echo $row['Kistennr']; ?>
-              <?php if ($row['Kuehlen'] == true)
-              echo "<img src='../media/freeze_icon.svg' alt='freeze_icon' />"; ?>
-            </td>
-            <td class="grid-col-2">
-              <?php echo $row['Menge'] ?> Kg
-            </td>
-            <td class="grid-col-3">
-              <?php echo $row['Genießbar'] ?>
-            </td>
-            <td class="grid-col-2">
-              <div class="interaktion-buttons">
-                <!-- OVERLAY TRIGGER -->
+            ?>
+            <tr class="table-items" id="<?php echo $array[$key]['id'] ?>">
+              <td class="grid-col-3">
                 <?php
-            if ($array[$key]['Anmerkungen'] == true || $array[$key]['Allergene'] == true) { ?>
-                <img src='../media/comment_icon.svg' alt='comment_icon' id="anmerkungButton:<?php echo $array[$key]['id'] ?>"
-                  onClick='changeAnmerkung("<?php echo $array[$key]['id'] ?>")' />
-                <?php
-            }
+
+                $iconList = array(
+                  "0",
+                  $icon_backwaren_salzig_url,
+                  $icon_backwaren_suess_url,
+                  $icon_gemuese_url,
+                  $icon_konserven_url,
+                  $icon_kuehlprodukte_url,
+                  $icon_obst_url,
+                  $icon_sonstiges_url,
+                  $icon_trockenprodukte_url,
+                );
+
                 ?>
-                <!-- OVERLAY TRIGGER -->
-                <img src="../media/edit_icon.svg" alt="edit_icon" id="editButton:<?php echo $array[$key]['id'] ?>"
-                  onClick="changeBearbeiten('<?php echo $array[$key]['id'] ?>')" />
+                <div class="flex">
+                  <?php echo "<img src='" . $iconList[$row['Kategorie']] . "'>" ?>
+                  <p>
+                    <?php echo $row['Lebensmittel'] ?>
+                  </p>
+                </div>
+              </td>
+              <td class="grid-col-2 flex">
+                <?php echo $row['Kistennr']; ?>
+                <?php if ($row['Kuehlen'] == true)
+                  echo "<img src='../media/freeze_icon.svg' alt='freeze_icon' />"; ?>
+              </td>
+              <td class="grid-col-2">
+                <?php echo $row['Menge'] ?> Kg
+              </td>
+              <td class="grid-col-3">
+                <?php echo $row['Genießbar'] ?>
+              </td>
+              <td class="grid-col-2">
+                <div class="interaktion-buttons">
+                  <!-- OVERLAY TRIGGER -->
+                  <?php
+                  if ($array[$key]['Anmerkungen'] == true || $array[$key]['Allergene'] == true) { ?>
+                    <img src='../media/comment_icon.svg' alt='comment_icon'
+                      id="anmerkungButton:<?php echo $array[$key]['id'] ?>"
+                      onClick='changeAnmerkung("<?php echo $array[$key]['id'] ?>")' />
+                    <?php
+                  }
+                  ?>
+                  <!-- OVERLAY TRIGGER -->
+                  <img src="../media/edit_icon.svg" alt="edit_icon" id="editButton:<?php echo $array[$key]['id'] ?>"
+                    onClick="changeBearbeiten('<?php echo $array[$key]['id'] ?>')" />
 
-                <!-- Overlay fs-anmerkung-allergene -->
-                <div id="overlay:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-anmerkungen">
-                  <div class="popup-anmerkung">
-                    <?php if ($row['Anmerkungen'] == true)
-              echo "<h5>Anmerkung:</h5>";
-                    ?>
+                  <!-- Overlay fs-anmerkung-allergene -->
+                  <div id="overlay:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-anmerkungen">
+                    <div class="popup-anmerkung">
+                      <?php if ($row['Anmerkungen'] == true)
+                        echo "<h5>Anmerkung:</h5>";
+                      ?>
 
-                    <?php if ($row['Anmerkungen'] == true) { ?>
-                    <p>
-                      <?php echo ($array[$key]['Anmerkungen']) ?>
-                    </p>
-                    <?php } ?>
-                    <?php if ($row['Allergene'] == true)
-              echo "<h5 class='header2'>Allergene und Inhaltsstoffe:</h5>"; ?>
-
-                    <p>
+                      <?php if ($row['Anmerkungen'] == true) { ?>
+                        <p>
+                          <?php echo ($array[$key]['Anmerkungen']) ?>
+                        </p>
+                      <?php } ?>
                       <?php if ($row['Allergene'] == true)
-              echo $array[$key]['Allergene']; ?>
-                    </p>
-                  </div>
-                </div>
+                        echo "<h5 class='header2'>Allergene und Inhaltsstoffe:</h5>"; ?>
 
-
-                <!-- Overlay fs-lm-optionen -->
-                <div id="overlayBearbeiten:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-bearbeiten">
-                  <div class="popup-uebersicht-bearbeiten">
-                    <div class="bearbeiten">
-                      <img src="../media/bearbeiten.svg" alt="Stift zum Bearbeiten">
-                      <h5>Bearbeiten</h5>
+                      <p>
+                        <?php if ($row['Allergene'] == true)
+                          echo $array[$key]['Allergene']; ?>
+                      </p>
                     </div>
-                  <div class="trennlinie">
-                    <img src="../media/trennlinie.svg" alt="Trennlinie">
                   </div>
-                  <div class="loeschen" onClick="openLoeschen('<?php echo $array[$key]['id'] ?>')" >
-                    <img src="../media/loeschen.svg" alt="Müllerimer zum Löschen">
-                    <h5>Löschen</h5>
-                  </div>
-                </div>
-              </div>
 
-                <!-- Overlay fs-lm-loeschen -->
-                <div id="overlayLoeschen:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-loeschen">
-                  <div class="popup-lebensmittel-löschen">
-                    <div class="lebensmittel-zum-löschen-popup">
-                      <?php echo "<img src='" . $iconList[$row['Kategorie']] . "'>" ?>
-                      <h5 class="popupheaderklein">
-                        <?php echo $array[$key]['Lebensmittel'] ?>
-                      </h5>
-                    </div>
-                    <p class="textpopup">
-                    <?php echo $key?>
-                    <?php echo $array[$key]['key']?>
-                    Möchtest Du das ausgewählte Lebensmittel wirklich aus der Liste löschen?</p>
-                    <div class="button-spacing-popup">
-                      <a class="exitButton" href="">
-                        <h5>Abbrechen</h5>
-                      </a>
-                      <a class="deleteButton" onClick="loeschen2('<?php echo $array[$key]['id'] ?>');">
+
+                  <!-- Overlay fs-lm-optionen -->
+                  <div id="overlayBearbeiten:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-bearbeiten">
+                    <div class="popup-uebersicht-bearbeiten">
+                      <div class="bearbeiten">
+                        <img src="../media/bearbeiten.svg" alt="Stift zum Bearbeiten">
+                        <h5>Bearbeiten</h5>
+                      </div>
+                      <div class="trennlinie">
+                        <img src="../media/trennlinie.svg" alt="Trennlinie">
+                      </div>
+                      <div class="loeschen" onClick="openLoeschen('<?php echo $array[$key]['id'] ?>')">
+                        <img src="../media/loeschen.svg" alt="Müllerimer zum Löschen">
                         <h5>Löschen</h5>
-                      </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Overlay fs-lm-loeschen -->
+                  <div id="overlayLoeschen:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-loeschen">
+                    <div class="popup-lebensmittel-löschen">
+                      <div class="lebensmittel-zum-löschen-popup">
+                        <?php echo "<img src='" . $iconList[$row['Kategorie']] . "'>" ?>
+                        <h5 class="popupheaderklein">
+                          <?php echo $array[$key]['Lebensmittel'] ?>
+                        </h5>
+                      </div>
+                      <p class="textpopup">
+                        <?php echo $key ?>
+
+                        Möchtest Du das ausgewählte Lebensmittel wirklich aus der Liste löschen?
+                      </p>
+                      <div class="button-spacing-popup">
+                        <a class="exitButton" href="">
+                          <h5>Abbrechen</h5>
+                        </a>
+                        <a class="deleteButton" href="04_foodsaver_uebersicht.php?key=<?php echo $key ?>">
+                          <h5>Löschen</h5>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-
-              </div>
-            </td>
-          </tr>
-          <script>
-            let key = <?php echo json_encode($key); ?>;
-            let array = <?php echo json_encode($array); ?>;
-          </script>
-          <?php
+              </td>
+            </tr>
+            <script>
+              let key = <?php echo json_encode($key); ?>;
+              let array = <?php echo json_encode($array); ?>;
+            </script>
+            <?php
           }
           ?>
         </table>
@@ -415,3 +426,11 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 </body>
 
 </html>
+
+<?php
+ob_end_flush();
+// Output Buffering: You can also solve this issue by using output buffering. 
+// You can do this by adding ob_start(); at the top of your script and ob_end_flush(); 
+// at the bottom of your script. This will buffer the output and send it to the browser only when your script is finished executing.
+?>
+
