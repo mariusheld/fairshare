@@ -99,7 +99,7 @@ $icons = array(
             echo
                 "<td class='lmicon'>
                     <div class='tablecontainer'>
-                        <img alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'>
+                        <img width='48px' alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'>
                         <div id='bezeichnung-" . $zähler . "' style='font-weight: 600; padding-left: 16px;'>"
                 . $zeile['Bezeichnung'] . "
                         </div>
