@@ -74,8 +74,7 @@ $icons = array(
             <table>
                 <!--Tabellenkopf-->
                 <tr>
-                    <th style="width: 25%;">Lebensmittel</th>
-                    <th style="width: 20%;">Kistennr</th>
+                    <th style="width: 45%;">Lebensmittel</th>
                     <th style="width: 20%;">Menge</th>
                     <th>Genießbar</th>
                     <th style="width: 50px;"></th>
@@ -91,6 +90,10 @@ $icons = array(
         echo "<script>console.log(" . json_encode($result) . ");</script>";
 
         $zähler = 0;
+
+         //Datumsberechnung
+        $jetzt = time();
+       // $result['VerteilDeadline'] = strtotime($result['VerteilDeadline']);
 
         foreach ($result as $zeile) {
             $zähler += 1;
