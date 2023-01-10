@@ -10,7 +10,7 @@ $login = $_SESSION['login'];
 
 //Abfrage an Datenbank senden
 //Wenn Datenbank alles Anzeigen soll wegen Kisten Bug: "SELECT*FROM Lebensmittel WHERE LMkey >= 13"
-$query = $db->prepare("SELECT*FROM Lebensmittel, Box WHERE  Lebensmittel.LMkey = Box.LMkey");
+$query = $db->prepare("SELECT*FROM Lebensmittel ORDER BY VerteilDeadline");
 $erfolg = $query->execute();
 
 //Fehlertest
@@ -94,24 +94,49 @@ $icons = array(
 
         foreach ($result as $zeile) {
             $zähler += 1;
+            $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt) / (60 * 60 * 24));
+            $ablaufdatum = $zeile['VerteilDeadline']; 
             echo "<tr>";
             //echo "<td> <img alt='icon' width='48' src='" . $icons[$zeile['OKatKey']] . "'></td>";
-            echo
-                "<td class='lmicon'>
+            //If Else Schleife für Rotfäburng der abgelaufenen Lebensmittel
+                    if ($ablaufdatum > 0) {
+                      echo
+                        "<td class='lmicon'>
+                        <div class='tablecontainer'>
+                            <img width='48px' alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'>
+                            <div id='bezeichnung-" . $zähler . "' style='font-weight: 600; padding-left: 16px;'>"
+                                . $zeile['Bezeichnung'] . " 
+                            </div>
+                        </div>
+                    </td>";
+                    } else if ($ablaufdatum <= 0) {
+                        echo
+                            "<td class='lmicon'>
                     <div class='tablecontainer'>
                         <img width='48px' alt='lmicon' src='" . $icons[$zeile['OKatKey']] . "'>
-                        <div id='bezeichnung-" . $zähler . "' style='font-weight: 600; padding-left: 16px;'>"
-                . $zeile['Bezeichnung'] . "
+                        <div id='bezeichnung-" . $zähler . "' style='font-weight: 600; padding-left: 16px; color: red'>"
+                            . $zeile['Bezeichnung'] . " 
                         </div>
                     </div>
                 </td>";
-            if ($zeile['Kuehlware'] == 0) {
-                echo "<td>" . $zeile['BoxID'] . "</td>";
-            } else {
-                echo "<td><div class='tablecontainer'><div>4</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'></div></td>";
-            }
+                    }
+            //if ($zeile['Kuehlware'] == 0) {
+              //  echo "<td>" . $zeile['BoxID'] . "</td>";
+            //} else {
+              //  echo "<td><div class='tablecontainer'><div>4</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'></div></td>";
+            //}
             echo "<td id='gewicht-" . $zähler . "'>" . $zeile['Gewicht'] . " kg</td>";
-            echo "<td>" . $zeile['VerteilDeadline'] . "</td>";
+            //If Else Abfrage für Rotfärbung der abgelaufenen Lebensmitel und Kühlicon FÄLLE: rot+Kühl, rot+oKühl, schwarz+Kühl, schwarz+oKühl
+                if ($zeile['Kuehlware'] == 0 &&  $ablaufdatum > 0){
+                    echo "<td>" . $zeile['VerteilDeadline'] . " Tage </td>";
+                    } else if ($zeile['Kuehlware'] == 1 && $ablaufdatum > 0) {
+                        echo "<td><div class='tablecontainer'><div>" .  $zeile['VerteilDeadline'] . " Tage</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'></div></td>";
+                    } else if ($zeile['Kuehlware'] == 0 && $ablaufdatum <= 0) {
+                        echo "<td style='color: red'>" . $zeile['VerteilDeadline'] . " Tage </td>";
+                    } else {
+                        echo "<td style='color: red'><div class='tablecontainer'><div>" .  $zeile['VerteilDeadline'] . " Tage</div> <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'></div></td>";
+                    }
+            //if else Abfrage des Anmerkungsicons
             if ($zeile['Anmerkung']) {
                 echo "<td style='text-align: right'><img id='bubble' alt='dots' src='../media/comment_icon.svg' width='48px;'/></td>";
             } else {
@@ -127,6 +152,8 @@ $icons = array(
                 </ul>
             </td>";
             echo "</tr>\n";
+            
+            
         }
                 ?>
 
