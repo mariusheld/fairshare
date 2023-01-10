@@ -96,7 +96,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		<!--Seiteninhalt-->
 		<div class="seiteninhalt">
-			<form class="emailco" method="POST" >
+        <div id="regcontainer" class="regcontainer">
+            <div class="header">
+                Zum ersten mal hier?
+            </div>
+            <a href="01_foodsaver_anmeldung.php">
+            <button class="reg">Registrieren</button>
+            </a>
+        </div>
+			<form class="emailco" method="POST" style="margin-top: 48px;" >
                 <div class="header">
                     Anmelden per...
                 </div>
@@ -106,14 +114,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button id="btnid" type="button" onclick="buttoncheck(this)" class="btn">Foodsaver-ID</button>
                 </div>
             </form>
-            <div id="regcontainer" class="regcontainer">
-            <div class="header" style="margin-top: 48px;">
-                Zum ersten mal hier?
-            </div>
-            <a href="01_foodsaver_anmeldung.php">
-            <button class="reg">Registrieren</button>
-            </a>
-        </div>
         <div class="formvariabel" style="text-align: left;">
             <form class="anmeldung" method="POST">
                 <div class="anmeldungmail" id="anmail">
@@ -141,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="action-wrap">
                     <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
-                    <button style="margin-top:0px" id="btnbreakup" type="button" onclick="buttoncheck(this)" >Abbrechen</button>
+                    <button style="margin-top:0px" id="btnbreakup" type="button" onclick="buttoncheck(this)" >Zurück</button>
                     <input class="continue-button" type="submit" form="myform" value="Anmeldung" style="width: 228px">
                 </div>
             </div>
