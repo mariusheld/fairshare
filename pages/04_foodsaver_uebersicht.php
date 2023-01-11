@@ -213,10 +213,10 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                   <!-- Overlay fs-lm-optionen -->
                   <div id="overlayBearbeiten:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-bearbeiten">
                     <div class="popup-uebersicht-bearbeiten">
-                      <div class="bearbeiten">
+                      <a class="bearbeiten" href="03_foodsaver_hinzufuegen.php?editieren=1">
                         <img src="../media/bearbeiten.svg" alt="Stift zum Bearbeiten">
                         <h5>Bearbeiten</h5>
-                      </div>
+                      </a>
                       <div class="trennlinie">
                         <img src="../media/trennlinie.svg" alt="Trennlinie">
                       </div>

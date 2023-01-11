@@ -255,7 +255,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <?php echo $lmbezErr; ?>
                                 </span>
                             </label>
-                            <input name="LMBez" class="input" type="text" value="<?php echo $LMBez; ?>" />
+                            <input name="LMBez" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
+                                echo "testValue";
+                            } else {
+                                echo $LMBez;
+                            } ?>" />
                         </div>
                         <!-- Kühlen Check? -->
                         <div class="grid-col-2">
