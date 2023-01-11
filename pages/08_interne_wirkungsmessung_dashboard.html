@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foodsharing Statistics</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200;300;400;500;600;700;800;900&family=Londrina+Solid&display=swap" rel="stylesheet" />
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="../css/interne_wirkungsmessung.css"/> 
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <!-- JS Scripts -->  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->  
+    <header>
+      <a>
+        <h1 class="font-londrina">MENGE GERETTETER LEBENSMITTEL</h1>
+      </a>
+      <div class="header-btn">
+      <div class="font-fira header-btn-title">
+        <p>Zeitraum</p>
+      </div>  
+      <div class="time-button" >
+        <a href='#' class="link-button">  
+          <i class='fa fa-clock-o'  style="font-size:30px;"></i>
+          <div class="button-text">
+            <p class="font-fira">Jahr 2023</p>
+          </div>
+        </a>
+      </div>
+      </div>
+    </header>
+
+    <!-- Hauptinhalt -->  
+    <div class="content flx-container">
+        <!-- Erste Spalte -->  
+        <div class="column-1">
+          <!--Info Blocks -->  
+          <div class="flx-container">
+            <div class="block">
+              <p class="font-fira description">Insgesamt gerettete Lebensmittel:</p>
+              <h1 class="font-londrina number">50,8 TONNEN</h1>
+            </div>
+            <div class="block" >
+              <p class="font-fira description">Im ausgewählten Zeitraum gerettete Lebensmittel:</p>
+              <h1 class="font-londrina number">20,4 TONNEN</h1>
+            </div>
+          </div>
+          <!-- Chart -->  
+          <div class="block bg-block">
+            <p class="font-fira description"><strong>Nach Zeitraum (in kg)</strong></p>
+            <div class="chart-container">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zweite Spalte -->  
+        <div class="column-2">
+          <!-- Block für Kategorien -->  
+          <div class="block flx-container">
+            <!-- Liste der Kategorien -->  
+            <div style="display: inline;">
+              <p class="font-fira description"><strong>Nach Kategorien</strong></p>
+              <div class="font-fira list-category">
+                <table>
+                  <tr>
+                    <td style="text-align: right;">50%</td>
+                    <td>&nbsp&nbsp&nbspBackwaren (salzig)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right;">30%</td>
+                    <td>&nbsp&nbsp&nbspBackwaren (süß)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right;">5%</td>
+                    <td>&nbsp&nbsp&nbspObst</td>
+                  </tr>
+                  <tr class="list-category-sml">
+                    <td  style="text-align: right;">11%</td>
+                    <td>&nbsp&nbsp&nbspGemüse</td>
+                  </tr>
+                  <tr class="list-category-sml">
+                    <td style="text-align: right;">7%</td>
+                    <td>&nbsp&nbsp&nbspTrockenprodukte</td>
+                  </tr>
+                  <tr class="list-category-sml">
+                    <td style="text-align: right;">4%</td>
+                    <td>&nbsp&nbsp&nbspMilchprodukte</td>
+                  </tr>
+                  <tr class="list-category-sml">
+                    <td style="text-align: right;">2%</td>
+                    <td>&nbsp&nbsp&nbspKonserven</td>
+                  </tr>
+                  <tr class="list-category-sml">
+                    <td style="text-align: right;">2%</td>
+                    <td>&nbsp&nbsp&nbspSonstiges</td>
+                  </tr>
+                </table>
+              </div>
+            </div> 
+            <!-- Bilder der Kategorien --> 
+            <div class="img-block">
+              <img src="../media/kategorien/icon_backwaren-salzig.svg" class="img-category" style="width: 80px;"><br>
+              <img src="../media/kategorien/icon_backwaren-suess.svg" class="img-category" style="width: 60px;"><br>
+              <img src="../media/kategorien/icon_obst.svg" class="img-category" style="width: 40px;">
+            </div> 
+          </div> 
+          <!-- Liste der Kategorien --> 
+          <div class="block" style="height: 267px;">
+            <div style="display: inline-block;">
+              <p class="font-fira description" style="float:left; margin-bottom: 30px;"><strong>Nach Herkunft</strong></p>
+              <div class="font-fira list-category">
+                <table>
+                  <tr>
+                    <td style="text-align: right;">29%</td>
+                    <td>&nbsp&nbsp&nbspBäckerei</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right;">22%</td>
+                    <td>&nbsp&nbsp&nbspSupermarkt</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right;">18%</td>
+                    <td>&nbsp&nbsp&nbspWochenmarkt</td>
+                  </tr>
+                  <tr class="list-category-sml">
+                    <td  style="text-align: right;">11%</td>
+                    <td>&nbsp&nbsp&nbspGastronomie</td>
+                  </tr>
+                  <tr class="list-category-sml">
+                    <td style="text-align: right;">7%</td>
+                    <td>&nbsp&nbsp&nbspVeranstaltung</td>
+                  </tr>
+                  <tr class="list-category-sml">
+                    <td style="text-align: right;">4%</td>
+                    <td>&nbsp&nbsp&nbspHaushalt</td>
+                  </tr>
+                  <tr class="list-category-sml">
+                    <td style="text-align: right;">2%</td>
+                    <td>&nbsp&nbsp&nbspTankstelle</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+        <!-- Footer --> 
+        <div class="action-container">
+          <div class="footer-btn font-fira">
+            <a href="#" class="cancel-button">Lagerübersicht</a>
+          </div>
+          <div class="footer-btn font-fira">
+            <a href='#' class="next-button">Export als CSV-Datei</a>
+          </div>
+        </div>
+  </div>
+</body>
+<script>
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], //Labels
+          datasets: [{
+              label: null,
+              data: [12, 19, 3, 5, 2, 3, 20, 33, 23, 12, 33, 10], //Data für Liniendiagram
+              pointRadius: 0,  // Keine Punkte anzeigen
+              backgroundColor: 'rgb(153,187,68, 1)',
+              borderColor: 'rgb(153,187,68, 1)',
+              borderWidth: 5
+          }]
+      },
+      options: { 
+        scaleShowVerticalLines: false,
+        aspectRatio: 2.2,
+        indexAxis: 'x',
+        scales: {
+          x: {
+            beginAtZero: true,
+            grid: {
+              display: false
+            },
+            ticks: {
+              font: {
+                  family: 'Fira Sans',
+                  size: 14,
+              },
+              color: 'black'
+          }
+          },
+          y: {
+            ticks: {
+              font: {
+                  family: 'Fira Sans',
+                  size: 14,
+              },
+              color: 'black'
+          }
+          }
+        },
+          plugins: {
+            legend: {
+                display: false
+            },
+        }
+      }
+      
+  });
+</script>
+
+</html>
