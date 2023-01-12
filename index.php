@@ -8,9 +8,22 @@ $_SESSION["latestLMkey"] = 0;
 //Datenbankverbindung aufbauen
 require_once("dbconnect/dbconnect.inc.php");
 
-//Test-Abfrage an Datenbank senden
-$query = $db->prepare("SELECT*FROM Lebensmittel");
+//Lebensmittel-Abfrage an Datenbank senden
+$query = $db->prepare("SELECT SUM(Gewicht) FROM Lebensmittel")/*("SELECT SUM(BewegMenge) FROM `Bestand_Bewegung` WHERE Bestand_Bewegung.LStatusKey = 2")*/;   //Erster SQL Befehl gibt Auskunft über Menge im Lager an, zweiter SQL Befehl gibt bereits verteilte Menge an.
 $erfolg = $query->execute();
+
+//Zellenweise Verarbeitung der Datenbankabfrage
+$result = $query->fetchColumn(); //fetch_column()
+
+//Gewicht der fairteilten Lebensmittel berechnen !!!!!!!!! Hier liegt irgendwo der Fehler, Kilogramm werden leider nicht angezeigt weil Array angeblich leer ist
+//$gewicht = $result[0];
+//$gewicht = array_sum($gewichtarray);
+$gewicht = intval($result);
+
+
+     //Konsolenausgabe der Datenbankabfrage (nur möglich nach einem fetchAll() befehl der Abfrage)
+     echo "<script>console.log(" . json_encode($gewicht) . ");</script>";
+
 
 //Fehlertest
 if (!$erfolg) {
@@ -83,7 +96,7 @@ if (!$erfolg) {
 
     <div id="startscreen-content">
         <div>
-            <h1 id="startscreen-title">50 Tonnen</h1>
+            <h1 id="startscreen-title"><?php echo $gewicht ?> Kilogramm</h1>
             <p id="startscreen-text">Lebensmittel wurden bisher gerettet.</p>
             <button id="startscreen-button">Tippe, um zu beginnen</button>
         </div>
