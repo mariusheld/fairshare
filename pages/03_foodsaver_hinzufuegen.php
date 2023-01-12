@@ -15,16 +15,16 @@ if ($_SESSION["foodsaverLogin"] == false) {
 $LMBez = "";
 $OKatKey = 0;
 $kuehlcheck = $_SESSION["kuehlcheck"];
-$kiste = null;
+$betrieb = null;
 $menge = null;
 $HerkunftKey = "";
 $verbrDatum = date(0);
 $haltbarkeit = "";
-$comment = "";
+$anmerkung = "";
 $allergene = "";
 
 // ---- Error Variables 
-$lmbezErr = $kisteErr = $mengeErr = $herkunftErr = $kategorieErr = $haltbarkeitErr = "";
+$lmbezErr = $betriebErr = $mengeErr = $herkunftErr = $kategorieErr = $haltbarkeitErr = "";
 
 // ---- KategorieIcons 
 $icon_backwaren_salzig_url = '../media/kategorien/icon_backwaren-salzig.svg';
@@ -74,15 +74,6 @@ function test_input($data)
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // if (empty($_POST["LMBez"])) {
-    //     $lmbezErr = "Erforderlich";
-    // } else {
-    //     $LMBez = test_input($_POST["LMBez"]);
-    //     // check if LMBez only contains letters and whitespace
-    //     if (!preg_match("/^[a-zA-Z-' ]*$/", $LMBez)) {
-    //         $lmbezErr = "Only letters and white space allowed";
-    //     }
-    // }
 
     if (empty($_POST["LMBez"])) {
         $lmbezErr = "Erforderlich";
@@ -98,10 +89,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $kuehlcheck = 1;
     }
 
-    if (empty($_POST["kiste"])) {
-        $kisteErr = "Erforderlich";
+    if (empty($_POST["betrieb"])) {
+        $betriebErr = "Erforderlich";
     } else {
-        $kiste = test_input($_POST["kiste"]);
+        $betrieb = test_input($_POST["betrieb"]);
     }
 
     if (empty($_POST["menge"])) {
@@ -132,8 +123,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allergene = test_input($_POST["allergene"]);
     }
 
-    if (!empty($_POST["comment"])) {
-        $comment = test_input($_POST["comment"]);
+    if (!empty($_POST["anmerkung"])) {
+        $anmerkung = test_input($_POST["anmerkung"]);
     }
 
     // ---- CREATE OBJECTS -------
@@ -166,26 +157,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'LMkey' => $LMkey,
         'Bezeichnung' => $LMBez,
         'VerteilDeadline' => $VerteilDeadline,
-        'Anmerkung' => $comment,
+        'Anmerkung' => $anmerkung,
         'Kuehlware' => $kuehlcheck,
         'Gewicht' => $menge,
+        'Betrieb' => $betrieb,
         'OKatKey' => $OKatKey,
         'Herkunft' => $HerkunftKey,
     ];
 
-    $box = (object) [
-        'BoxID' => $kiste,
-        'LMkey' => $LMkey,
-        'BStatusKey' => 5,
-    ];
-
     // Datenbankeintrag erstellen
-    $dbeintrag = array($lieferung, $lebensmittel, $box);
+    $dbeintrag = array($lieferung, $lebensmittel);
 
     // ----------- add Object to Uebersicht --------
     // Wenn es keine Errors gibt und keine Variablen leer sind, wird das Objekt zur Übersicht übertragen und man wird zur Überischt weitergeleitet
     if (
-        empty($lmbezErr) && empty($kisteErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
+        empty($lmbezErr) && empty($betriebErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
         !empty($lebensmittel->OKatKey && $lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)
     ) {
         $eintrag = (object) [
@@ -194,12 +180,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'Kategorie' => $lebensmittel->OKatKey,
             'Lebensmittel' => $lebensmittel->Bezeichnung,
             'Menge' => $lebensmittel->Gewicht,
-            'Kistennr' => $box->BoxID,
             'Kuehlen' => $lebensmittel->Kuehlware,
             'Genießbar' => $haltbarkeit,
             'Herkunft' => $lebensmittel->Herkunft,
             'Allergene' => $allergene,
-            'Anmerkungen' => $comment
+            'Anmerkungen' => $anmerkung
         ];
         array_push($_SESSION["array"], $eintrag);
         array_push($_SESSION["dbeintragArray"], $dbeintrag);
@@ -317,33 +302,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $icon_sonstiges_url,
                                         $icon_trockenprodukte_url,
                                     );
-                                ?>
-                                <div class="radio-container kategorie">
-                                    <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php if (
-                                        isset($OKatKey) && $OKatKey==$row['OKatKey'] ) echo "checked"; ?> >
-                                    <div class="category-item">
-                                        <?php echo "<img src='" . $iconList[$key] . "'>" ?>
-                                        <p>
-                                            <?php echo $row['OKatName'] ?>
-                                        </p>
+                                    ?>
+                                    <div class="radio-container kategorie">
+                                        <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php if (
+                                               isset($OKatKey) && $OKatKey == $row['OKatKey']
+                                           )
+                                               echo "checked"; ?>>
+                                        <div class="category-item">
+                                            <?php echo "<img src='" . $iconList[$key] . "'>" ?>
+                                            <p>
+                                                <?php echo $row['OKatName'] ?>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </div>
                         </div>
                     </div>
                     <div class="grid">
-                        <!-- Kistennummer INPUT -->
-                        <div class="grid-col-3">
+                        <!-- Herkunft INPUT -->
+                        <div class="grid-col-6">
                             <label class="grid-title">
-                                Kistennummer
+                                Wo gerettet?
                                 <span class="error">*
-                                    <?php echo $kisteErr; ?>
+                                    <?php echo $herkunftErr; ?>
                                 </span>
                             </label>
-                            <input name="kiste" class="input" type="number" value="<?php echo $kiste; ?>" min="0" />
+                            <div class="haltbarkeit-grid">
+                                <?php
+                                // LOOP TILL END OF DATA
+                                foreach ($herkunftkategorien as $key => $row) {
+                                    ?>
+                                    <div class="radio-container haltbarkeit">
+                                        <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
+                                            <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey'])
+                                                echo
+                                                    "checked"; ?>>
+                                        <div class="haltbarkeit-item">
+                                            <p>
+                                                <?php echo $row['HerkunftName'] ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <!-- Betriebsname INPUT -->
+                        <div class="grid-col-3">
+                            <label class="grid-title">
+                                Betriebsname
+                                <span class="error">*
+                                    <?php echo $betriebErr; ?>
+                                </span>
+                            </label>
+                            <input name="betrieb" class="input" type="text" value="<?php echo $betrieb; ?>"/>
                         </div>
                         <!-- Menge INPUT  -->
                         <div class="grid-col-3">
@@ -397,34 +413,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 input.oninput();
                             </script>
                         </div>
-                        <!-- Herkunft INPUT -->
-                        <div class="grid-col-6">
-                            <label class="grid-title">
-                                Wo gerettet?
-                                <span class="error">*
-                                    <?php echo $herkunftErr; ?>
-                                </span>
-                            </label>
-                            <div class="haltbarkeit-grid">
-                                <?php
-                                // LOOP TILL END OF DATA
-                                foreach ($herkunftkategorien as $key => $row) {
-                                ?>
-                                <div class="radio-container haltbarkeit">
-                                    <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
-                                        <?php if (isset($HerkunftKey) && $HerkunftKey==$row['HerkunftKey']) echo
-                                        "checked"; ?>>
-                                    <div class="haltbarkeit-item">
-                                        <p>
-                                            <?php echo $row['HerkunftName'] ?>
-                                        </p>
-                                    </div>
-                                </div>
-                                <?php
-                                }
-                                ?>
-                            </div>
-                        </div>
                         <!-- Allergene INPUT  -->
                         <div class="grid-col-6">
                             <div class="grid-title">
@@ -453,7 +441,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label class="grid-title">
                                 Anmerkungen
                             </label>
-                            <textarea name="comment" rows="1" class="input"><?php echo $comment; ?></textarea>
+                            <textarea name="anmerkung" rows="1" class="input"><?php echo $anmerkung; ?></textarea>
                         </div>
                     </div>
                 </div>
