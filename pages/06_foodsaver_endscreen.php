@@ -1,3 +1,10 @@
+<?php
+// Session initialisieren, damit php erkennt welche Session im nächsten Schritt gemeint ist
+session_start();
+// Session wird zerstört und resettet
+session_destroy();
+?>
+
 <!DOCTYPE html>
 <html lang=de>
 

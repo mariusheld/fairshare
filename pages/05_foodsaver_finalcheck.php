@@ -1,15 +1,33 @@
 <?php
 // --- CREATE SESSION --- 
 session_start();
-
 if ($_SESSION["foodsaverLogin"] == false) {
     session_destroy();
     header("Location: ../index.php");
 }
+require_once("../dbconnect/dbconnect.inc.php");
+$db_handle = new DBController();
+$conn = $db_handle->connectDB();
+
 // Array wird geleert 
 $_SESSION["array"] = array();
-// Session wird zerstört und resettet
-session_destroy();
+
+$letzteBox = false;
+$Zeitpunkt = date("Y-m-d H:i:s");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (
+        isset($_POST['letzteBox']) &&
+        $_POST['letzteBox'] == 'true'
+    ) {
+        $letzteBox = 1;
+    }
+
+    mysqli_select_db($conn, "u-projraupe");
+    $finalCheckQuery = "INSERT INTO `BVerfuegbarkeit` (`Zeitpunkt`, `NochVerfuegbar`) VALUES ('$Zeitpunkt', '$letzteBox')";
+    mysqli_query($conn, $finalCheckQuery);
+    header("Location: ./06_foodsaver_endscreen.php");
+}
 ?>
 
 
@@ -40,8 +58,10 @@ session_destroy();
             <img id="openHelp" src="../media/icon_help.svg" alt="icon_help" />
         </header>
         <div class="content">
+            <img src="../media/finalCheck_background.svg" alt="background_image" class="background"></img>
             <div class="wrap-title font-fira">
-                <div class="reminder">
+                <form class="reminder" id="finalCheckForm" method="post"
+                    action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <div>
                         <h1 class="font-londrina">
                             DANKE FÜR DEINE SPENDE!
@@ -57,14 +77,14 @@ session_destroy();
                         </p>
                     </div>
                     <div class="check-item">
-                        <input name="check" type="checkbox">
+                        <input name="letzteBox" type="checkbox" value="true">
                         <img src="../media/checkbox.svg" alt="checkbox" />
                         <img src="../media/checkbox_checked.svg" alt="checkbox_checked" />
                         Ich habe die letzte Box genommen.
                     </div>
-                </div>
+                </form>
                 <!-- WEITERLEITUNG ZUM ENDSCREEN-->
-                <a class="final-button" href="./06_foodsaver_endscreen.php">Alles klar</a>
+                <input class="final-button" type="submit" form="finalCheckForm" value="Alles klar">
             </div>
         </div>
     </div>
