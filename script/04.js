@@ -130,14 +130,36 @@ function changeBearbeiten(id){
 }
 
 
-function openLoeschen (id){
-  document.getElementById("overlayLoeschen:" + id).style.display = "block"
+function openLoeschen(id) {
+  console.log(document.getElementById("overlayLoeschen:" + id))
+  document.getElementById("overlayLoeschen:" + id).style.display = "block";
+  document.getElementById("grauer-hintergrund").style.display = "block";
 }
 
-function loeschen2(id){
-  document.getElementById(id).onclick = function () {
-    this.remove ();
+function loeschenAbbr(id) { 
+  console.log("clickAbbr");
+  document.getElementById("overlayLoeschen:" + id).style.display = "none";
 }
-} 
+
+// Schließen wenn außerhalb des Pop-ups gedrückt wird
+var popups = document.getElementsByClassName("popup");
+var triggerIcons = document.getElementsByClassName("open_icon");
+window.onclick = function (event) {
+  if (event.target.classList[0] != "open_icon") {
+    console.log("click")
+    for (let item of popups) {
+      for (let trigger of triggerIcons) {
+        if (trigger.id.length < 38) {
+          bearbeiten = false;
+          document.getElementById(trigger.id).setAttribute("src", "../media/edit_icon.svg");
+        } else {
+          anmerkungen = false;
+          document.getElementById(trigger.id).setAttribute("src", "../media/comment_icon.svg");
+        } 
+      }
+      item.style.display = "none";
+    }
+  }
+};
 
 

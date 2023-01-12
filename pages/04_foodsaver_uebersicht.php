@@ -26,9 +26,6 @@ function consolelog($data, bool $quotes = false)
   }
 }
 
-consolelog($array);
-consolelog($dbeintragArray);
-
 // Vollständiger Array mit allen Einträgen wird an die Datenbank übertragen. -------------------
 function sendList($dbeintragArray, $conn)
 {
@@ -53,21 +50,21 @@ function sendList($dbeintragArray, $conn)
     $Anmerkung = $lebensmittelEintrag['Anmerkung'];
     $Kuehlware = $lebensmittelEintrag['Kuehlware'];
     $Gewicht = $lebensmittelEintrag['Gewicht'];
+    $Betrieb = $lebensmittelEintrag['Betrieb'];
     $OKatKey = $lebensmittelEintrag['OKatKey'];
     $HerkunftKey = $lebensmittelEintrag['Herkunft'];
 
-    $lebensmittelQuery = "INSERT INTO `Lebensmittel` (`LMkey`, `Bezeichnung`, `VerteilDeadline`, `Anmerkung`, `Kuehlware`, `Gewicht`, `OKatKey`, `HerkunftKey`) VALUES ('$LMkey', '$Bezeichnung', '$VerteilDeadline', '$Anmerkung', '$Kuehlware', '$Gewicht', '$OKatKey', '$HerkunftKey')";
+    $lebensmittelQuery = "INSERT INTO `Lebensmittel` (`LMkey`, `Bezeichnung`, `VerteilDeadline`, `Anmerkung`, `Kuehlware`, `Gewicht`, `Betrieb`, `OKatKey`, `HerkunftKey`) VALUES ('$LMkey', '$Bezeichnung', '$VerteilDeadline', '$Anmerkung', '$Kuehlware', '$Gewicht', '$Betrieb', '$OKatKey', '$HerkunftKey')";
     mysqli_query($conn, $lebensmittelQuery);
 
-    // BOX QUERY
-    $boxEintrag = $dbEintrag[2];
+    // Bestand_Bewegung QUERY
+    $LMkeyBestandBewegung = $lieferungEintrag['LMkey'];
+    $LStatusKey = 1;
+    $BewegDatum = date("Y-m-d h:i:sa");
+    $BewegMenge = $lebensmittelEintrag['Gewicht'];
 
-    $BoxID = $boxEintrag['BoxID'];
-    $LMkeyBox = $boxEintrag['LMkey'];
-    $BStatusKey = $boxEintrag['BStatusKey'];
-
-    $boxQuery = "UPDATE `Box` SET `Box`.`LMkey` = '$LMkeyBox', `Box`.`BStatusKey` = '$BStatusKey' WHERE `Box`.`BoxID` = '$BoxID'";
-    mysqli_query($conn, $boxQuery);
+    $BestandBewegungQuery = "INSERT INTO `Bestand_Bewegung` (`LMkey`, `LStatusKey`, `BewegDatum`, `BewegMenge`) VALUES ('$LMkeyBestandBewegung', '$LStatusKey', '$BewegDatum', '$BewegMenge')";
+    mysqli_query($conn, $BestandBewegungQuery);
   }
 }
 
@@ -115,6 +112,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 </head>
 
 <body class="font-fira">
+  <div id="grauer-hintergrund"></div>
   <div class="container">
     <header>
       <img src="../media/logo.svg" alt="logo" />
@@ -126,11 +124,10 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         <!-- Tabelle -->
         <table class="table">
           <tr class="table-headers">
-            <th class="grid-col-3">Lebensmittel</th>
-            <th class="grid-col-2">Kistennr</th>
+            <th class="grid-col-6">Lebensmittel</th>
             <th class="grid-col-2">Menge</th>
             <th class="grid-col-3">Genießbar</th>
-            <th class="grid-col-2"></th>
+            <th class="grid-col-1"></th>
           </tr>
           <?php
           // Tabelleneintrag
@@ -138,7 +135,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
           foreach ($array as $key => $row) {
             ?>
             <tr class="table-items" id="<?php echo $array[$key]['id'] ?>">
-              <td class="grid-col-3">
+              <td class="grid-col-6">
                 <?php
 
                 $iconList = array(
@@ -161,57 +158,51 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                   </p>
                 </div>
               </td>
-              <td class="grid-col-2 flex">
-                <?php echo $row['Kistennr']; ?>
-                <?php if ($row['Kuehlen'] == true)
-                  echo "<img src='../media/freeze_icon.svg' alt='freeze_icon' />"; ?>
-              </td>
               <td class="grid-col-2">
                 <?php echo $row['Menge'] ?> Kg
               </td>
               <td class="grid-col-3">
-                <?php echo $row['Genießbar'] ?>
+                <div class="flex">
+                  <?php echo $row['Genießbar'] ?>
+                  <?php if ($row['Kuehlen'] == true)
+                    echo "<img src='../media/freeze_icon.svg' alt='freeze_icon' />"; ?>
+                </div>
               </td>
-              <td class="grid-col-2">
+              <td class="grid-col-1">
                 <div class="interaktion-buttons">
                   <!-- OVERLAY TRIGGER -->
                   <?php
                   if ($array[$key]['Anmerkungen'] == true || $array[$key]['Allergene'] == true) { ?>
                     <img src='../media/comment_icon.svg' alt='comment_icon'
                       id="anmerkungButton:<?php echo $array[$key]['id'] ?>"
-                      onClick='changeAnmerkung("<?php echo $array[$key]['id'] ?>")' />
+                      onClick='changeAnmerkung("<?php echo $array[$key]['id'] ?>")' class="open_icon" />
                     <?php
                   }
                   ?>
                   <!-- OVERLAY TRIGGER -->
                   <img src="../media/edit_icon.svg" alt="edit_icon" id="editButton:<?php echo $array[$key]['id'] ?>"
-                    onClick="changeBearbeiten('<?php echo $array[$key]['id'] ?>')" />
+                    onClick="changeBearbeiten('<?php echo $array[$key]['id'] ?>')" class="open_icon" />
 
                   <!-- Overlay fs-anmerkung-allergene -->
-                  <div id="overlay:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-anmerkungen">
+                  <div id="overlay:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-anmerkungen popup">
                     <div class="popup-anmerkung">
-                      <?php if ($row['Anmerkungen'] == true)
+                      <?php if ($row['Anmerkungen'] == true) {
                         echo "<h5>Anmerkung:</h5>";
+                        echo "<p>" . $array[$key]['Anmerkungen'] . "</p>";
+                      }
+                      ;
                       ?>
-
-                      <?php if ($row['Anmerkungen'] == true) { ?>
-                        <p>
-                          <?php echo ($array[$key]['Anmerkungen']) ?>
-                        </p>
-                      <?php } ?>
-                      <?php if ($row['Allergene'] == true)
-                        echo "<h5 class='header2'>Allergene und Inhaltsstoffe:</h5>"; ?>
-
-                      <p>
-                        <?php if ($row['Allergene'] == true)
-                          echo $array[$key]['Allergene']; ?>
-                      </p>
+                      <?php if ($row['Allergene'] == true) {
+                        echo "<h5 class='header2'>Allergene und Inhaltsstoffe:</h5>";
+                        echo "<p>" . $array[$key]['Allergene'] . "</p>";
+                      }
+                      ;
+                      ?>
                     </div>
                   </div>
 
-
                   <!-- Overlay fs-lm-optionen -->
-                  <div id="overlayBearbeiten:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-bearbeiten">
+                  <div id="overlayBearbeiten:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-bearbeiten popup">
                     <div class="popup-uebersicht-bearbeiten">
                       <a class="bearbeiten" href="03_foodsaver_hinzufuegen.php?editieren=1">
                         <img src="../media/bearbeiten.svg" alt="Stift zum Bearbeiten">
@@ -238,7 +229,6 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                       </div>
                       <p class="textpopup">
                         <?php echo $key ?>
-
                         Möchtest Du das ausgewählte Lebensmittel wirklich aus der Liste löschen?
                       </p>
                       <div class="button-spacing-popup">
@@ -433,4 +423,3 @@ ob_end_flush();
 // You can do this by adding ob_start(); at the top of your script and ob_end_flush(); 
 // at the bottom of your script. This will buffer the output and send it to the browser only when your script is finished executing.
 ?>
-
