@@ -204,7 +204,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                   <!-- Overlay fs-lm-optionen -->
                   <div id="overlayBearbeiten:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-bearbeiten popup">
                     <div class="popup-uebersicht-bearbeiten">
-                      <a class="bearbeiten" href="03_foodsaver_hinzufuegen.php?editieren=1">
+                      <a class="bearbeiten" href="03_foodsaver_hinzufuegen.php?editieren=<?php echo $key; ?> ">
                         <img src="../media/bearbeiten.svg" alt="Stift zum Bearbeiten">
                         <h5>Bearbeiten</h5>
                       </a>

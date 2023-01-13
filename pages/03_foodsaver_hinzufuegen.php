@@ -194,7 +194,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
-
 ?>
 
 <!-- --------- HTML --------- -->
@@ -241,7 +240,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </span>
                             </label>
                             <input name="LMBez" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
-                                echo "testValue";
+                                echo $_GET['editieren'];;
                             } else {
                                 echo $LMBez;
                             } ?>" />
@@ -250,7 +249,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="grid-col-2">
                             <div class="kuehlcheck">
                                 <div class="check-item">
-                                    <input name="kuehlcheck" type="checkbox" value="true" id="kuehlen">
+                                    <input name="kuehlcheck" type="checkbox" id="kuehlen" value="true">
                                     <?php
                                     if ($kuehlcheck == "0") {
                                         echo "<img src='../media/checkbox.svg' alt='checkbox' />";
@@ -359,7 +358,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <?php echo $betriebErr; ?>
                                 </span>
                             </label>
-                            <input name="betrieb" class="input" type="text" value="<?php echo $betrieb; ?>"/>
+                            <input name="betrieb" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
+                                echo $_GET['editieren'];;
+                            } else {
+                                echo $betrieb;
+                            } ?>" />
                         </div>
                         <!-- Menge INPUT  -->
                         <div class="grid-col-3">
@@ -384,8 +387,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                 </div>
                             </div>
-                            <input name="menge" class="input" type="number" step="0.1" value="<?php echo $menge; ?>"
-                                min="0" />
+                            <input name="menge" class="input" type="number" step="0.1" min="0" value="<?php if (isset($_GET['editieren'])) {
+                                echo $_GET['editieren'];;
+                            } else {
+                                echo $menge;
+                            } ?>"/>
                         </div>
                         <!-- Haltbarkeit INPUT -->
                         <div class="grid-col-6">
@@ -434,14 +440,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                 </div>
                             </div>
-                            <input name="allergene" class="input" type="text" value="<?php echo $allergene; ?>" />
+                            <input name="allergene" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
+                                echo $_GET['editieren'];;
+                            } else {
+                                echo $allergene;
+                            } ?>"/>
                         </div>
                         <!-- Anmerkungen INPUT -->
                         <div class="grid-col-6">
                             <label class="grid-title">
                                 Anmerkungen
                             </label>
-                            <textarea name="anmerkung" rows="1" class="input"><?php echo $anmerkung; ?></textarea>
+                            <textarea name="anmerkung" rows="1" class="input">
+                            <?php if (isset($_GET['editieren'])) {
+                                echo $_GET['editieren'];;
+                            } else {
+                                echo $anmerkung;
+                            } ?>
+                            </textarea>
                         </div>
                     </div>
                 </div>
