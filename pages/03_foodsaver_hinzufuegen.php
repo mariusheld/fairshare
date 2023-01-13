@@ -470,7 +470,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="schrittliste-popup">
                 <div>
                     <ul class="listpopupHilfe">
-                        <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                        <img src="../media/1-hygiene.svg" class="icon-help-popup">
                         <h5 class="steps-hilfe">1. Hygiene</h5>
                         <li>
                             Hände waschen
@@ -482,7 +482,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div>
                     <ul class="listpopupHilfe">
-                        <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                        <img src="../media/2-boxen.svg" class="icon-help-popup">
                         <h5 class="steps-hilfe">2. Boxen</h5>
                         <li>
                             Hol dir genügend Boxen unter der Theke
@@ -494,7 +494,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div>
                     <ul class="listpopupHilfe">
-                        <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                        <img src="../media/3-vorbereitung.svg" class="icon-help-popup">
                         <h5 class="steps-hilfe">3. Vorbereitung</h5>
                         <li>
                             Sortiere Verdorbenes aus
@@ -509,7 +509,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div>
                     <ul class="listpopupHilfe">
-                        <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+                        <img src="../media/4-verpacken.svg" class="icon-help-popup">
                         <h5 class="steps-hilfe">4. Lebensmittelabgabe</h5>
                         <li>
                             Packe die Lebensmittel in die Boxen
