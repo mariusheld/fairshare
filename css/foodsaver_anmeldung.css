@@ -224,7 +224,7 @@ input.eingabefeld {
 input[type=text] {
     font-family: "Fira Sans";
     font-size: 16px;
-    text-align: center;
+    text-align: left;
 }
 
 p.vergessen {

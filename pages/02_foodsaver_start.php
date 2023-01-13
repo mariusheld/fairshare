@@ -99,7 +99,7 @@ $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["
       <div class="schrittliste-popup">
         <div>
           <ul class="listpopupHilfe">
-            <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+            <img src="../media/hygiene.svg" class="icon-help-popup">
             <h5 class="steps-hilfe">1. Hygiene</h5>
             <li>
               Hände waschen
@@ -111,7 +111,7 @@ $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["
         </div>
         <div>
           <ul class="listpopupHilfe">
-            <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+            <img src="../media/boxen.svg" class="icon-help-popup">
             <h5 class="steps-hilfe">2. Boxen</h5>
             <li>
               Hol dir genügend Boxen unter der Theke
@@ -123,7 +123,7 @@ $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["
         </div>
         <div>
           <ul class="listpopupHilfe">
-            <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+            <img src="../media/vorbereitung.svg" class="icon-help-popup">
             <h5 class="steps-hilfe">3. Vorbereitung</h5>
             <li>
               Sortiere Verdorbenes aus
@@ -138,7 +138,7 @@ $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["
         </div>
         <div>
           <ul class="listpopupHilfe">
-            <img src="../media/kategorien/icon_gemuese.svg" class="icon-help-popup">
+            <img src="../media/verpacken.svg" class="icon-help-popup">
             <h5 class="steps-hilfe">4. Lebensmittelabgabe</h5>
             <li>
               Packe die Lebensmittel in die Boxen
