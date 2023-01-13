@@ -1,3 +1,80 @@
+<!-- --------- PHP --------- -->
+
+<?php
+session_start();
+//Datenbankverbindung aufbauen
+require_once("../dbconnect/dbconnect.inc.php");
+$db_handle = new DBController();
+
+
+//Auslesen, von welcher Seite die Zeitraumauswahl aufgerufen wurde
+$camefrom = $_GET['camefrom'];
+if (!$camefrom)
+	{
+	//für erstes Testing
+	$camefrom = "zeitraum";
+	
+	//TODO: sobald Dashboard fertig ist, nur noch das hier
+	//$camefrom = "dashboard";
+	}
+
+
+	if ($camefrom == "dashboard") 
+		{
+		$filterleadsto = "08_interne_wirkungsmessung_dashboard.php";
+		}
+	if ($camefrom == "herkunft")
+		{
+		$filterleadsto = "08_interne_wirkungsmessung_herkunft.php";
+		}
+
+
+//TODO: entfernen, sobald Dashboard fertig ist
+	if ($camefrom == "zeitraum")
+		{
+		$filterleadsto = "08_interne_wirkungsmessung_zeitraum_waehlen.php";
+		}
+	
+
+//TODO: Link zu dieser Seite in Dashboard und Balkendiagramm einbauen & camefrom mitgeben
+
+//TODO: Code für Datumsauslesung und Konvertierung in Dashboard und Balkendiagramm übernehmen
+
+//Datumsauswahl auslesen
+$date1formatted = $_GET['date1'];
+$date2formatted = $_GET['date2'];
+
+//Datumsauswahl in Formatierung für Datenbank konvertieren
+$date1timestamp = strtotime($date1formatted);
+$date2timestamp = strtotime($date2formatted);
+
+$date1_ISO8601 = date("Y-m-d", $date1timestamp);
+$date2_ISO8601 = date("Y-m-d", $date2timestamp);
+
+
+//Aktuelles Jahr
+$thisyear = date("Y"); 
+$lastyear = $thisyear -1; 
+
+?>
+
+<script>
+//Datumsauswahl an JavaScript übergeben
+var gotdate1 = "<?php echo $date1_ISO8601; ?>";
+var gotdate2 = "<?php echo $date2_ISO8601; ?>";
+// Test:
+//alert("date1="+gotdate1+" & date2="+gotdate2);
+
+//Herkunftsseite an JavaScript übergeben
+var camefrom = "<?php echo $camefrom; ?>"; 
+var filterleadsto = "<?php echo $filterleadsto; ?>"; 
+//Test:
+//alert("camefrom=" +camefrom + "& filterleadsto=" +filterleadsto);
+
+</script>
+
+
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
@@ -30,6 +107,8 @@
 
     <!-- Hauptinhalt -->  
     <div class="content flx-container">
+    
+    
         <!-- Erste Spalte -->  
         <div class="picker-column-1">
             <!-- Input Fields für Zeit -->  
@@ -62,11 +141,11 @@
                 </div>
                 <div class="radio-group">
                     <input type="radio" id="radio2" name="date-checkbox-group" value="option2">
-                    <label for="radio2">Dieses Jahr (2023)</label>
+                    <label for="radio2">Dieses Jahr <?php echo '(' . $thisyear . ')'; ?></label>
                 </div>
                 <div class="radio-group">
                     <input type="radio" id="radio3" name="date-checkbox-group" value="option3">
-                    <label for="radio3">Letztes Jahr (2022)</label>
+                    <label for="radio3">Letztes Jahr <?php echo '(' . $lastyear . ')'; ?></label>
                 </div>
                 <div class="radio-group">
                     <input type="radio" id="radio4" name="date-checkbox-group" value="option4">
@@ -81,14 +160,17 @@
                     <label for="radio6">Eigene</label>
                 </div>
             </div>  
-            <!-- Filtern Button -->  
+            <!-- Filtern Button --> 
+            
+
             <div>
-                <button class="filter-button">Filtern</button>
+                <button class="filter-button" onclick="visitPage();">Filtern</button>
             </div>
         </div>
     </div>
   </div>
 </body>
+
 <script>
     //DatePicker - Auswahl und Verbindung mit Input Feldern
     $(function ($) {
@@ -202,5 +284,21 @@
         });
 
 
-    </script>
+    //Datumsauswahl an PHP übergeben 
+    function visitPage(){
+        
+        //console.log("Logging01: date1="+date1.value+" date2="+date2.value+" ");
+
+        window.location= filterleadsto+"?date1="+ date1.value + "&date2=" + date2.value ;
+    	
+    	//console.log("Logging02: date1="+date1.value+" date2="+date2.value+" ");
+    	
+    	//TODO: Testausgaben entfernen
+
+    }
+	
+	</script>
+    
 </html>
+
+
