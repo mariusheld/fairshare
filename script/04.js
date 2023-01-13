@@ -18,13 +18,6 @@ exitHilfe.onclick = function () {
   fsHilfe.style.display = "none";
 };
 
-// Schließen wenn außerhalb des Pop-ups gedrückt wird
-//window.onclick = function (event) {
-//if (event.target == fsHilfe) {
-//fsHilfe.style.display = "none";
-//}
-//};
-
 //----------------JavaScript für fs-uebersicht-abbr Overlay, genutzt in 02, 04 -----------------------------//
 //Overlay auswählen
 var fsUebersichtAbbr = document.getElementById("fsUebersichtAbbr");
@@ -54,12 +47,6 @@ nextUebersichtAbbr.onclick = function () {
   // window.open(href = "../index.php");
 };
 
-// Schließen wenn außerhalb des Pop-ups gedrückt wird
-//window.onclick = function (event) {
-//if (event.target == fsUebersichtAbbr) {
-//fsUebersichtAbbr.style.display = "none";
-//}
-//};
 
 //----------------JavaScript für fs-lm-verstauen Overlay, genutzt in 04 -----------------------------//
 //Overlay auswählen

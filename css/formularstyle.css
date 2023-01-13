@@ -1031,6 +1031,7 @@ Foodsaver Übersicht
     top: 100%;
     transform: translateY(5%);
     z-index: 20;
+    right: 63px;
 }
 
 .fs-uebersicht-bearbeiten {
