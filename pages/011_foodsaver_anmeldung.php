@@ -123,15 +123,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form class="anmeldung" method="POST">
                 <div class="anmeldungmail" id="anmail">
                     <label  for="mail">Deine E-Mail</label></br>
-                    <input type="email" name="mail"  style="width:310px; height: 46px;"/>
+                    <input type="email" id="mail" name="mail"  style="width:310px; height: 46px;"/>
                 </div>
                 <div class="anmeldungtel" id="antel">
                     <label  for="tel">Deine Telefonnummer</label></br>
-                    <input type="tel" name="tel"  style="width:310px; height: 46px;"/>
+                    <input type="tel" id="tel" name="tel"  style="width:310px; height: 46px;"/>
                 </div>
                 <div class="anmeldungid" id="anid">
                     <label  for="ID">Deine Foodsaver-ID</label></br>
-                    <input type="text" name="ID"  style="width:310px; height: 46px;"/>
+                    <input type="text" id="ID" name="ID"  style="width:310px; height: 46px;"/>
                 </div>
             </form>
         </div>
@@ -179,6 +179,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById("anid").style.display = "none";
                     document.getElementById("anmail").style.display = "block";
                     document.getElementById("footer").style.visibility = "visible";
+
+                    //Reset des Input der anderen Eingaben
+                    document.getElementById("tel").value = "";
+                    document.getElementById("ID").value = "";
                     
                 } else if (x == "btntel") {
                      //CSS zum Button Styling
@@ -201,6 +205,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById("anmail").style.display = "none";
                     document.getElementById("footer").style.visibility = "visible";
 
+                     //Reset des Input der anderen Eingaben
+                     document.getElementById("mail").value = "";
+                    document.getElementById("ID").value = "";
+
                 }else if (x == "btnid") {
                      //CSS zum Button Styling
                      var idclick = document.getElementById("btnid");
@@ -221,6 +229,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById("anid").style.display = "block";
                     document.getElementById("anmail").style.display = "none";
                     document.getElementById("footer").style.visibility = "visible";
+
+                    //Reset des Input der anderen Eingaben
+                    document.getElementById("mail").value = "";
+                    document.getElementById("tel").value = "";
+
                 } else if (x == "btnbreakup") {
                     //CSS zum Zurücksetzen der geklickten Buttons
                     var mailclick = document.getElementById("btnmail");
@@ -238,6 +251,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById("anid").style.display = "none";
                     document.getElementById("anmail").style.display = "none";
                     document.getElementById("footer").style.visibility = "hidden";
+
+                     //Reset des Input der anderen Eingaben
+                     document.getElementById("mail").value = "";
+                    document.getElementById("tel").value = "";
+                    document.getElementById("ID").value = "";
 
                 }
             }
