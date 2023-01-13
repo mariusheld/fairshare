@@ -183,6 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'Kuehlen' => $lebensmittel->Kuehlware,
             'Genießbar' => $haltbarkeit,
             'Herkunft' => $lebensmittel->Herkunft,
+            'Betrieb'=> $lebensmittel->Betrieb,
             'Allergene' => $allergene,
             'Anmerkungen' => $anmerkung
         ];
@@ -240,7 +241,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </span>
                             </label>
                             <input name="LMBez" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
-                                echo $_GET['editieren'];;
+                                echo $_SESSION["array"][$_GET['editieren']]->Lebensmittel;
                             } else {
                                 echo $LMBez;
                             } ?>" />
@@ -359,7 +360,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </span>
                             </label>
                             <input name="betrieb" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
-                                echo $_GET['editieren'];;
+                                echo $_SESSION["array"][$_GET['editieren']]->Betrieb;
                             } else {
                                 echo $betrieb;
                             } ?>" />
@@ -388,7 +389,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                             <input name="menge" class="input" type="number" step="0.1" min="0" value="<?php if (isset($_GET['editieren'])) {
-                                echo $_GET['editieren'];;
+                                echo $_SESSION["array"][$_GET['editieren']]->Menge;
                             } else {
                                 echo $menge;
                             } ?>"/>
@@ -441,7 +442,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                             <input name="allergene" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
-                                echo $_GET['editieren'];;
+                                echo $_SESSION["array"][$_GET['editieren']]->Allergene;
                             } else {
                                 echo $allergene;
                             } ?>"/>
@@ -451,9 +452,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label class="grid-title">
                                 Anmerkungen
                             </label>
-                            <textarea name="anmerkung" rows="1" class="input">
+                            <textarea name="anmerkung" rows="1" class="input" style="text-align: left">
                             <?php if (isset($_GET['editieren'])) {
-                                echo $_GET['editieren'];;
+                                echo $_SESSION["array"][$_GET['editieren']]->Anmerkungen;
                             } else {
                                 echo $anmerkung;
                             } ?>
