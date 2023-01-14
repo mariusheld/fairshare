@@ -1,14 +1,15 @@
-/*Alter Abschnitt - muss angepasst werden*/
+/*General Styling*/
 body {
-    /*height: 768px;*/
-    margin: 0;
-    background: #858585;
+    margin: 0px;
+    background: #FFFDFD;
+    height: 100vh;
 }
 
 a,
 p {
     margin: 0;
     text-decoration: none;
+    color: inherit;
 }
 
 .font-londrina {
@@ -24,29 +25,37 @@ p {
     flex-flow: column;
     height: 100%;
 }
+@media (max-width: 1023px) {
+    .container {
+        height: auto;
+        display: block;
+    }
+    
+}
 
 header {
-    /* positioning */
     height: 88px;
-    width: 1024px;
-    margin: auto;
-    margin-top: 0;
-    margin-bottom: 0;
-
-    /* apple-green */
+    width: 100%;
     background: #99BB44;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
-
-    /* handle items  */
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+@media (max-width: 479px) {
+    header {
+        height: auto;
+        display: block;
+        min-height: 88px;
+    }
 }
 
 header h1 {
     font-weight: 400;
     font-size: 36px;
     color: #FFFDFD;
+    padding-left: 32px;
+    margin: 0px;
 }
 
 header a {
@@ -55,72 +64,40 @@ header a {
 }
 
 .content {
-    /* positioning */
     position: relative;
     flex: 1;
-    width: 1024px;
+    width: 100%;
+    height: 50%;
     margin: auto;
     background: #FFFDFD;
 }
-
-.content form {
-    padding: 32px;
-}
-
 
 .action-container {
-    /* positioning */
     height: 94px;
-    width: 1024px;
+    width: 100%;
     margin: auto;
     z-index: 10;
-    /* white */
     background: #FFFDFD;
-    /* button_hover */
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+@media (max-width: 1023px) {
+    .action-container {
+        position: relative;
+        bottom: 0;
+    }
+}
 
 .action-container div:first-child {
     padding-left: 32px;
+    cursor: pointer;
 }
 
 .action-container div:last-child {
     padding-right: 32px;
-}
-
-
-.grid-col-1 {
-    font-weight: 500;
-    text-align: start;
-    grid-column: span 1 / span 1;
-}
-
-.grid-col-2 {
-    font-weight: 500;
-    text-align: start;
-    grid-column: span 2 / span 2;
-}
-
-.grid-col-3 {
-    font-weight: 500;
-    text-align: start;
-    grid-column: span 3 / span 3;
-}
-
-.grid-col-4 {
-    font-weight: 500;
-    text-align: start;
-    grid-column: span 4 / span 4;
-}
-
-.grid-col-6 {
-    font-weight: 500;
-    text-align: start;
-    grid-column: span 6 / span 6;
+    cursor: pointer;
 }
 
 .error {
@@ -128,299 +105,13 @@ header a {
     font-size: 10px;
 }
 
-.flex {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 16px;
-}
-
-/* ------- 
-Foodsaver start
- --------- */
-
-.background {
-    position: absolute;
-    left: 55px;
-}
-
-.wrap-title {
-    margin: 0;
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.title {
-    /* onyx */
-    color: #1E212B;
-    font-size: 48px;
-    font-weight: 400;
-    text-align: center;
-}
-
-.cancel-on-start {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 20px 32px;
-}
-
-.cancel-on-start div {
-    width: 228px;
-}
-
-/* ------- 
-Foodsaver Hinzufügen
- --------- */
-
-.wrapper {
-    display: flex;
-}
-
-.grid-spacing {
-    height: 100%;
-    display: flex;
-    gap: 48px;
-}
-
-.grid {
-    width: 50%;
-    /* text concrete  */
-    color: #BEBEB9;
-
-    /* handle items  */
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 24px 16px;
-    height: 100%;
-}
-
-.grid-title {
-    height: 22px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
-}
-
-.input {
-    width: 100%;
-    /* height: 46px; */
-    /* alabaster */
-    background: #F2F1F0;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    /* onyx */
-    color: #1E212B;
-    font-size: 18px;
-    font-weight: 500;
-}
-
-.input:focus {
-    outline: none;
-}
-
-.kuehlcheck {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: end;
-}
-
-.category-grid {
-    /* handle items  */
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.category-item {
-    font-size: 14px;
-    color: #99BB44;
-    /* sand  */
-    border: solid 2px #E5E5E3;
-    border-radius: 20px;
-    padding: 12px 0px;
-
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-}
-
-.radio-container.kategorie input {
-    height: 109px;
-    width: 141px;
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    margin: 0;
-}
-
-.radio-container input:checked~.category-item {
-    border: solid 2px #99BB44;
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-}
-
-.rangeslider {
-    width: 100%;
-    margin-top: 12px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.slider {
-    -webkit-appearance: none;
-    width: 445px;
-    height: 28px;
-    outline: none;
-    opacity: 0.8;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-    /* background-color: #BEBEB9; */
-    background-image: url("./assets/range-thumb.svg");
-    margin: 0;
-}
-
-.slider:hover {
-    opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    /* margin-left: 8px; */
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    background-color: #99BB44;
-    border-radius: 50%;
-    /* opacity: 0.2; */
-    /* background-image: url("./assets/slider-thumb.svg"); */
-}
-
-.output {
-    padding-top: 6px;
-    width: 100%;
-    font-size: 12px;
-}
-
-/* ------- 
-Foodsaver Übersicht
- --------- */
-
-.wrap {
-    display: flex;
-    flex-direction: column;
-    padding: 32px;
-    height: 522px;
-    overflow-y: scroll;
-}
-
-.add-icon {
-    position: absolute;
-    left: 50%;
-    top: 80%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-}
-
-.table {
-    width: 100%;
-}
-
-.table-headers {
-    padding-bottom: 16px;
-    margin-bottom: 16px;
-    /* text concrete  */
-    color: #BEBEB9;
-    /* divider sand  */
-    border-bottom: solid 2px #E5E5E3;
-
-    /* handle items  */
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-}
-
-.table-items {
-    padding-bottom: 16px;
-    margin-bottom: 16px;
-    /* text concrete  */
-    color: #1E212B;
-    /* divider sand  */
-    border-bottom: solid 2px #E5E5E3;
-
-    /* handle items  */
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-}
-
-.action-container div:first-child {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    /* text concrete  */
-    color: #BEBEB9;
-    font-weight: 600;
-}
-
-.action-wrap {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    /* text concrete  */
-    color: #BEBEB9;
-
-    width: 456px;
-}
-
-.action-wrap a:first-child {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 54px;
-    width: 100%;
-
-    /* border sand  */
-    box-sizing: border-box;
-    border: solid 2px #E5E5E3;
-    border-radius: 16px;
-    /* text apple  */
-    color: #99BB44;
-    font-weight: 600;
-    font-size: 18px;
-}
-
 .next-button {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
     height: 54px;
     width: 100%;
-
-    /* apple-green */
     background: #99BB44;
     border: solid 0px #99BB44;
     border-radius: 16px;
@@ -430,104 +121,29 @@ Foodsaver Übersicht
     font-size: 18px;
     cursor: pointer;
 }
-
-.final-button {
-    margin-top: 42px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 54px;
-    width: 100%;
-
-    /* apple-green */
-    background: #99BB44;
-    border: solid 0px #99BB44;
-    border-radius: 16px;
-    /* text apple  */
-    color: #FFFDFD;
-    font-weight: 600;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-/* -------- Final Check ---------- */
-
-.reminder {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    line-height: 26px;
-    font-size: 18px;
-}
-
-.reminder h1 {
-    font-weight: 400;
-    font-size: 28px;
-}
-
-.reminder h2 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.check-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.check-item input {
-    height: 32px;
-    width: 32px;
-    opacity: 0;
-    cursor: pointer;
-    margin: 0;
-    z-index: 10;
-    position: absolute;
-}
-
-.check-item img {
-    cursor: pointer;
-}
-
-.check-item img:last-child {
-    position: absolute;
-    opacity: 0;
-}
-
-.check-item input:checked~img {
-    opacity: 1;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*Abschnitt für Dashboard*/
-.column-1 {
+.flx-container{
+    display: flex;
+    max-width: 1024px;
+  }
+@media (max-width: 1023px) {
+    .flx-container { 
+        align-items: center;
+        display: block;
+    }
+}
+  .column-1 {
     width: 66%;
     margin: 20px 0px 20px 20px;
   }
+
   .column-2 {
     width: 33%;
     margin: 20px 20px 20px 0px;
   }
+
   .block {
     background-color: #f2f1f0;
     margin: 5px;
@@ -537,28 +153,30 @@ Foodsaver Übersicht
   }
   .bg-block{
     width: 646px;
-    height: 360px;
+    height: auto;
+    min-height: 15vh;
   }
-  .flx-container{
-    display: flex;
-  }
+  
   p.description {
-    margin:20px;
-    font-size: 20px;
+    margin:20px 20px 10px 20px;
+    font-weight: 400;
+    font-size: 19px;
   }
    h1.number {
     font-size: 3em;
     color: black;
-    margin:15px 0px 20px 20px;
+    margin:5px 0px 15px 20px;
    }
    .chart-container{
     display: block;
     margin: 0 auto;
     max-height: 300px; 
-    max-width:600px;
+    max-width: 600px;
+    padding-bottom: 15px;
+    text-align: center;
    }
    .img-block{
-    margin: 20px 15px 20px 10px;
+    margin: 20px 15px 20px 15px;
    }
    .img-category{
     border-radius: 50%;  
@@ -569,6 +187,7 @@ Foodsaver Übersicht
     margin-left: 20px;
     font-size: 16px;
     font-weight: bold;
+    margin-bottom: 15px;
    }
    .list-category-sml{
     font-size: 14px;
@@ -578,13 +197,13 @@ Foodsaver Übersicht
     display: flex;
    }
    .header-btn-title{
-    color: white;
+    color: #FFFDFD;
     font-size: 20px;
     font-weight: 600;
     margin: 20px;
    }
    .time-button{
-    background: white;
+    background: #FFFDFD;
     display: flex;
     align-items: center;
     height: 54px;
@@ -593,6 +212,7 @@ Foodsaver Übersicht
     color: black;
     margin-right: 32px;
     position: relative;
+    cursor: pointer;
    }
    .button-text{
     font-size: 18px;
@@ -627,163 +247,163 @@ Foodsaver Übersicht
     color: #99BB44;
     font-weight: 600;
     font-size: 18px;
+    cursor: pointer;
   }
 
 
 
 
-/*Abschnitt für Zetiraum;*/
-  .flx-container{
+/*Abschnitt für Zeitraum;*/
+  .flx-container-sm{
     display: flex;
   }
   .picker-column-1 {
     width: 60%;
-    margin: 100px 10px 80px 200px;
+    margin: 90px 10px 80px 200px;
   }
   .picker-column-2 { 
     width: 40%;
-    margin: 100px 160px 80px 10px;
+    margin: 90px 160px 80px 10px;
   }
   .date-picker-label{
-      font-size: 16px;
-      color: #bfbfbb;
-      font-weight: 500;
-      margin: 10px 0px 20px 0px;
+    font-size: 16px;
+    color: #bfbfbb;
+    font-weight: 500;
+    margin: 10px 0px 20px 0px;
   }
   .date-picker-field{
-      background-color: #f2f1f0;
-      width: 130px;
-      font-size: 18px;
-      font-weight: 4s00;
-      color: black;
-      border: none;
-      border-radius: 8px;
-      padding: 10px;
-      display: inline;
-      margin:10px 15px 10px 0px;
+    background-color: #f2f1f0;
+    width: 130px;
+    font-size: 18px;
+    font-weight: 400;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    display: inline;
+    margin:10px 15px 10px 0px;
   }
   *:focus {
-      outline: none;
+    outline: none;
   }
   .ui-datepicker-inline{
-      font-family: 'Fira Sans', sans-serif !important;
-      font-size: 18px !important;
-      border: none !important;
-      margin: 20px 35px 0px 0px !important;
-      width: auto !important;
+    font-family: 'Fira Sans', sans-serif !important;
+    font-size: 18px !important;
+    border: none !important;
+    margin: 20px 35px 0px 0px !important;
+    width: auto !important;
   }
   .ui-datepicker-header{
-      background: white !important;
-      border: none !important;  
+    background: #FFFDFD !important;
+    border: none !important;  
   }
   .ui-icon{
-      margin: 0px !important;
-      background-image: none !important;
+    margin: 0px !important;
+    background-image: none !important;
   }
   .ui-datepicker-prev{
-      border: 2px solid #A2C155 !important;
-      border-radius: 8px !important;
+    border: 2px solid #A2C155 !important;
+    border-radius: 8px !important;
   }
   .ui-datepicker-prev::before{
-      font: var(--fa-font-solid);
-      content: "\f053";
-      font-size: 22px;
-      color: #A2C155;
-      padding: 5px 10px 5px 8px;
-      position: absolute;
+    font: var(--fa-font-solid);
+    content: "\f053";
+    font-size: 22px;
+    color: #A2C155;
+    padding: 5px 10px 5px 8px;
+    position: absolute;
   }
   .ui-datepicker-next{
-      border: 2px solid #A2C155 !important;
-      border-radius: 8px !important;
+    border: 2px solid #A2C155 !important;
+    border-radius: 8px !important;
   }
   .ui-datepicker-next::before{
-      font: var(--fa-font-solid);
-      content: "\f054";
-      font-size: 22px;
-      color: #A2C155;
-      padding: 5px 10px 5px 8px;
-      position: absolute;
+    font: var(--fa-font-solid);
+    content: "\f054";
+    font-size: 22px;
+    color: #A2C155;
+    padding: 5px 10px 5px 8px;
+    position: absolute;
   }
   .ui-datepicker th {
-      color: #C1C1BD !important;
-      font-weight: normal !important;
-      font-size: 18px;
+    color: #C1C1BD !important;
+    font-weight: normal !important;
+    font-size: 18px;
 }
   .ui-state-default{
-      background: none !important;
-      text-align: center !important;
-      color: black !important;
-      border: none !important;
-      font-size: 18px !important;
+    background: none !important;
+    text-align: center !important;
+    color: black !important;
+    border: none !important;
+    font-size: 18px !important;
   }
   .dp-highlight {
-      background: #D5E989 !important;
+    background: #D5E989 !important;
   }
   .dp-highlight:first-child {
-      border-top-left-radius: 8px !important;
-      border-bottom-left-radius: 8px !important;
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
   }
   .dp-highlight:last-child {
-      border-top-right-radius: 8px !important;
-      border-bottom-right-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
   }
   table.ui-datepicker-calendar{
-      border-collapse: separate !important;
-      border-spacing: 0 10px;
+    border-collapse: separate !important;
+    border-spacing: 0 10px;
   }
   .ui-datepicker-today a{
-      font-weight: 700 !important;
+    font-weight: 700 !important;
   }
   .firstDate { 
-      border-top-left-radius: 8px !important;
-      border-bottom-left-radius: 8px !important;
-      background-color:#99BB44 !important; 
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+    background-color:#99BB44 !important; 
   }
   .lastDate { 
-      background-color:#99BB44 !important; 
-      border-top-right-radius: 8px !important;
-      border-bottom-right-radius: 8px !important;
+    background-color:#99BB44 !important; 
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
   }
   .description {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
   }
   .custom-radio-group input[type="radio"] {
-  display: none;
+    display: none;
   }
   .custom-radio-group label {
-      font-family: 'Fira Sans', sans-serif;
-      font-size: 18px;
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 18px;
   }
   .custom-radio-group label:before {
-  width:20px;
-  height: 2px;
-  content: "";
-  padding: 5px 15px 5px 15px;
-  border: 2px solid #E5E5E3;
-  border-radius: 8px;
-  margin-right: 15px;
+    width:20px;
+    content: "";
+    padding: 5px 16px 5px 15px;
+    border: 2px solid #E5E5E3;
+    border-radius: 8px;
+    margin-right: 15px;
   }
   .custom-radio-group input[type="radio"]:checked + label:before {
-  content: "\f00c";
-  font: var(--fa-font-solid);
-  font-size: 18px;
-  color: #A2C155;
-  border: 2px solid #A2C155;
-  padding: 5px 6px 5px 6px;
+    content: "\f00c";
+    font: var(--fa-font-solid);
+    font-size: 18px;
+    color: #A2C155;
+    border: 2px solid #A2C155;
+    padding: 7px 7px 6px 6px;
   }
   .custom-radio-group input[type="radio"]:checked + label {
-      font-weight: bold;
+    font-weight: bold;
   }
   .radio-group{
-      margin:20px 0px 25px 0px;
+    margin:20px 0px 25px 0px;
   }
   .custom-radio-group{
-      margin:40px 0px 50px 0px;
+    margin:40px 0px 50px 0px;
   }
   .filter-button{
-  background-color: #99BB44;
+    background-color: #99BB44;
     justify-content: center;
     height: 54px;
     width: 100%;
@@ -794,24 +414,116 @@ Foodsaver Übersicht
     font-weight: 600;
     font-size: 18px;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
   }
-
-
-
-
-
-
-
-
-
-
-
-
   .ui-datepicker.ui-datepicker-multi  {
-      width: 100% !important;
+    width: 100% !important;
   }
   .ui-datepicker-multi .ui-datepicker-group {
-  float:none;
+    float:none;
   }
-
   .ui-widget { font-size: 100% }
+
+
+
+/*Abschnitt für Balkendiagram;*/
+.category-list {
+    align-items: center;
+}
+
+.category-bar {
+    height: 25px;
+    background-color: #D9D9D9;
+    transition: width 0.5s ease-in-out;
+    border-radius: 3px;
+}
+
+#bar1{
+    width: 75% !important;
+    background-color: #99BB44;
+}
+
+#bar2{
+    background-color: #446622;
+}
+
+#bar3{
+    background-color: #E97878;
+}
+
+.balkendiagram-container{
+    width: 100%;
+    max-width: 1024px;
+    margin: auto;
+    display: block;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.bar{
+    width: 90%;
+}
+
+.bar-container{
+    display:flex;
+}
+
+.category-name{
+    text-align: right;
+    font-size: 18px;
+
+}
+
+.balkendiagram-content{
+    width: 100%;
+    border-spacing: 25px;
+}
+
+.percentage{
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0px 0px 0px 10px;
+}
+
+.button-previous-page{
+    border: solid 2px #E5E5E3;
+    border-radius: 8px;
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    left: 80%;
+    top: 5%;
+}
+
+.button-previous-page:before {
+    content: "\f00d";
+    font: var(--fa-font-solid);
+    font-size: 35px;
+    color: #A2C155;
+    padding: 7px 15px 5px 13px;
+    position: absolute;
+}
+
+.footer-fixed{
+    height: 94px;
+    width: 100%;
+    margin: auto;
+    background: #FFFDFD;
+    z-index: 10;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+@media (max-width: 1023px) {
+    .footer-fixed {
+        position: relative;
+        bottom: 0;
+    }
+}
+
+.footer-fixed div{
+    padding-right: 5vh;
+}
+

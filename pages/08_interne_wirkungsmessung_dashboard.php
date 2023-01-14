@@ -133,9 +133,7 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
   <div class="container">
     <!-- Header -->  
     <header>
-      <a>
-        <h1 class="font-londrina">MENGE GERETTETER LEBENSMITTEL</h1>
-      </a>
+      <h1 class="font-londrina">MENGE GERETTETER LEBENSMITTEL</h1>
       <div class="header-btn">
       <div class="font-fira header-btn-title">
         <p>Zeitraum</p>
@@ -182,92 +180,96 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
         <!-- Zweite Spalte -->  
         <div class="column-2">
           <!-- Block für Kategorien -->  
-          <div class="block flx-container">
-            <!-- Liste der Kategorien -->  
-            <div style="display: inline;">
-              <p class="font-fira description"><strong>Nach Kategorien</strong></p>
-              <div class="font-fira list-category">
-                <table>
-                  <tr>
-                    <td style="text-align: right;">50%</td>
-                    <td>&nbsp&nbsp&nbspBackwaren (salzig)</td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: right;">30%</td>
-                    <td>&nbsp&nbsp&nbspBackwaren (süß)</td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: right;">5%</td>
-                    <td>&nbsp&nbsp&nbspObst</td>
-                  </tr>
-                  <tr class="list-category-sml">
-                    <td  style="text-align: right;">11%</td>
-                    <td>&nbsp&nbsp&nbspGemüse</td>
-                  </tr>
-                  <tr class="list-category-sml">
-                    <td style="text-align: right;">7%</td>
-                    <td>&nbsp&nbsp&nbspTrockenprodukte</td>
-                  </tr>
-                  <tr class="list-category-sml">
-                    <td style="text-align: right;">4%</td>
-                    <td>&nbsp&nbsp&nbspMilchprodukte</td>
-                  </tr>
-                  <tr class="list-category-sml">
-                    <td style="text-align: right;">2%</td>
-                    <td>&nbsp&nbsp&nbspKonserven</td>
-                  </tr>
-                  <tr class="list-category-sml">
-                    <td style="text-align: right;">2%</td>
-                    <td>&nbsp&nbsp&nbspSonstiges</td>
-                  </tr>
-                </table>
+          <a href="#">
+            <div class="block flx-container-sm">
+              <!-- Liste der Kategorien -->  
+              <div style="display: inline;">
+                <p class="font-fira description"><strong>Nach Kategorien</strong></p>
+                <div class="font-fira list-category">
+                  <table>
+                    <tr>
+                      <td style="text-align: right;">50%</td>
+                      <td>&nbsp&nbsp&nbspBackwaren (salzig)</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right;">30%</td>
+                      <td>&nbsp&nbsp&nbspBackwaren (süß)</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right;">5%</td>
+                      <td>&nbsp&nbsp&nbspObst</td>
+                    </tr>
+                    <tr class="list-category-sml">
+                      <td  style="text-align: right;">11%</td>
+                      <td>&nbsp&nbsp&nbspGemüse</td>
+                    </tr>
+                    <tr class="list-category-sml">
+                      <td style="text-align: right;">7%</td>
+                      <td>&nbsp&nbsp&nbspTrockenprodukte</td>
+                    </tr>
+                    <tr class="list-category-sml">
+                      <td style="text-align: right;">4%</td>
+                      <td>&nbsp&nbsp&nbspMilchprodukte</td>
+                    </tr>
+                    <tr class="list-category-sml">
+                      <td style="text-align: right;">2%</td>
+                      <td>&nbsp&nbsp&nbspKonserven</td>
+                    </tr>
+                    <tr class="list-category-sml">
+                      <td style="text-align: right;">2%</td>
+                      <td>&nbsp&nbsp&nbspSonstiges</td>
+                    </tr>
+                  </table>
+                </div>
               </div>
-            </div> 
-            <!-- Bilder der Kategorien --> 
-            <div class="img-block">
-              <img src="../media/kategorien/icon_backwaren-salzig.svg" class="img-category" style="width: 80px;"><br>
-              <img src="../media/kategorien/icon_backwaren-suess.svg" class="img-category" style="width: 60px;"><br>
-              <img src="../media/kategorien/icon_obst.svg" class="img-category" style="width: 40px;">
-            </div> 
-          </div> 
+              <!-- Bilder der Kategorien --> 
+              <div class="img-block">
+                <img src="../media/kategorien/icon_backwaren-salzig.svg" class="img-category" style="width: 70px;"><br>
+                <img src="../media/kategorien/icon_backwaren-suess.svg" class="img-category" style="width: 50px;"><br>
+                <img src="../media/kategorien/icon_obst.svg" class="img-category" style="width: 40px;">
+              </div> 
+            </div>
+          </a> 
           <!-- Liste der Kategorien --> 
-          <div class="block" style="height: 267px;">
-            <div style="display: inline-block;">
-              <p class="font-fira description" style="float:left; margin-bottom: 30px;"><strong>Nach Herkunft</strong></p>
-              <div class="font-fira list-category">
-                <table>
-                  <tr>
-                    <td style="text-align: right;">29%</td>
-                    <td>&nbsp&nbsp&nbspBäckerei</td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: right;">22%</td>
-                    <td>&nbsp&nbsp&nbspSupermarkt</td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: right;">18%</td>
-                    <td>&nbsp&nbsp&nbspWochenmarkt</td>
-                  </tr>
-                  <tr class="list-category-sml">
-                    <td  style="text-align: right;">11%</td>
-                    <td>&nbsp&nbsp&nbspGastronomie</td>
-                  </tr>
-                  <tr class="list-category-sml">
-                    <td style="text-align: right;">7%</td>
-                    <td>&nbsp&nbsp&nbspVeranstaltung</td>
-                  </tr>
-                  <tr class="list-category-sml">
-                    <td style="text-align: right;">4%</td>
-                    <td>&nbsp&nbsp&nbspHaushalt</td>
-                  </tr>
-                  <tr class="list-category-sml">
-                    <td style="text-align: right;">2%</td>
-                    <td>&nbsp&nbsp&nbspTankstelle</td>
-                  </tr>
-                </table>
+          <a href="#">
+            <div class="block">
+              <div style="display: inline-block;">
+                <p class="font-fira description" style="float:left;"><strong>Nach Herkunft</strong></p>
+                <div class="font-fira list-category">
+                  <table>
+                    <tr>
+                      <td style="text-align: right;">29%</td>
+                      <td>&nbsp&nbsp&nbspBäckerei</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right;">22%</td>
+                      <td>&nbsp&nbsp&nbspSupermarkt</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right;">18%</td>
+                      <td>&nbsp&nbsp&nbspWochenmarkt</td>
+                    </tr>
+                    <tr class="list-category-sml">
+                      <td  style="text-align: right;">11%</td>
+                      <td>&nbsp&nbsp&nbspGastronomie</td>
+                    </tr>
+                    <tr class="list-category-sml">
+                      <td style="text-align: right;">7%</td>
+                      <td>&nbsp&nbsp&nbspVeranstaltung</td>
+                    </tr>
+                    <tr class="list-category-sml">
+                      <td style="text-align: right;">4%</td>
+                      <td>&nbsp&nbsp&nbspHaushalt</td>
+                    </tr>
+                    <tr class="list-category-sml">
+                      <td style="text-align: right;">2%</td>
+                      <td>&nbsp&nbsp&nbspTankstelle</td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         </div>
     </div>
         <!-- Footer --> 
@@ -298,7 +300,7 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
       },
       options: { 
         scaleShowVerticalLines: false,
-        aspectRatio: 2.2,
+        aspectRatio: 2.4,
         indexAxis: 'x',
         scales: {
           x: {

@@ -102,9 +102,7 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
   <div class="container">
     <!-- Header -->  
     <header>
-      <a>
         <h1 class="font-londrina">ZEITRAUM WÄHLEN</h1>
-      </a>
     </header>
 
     <!-- Hauptinhalt -->  
@@ -133,7 +131,7 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
         <!-- Zweite Spalte -->  
         <div class="picker-column-2">
             <div class="font-fira">
-                <p class="description">Zeitraum wählen</p>
+                <p class="description" style="margin-left: 0px; font-weight:600;">Zeitraum wählen</p>
             </div>
             <!-- Auswahl für Zeitabschnitte -->  
             <div class="custom-radio-group">
@@ -248,8 +246,8 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
         radioThisYear.addEventListener("click", function() {
             let today = new Date();
             let currentYear = new Date().getFullYear();
-            date1.value = `01.01.${currentYear}`;
             $("#divDatepicker").datepicker("setDate", new Date(date1));
+            date1.value = `01.01.${currentYear}`;
             date2.value = `${today.getDate().toString().padStart(2, "0")}.${(today.getMonth()+1).toString().padStart(2, "0")}.${today.getFullYear()}`;
             $("#divDatepicker").datepicker("setDate", new Date(date2));
         });

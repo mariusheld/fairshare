@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foodsharing Statistics</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200;300;400;500;600;700;800;900&family=Londrina+Solid&display=swap" rel="stylesheet" />
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="../css/interne_wirkungsmessung.css"/> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->  
+    <header>
+      <h1 class="font-londrina">MENGE GERETTETER LEBENSMITTEL</h1>
+      <div class="header-btn">
+      <div class="font-fira header-btn-title">
+        <p>Zeitraum</p>
+      </div>  
+      <div class="time-button" >
+        <a href='#' class="link-button">  
+          <i class='fa fa-clock-o'  style="font-size:30px;"></i>
+          <div class="button-text">
+            <p class="font-fira">Jahr 2023</p>
+          </div>
+        </a>
+      </div>
+      </div>
+    </header>
+
+    <!-- Hauptinhalt -->  
+    <div class="content" style="position: relative;">
+
+        <div class="balkendiagram-container">
+            <!-- Button close the page -->  
+            <a href=""><div class="button-previous-page"></div></a>
+
+            <!-- Titel -->  
+            <div class="font-fira">
+                <h2>Lebensmittel nach Herkunft</h2>
+            </div>
+            <!-- Bar Diagram --> 
+            <div class="category-list">
+                <table class="balkendiagram-content" >
+                    <tr>
+                        <!-- Category name --> 
+                        <td class="font-fira category-name">Supermarkt</td>
+                        <!-- Bar and info --> 
+                        <td class="bar">
+                            <div class="bar-container">
+                                <div class="category-bar" id="bar1" data-percentage="34.6"></div>
+                                <div class="font-fira percentage">36,6% (5.900 Kg)</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Category name -->
+                        <td class="font-fira category-name">Bäckerei</td>
+                        <!-- Bar and info --> 
+                        <td class="bar">
+                            <div class="bar-container">
+                                <div class="category-bar" id="bar2" data-percentage="23.1"></div>
+                                <div class="font-fira percentage">23,1% (3.200 Kg)</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Category name -->
+                        <td class="font-fira category-name">Wochenmarkt</td>
+                        <!-- Bar and info --> 
+                        <td class="bar">
+                            <div class="bar-container">
+                                <div class="category-bar" id="bar3" data-percentage="15.4"></div>
+                                <div class="font-fira percentage">15,4% (2.400 Kg)</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Category name -->
+                        <td class="font-fira category-name">Gastronomie</td>
+                        <!-- Bar and info --> 
+                        <td class="bar">
+                            <div class="bar-container">
+                                <div class="category-bar" data-percentage="11.5"></div>
+                                <div class="font-fira percentage">11,5% (1.900 Kg)</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Category name -->
+                        <td class="font-fira category-name">Haushalt</td>
+                        <!-- Bar and info --> 
+                        <td class="bar">
+                            <div class="bar-container">
+                                <div class="category-bar" data-percentage="7.7"></div>
+                                <div class="font-fira percentage">7,7% (1.400 Kg)</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Category name -->
+                        <td class="font-fira category-name">Veranstaltung</td>
+                        <!-- Bar and info --> 
+                        <td class="bar">
+                            <div class="bar-container">
+                                <div class="category-bar" data-percentage="3.9"></div>
+                                <div class="font-fira percentage">3,9% (750 Kg)</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Category name -->
+                        <td class="font-fira category-name">Tankstelle</td>
+                        <!-- Bar and info --> 
+                        <td class="bar">
+                            <div class="bar-container">
+                                <div class="category-bar" data-percentage="3.7"></div>
+                                <div class="font-fira percentage">3,7% (725 Kg)</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+        <!-- Footer --> 
+        <div class="footer-fixed">
+          <div class="footer-btn font-fira">
+            <a href="#" class="cancel-button">Zurück</a>
+          </div>
+          <div class="footer-btn font-fira">
+            <a href='#' class="next-button">Export als CSV-Datei</a>
+          </div>
+        </div>
+  </div>
+</body>
+<script>
+    //Get first bar and calculate the width of each next bar
+    const firstBar = document.getElementById("bar1");
+    const firstPercent = firstBar.getAttribute("data-percentage");
+    const firstBarWidth = firstBar.clientWidth;
+
+    const categoryBars = document.querySelectorAll('.category-bar');
+    document.querySelectorAll(".category-bar").forEach(bar => {
+    if (bar !== firstBar) {
+        const percent = bar.getAttribute("data-percentage");
+        const width = (firstBarWidth / firstPercent ) * percent;
+        bar.style.width = `${width}px`;
+    }
+    });
+</script>
+
+</html>
