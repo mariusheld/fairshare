@@ -5,17 +5,16 @@ session_start();
 //Datenbankverbindung aufbauen
 require_once("../dbconnect/dbconnect.inc.php");
 $db_handle = new DBController();
-
+$conn = $db_handle->connectDB();
 
 //Auslesen, von welcher Seite die Zeitraumauswahl aufgerufen wurde
 $camefrom = $_GET['camefrom'];
 if (!$camefrom)
 	{
 	//für erstes Testing
-	$camefrom = "zeitraum";
+	//$camefrom = "zeitraum";	
 	
-	//TODO: sobald Dashboard fertig ist, nur noch das hier
-	//$camefrom = "dashboard";
+	$camefrom = "dashboard";
 	}
 
 
@@ -28,7 +27,6 @@ if (!$camefrom)
 		$filterleadsto = "08_interne_wirkungsmessung_herkunft.php";
 		}
 
-
 //TODO: entfernen, sobald Dashboard fertig ist
 	if ($camefrom == "zeitraum")
 		{
@@ -36,20 +34,24 @@ if (!$camefrom)
 		}
 	
 
-//TODO: Link zu dieser Seite in Dashboard und Balkendiagramm einbauen & camefrom mitgeben
-
-//TODO: Code für Datumsauslesung und Konvertierung in Dashboard und Balkendiagramm übernehmen
+//TODO: Code für Datumsauslesung und Konvertierung in Balkendiagramm übernehmen
 
 //Datumsauswahl auslesen
 $date1formatted = $_GET['date1'];
 $date2formatted = $_GET['date2'];
 
 //Datumsauswahl in Formatierung für Datenbank konvertieren
-$date1timestamp = strtotime($date1formatted);
-$date2timestamp = strtotime($date2formatted);
+if ($date1formatted != NULL)
+	{
+	$date1timestamp = strtotime($date1formatted);
+	$date1_ISO8601 = date("Y-m-d", $date1timestamp);
+	}
 
-$date1_ISO8601 = date("Y-m-d", $date1timestamp);
-$date2_ISO8601 = date("Y-m-d", $date2timestamp);
+if ($date2formatted != NULL)
+	{
+	$date2timestamp = strtotime($date2formatted);
+	$date2_ISO8601 = date("Y-m-d", $date2timestamp);
+	}
 
 
 //Aktuelles Jahr
@@ -287,13 +289,19 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
     //Datumsauswahl an PHP übergeben 
     function visitPage(){
         
-        //console.log("Logging01: date1="+date1.value+" date2="+date2.value+" ");
 
-        window.location= filterleadsto+"?date1="+ date1.value + "&date2=" + date2.value ;
+	if (date1.value != 0 && date2.value != 0)
+		{
+      	 window.location= filterleadsto+"?date1="+ date1.value + "&date2=" + date2.value +"&";
     	
-    	//console.log("Logging02: date1="+date1.value+" date2="+date2.value+" ");
+    		//console.log("Logging: date1="+date1.value+" date2="+date2.value+" ");
+    	}
+    else 
     	
+    	console.log("Date(s) missing: date1="+date1.value+" date2="+date2.value+" ");
+    
     	//TODO: Testausgaben entfernen
+    	//TODO (@Anastasia?): Fehlermeldung, wenn ein Datum nicht ausgefüllt ist?
 
     }
 	
