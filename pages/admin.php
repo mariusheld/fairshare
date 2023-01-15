@@ -259,7 +259,7 @@ $icons = array(
                             <h3>PRODUKT FAIRTEILT</h3>
                         </div>
                         <p>Das Lebensmittel wurde in den Fairteiler gelegt.</p>
-                        <button class="center-btn">Alles klar</button>
+                        <button class="center-btn" onclick="window.location.href='admin.php'">Alles klar</button>
                     </div>
                 </div>
             </div> <?php
