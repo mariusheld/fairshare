@@ -101,15 +101,57 @@ else
 	$gewaehlterZeitraum = $date1_display . " - " . $date2_display; 
 	}
 
+//Mengen geretteter Lebensmittel abfragen
+$select_gesMenge = $db->prepare("SELECT SUM(BewegMenge) FROM Bestand_Bewegung WHERE LStatusKey='2'");
+$erfolg = $select_gesMenge->execute(); 
+
+$select_ZeitraumMenge = $db->prepare("SELECT SUM(BewegMenge) FROM Bestand_Bewegung WHERE LStatusKey='2' AND BewegDatum BETWEEN :date1 AND :date2");
+$daten_zeitraum = array(
+	"date1" => $date1_ISO8601, 
+	"date2" => $date2_ISO8601 
+	);
+$select_ZeitraumMenge->execute($daten_zeitraum); 
+
+
+
+//Fehlertest
+if (!$erfolg) {
+    $fehler = $select_gesMenge->errorInfo();
+    die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
+}
+
+
+//Mengen geretteter Lebensmittel anzeigefähig machen
+$gesMenge = $select_gesMenge->fetchColumn();
+$ZeitraumMenge = $select_ZeitraumMenge->fetchColumn();
+
+
+/*
+//SQL für Balkendiagramm (in Adminer getestet)
+SELECT HerkunftName AS Herkunft, SUM(BewegMenge) AS KGfairteilt
+FROM 
+(SELECT Bestand_Bewegung.LMKey, BewegMenge, BewegDatum, HerkunftName
+FROM (Bestand_Bewegung LEFT JOIN Lebensmittel ON Bestand_Bewegung.LMKey=Lebensmittel.LMKey)
+LEFT JOIN HerkunftsKategorie ON Lebensmittel.HerkunftKey=HerkunftsKategorie.HerkunftKey
+WHERE LStatusKey=2) AS FairteiltesHerk
+GROUP BY HerkunftName
+ORDER BY KGfairteilt DESC
+*/
+
+
+//TODO: Tabelle aus Query in relevante Variablen übertragen
+//TODO: Prozentanteil jeder Kategorie ausrechnen (KGfairteilt/ZeitraumMenge*100)
+//TODO: Herkunftsbezeichnungen (per Variablen) in absteigender Reihenfolge in HTML einfügen
+//TODO: Zahlen per Variablen in richtiger Reihenfolge in HTML einfügen (deutsch formatiert)
+//TODO: ausgewählten Zeitraum bei Rückkehr zu Dashboard an Dashboard übergeben?
+
+
 ?>
 
 <script>
 //Datumsauswahl an JavaScript übergeben
 var gotdate1 = "<?php echo $date1_ISO8601; ?>";
 var gotdate2 = "<?php echo $date2_ISO8601; ?>";
-
-var erstesMessdatum = "<?php echo $erstesMessdatum_dmY; ?>";
-var date1formatted = "<?php echo $date1formatted; ?>";
 
 // Test:
 //alert("date1="+gotdate1+" & date2="+gotdate2);
@@ -160,6 +202,7 @@ var date1formatted = "<?php echo $date1formatted; ?>";
 
         <div class="balkendiagram-container">
             <!-- Button close the page -->  
+<!-- TODO: Link zu Dashboard einfügen -->
             <a href=""><div class="button-previous-page"></div></a>
 
             <!-- Titel -->  
@@ -254,9 +297,11 @@ var date1formatted = "<?php echo $date1formatted; ?>";
         <!-- Footer --> 
         <div class="footer-fixed">
           <div class="footer-btn font-fira">
+<!-- TODO: Link zu Dashboard einfügen -->
             <a href="#" class="cancel-button">Zurück</a>
           </div>
           <div class="footer-btn font-fira">
+<!-- TODO: Besprechen, ob der entfernt werden kann? -->
             <a href='#' class="next-button">Export als CSV-Datei</a>
           </div>
         </div>
