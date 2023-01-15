@@ -373,19 +373,10 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
       <p class="textpopup">Bitte beachte Folgendes beim Verstauen der Lebensmittel:</p>
       <ul class="listpopup">
         <li>
-          Lebensmittel, die gekühlt werden müssen bitte unbedingt im Kühlschrank verstauen.
+          Lebensmittel in Fairteiler-Box(en) nach Sorten und Lagerbedarf sortieren (gekühlt oder ungekühlt)
         </li>
         <li>
-          Regel 2
-        </li>
-        <li>
-          Regel 3
-        </li>
-        <li>
-          Regel 4
-        </li>
-        <li>
-          Regel 5
+          Deckel aus dem Regal über dir holen, Box(en) verschließen & Box(en) in Regale und Kühlschränke (Check: Kühlschrank eingesteckt und an?) einräumen.
         </li>
       </ul>
       <div class="buttoncenter">
