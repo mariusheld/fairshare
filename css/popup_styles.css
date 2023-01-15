@@ -149,6 +149,11 @@
     font-weight: 600;
 }
 
+.marked-green {
+    color: var(--apple-green);
+    font-weight: 600;
+}
+
 .popup-form {
     grid-column: span 2;
     display: grid;

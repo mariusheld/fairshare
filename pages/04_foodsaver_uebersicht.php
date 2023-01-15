@@ -241,6 +241,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                       </div>
                     </div>
                   </div>
+
                 </div>
               </td>
             </tr>

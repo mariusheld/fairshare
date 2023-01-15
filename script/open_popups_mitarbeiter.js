@@ -1,7 +1,7 @@
 //Pop-Up: "Nicht genießbar"---------------------------------------------------------------
 
-document.getElementById('open_nicht_genießbar').addEventListener('click', open_NichtGenießbar);
-document.getElementById('close_nicht_genießbar').addEventListener('click', close_NichtGenießbar);
+// document.getElementById('open_nicht_genießbar').addEventListener('click', open_NichtGenießbar);
+// document.getElementById('close_nicht_genießbar').addEventListener('click', close_NichtGenießbar);
 
 
 function open_NichtGenießbar() {
@@ -55,37 +55,40 @@ function open_close_options(options_btn) {
 // Pop-Up: "Lebensmittel fairteilen"-------------------------------------------------------------------
 
 function open_lebensmittel_fairteilen(fairteilen_btn) {
-    let bezeichnung = document.getElementById('bezeichnung-' + fairteilen_btn.parentElement.id).innerHTML;
-    let gewicht = document.getElementById('gewicht-' + fairteilen_btn.parentElement.id).innerHTML;
-    
-    $('#popup_lebensmittel_fairteilen h5').html(bezeichnung);
-    $('#popup_lebensmittel_fairteilen #bestand').html("/ " + gewicht);
-
-    document.getElementById('popup_lebensmittel_fairteilen').style.display = 'flex';
+    document.getElementById('popup_lebensmittel_fairteilen-' + fairteilen_btn.id).style.display = 'flex';
     open_close_options(fairteilen_btn.parentElement.previousElementSibling);
 }
 
-document.getElementById('fairteilen-abbrechen').addEventListener('click', () => {
-    document.getElementById('popup_lebensmittel_fairteilen').style.display = 'none';
-});
+function fairteilen_abbrechen(abbrechen_btn) {
+    console.log(abbrechen_btn.id)
+    document.getElementById("popup_lebensmittel_fairteilen-" + abbrechen_btn.id).style.display = 'none';
+}
 
-document.getElementById('fairteilen').addEventListener('click', () => {
-    window.location.href='admin.php?fairteilen=1';
-});
+// document.getElementById('fairteilen').addEventListener('click', () => {
+//     window.location.href='admin.php?fairteilen=1';
+// });
 
 
 // Pop-Up: "Lebensmittel entsorgen"-------------------------------------------------------------------
 
 function open_lebensmittel_entsorgen(entsorgen_btn) {
-    let bezeichnung = document.getElementById('bezeichnung-' + entsorgen_btn.parentElement.id).innerHTML;
-    let gewicht = document.getElementById('gewicht-' + entsorgen_btn.parentElement.id).innerHTML;
-    
-    $('#popup_lebensmittel_entsorgen h5').html(bezeichnung);
-    $('#popup_lebensmittel_entsorgen .bestand').html(gewicht);
-    document.getElementById('popup_lebensmittel_entsorgen').style.display = 'flex';
+    document.getElementById("popup_lebensmittel_entsorgen-" + entsorgen_btn.id).style.display = 'flex';
     open_close_options(entsorgen_btn.parentElement.previousElementSibling);
 }
 
-document.getElementById('entsorgen-abbrechen').addEventListener('click', () => {
-    document.getElementById('popup_lebensmittel_entsorgen').style.display = 'none';
-});
+function entsorgen_abbrechen(abbrechen_btn) {
+    document.getElementById("popup_lebensmittel_entsorgen-" + abbrechen_btn.id).style.display = 'none';
+}
+
+// Pop-Up: "Lebensmittel ansehen"-------------------------------------------------------------------
+
+function open_lebensmittel_ansehen(ansehen_btn) {
+    document.getElementById("popup_lebensmittel_ansehen-" + ansehen_btn.id).style.display = 'flex';
+    open_close_options(ansehen_btn.parentElement.previousElementSibling);
+}
+
+// function entsorgen_abbrechen(abbrechen_btn) {
+//     document.getElementById("popup_lebensmittel_entsorgen-" + abbrechen_btn.id).style.display = 'none';
+// }
+
+
