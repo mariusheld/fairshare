@@ -245,24 +245,24 @@ $icons = array(
 
 
                 <button class="secondary-btn" id="fairteilen-abbrechen">Abbrechen</button>
-                <button class="primary-btn" id="fairteilen">Fairteilen</button>
+                <button class="primary-btn" id="fairteilen" onclick="window.location.href='admin.php?fairteilen=1'">Fairteilen</button>
             </div>
         </div>
     </div>
 
     <?php
-        if($_GET['fairteilen'] == 1) { ?>
-            <div class="overlay" id="popup_lebensmittel_fairteilt">
-                <div class="popup-wrapper">
-                    <div class="popup active">
-                        <div class="popup-header">
-                            <h3>PRODUKT FAIRTEILT</h3>
-                        </div>
-                        <p>Das Lebensmittel wurde in den Fairteiler gelegt.</p>
-                        <button class="center-btn" onclick="window.location.href='admin.php'">Alles klar</button>
-                    </div>
-                </div>
-            </div> <?php
+        if($_GET['fairteilen'] == 1) {
+            echo"<div class='overlay' id='popup_lebensmittel_fairteilt'>";
+                echo "<div class='popup-wrapper'>";
+                    echo"<div class='popup active'>";
+                        echo"<div class='popup-header'>";
+                            echo "<h3>PRODUKT FAIRTEILT</h3>";
+                        echo "</div>";
+                        echo "<p>Das Lebensmittel wurde in den Fairteiler gelegt.</p>";
+                        echo "<button class='center-btn'>Alles klar</button>";
+                    echo "</div>";
+                echo "</div>";
+            echo "</div>"; 
         }
     ?>
 
