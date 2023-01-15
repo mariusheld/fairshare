@@ -152,6 +152,50 @@ else
 	$ZeitraumMenge_display = number_format($ZeitraumMenge/1000,1,",",".");
 	}
 
+// ---- Menge Lebensmittel nach Kategorien
+$KategorieQuery = "SELECT SUM(BB.BewegMenge) AS menge, OK.OKatName AS katname, OK.OKatKey AS katkey
+      FROM Bestand_Bewegung BB
+      INNER JOIN Lebensmittel L ON BB.LMkey = L.LMkey
+      INNER JOIN OberKategorie OK ON L.OKatKey = OK.OKatKey
+      WHERE LStatusKey='2'
+      AND BewegDatum BETWEEN '$date1_ISO8601' AND '$date2_ISO8601'
+      GROUP BY OK.OKatName
+      ORDER BY SUM(BB.BewegMenge) DESC";
+$KategorieResult = mysqli_query($conn, $KategorieQuery);
+while ($row = mysqli_fetch_assoc($KategorieResult)) {
+$kategorieresultset[] = $row;
+}
+
+$kategorien = $kategorieresultset;
+
+// ---- KategorieIcons 
+$kat_icon_4 = '../media/kategorien/icon_backwaren-salzig.svg';
+$kat_icon_3 = '../media/kategorien/icon_backwaren-suess.svg';
+$kat_icon_1 = '../media/kategorien/icon_gemuese.svg';
+$kat_icon_7 = '../media/kategorien/icon_konserven.svg';
+$kat_icon_6 = '../media/kategorien/icon_kuehlprodukte.svg';
+$kat_icon_2 = '../media/kategorien/icon_obst.svg';
+$kat_icon_5 = '../media/kategorien/icon_trockenprodukte.svg';
+$kat_icon_8 = '../media/kategorien/sonstiges.svg';
+
+
+// ---- Menge Lebensmittel nach Herkunft
+
+$HerkunftQuery = "SELECT SUM(BB.BewegMenge) AS menge, HK.HerkunftName AS herkunftname
+      FROM Bestand_Bewegung BB
+      INNER JOIN Lebensmittel L ON BB.LMkey = L.LMkey
+      INNER JOIN HerkunftsKategorie HK ON L.HerkunftKey = HK.HerkunftKey
+      WHERE LStatusKey='2'
+      AND BewegDatum BETWEEN '$date1_ISO8601' AND '$date2_ISO8601'
+      GROUP BY HK.HerkunftName
+      ORDER BY SUM(BB.BewegMenge) DESC";
+$HerkunftResult = mysqli_query($conn, $HerkunftQuery);
+while ($row = mysqli_fetch_assoc($HerkunftResult)) {
+$herkunftresultset[] = $row;
+}
+
+$herkunft = $herkunftresultset;
+
 ?>
 
 
@@ -244,46 +288,87 @@ var date1formatted = "<?php echo $date1formatted; ?>";
                 <p class="font-fira description"><strong>Nach Kategorien</strong></p>
                 <div class="font-fira list-category">
                   <table>
-                    <tr>
-                      <td style="text-align: right;">50%</td>
-                      <td>&nbsp&nbsp&nbspBackwaren (salzig)</td>
-                    </tr>
-                    <tr>
-                      <td style="text-align: right;">30%</td>
-                      <td>&nbsp&nbsp&nbspBackwaren (süß)</td>
-                    </tr>
-                    <tr>
-                      <td style="text-align: right;">5%</td>
-                      <td>&nbsp&nbsp&nbspObst</td>
-                    </tr>
-                    <tr class="list-category-sml">
-                      <td  style="text-align: right;">11%</td>
-                      <td>&nbsp&nbsp&nbspGemüse</td>
-                    </tr>
-                    <tr class="list-category-sml">
-                      <td style="text-align: right;">7%</td>
-                      <td>&nbsp&nbsp&nbspTrockenprodukte</td>
-                    </tr>
-                    <tr class="list-category-sml">
-                      <td style="text-align: right;">4%</td>
-                      <td>&nbsp&nbsp&nbspMilchprodukte</td>
-                    </tr>
-                    <tr class="list-category-sml">
-                      <td style="text-align: right;">2%</td>
-                      <td>&nbsp&nbsp&nbspKonserven</td>
-                    </tr>
-                    <tr class="list-category-sml">
-                      <td style="text-align: right;">2%</td>
-                      <td>&nbsp&nbsp&nbspSonstiges</td>
-                    </tr>
+                    <?php
+                      if(is_array($kategorien)){
+                        foreach($kategorien as $key => $row){
+                          $menge = (float) $row['menge'];
+                          $menge_ges = (float) $gesMenge;
+                          // $menge_ges = 24;
+                          $prozent = $menge / $menge_ges * 100;
+                          if($key < 3){
+                            ?>
+                            <tr>
+                              <td style="text-align: right;"><?php echo round($prozent) ?>%</td>
+                              <td>&nbsp&nbsp&nbsp<?php echo $row['katname'] ?></td>
+                            </tr>
+                          <?php
+                          } else {
+                            ?>
+                            <tr class="list-category-sml">
+                              <td style="text-align: right;"><?php echo round($prozent) ?>%</td>
+                              <td>&nbsp&nbsp&nbsp<?php echo $row['katname'] ?></td>
+                            </tr>
+                          <?php
+                          }
+                        }
+                      }
+                    ?>
                   </table>
                 </div>
               </div>
               <!-- Bilder der Kategorien --> 
               <div class="img-block">
-                <img src="../media/kategorien/icon_backwaren-salzig.svg" class="img-category" style="width: 70px;"><br>
-                <img src="../media/kategorien/icon_backwaren-suess.svg" class="img-category" style="width: 50px;"><br>
-                <img src="../media/kategorien/icon_obst.svg" class="img-category" style="width: 40px;">
+                <img src="<?php if($kategorien[0]['katkey'] == 1){
+                                    echo $kat_icon_1;
+                                } else if($kategorien[0]['katkey'] == 2){
+                                    echo $kat_icon_2;
+                                } else if($kategorien[0]['katkey'] == 3){
+                                  echo $kat_icon_3;
+                                } else if($kategorien[0]['katkey'] == 4){
+                                  echo $kat_icon_4;
+                                } else if($kategorien[0]['katkey'] == 5){
+                                  echo $kat_icon_5;
+                                } else if($kategorien[0]['katkey'] == 6){
+                                  echo $kat_icon_6;
+                                } else if($kategorien[0]['katkey'] == 7){
+                                  echo $kat_icon_7;
+                                } else if($kategorien[0]['katkey'] == 8){
+                                  echo $kat_icon_8;
+                                }?>" class="img-category" style="width: 70px;"><br>
+                <img src="<?php if($kategorien[1]['katkey'] == 1){
+                                    echo $kat_icon_1;
+                                } else if($kategorien[1]['katkey'] == 2){
+                                    echo $kat_icon_2;
+                                } else if($kategorien[1]['katkey'] == 3){
+                                  echo $kat_icon_3;
+                                } else if($kategorien[1]['katkey'] == 4){
+                                  echo $kat_icon_4;
+                                } else if($kategorien[1]['katkey'] == 5){
+                                  echo $kat_icon_5;
+                                } else if($kategorien[1]['katkey'] == 6){
+                                  echo $kat_icon_6;
+                                } else if($kategorien[1]['katkey'] == 7){
+                                  echo $kat_icon_7;
+                                } else if($kategorien[1]['katkey'] == 8){
+                                  echo $kat_icon_8;
+                                }?>" class="img-category" style="width: 50px;"><br>
+                <img src="<?php if($kategorien[2]['katkey'] == 1){
+                                    echo $kat_icon_1;
+                                } else if($kategorien[2]['katkey'] == 2){
+                                    echo $kat_icon_2;
+                                } else if($kategorien[2]['katkey'] == 3){
+                                  echo $kat_icon_3;
+                                } else if($kategorien[2]['katkey'] == 4){
+                                  echo $kat_icon_4;
+                                } else if($kategorien[2]['katkey'] == 5){
+                                  echo $kat_icon_5;
+                                } else if($kategorien[2]['katkey'] == 6){
+                                  echo $kat_icon_6;
+                                } else if($kategorien[2]['katkey'] == 7){
+                                  echo $kat_icon_7;
+                                } else if($kategorien[2]['katkey'] == 8){
+                                  echo $kat_icon_8;
+                                }?>" class="img-category" style="width: 40px;">
               </div> 
             </div>
           </a> 
@@ -294,34 +379,31 @@ var date1formatted = "<?php echo $date1formatted; ?>";
                 <p class="font-fira description" style="float:left;"><strong>Nach Herkunft</strong></p>
                 <div class="font-fira list-category">
                   <table>
-                    <tr>
-                      <td style="text-align: right;">29%</td>
-                      <td>&nbsp&nbsp&nbspBäckerei</td>
-                    </tr>
-                    <tr>
-                      <td style="text-align: right;">22%</td>
-                      <td>&nbsp&nbsp&nbspSupermarkt</td>
-                    </tr>
-                    <tr>
-                      <td style="text-align: right;">18%</td>
-                      <td>&nbsp&nbsp&nbspWochenmarkt</td>
-                    </tr>
-                    <tr class="list-category-sml">
-                      <td  style="text-align: right;">11%</td>
-                      <td>&nbsp&nbsp&nbspGastronomie</td>
-                    </tr>
-                    <tr class="list-category-sml">
-                      <td style="text-align: right;">7%</td>
-                      <td>&nbsp&nbsp&nbspVeranstaltung</td>
-                    </tr>
-                    <tr class="list-category-sml">
-                      <td style="text-align: right;">4%</td>
-                      <td>&nbsp&nbsp&nbspHaushalt</td>
-                    </tr>
-                    <tr class="list-category-sml">
-                      <td style="text-align: right;">2%</td>
-                      <td>&nbsp&nbsp&nbspTankstelle</td>
-                    </tr>
+                    <?php
+                      if(is_array($herkunft)){
+                        foreach($herkunft as $key => $row){
+                          $menge = (float) $row['menge'];
+                          $menge_ges = (float) $gesMenge;
+                          // $menge_ges = 24;
+                          $prozent = $menge / $menge_ges * 100;
+                          if($key < 3){
+                            ?>
+                            <tr>
+                              <td style="text-align: right;"><?php echo round($prozent) ?>%</td>
+                              <td>&nbsp&nbsp&nbsp<?php echo $row['herkunftname'] ?></td>
+                            </tr>
+                          <?php
+                          } else {
+                            ?>
+                            <tr class="list-category-sml">
+                              <td style="text-align: right;"><?php echo round($prozent) ?>%</td>
+                              <td>&nbsp&nbsp&nbsp<?php echo $row['herkunftname'] ?></td>
+                            </tr>
+                          <?php
+                          }
+                        }
+                      }
+                    ?>
                   </table>
                 </div>
               </div>
