@@ -1,3 +1,122 @@
+<!-- --------- PHP --------- -->
+<?php
+session_start();
+//Datenbankverbindung aufbauen
+require_once("../dbconnect/dbconnect.inc.php");
+$db_handle = new DBController();
+$conn = $db_handle->connectDB();
+
+
+//ZEITRAUM
+//Datumsauswahl auslesen
+$date1formatted = $_GET['date1'];
+$date2formatted = $_GET['date2'];
+
+
+// Wenn noch kein Datum ausgewählt wurde, aktuelles Jahr anzeigen
+$thisyear = date("Y"); 
+$today_dmY = date("d.m.Y");
+
+if ($date1formatted == NULL && $date2formatted == NULL)
+	{
+	$date1formatted = "01.01.".$thisyear;
+	$date2formatted = $today_dmY; 
+	}
+
+
+//Datum-Formatkonvertierungen
+//Datumsauswahl in Formatierung für Datenbank konvertieren
+if ($date1formatted != NULL)
+	{
+	$date1timestamp = strtotime($date1formatted);
+	$date1_ISO8601 = date("Y-m-d", $date1timestamp);
+	//Datumsauswahl zusätzlich in Anzeigeformat konvertieren
+	$date1_display = date("d.m.y", $date1timestamp);
+	}
+
+if ($date2formatted != NULL)
+	{
+	$date2timestamp = strtotime($date2formatted);
+	$date2_ISO8601 = date("Y-m-d", $date2timestamp);
+	//Datumsauswahl zusätzlich in Anzeigeformat konvertieren
+	$date2_display = date("d.m.y", $date2timestamp);
+	}
+
+//Nutzerfreundliche Anzeige des ausgewählten Zeitraums
+$date1_dm = date("d.m", $date1timestamp); 
+$date1_Y = date("Y", $date1timestamp); 
+$date2_dm = date("d.m", $date2timestamp); 
+$date2_Y = date("Y", $date2timestamp); 
+//TODO: Prüfen, ob das tatsächlich das erste Messdatum ist/sein soll
+$erstesMessdatum_timestamp = strtotime("2020-01-01");
+$erstesMessdatum_dmY = date("d.m.Y", $erstesMessdatum_timestamp); 
+$monthago_timestamp = strtotime("-1 month"); 
+$monthago_dmY = date("d.m.Y", $monthago_timestamp);
+$yearago_timestamp = strtotime("-1 year"); 
+$yearago_dmY = date("d.m.Y", $yearago_timestamp);
+
+
+if ($date1_dm == "01.01" && $date2_dm == "31.12")
+	{
+	if ($date2_Y - $date1_Y == 0)
+		{
+		$gewaehlterZeitraum = "Jahr " . $date2_Y;
+		}
+	elseif ($date2_Y > $date1_Y)
+		{
+		$gewaehlterZeitraum = $date1_Y . " - " . $date2_Y; 
+		}
+	else 
+		{
+		$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+		}
+	} 
+elseif ($date2formatted == $today_dmY)
+	{
+	if ($date1formatted == "01.01.".$thisyear)
+		{
+		$gewaehlterZeitraum = "Dieses Jahr";
+		}
+	elseif ($date1formatted == $yearago_dmY)
+		{
+		$gewaehlterZeitraum = "Letzte 12 Monate";
+		}
+	elseif ($date1formatted == $erstesMessdatum_dmY)
+		{
+		$gewaehlterZeitraum = "Ges. Zeitraum"; 
+		}
+
+	elseif ($date1formatted == $monthago_dmY)
+		{
+		$gewaehlterZeitraum = "Letzter Monat"; 
+		} 
+		
+	else 
+		{
+		$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+		}
+	}
+else 
+	{ 
+	$gewaehlterZeitraum = $date1_display . " - " . $date2_display; 
+	}
+
+?>
+
+<script>
+//Datumsauswahl an JavaScript übergeben
+var gotdate1 = "<?php echo $date1_ISO8601; ?>";
+var gotdate2 = "<?php echo $date2_ISO8601; ?>";
+
+var erstesMessdatum = "<?php echo $erstesMessdatum_dmY; ?>";
+var date1formatted = "<?php echo $date1formatted; ?>";
+
+// Test:
+//alert("date1="+gotdate1+" & date2="+gotdate2);
+
+</script> 
+
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
@@ -26,10 +145,10 @@
         <p>Zeitraum</p>
       </div>  
       <div class="time-button" >
-        <a href='#' class="link-button">  
+        <a href='08_interne_wirkungsmessung_zeitraum_waehlen.php?camefrom=herkunft' class="link-button">  
           <i class='fa fa-clock-o'  style="font-size:30px;"></i>
           <div class="button-text">
-            <p class="font-fira">Jahr 2023</p>
+            <p class="font-fira"><?php echo $gewaehlterZeitraum ?></p>
           </div>
         </a>
       </div>

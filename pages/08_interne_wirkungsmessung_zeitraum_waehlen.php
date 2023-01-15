@@ -24,7 +24,7 @@ if (!$camefrom)
 		}
 	if ($camefrom == "herkunft")
 		{
-		$filterleadsto = "08_interne_wirkungsmessung_herkunft.php";
+		$filterleadsto = "08_interne_wirkungsmessung_balkendiagramm.php";
 		}
 
 //TODO: entfernen, sobald Dashboard fertig ist
