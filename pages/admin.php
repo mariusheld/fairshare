@@ -256,7 +256,7 @@ $icons = array(
                 <div class="popup-wrapper">
                     <div class="popup active">
                         <div class="popup-header">
-                            <h5>Produkt fairteilt</h5>
+                            <h3>PRODUKT FAIRTEILT</h3>
                         </div>
                         <p>Das Lebensmittel wurde in den Fairteiler gelegt.</p>
                         <button class="center-btn">Alles klar</button>
