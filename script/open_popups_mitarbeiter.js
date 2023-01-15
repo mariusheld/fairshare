@@ -70,8 +70,7 @@ document.getElementById('fairteilen-abbrechen').addEventListener('click', () => 
 });
 
 document.getElementById('fairteilen').addEventListener('click', () => {
-    document.getElementById('popup_lebensmittel_fairteilen').style.display = 'none';
-    document.getElementById('popup_lebensmittel_fairteilt').style.display = 'flex';
+    window.location.href='admin.php?fairteilen=1';
 });
 
 

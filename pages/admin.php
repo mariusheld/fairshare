@@ -250,6 +250,22 @@ $icons = array(
         </div>
     </div>
 
+    <?php
+        if($_GET['fairteilen'] == 1) { ?>
+            <div class="overlay" id="popup_lebensmittel_fairteilt">
+                <div class="popup-wrapper">
+                    <div class="popup active">
+                        <div class="popup-header">
+                            <h5>Produkt fairteilt</h5>
+                        </div>
+                        <p>Das Lebensmittel wurde in den Fairteiler gelegt.</p>
+                        <button class="center-btn">Alles klar</button>
+                    </div>
+                </div>
+            </div> <?php
+        }
+    ?>
+
     <!-- Popup "Lebensmittel entsorgen" -->
     <div class="overlay" id="popup_lebensmittel_entsorgen">
         <div class="popup-wrapper">
