@@ -33,8 +33,12 @@ $icons = array(
 
 $herkunft = array(
     1 => "Supermarkt",
-    // ...
-)
+    2 => "Wochenmarkt",
+    3 => "Bäckerei",
+    4 => "Gastronomie",
+    5 => "Veranstaltung",
+    6 => "Sonstiges"
+);
 
 ?>
 
@@ -240,8 +244,66 @@ $herkunft = array(
                         <!-- Popup "Lebensmittel ansehen" -->
                         <div class="overlay" id="popup_lebensmittel_ansehen-<?php echo $zähler ?>">
                             <div class="popup-wrapper">
-                                <div class="popup active">
-                                    <?php echo $zeile['Bezeichnung'] ?>
+                                <div class="popup ansehen">
+                                    <div class="popup-header-cross">
+                                        <div class="container">
+                                            <img src="<?php echo $icons[$zeile['OKatKey']] ?>">
+                                            <h5><?php echo $zeile['Bezeichnung'] ?></h5>
+                                        </div>
+                                        <div class="close-btn" id="close">
+                                            <img src="../media/cross.svg" alt="Schließen">
+                                        </div>
+                                    </div>
+
+                                    <div class="info">
+                                        <div class="block">
+                                            <div class="zeile">
+                                                <div>Menge:</div>
+                                                <div><?php echo $zeile['Gewicht'] ?> kg</div>
+                                            </div>
+                                            <div class="zeile">
+                                                <div>Inhaltsstoffe:</div>
+                                                <div>-</div>
+                                            </div>
+                                            <div class="zeile">
+                                                <div>Genießbar bis:</div>
+                                                <div><?php echo $zeile['VerteilDeadline'] ?> Tage</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="block">
+                                            <div class="zeile">
+                                                <div>Geliefert von:</div>
+                                                <div>Jürgen</div>
+                                            </div>
+                                            <div class="zeile">
+                                                <div>E-Mail:</div>
+                                                <div>email.com</div>
+                                            </div>
+                                            <div class="zeile">
+                                                <div>Telefonnr:</div>
+                                                <div>10264606194316</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="block last">
+                                            <div class="zeile">
+                                                <div>Gerettet von:</div>
+                                                <div><?php echo $herkunft[$zeile['HerkunftKey']] ?></div>
+                                            </div>
+                                            <div class="zeile">
+                                                <div>Gespendet am:</div>
+                                                <div>20.11.2022</div>
+                                            </div>
+                                            <div class="zeile">
+                                                <div>Anmerkungen:</div>
+                                                <div><?php echo $zeile['Anmerkung'] ?></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="secondary-btn-red">Entsorgen</button>
+                                    <button class="primary-btn">Fairteilen</button>
                                 </div>
                             </div>
                         </div>
