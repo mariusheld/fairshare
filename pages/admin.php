@@ -13,6 +13,7 @@ $login = $_SESSION['login'];
 $query = $db->prepare("SELECT*FROM Lebensmittel ORDER BY VerteilDeadline");
 $erfolg = $query->execute();
 
+
 //Fehlertest
 if (!$erfolg) {
     $fehler = $query->errorInfo();
@@ -267,7 +268,7 @@ $herkunft = array(
                                             </div>
                                             <div class="zeile">
                                                 <div>Genießbar bis:</div>
-                                                <div><?php echo $zeile['VerteilDeadline'] ?> Tage</div>
+                                                <div <?php if($ablaufdatum < 0) {echo "style='color: red'";}?>><?php echo $zeile['VerteilDeadline'] ?> Tage <?php if($zeile['Kuehlware'] == 0) {echo "<img style='position: absolute; margin-left: 8px;' width='20px' src='../media/freeze_icon.svg'>";}?></div>
                                             </div>
                                         </div>
 
