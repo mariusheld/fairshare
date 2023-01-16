@@ -58,7 +58,8 @@ while ($row = mysqli_fetch_assoc($FSkeyResult)) {
 // SET LMKEY -------------
 $LMkey = $_SESSION["latestLMkey"] + 1;
 // SET FSKEY -------------
-$FSkey = $latestFSkey[0]['FSkey'];
+$_SESSION['FSkey'] = $latestFSkey[0]['FSkey'];
+$FSkey = $_SESSION['FSkey'];
 // SET KATEGORIEN -------------
 $kategorien = $kategorieresultset;
 // SET HERKUNFTSKATEGORIEN -------------
@@ -192,7 +193,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Datenbankeintrag erstellen
     $dbeintrag = array($lieferung, $lebensmittel);
 
-    if ($_SESSION["editieren"] >= 0 ) {
+    if ($_SESSION["editieren"] >= 0 && empty($lmbezErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
+        !empty($lebensmittel->OKatKey && $lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)) {
         $replacement = array($_SESSION['editieren'] => $eintrag);
         $_SESSION["array"] = array_replace($_SESSION["array"], $replacement);
         $_SESSION["dbeintragArray"] = array_replace($_SESSION["dbeintragArray"], $replacement);

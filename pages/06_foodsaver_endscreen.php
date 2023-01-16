@@ -1,6 +1,9 @@
 <?php
 // Session initialisieren, damit php erkennt welche Session im nächsten Schritt gemeint ist
 session_start();
+
+$FSkey = $_SESSION['FSkey'];
+
 // Session wird zerstört und resettet
 session_destroy();
 ?>

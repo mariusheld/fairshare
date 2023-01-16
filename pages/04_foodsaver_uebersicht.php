@@ -12,6 +12,9 @@ if ($_SESSION["foodsaverLogin"] == false) {
   header("Location: ../index.php");
 }
 
+$_SESSION["editieren"] = null;
+$_SESSION["kuehlcheck"] = null;
+
 // Session Objekt wird lokal gespeichert
 $array = json_decode(json_encode($_SESSION["array"]), true);
 $dbeintragArray = json_decode(json_encode($_SESSION["dbeintragArray"]), true);
