@@ -73,20 +73,10 @@ function abbr() {
   header("Location: ../index.php");
 }
 
-// var editButton = document.getElementById("editButton");
-// editButton.onclick = function() {
-//   var item = array[key];
-//   var itemName = item.Lebensmittel;
-//   var itemKistennr = item.Kistennr;
-//   console.log(itemName);
-// }
-
 var fsLmLoeschen = document.getElementById("fsLmLoeschen");
 
 let anmerkungen = false
 let bearbeiten = false
-
-// console.log(array[1].id);
 
 function changeAnmerkung(id){
   if (bearbeiten == false) {
@@ -115,7 +105,6 @@ function changeBearbeiten(id){
     }
   }
 }
-
 
 function openLoeschen(id) {
   console.log(document.getElementById("overlayLoeschen:" + id))

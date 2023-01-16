@@ -24,7 +24,7 @@ $anmerkung = "";
 $allergene = "";
 
 // ---- Error Variables 
-$lmbezErr = $betriebErr = $mengeErr = $herkunftErr = $kategorieErr = $haltbarkeitErr = "";
+$lmbezErr = $betriebErr = $mengeErr = $herkunftErr = $kategorieErr = $haltbarkeitErr = false;
 
 // ---- KategorieIcons 
 $icon_backwaren_salzig_url = '../media/kategorien/icon_backwaren-salzig.svg';
@@ -40,7 +40,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 $conn = $db_handle->connectDB();
 $FSkeyQuery = "SELECT FSkey FROM Foodsaver ORDER BY FSkey DESC LIMIT 1";
 $FSkeyResult = mysqli_query($conn, $FSkeyQuery);
-$KategorieQuery = "SELECT*FROM OberKategorie";
+$KategorieQuery = "SELECT*FROM OberKategorie ORDER BY OKatKey ASC";
 $KategorieResult = mysqli_query($conn, $KategorieQuery);
 $HerkunftQuery = "SELECT*FROM HerkunftsKategorie";
 $HerkunftResult = mysqli_query($conn, $HerkunftQuery);
@@ -76,7 +76,7 @@ function test_input($data)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["LMBez"])) {
-        $lmbezErr = "Erforderlich";
+        $lmbezErr = true;
     } else {
         $LMBez = test_input($_POST["LMBez"]);
     }
@@ -87,34 +87,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ) {
         $_SESSION["kuehlcheck"] = 1;
         $kuehlcheck = 1;
+    } else {
+        $_SESSION["kuehlcheck"] = 0;
+        $kuehlcheck = 0;
     }
 
-    if (empty($_POST["betrieb"])) {
-        $betriebErr = "Erforderlich";
-    } else {
+    // if (empty($_POST["betrieb"])) {
+    //     $betriebErr = true;
+    // } else {
+    //     $betrieb = test_input($_POST["betrieb"]);
+    // }
+    if (!empty($_POST["betrieb"])) {
         $betrieb = test_input($_POST["betrieb"]);
     }
 
     if (empty($_POST["menge"])) {
-        $mengeErr = "Erforderlich";
+        $mengeErr = true;
     } else {
         $menge = test_input($_POST["menge"]);
     }
 
     if (empty($_POST["HerkunftKey"])) {
-        $herkunftErr = "Erforderlich";
+        $herkunftErr = true;
     } else {
         $HerkunftKey = test_input($_POST["HerkunftKey"]);
     }
 
     if (empty($_POST["OKatKey"])) {
-        $kategorieErr = "Erforderlich";
+        $kategorieErr = true;
     } else {
         $OKatKey = test_input($_POST["OKatKey"]);
     }
 
     if (empty($_POST["haltbarkeit"])) {
-        $haltbarkeitErr = "Erforderlich";
+        $haltbarkeitErr = true;
     } else {
         $haltbarkeit = test_input($_POST["haltbarkeit"]);
     }
@@ -171,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // ----------- add Object to Uebersicht --------
     // Wenn es keine Errors gibt und keine Variablen leer sind, wird das Objekt zur Übersicht übertragen und man wird zur Überischt weitergeleitet
     if (
-        empty($lmbezErr) && empty($betriebErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
+        empty($lmbezErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
         !empty($lebensmittel->OKatKey && $lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)
     ) {
         $eintrag = (object) [
@@ -183,7 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'Kuehlen' => $lebensmittel->Kuehlware,
             'Genießbar' => $haltbarkeit,
             'Herkunft' => $lebensmittel->Herkunft,
-            'Betrieb'=> $lebensmittel->Betrieb,
+            'Betrieb' => $lebensmittel->Betrieb,
             'Allergene' => $allergene,
             'Anmerkungen' => $anmerkung
         ];
@@ -233,14 +239,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="grid">
                         <!-- Lebensmittel INPUT -->
                         <div class="grid-col-4">
-                            <label class="grid-title">
+                            <label class="grid-title" style="<?php if($lmbezErr) echo"color: #E97878;"?>">
                                 Lebensmittel
-
-                                <span class="error">*
-                                    <?php echo $lmbezErr; ?>
-                                </span>
                             </label>
-                            <input name="LMBez" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
+                            <input name="LMBez" class="input <?php if($lmbezErr) echo"error"?>" type="text" 
+                            value="<?php if (isset($_GET['editieren'])) {
                                 echo $_SESSION["array"][$_GET['editieren']]->Lebensmittel;
                             } else {
                                 echo $LMBez;
@@ -250,27 +253,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="grid-col-2">
                             <div class="kuehlcheck">
                                 <div class="check-item">
-                                    <input name="kuehlcheck" type="checkbox" id="kuehlen" value="true">
+                                    <input name="kuehlcheck" type="checkbox" id="kuehlen" value="true"
                                     <?php
-                                    if ($kuehlcheck == "0") {
-                                        echo "<img src='../media/checkbox.svg' alt='checkbox' />";
-                                        echo "<img src='../media/checkbox_checked.svg' alt='checkbox_checked' />";
-                                    } else {
-                                        echo "<img src='../media/checkbox_checked.svg' alt='checkbox_checked' />";
-                                        echo "<img src='../media/checkbox_checked.svg' alt='checkbox_checked' />";
-                                    } ?>
+                                    if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Kuehlen == "1") {
+                                        echo "checked";
+                                    } else if ($kuehlcheck == "1") {
+                                        echo "checked";
+                                    }?>> 
+                                    <img src='../media/checkbox.svg' alt='checkbox' />
+                                    <img src='../media/checkbox_checked.svg' alt='checkbox_checked' />
                                     In den Kühlschrank
                                 </div>
                             </div>
                         </div>
                         <!-- Kategorie auswählen -->
                         <div class="grid-col-6">
-                            <div class="grid-title">
+                            <div class="grid-title" style="<?php if($kategorieErr) echo"color: #E97878;"?>">
                                 <label>
                                     Kategorie
-                                    <span class="error">*
-                                        <?php echo $kategorieErr; ?>
-                                    </span>
                                 </label>
                                 <!-- OVERLAY Trigger -->
                                 <div>
@@ -288,27 +288,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="category-grid">
                                 <?php
-
                                 // LOOP TILL END OF DATA
                                 foreach ($kategorien as $key => $row) {
-
                                     $iconList = array(
-                                        $icon_backwaren_salzig_url,
-                                        $icon_backwaren_suess_url,
                                         $icon_gemuese_url,
-                                        $icon_konserven_url,
-                                        $icon_kuehlprodukte_url,
                                         $icon_obst_url,
-                                        $icon_sonstiges_url,
+                                        $icon_backwaren_suess_url,
+                                        $icon_backwaren_salzig_url,
                                         $icon_trockenprodukte_url,
+                                        $icon_kuehlprodukte_url,
+                                        $icon_konserven_url,
+                                        $icon_sonstiges_url,
                                     );
                                     ?>
                                     <div class="radio-container kategorie">
                                         <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php if (
                                                isset($OKatKey) && $OKatKey == $row['OKatKey']
-                                           )
-                                               echo "checked"; ?>>
-                                        <div class="category-item">
+                                           ) {
+                                               echo "checked";
+                                           }
+                                           ?>>
+                                        <div class="category-item <?php if($kategorieErr) echo"error"?>">
                                             <?php echo "<img src='" . $iconList[$key] . "'>" ?>
                                             <p>
                                                 <?php echo $row['OKatName'] ?>
@@ -324,11 +324,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="grid">
                         <!-- Herkunft INPUT -->
                         <div class="grid-col-6">
-                            <label class="grid-title">
+                            <label class="grid-title" style="<?php if($herkunftErr) echo"color: #E97878;"?>">
                                 Wo gerettet?
-                                <span class="error">*
-                                    <?php echo $herkunftErr; ?>
-                                </span>
                             </label>
                             <div class="haltbarkeit-grid">
                                 <?php
@@ -337,10 +334,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     ?>
                                     <div class="radio-container haltbarkeit">
                                         <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
-                                            <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey'])
-                                                echo
-                                                    "checked"; ?>>
-                                        <div class="haltbarkeit-item">
+                                            <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey']) {
+                                                echo "checked";
+                                            }
+                                            ?>>
+                                        <div class="haltbarkeit-item <?php if($herkunftErr) echo"error"?>">
                                             <p>
                                                 <?php echo $row['HerkunftName'] ?>
                                             </p>
@@ -355,9 +353,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="grid-col-3">
                             <label class="grid-title">
                                 Betriebsname
-                                <span class="error">*
-                                    <?php echo $betriebErr; ?>
-                                </span>
                             </label>
                             <input name="betrieb" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
                                 echo $_SESSION["array"][$_GET['editieren']]->Betrieb;
@@ -367,13 +362,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <!-- Menge INPUT  -->
                         <div class="grid-col-3">
-                            <div class="grid-title">
+                            <div class="grid-title" style="<?php if($mengeErr) echo"color: #E97878;"?>">
                                 <label>
                                     Menge (in kg)
                                 </label>
-                                <span class="error">*
-                                    <?php echo $mengeErr; ?>
-                                </span>
                                 <!-- OVERLAY Trigger-->
                                 <div>
                                     <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
@@ -388,37 +380,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                 </div>
                             </div>
-                            <input name="menge" class="input" type="number" step="0.1" min="0" value="<?php if (isset($_GET['editieren'])) {
+                            <input name="menge" class="input <?php if($mengeErr) echo"error"?>" type="number" step="0.1" min="0" value="<?php if (isset($_GET['editieren'])) {
                                 echo $_SESSION["array"][$_GET['editieren']]->Menge;
                             } else {
                                 echo $menge;
-                            } ?>"/>
+                            } ?>" />
                         </div>
                         <!-- Haltbarkeit INPUT -->
                         <div class="grid-col-6">
-                            <label class="grid-title">
+                            <label class="grid-title" style="<?php if($haltbarkeitErr) echo"color: #E97878;"?>">
                                 Wie lange genießbar?
-                                <span class="error">*
-                                    <?php echo $haltbarkeitErr; ?>
-                                </span>
                             </label>
                             <div class="rangeslider">
                                 <img height="6px" src="../media/range-thumb-left.svg" alt="range-thumb">
-                                <input id="input" type="range" min="1" max="8" value="0" name="haltbarkeit"
-                                    class="slider">
+                                <input id="input" type="range" min="1" max="8" value="0" name="haltbarkeit" class="slider">
                                 <img height="6px" src="../media/range-thumb-right.svg" alt="range-thumb">
                             </div>
-                            <div class="output" id="output"></div>
-                            <script>
-                                var values = ["", "unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
-
-                                var input = document.getElementById('input'),
-                                    output = document.getElementById('output');
-                                input.oninput = function () {
-                                    output.innerHTML = values[this.value];
-                                };
-                                input.oninput();
-                            </script>
+                            <div class="slider-steps">
+                                <?php
+                                    $steps = ["unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
+                                    foreach ($steps as $key => $step) { ?>
+                                    <div id="<?php echo $key + 1 ?>">
+                                        <?php echo $step ?>                                      
+                                    </div>
+                                <?php } ?>
+                                <script>
+                                    var input = document.getElementById('input');
+                                    input.oninput = function () {
+                                        for(i = 1; i <= 8; i++) {
+                                            if(i == input.value) {
+                                                document.getElementById(i).style.color = "#99BB44";
+                                            } else {
+                                                document.getElementById(i).style.color = "#BEBEB9";
+                                            }
+                                        }
+                                    };
+                                    input.oninput();
+                                </script>
+                            </div>
                         </div>
                         <!-- Allergene INPUT  -->
                         <div class="grid-col-6">

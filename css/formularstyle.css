@@ -190,12 +190,6 @@ header img:last-child {
     grid-column: span 6 / span 6;
 }
 
-/* Error styling */
-.error {
-    color: red;
-    font-size: 10px;
-}
-
 /* Allgemeine Flex Klasse */
 .flex {
     display: flex;
@@ -545,10 +539,22 @@ Foodsaver Hinzufügen
     /* background-image: url("./assets/slider-thumb.svg"); */
 }
 
-.output {
+.slider-steps {
     padding-top: 6px;
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 0 8px;
+}
+.slider-steps div {
     font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checked {
+    color: #99BB44;
 }
 
 /* ------- 
@@ -674,7 +680,12 @@ Foodsaver Übersicht
     cursor: pointer;
 }
 
-/*-----------------------------------------------------Pop-ups Foodsaver-------------------------------------------*/
+/* Error styling */
+.error {
+    border: 2px solid #E97878;
+}
+
+/*-----------------------------------------------------Alle Pop-ups Foodsaver-------------------------------------------*/
 
 
 /*-----------------------Buttons Fs-pop-ups-----------------------*/

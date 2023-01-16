@@ -140,14 +140,14 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 
                 $iconList = array(
                   "0",
-                  $icon_backwaren_salzig_url,
-                  $icon_backwaren_suess_url,
                   $icon_gemuese_url,
-                  $icon_konserven_url,
-                  $icon_kuehlprodukte_url,
                   $icon_obst_url,
-                  $icon_sonstiges_url,
+                  $icon_backwaren_suess_url,
+                  $icon_backwaren_salzig_url,
                   $icon_trockenprodukte_url,
+                  $icon_kuehlprodukte_url,
+                  $icon_konserven_url,
+                  $icon_sonstiges_url,
                 );
 
                 ?>
@@ -245,10 +245,6 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                 </div>
               </td>
             </tr>
-            <script>
-              let key = <?php echo json_encode($key); ?>;
-              let array = <?php echo json_encode($array); ?>;
-            </script>
             <?php
           }
           ?>
@@ -376,7 +372,8 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
           Lebensmittel in Fairteiler-Box(en) nach Sorten und Lagerbedarf sortieren (gekühlt oder ungekühlt)
         </li>
         <li>
-          Deckel aus dem Regal über dir holen, Box(en) verschließen & Box(en) in Regale und Kühlschränke (Check: Kühlschrank eingesteckt und an?) einräumen.
+          Deckel aus dem Regal über dir holen, Box(en) verschließen & Box(en) in Regale und Kühlschränke (Check:
+          Kühlschrank eingesteckt und an?) einräumen.
         </li>
       </ul>
       <div class="buttoncenter">
