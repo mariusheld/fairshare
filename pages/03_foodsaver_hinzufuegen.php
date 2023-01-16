@@ -73,6 +73,10 @@ function test_input($data)
     return $data;
 }
 
+if (isset($_GET['editieren'])) {
+    $_SESSION["editieren"] = $_GET['editieren'];
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["LMBez"])) {
@@ -171,34 +175,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'Herkunft' => $HerkunftKey,
     ];
 
+    $eintrag = (object) [
+        'session_id' => session_id(),
+        'id' => session_create_id(),
+        'Kategorie' => $lebensmittel->OKatKey,
+        'Lebensmittel' => $lebensmittel->Bezeichnung,
+        'Menge' => $lebensmittel->Gewicht,
+        'Kuehlen' => $lebensmittel->Kuehlware,
+        'Genießbar' => $haltbarkeit,
+        'Herkunft' => $lebensmittel->Herkunft,
+        'Betrieb' => $lebensmittel->Betrieb,
+        'Allergene' => $allergene,
+        'Anmerkungen' => $anmerkung
+    ];
+
     // Datenbankeintrag erstellen
     $dbeintrag = array($lieferung, $lebensmittel);
 
-    // ----------- add Object to Uebersicht --------
-    // Wenn es keine Errors gibt und keine Variablen leer sind, wird das Objekt zur Übersicht übertragen und man wird zur Überischt weitergeleitet
-    if (
-        empty($lmbezErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
-        !empty($lebensmittel->OKatKey && $lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)
-    ) {
-        $eintrag = (object) [
-            'session_id' => session_id(),
-            'id' => session_create_id(),
-            'Kategorie' => $lebensmittel->OKatKey,
-            'Lebensmittel' => $lebensmittel->Bezeichnung,
-            'Menge' => $lebensmittel->Gewicht,
-            'Kuehlen' => $lebensmittel->Kuehlware,
-            'Genießbar' => $haltbarkeit,
-            'Herkunft' => $lebensmittel->Herkunft,
-            'Betrieb' => $lebensmittel->Betrieb,
-            'Allergene' => $allergene,
-            'Anmerkungen' => $anmerkung
-        ];
-        array_push($_SESSION["array"], $eintrag);
-        array_push($_SESSION["dbeintragArray"], $dbeintrag);
-        $_SESSION["latestLMkey"] = $_SESSION["latestLMkey"] + 1;
-        $_SESSION["kuehlcheck"] = 0;
+    if ($_SESSION["editieren"] >= 0 ) {
+        $replacement = array($_SESSION['editieren'] => $eintrag);
+        $_SESSION["array"] = array_replace($_SESSION["array"], $replacement);
+        $_SESSION["dbeintragArray"] = array_replace($_SESSION["dbeintragArray"], $replacement);
         header("Location: ./04_foodsaver_uebersicht.php");
         exit();
+    } else {
+        // ----------- add Object to Uebersicht --------
+        // Wenn es keine Errors gibt und keine Variablen leer sind, wird das Objekt zur Übersicht übertragen und man wird zur Überischt weitergeleitet
+        if (
+            empty($lmbezErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
+            !empty($lebensmittel->OKatKey && $lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)
+        ) {
+            array_push($_SESSION["array"], $eintrag);
+            array_push($_SESSION["dbeintragArray"], $dbeintrag);
+            $_SESSION["latestLMkey"] = $_SESSION["latestLMkey"] + 1;
+            $_SESSION["kuehlcheck"] = 0;
+            header("Location: ./04_foodsaver_uebersicht.php");
+            exit();
+        }
     }
 }
 ?>
@@ -302,12 +315,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     );
                                     ?>
                                     <div class="radio-container kategorie">
-                                        <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php if (
-                                               isset($OKatKey) && $OKatKey == $row['OKatKey']
-                                           ) {
-                                               echo "checked";
-                                           }
-                                           ?>>
+                                    <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php 
+                                        if (isset($OKatKey) && $OKatKey == $row['OKatKey']) {
+                                            echo "checked";
+                                        } else if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Kategorie == $row['OKatKey']) {
+                                            echo "checked";
+                                        }
+                                        ?>>
                                         <div class="category-item <?php if($kategorieErr) echo"error"?>">
                                             <?php echo "<img src='" . $iconList[$key] . "'>" ?>
                                             <p>
@@ -333,11 +347,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 foreach ($herkunftkategorien as $key => $row) {
                                     ?>
                                     <div class="radio-container haltbarkeit">
-                                        <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
-                                            <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey']) {
-                                                echo "checked";
-                                            }
-                                            ?>>
+                                    <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
+                                        <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey']) {
+                                            echo "checked";
+                                        } else if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Herkunft == $row['HerkunftKey']) {
+                                            echo "checked";
+                                        }
+                                        ?>>
                                         <div class="haltbarkeit-item <?php if($herkunftErr) echo"error"?>">
                                             <p>
                                                 <?php echo $row['HerkunftName'] ?>
@@ -393,7 +409,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </label>
                             <div class="rangeslider">
                                 <img height="6px" src="../media/range-thumb-left.svg" alt="range-thumb">
-                                <input id="input" type="range" min="1" max="8" value="0" name="haltbarkeit" class="slider">
+                                <input id="input" type="range" min="1" max="8" value="<?php
+                                    if (isset($_GET['editieren'])) {
+                                        $stufen = ["", "unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
+                                        $value = array_search($_SESSION["array"][$_GET['editieren']]->Genießbar, $stufen);
+                                        echo $value;
+                                    } else {
+                                        echo "0";
+                                    }
+                                    ?>" name="haltbarkeit" class="slider">
                                 <img height="6px" src="../media/range-thumb-right.svg" alt="range-thumb">
                             </div>
                             <div class="slider-steps">
@@ -472,7 +496,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="action-wrap">
                 <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
                 <a id="openHinzufuegenAbbr">Abbrechen</a>
-                <input class="continue-button" type="submit" form="myform" value="Hinzufügen">
+                <?php if (isset($_GET['editieren'])) {
+                    echo "<input class='continue-button' type='submit' form='myform' value='Aktualisieren'>";
+                } else {
+                    echo "<input class='continue-button' type='submit' form='myform' value='Hinzufügen'>";
+                } ?>
             </div>
         </div>
     </div>

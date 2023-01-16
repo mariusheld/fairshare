@@ -74,6 +74,7 @@ if (isset($_GET['send'])) {
   header("Location: ./05_foodsaver_finalcheck.php");
 }
 
+// Lebensmitteleintrag aus Übersicht löschen
 if (isset($_GET['key'])) {
   unset($_SESSION["array"][$_GET['key']]);
   unset($_SESSION["dbeintragArray"][$_GET['key']]);
@@ -90,6 +91,7 @@ $icon_obst_url = '../media/kategorien/icon_obst.svg';
 $icon_trockenprodukte_url = '../media/kategorien/icon_trockenprodukte.svg';
 $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 
+consolelog($_SESSION["array"]);
 ?>
 
 <!DOCTYPE html>
