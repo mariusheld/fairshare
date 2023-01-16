@@ -228,7 +228,6 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                         </h5>
                       </div>
                       <p class="textpopup">
-                        <?php echo $key ?>
                         Möchtest Du das ausgewählte Lebensmittel wirklich aus der Liste löschen?
                       </p>
                       <div class="button-spacing-popup">
