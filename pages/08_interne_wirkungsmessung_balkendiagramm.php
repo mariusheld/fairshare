@@ -102,6 +102,7 @@ else
 	}
 
 //Mengen geretteter Lebensmittel abfragen
+//TODO: ggf. Gesamtmenge hier gar nicht abfragen
 $select_gesMenge = $db->prepare("SELECT SUM(BewegMenge) FROM Bestand_Bewegung WHERE LStatusKey='2'");
 $erfolg = $select_gesMenge->execute(); 
 
@@ -113,22 +114,174 @@ $daten_zeitraum = array(
 $select_ZeitraumMenge->execute($daten_zeitraum); 
 
 
+//Mengen geretteter Lebensmittel im Zeitraum nach Herkunft 
+$select_HerkunftMengen = $db->prepare("SELECT HerkunftName AS Herkunft, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY KGfairteilt DESC) AS RowNumber
+		FROM (SELECT Bestand_Bewegung.LMKey, BewegMenge, BewegDatum, HerkunftName 
+		FROM (Bestand_Bewegung LEFT JOIN Lebensmittel ON Bestand_Bewegung.LMKey=Lebensmittel.LMKey)
+		LEFT JOIN HerkunftsKategorie ON Lebensmittel.HerkunftKey=HerkunftsKategorie.HerkunftKey
+		WHERE LStatusKey=2 AND BewegDatum BETWEEN :date1 AND :date2) AS FairteiltesHerk
+		GROUP BY HerkunftName
+		ORDER BY KGfairteilt DESC");
+$select_HerkunftMengen->execute($daten_zeitraum);
 
-//Fehlertest
-if (!$erfolg) {
-    $fehler = $select_gesMenge->errorInfo();
-    die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
-}
 
+// Fehlerüberprüfung
+if ($select_HerkunftMengen == false) 
+	{
+	$fehler = $db->errorInfo();
+	die("Folgender Datenbankfehler ist aufgetreten: " . $fehler[2]);
+	}
 
 //Mengen geretteter Lebensmittel anzeigefähig machen
 $gesMenge = $select_gesMenge->fetchColumn();
 $ZeitraumMenge = $select_ZeitraumMenge->fetchColumn();
 
 
+// Ergebnistabelle aus dem PDO auslesen und als assoz. Feld $KategorienMengen bereitstellen 
+$HerkunftMengen = $select_HerkunftMengen->fetchAll();
+
+//Variablen für das Balkendiagramm
+$B1hidden = "hidden";
+$B2hidden = "hidden";
+$B3hidden = "hidden";
+$B4hidden = "hidden";
+$B5hidden = "hidden";
+$B6hidden = "hidden";
+$B7hidden = "hidden";
+
+foreach ($HerkunftMengen as $NachHerkunft) 
+{
+	if ($NachHerkunft['RowNumber'] == "1") 
+		{
+		if ($NachHerkunft['Herkunft'] != NULL)
+			{
+			$Herkunft1Name =$NachHerkunft['Herkunft'];
+			}
+		else
+			{
+			$Herkunft1Name ="Unbekannt";
+			}
+		$Herkunft1kg = $NachHerkunft['KGfairteilt'];
+		$B1hidden = "";
+		
+		}
+	if ($NachHerkunft['RowNumber'] == "2") 
+		{
+		if ($NachHerkunft['Herkunft'] != NULL)
+			{
+			$Herkunft2Name =$NachHerkunft['Herkunft'];
+			}
+		else
+			{
+			$Herkunft2Name ="Unbekannt";
+			}
+		$Herkunft2kg = $NachHerkunft['KGfairteilt'];
+		$B2hidden = "";
+		}
+	if ($NachHerkunft['RowNumber'] == "3") 
+		{
+		if ($NachHerkunft['Herkunft'] != NULL)
+			{
+			$Herkunft3Name =$NachHerkunft['Herkunft'];
+			}
+		else
+			{
+			$Herkunft3Name ="Unbekannt";
+			}
+		$Herkunft3kg = $NachHerkunft['KGfairteilt'];
+		$B3hidden = "";
+		}
+	if ($NachHerkunft['RowNumber'] == "4") 
+		{
+		if ($NachHerkunft['Herkunft'] != NULL)
+			{
+			$Herkunft4Name =$NachHerkunft['Herkunft'];
+			}
+		else
+			{
+			$Herkunft4Name ="Unbekannt";
+			}
+		$Herkunft4kg = $NachHerkunft['KGfairteilt'];
+		$B4hidden = "";
+		}
+	if ($NachHerkunft['RowNumber'] == "5") 
+		{
+		if ($NachHerkunft['Herkunft'] != NULL)
+			{
+			$Herkunft5Name =$NachHerkunft['Herkunft'];
+			}
+		else
+			{
+			$Herkunft5Name ="Unbekannt";
+			}
+		$Herkunft5kg = $NachHerkunft['KGfairteilt'];
+		$B5hidden = "";
+		}
+	if ($NachHerkunft['RowNumber'] == "6") 
+		{
+		if ($NachHerkunft['Herkunft'] != NULL)
+			{
+			$Herkunft6Name =$NachHerkunft['Herkunft'];
+			}
+		else
+			{
+			$Herkunft6Name ="Unbekannt";
+			}
+		$Herkunft6kg = $NachHerkunft['KGfairteilt'];
+		$B6hidden = "";
+		}
+	if ($NachHerkunft['RowNumber'] == "7") 
+		{
+		if ($NachHerkunft['Herkunft'] != NULL)
+			{
+			$Herkunft7Name =$NachHerkunft['Herkunft'];
+			}
+		else
+			{
+			$Herkunft7Name ="Unbekannt";
+			}
+		$Herkunft7kg = $NachHerkunft['KGfairteilt'];
+		$B7hidden = "";
+		}	
+				
+}
+	
+//Zahlen in deutsche Formatierung konvertieren
+
+//TODO: Fix! Wenn Zeitraum ausgewählt, in dem keine LM gerettet, Division by zero Error
+
+$Herkunft1kg_display = number_format($Herkunft1kg,1,",",".");
+$Herkunft1Prozent = $Herkunft1kg/$ZeitraumMenge *100; 
+$Herkunft1Prozent_display = number_format($Herkunft1Prozent,1,",",".");	
+
+$Herkunft2kg_display = number_format($Herkunft2kg,1,",",".");
+$Herkunft2Prozent = $Herkunft2kg/$ZeitraumMenge *100;
+$Herkunft2Prozent_display = number_format($Herkunft2Prozent,1,",",".");	
+
+$Herkunft3kg_display = number_format($Herkunft3kg,1,",",".");
+$Herkunft3Prozent = $Herkunft3kg/$ZeitraumMenge *100;
+$Herkunft3Prozent_display = number_format($Herkunft3Prozent,1,",",".");	
+
+$Herkunft4kg_display = number_format($Herkunft4kg,1,",",".");
+$Herkunft4Prozent = $Herkunft4kg/$ZeitraumMenge *100;
+$Herkunft4Prozent_display = number_format($Herkunft4Prozent,1,",",".");	
+
+$Herkunft5kg_display = number_format($Herkunft5kg,1,",",".");
+$Herkunft5Prozent = $Herkunft5kg/$ZeitraumMenge *100;
+$Herkunft5Prozent_display = number_format($Herkunft5Prozent,1,",",".");	
+
+$Herkunft6kg_display = number_format($Herkunft6kg,1,",",".");
+$Herkunft6Prozent = $Herkunft6kg/$ZeitraumMenge *100;
+$Herkunft6Prozent_display = number_format($Herkunft6Prozent,1,",",".");	
+
+$Herkunft7kg_display = number_format($Herkunft7kg,1,",",".");
+$Herkunft7Prozent = $Herkunft7kg/$ZeitraumMenge *100;
+$Herkunft7Prozent_display = number_format($Herkunft7Prozent,1,",",".");
+	
+
 /*
 //SQL für Balkendiagramm (in Adminer getestet)
-SELECT HerkunftName AS Herkunft, SUM(BewegMenge) AS KGfairteilt
+SELECT HerkunftName AS Herkunft, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY KGfairteilt DESC) AS RowNumber
 FROM 
 (SELECT Bestand_Bewegung.LMKey, BewegMenge, BewegDatum, HerkunftName
 FROM (Bestand_Bewegung LEFT JOIN Lebensmittel ON Bestand_Bewegung.LMKey=Lebensmittel.LMKey)
@@ -143,7 +296,6 @@ ORDER BY KGfairteilt DESC
 //TODO: Prozentanteil jeder Kategorie ausrechnen (KGfairteilt/ZeitraumMenge*100)
 //TODO: Herkunftsbezeichnungen (per Variablen) in absteigender Reihenfolge in HTML einfügen
 //TODO: Zahlen per Variablen in richtiger Reihenfolge in HTML einfügen (deutsch formatiert)
-//TODO: ausgewählten Zeitraum bei Rückkehr zu Dashboard an Dashboard übergeben?
 
 
 ?>
@@ -203,89 +355,90 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
         <div class="balkendiagram-container">
             <!-- Button close the page -->  
 <!-- TODO: Link zu Dashboard einfügen -->
-            <a href=""><div class="button-previous-page"></div></a>
+            <a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>"><div class="button-previous-page"></div></a>
 
             <!-- Titel -->  
             <div class="font-fira">
                 <h2>Lebensmittel nach Herkunft</h2>
             </div>
             <!-- Bar Diagram --> 
+              
             <div class="category-list">
                 <table class="balkendiagram-content" >
-                    <tr>
+                    <tr <?php echo $B1hidden; ?> >
                         <!-- Category name --> 
-                        <td class="font-fira category-name">Supermarkt</td>
+                        <td class="font-fira category-name"><?php echo $Herkunft1Name; ?></td>
                         <!-- Bar and info --> 
                         <td class="bar">
                             <div class="bar-container">
-                                <div class="category-bar" id="bar1" data-percentage="34.6"></div>
-                                <div class="font-fira percentage">36,6% (5.900 Kg)</div>
+                                <div class="category-bar" id="bar1" data-percentage="<?php echo $Herkunft1Prozent; ?>"></div>
+                                <div class="font-fira percentage"><?php echo $Herkunft1Prozent_display; ?>% (<?php echo $Herkunft1kg_display; ?> Kg)</div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr <?php echo $B2hidden; ?>>
                         <!-- Category name -->
-                        <td class="font-fira category-name">Bäckerei</td>
+                        <td class="font-fira category-name"><?php echo $Herkunft2Name; ?></td>
                         <!-- Bar and info --> 
                         <td class="bar">
                             <div class="bar-container">
-                                <div class="category-bar" id="bar2" data-percentage="23.1"></div>
-                                <div class="font-fira percentage">23,1% (3.200 Kg)</div>
+                                <div class="category-bar" id="bar2" data-percentage="<?php echo $Herkunft2Prozent; ?>"></div>
+                                <div class="font-fira percentage"><?php echo $Herkunft2Prozent_display; ?>% (<?php echo $Herkunft2kg_display; ?> Kg)</div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr <?php echo $B3hidden; ?>>
                         <!-- Category name -->
-                        <td class="font-fira category-name">Wochenmarkt</td>
+                        <td class="font-fira category-name"><?php echo $Herkunft3Name; ?></td>
                         <!-- Bar and info --> 
                         <td class="bar">
                             <div class="bar-container">
-                                <div class="category-bar" id="bar3" data-percentage="15.4"></div>
-                                <div class="font-fira percentage">15,4% (2.400 Kg)</div>
+                                <div class="category-bar" id="bar3" data-percentage="<?php echo $Herkunft3Prozent; ?>"></div>
+                                <div class="font-fira percentage"><?php echo $Herkunft3Prozent_display; ?>% (<?php echo $Herkunft3kg_display; ?> Kg)</div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr <?php echo $B4hidden; ?>>
                         <!-- Category name -->
-                        <td class="font-fira category-name">Gastronomie</td>
+                        <td class="font-fira category-name"><?php echo $Herkunft4Name; ?></td>
                         <!-- Bar and info --> 
                         <td class="bar">
                             <div class="bar-container">
-                                <div class="category-bar" data-percentage="11.5"></div>
-                                <div class="font-fira percentage">11,5% (1.900 Kg)</div>
+                                <div class="category-bar" data-percentage="<?php echo $Herkunft4Prozent; ?>"></div>
+                                <div class="font-fira percentage"><?php echo $Herkunft4Prozent_display; ?>% (<?php echo $Herkunft4kg_display; ?> Kg)</div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr <?php echo $B5hidden; ?>>
                         <!-- Category name -->
-                        <td class="font-fira category-name">Haushalt</td>
+                        <td class="font-fira category-name"><?php echo $Herkunft5Name; ?></td>
                         <!-- Bar and info --> 
                         <td class="bar">
                             <div class="bar-container">
-                                <div class="category-bar" data-percentage="7.7"></div>
-                                <div class="font-fira percentage">7,7% (1.400 Kg)</div>
+                                <div class="category-bar" data-percentage="<?php echo $Herkunft5Prozent; ?>"></div>
+                                <div class="font-fira percentage"><?php echo $Herkunft5Prozent_display; ?>% (<?php echo $Herkunft5kg_display; ?> Kg)</div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr <?php echo $B6hidden; ?>>
                         <!-- Category name -->
-                        <td class="font-fira category-name">Veranstaltung</td>
+                        <td class="font-fira category-name"><?php echo $Herkunft6Name; ?></td>
                         <!-- Bar and info --> 
                         <td class="bar">
                             <div class="bar-container">
-                                <div class="category-bar" data-percentage="3.9"></div>
-                                <div class="font-fira percentage">3,9% (750 Kg)</div>
+                                <div class="category-bar" data-percentage="<?php echo $Herkunft6Prozent; ?>"></div>
+                                <div class="font-fira percentage"><?php echo $Herkunft6Prozent_display; ?>% (<?php echo $Herkunft6kg_display; ?> Kg)</div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr <?php echo $B7hidden; ?>>
                         <!-- Category name -->
-                        <td class="font-fira category-name">Tankstelle</td>
+                        <td class="font-fira category-name"><?php echo $Herkunft7Name; ?></td>
                         <!-- Bar and info --> 
                         <td class="bar">
                             <div class="bar-container">
-                                <div class="category-bar" data-percentage="3.7"></div>
-                                <div class="font-fira percentage">3,7% (725 Kg)</div>
+                                <div class="category-bar" data-percentage="<?php echo $Herkunft7Prozent; ?>"></div>
+                                <div class="font-fira percentage"><?php echo $Herkunft7Prozent_display; ?>% (<?php echo $Herkunft7kg_display; ?> Kg)</div>
                             </div>
                         </td>
                     </tr>
@@ -298,7 +451,7 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
         <div class="footer-fixed">
           <div class="footer-btn font-fira">
 <!-- TODO: Link zu Dashboard einfügen -->
-            <a href="#" class="cancel-button">Zurück</a>
+            <a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>" class="cancel-button">Zurück</a>
           </div>
           <div class="footer-btn font-fira">
 <!-- TODO: Besprechen, ob der entfernt werden kann? -->
@@ -322,5 +475,7 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
     }
     });
 </script>
+
+
 
 </html>

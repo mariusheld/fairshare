@@ -373,7 +373,7 @@ var date1formatted = "<?php echo $date1formatted; ?>";
             </div>
           </a> 
           <!-- Liste der Kategorien --> 
-          <a href="#">
+          <a href="<?php echo '08_interne_wirkungsmessung_balkendiagramm.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
             <div class="block">
               <div style="display: inline-block;">
                 <p class="font-fira description" style="float:left;"><strong>Nach Herkunft</strong></p>
