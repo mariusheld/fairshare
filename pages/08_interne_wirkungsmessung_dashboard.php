@@ -281,7 +281,7 @@ var date1formatted = "<?php echo $date1formatted; ?>";
         <!-- Zweite Spalte -->  
         <div class="column-2">
           <!-- Block für Kategorien -->  
-          <a href="#">
+          <a href="<?php echo '08_interne_wirkungsmessung_kategorien.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
             <div class="block flx-container-sm">
               <!-- Liste der Kategorien -->  
               <div style="display: inline;">
@@ -372,8 +372,8 @@ var date1formatted = "<?php echo $date1formatted; ?>";
               </div> 
             </div>
           </a> 
-          <!-- Liste der Kategorien --> 
-          <a href="<?php echo '08_interne_wirkungsmessung_balkendiagramm.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
+          <!-- Liste der Herkünfte --> 
+          <a href="<?php echo '08_interne_wirkungsmessung_herkunft.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
             <div class="block">
               <div style="display: inline-block;">
                 <p class="font-fira description" style="float:left;"><strong>Nach Herkunft</strong></p>
