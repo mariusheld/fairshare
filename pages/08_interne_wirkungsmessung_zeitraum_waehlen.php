@@ -34,7 +34,6 @@ if (!$camefrom)
 		}
 	
 
-//TODO: Code für Datumsauslesung und Konvertierung in Balkendiagramm übernehmen
 
 //Datumsauswahl auslesen
 $date1formatted = $_GET['date1'];
@@ -45,6 +44,7 @@ if ($date1formatted != NULL)
 	{
 	$date1timestamp = strtotime($date1formatted);
 	$date1_ISO8601 = date("Y-m-d", $date1timestamp);
+	$startdate_value = 'value=' . $date1timestamp;
 	}
 
 if ($date2formatted != NULL)
@@ -62,16 +62,15 @@ $lastyear = $thisyear -1;
 
 <script>
 //Datumsauswahl an JavaScript übergeben
-var gotdate1 = "<?php echo $date1_ISO8601; ?>";
-var gotdate2 = "<?php echo $date2_ISO8601; ?>";
+//TODO: Datumsauswahl vom Tool übernehmen lassen
+var gotdate1 = "<?php echo $date1formatted; ?>";
+var gotdate2 = "<?php echo $date2formatted; ?>";
 // Test:
 //alert("date1="+gotdate1+" & date2="+gotdate2);
 
 //Herkunftsseite an JavaScript übergeben
 var camefrom = "<?php echo $camefrom; ?>"; 
 var filterleadsto = "<?php echo $filterleadsto; ?>"; 
-//Test:
-//alert("camefrom=" +camefrom + "& filterleadsto=" +filterleadsto);
 
 </script>
 
@@ -115,11 +114,11 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
             <div style="display: flex;">
                 <div>
                     <label for="input1" class="font-fira date-picker-label">Start</label>
-                    <input class="font-fira date-picker-field" type="text" id="input1" onchange="startChanged(this.value)">
+                    <input class="font-fira date-picker-field" type="text" id="input1" value="<?php echo $date1formatted; ?>" onchange="startChanged(this.value)">
                 </div>
                 <div>
                     <label for="input2" class="font-fira date-picker-label">Ende</label>
-                    <input class="font-fira date-picker-field" type="text" id="input2" onchange="endChanged(this.value)">
+                    <input class="font-fira date-picker-field" type="text" id="input2" value="<?php echo $date2formatted; ?>" onchange="endChanged(this.value)">
                 </div>
             </div>
             <!-- DatePicker -->  
@@ -290,16 +289,18 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
 
 	if (date1.value != 0 && date2.value != 0)
 		{
-      	 window.location= filterleadsto+"?date1="+ date1.value + "&date2=" + date2.value +"&";
+      	 window.location= filterleadsto+"?date1="+ date1.value + "&date2=" + date2.value;
     	
     		//console.log("Logging: date1="+date1.value+" date2="+date2.value+" ");
     	}
     else 
     	
-    	console.log("Date(s) missing: date1="+date1.value+" date2="+date2.value+" ");
+    	window.location= filterleadsto+"?date1="+ gotdate1 + "&date2=" + gotdate2;
+    	//console.log("Date(s) missing: date1="+date1.value+" date2="+date2.value+" ");
     
     	//TODO: Testausgaben entfernen
     	//TODO (@Anastasia?): Fehlermeldung, wenn ein Datum nicht ausgefüllt ist?
+    	//TODO (@Anastasia?): Richtige Checkbox als schon ausgewählt anzeigen, wenn man vom Dashboard oder Balkendiagramm kommt?
 
     }
 	
