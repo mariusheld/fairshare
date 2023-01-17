@@ -51,16 +51,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <!-- Header der Anwendung -->
     <header>
-        <img src="../media/logo.svg" width="194px;" alt="Raupe Logo" id="logo">
+        <img src="../media/logo.svg" alt="Raupe Logo" style="padding-left: 0;">
         <a href="#" class="MitarbeiterLogin" id="login">
-            <span>Mitarbeiter*in</span>
-            <button id="startscreen-mitarbeiter-button"><svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
-                    width="28px" height="28px" fill="#99BB44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF"
-                    class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
-                </svg></button>
-        </a>
+                <span style="letter-spacing: -0.9px; font-weight: 800;">Mitarbeiter*in</span>
+                <button id="startscreen-mitarbeiter-button"><svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
+                        width="28px" height="28px" fill="#99BB44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF"
+                        class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+                    </svg></button>
+            </a>
     </header>
 
        <!-- Anmeldemaske -->
