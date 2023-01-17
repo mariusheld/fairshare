@@ -44,6 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Londrina Solid">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Sans">
     <link rel="stylesheet" href="../css/foodsaver_anmeldung.css">
+    <link rel="stylesheet" href="../css/adminstyle.css"/> 
+    <link rel="stylesheet" href="../css/formularstyle.css"/> 
 </head>
 
 <body>
@@ -61,9 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </a>
     </header>
 
-    <!-- Anmeldemaske -->
-    <main>
-        <form class="Anmeldeformular" method="POST" action="02_foodsaver_start.php">
+       <!-- Anmeldemaske -->
+       <div class="seiteninhalt" style="text-align: left;">
+        <form class="Anmeldeformular" id="myform" method="POST" action="02_foodsaver_start.php">
             <div class="col-3">
                 <label id="labelvorname" for="">Vorname</label>
                 <input type="text" required id="vorname" name="vorname">
@@ -87,19 +89,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <p id="telormail" class="col-6">Trage deine E-Mail oder deine Telefonnummer ein.</p>
             <div class="col-6 datenschutz" style="display: flex; flex-direction: row; padding-top: 32px;">
-                <input type="checkbox" name="datacheck" id="datacheck" value="true" style="margin-top: -14px"/>
-                <img alt="nocheck" src="../media/checkbox.svg" class="checkbox" style="margin-left: -23px; margin-top: -14px;">
-                <img alt="check" src="../media/checkbox_checked.svg" class="checkboxchecked"/ style="margin-left: -23px; margin-top: -14px;">
-                <p class="dataschutz">
+                <input type="checkbox" name="datacheck" id="datacheck" style="margin-top: -14px"/>
+                <img alt="nocheck" width="32px" height="32px" style="margin-top:0px" src="../media/checkbox.svg" id="checkboxunchecked" class="checkbox" style="margin-left: -23px; margin-top: -14px;">
+                <img alt="check" width="32px" height="32px" style="margin-top:0px" src="../media/checkbox_checked.svg" class="checkboxchecked"/ style="margin-left: -23px; margin-top: -14px;">
+                <p class="dataschutz" >
                 Ich stimme zu, dass die Raupe meine Daten zur Auswertung 
                 der Wirkungsmessung verwendet. Persönliche Daten werden 
                 nicht an Dritte weitergegeben.
                 </p>
             </div>
-            <a href="../index.php" class="button secondary col-3" id="breakupbtn">Abbrechen</a>
-            <input type="submit" value="Weiter" class="button primary col-3" id="weiter" onclick="return formcheck()">
-        </form>
-    </main>
+         </form>
+    </div>
+    <!--Footer-->
+    <footer id="footer" style="visibility: visible;">
+			<div class="action-container">
+                <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
+                <div id="openNichtErlaubteLm" style="visibility:hidden">
+                    <img src="../media/icon_help_mini.svg" alt="icon_help" />
+                    <p>Nicht erlaubte Lebensmittel</p>
+                </div>
+                <div class="action-wrap">
+                    <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
+                    <button style="margin-top:0px" id="btnbreakup" type="button" onclick="window.location.href ='011_foodsaver_anmeldung.php'">Zurück</button>
+                    <input class="continue-button" type="submit" form="myform" onclick="return formcheck()" value="Registrierung" style="width: 228px">
+                </div>
+            </div>
+		</footer>
 
     <!-- ---------- OVERLAYS ----------- -->
     <!-- Anmelde Overlay -->
@@ -145,8 +160,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //Variable für Fehlermeldung
         let passwordErr = <?php echo json_encode($passwordErr); ?>;
 
-        //Funktion zur Formularüberprüfung
-        function formcheck() {
+          //Funktion zur Formularüberprüfung
+          function formcheck() {
+            var dataschutz = document.getElementById("datacheck").checked;
             var email = document.getElementById('email').value;
             var tel = document.getElementById('tel').value;
             var vorname = document.getElementById('vorname').value;
@@ -156,7 +172,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else if (email == '' && tel == '') {
                 window.alert('kontakt fehlt');
                 return false;
-            } else {
+            } else if(dataschutz == false) {
+                document.getElementById("checkboxunchecked").src = "../media/datacheck_empty.png"
+                return false;
+            }else {
                 return true;
             }
         }
