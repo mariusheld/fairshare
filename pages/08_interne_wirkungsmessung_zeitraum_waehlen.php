@@ -30,14 +30,7 @@ if (!$camefrom)
 		{
 		$filterleadsto = "08_interne_wirkungsmessung_kategorien.php";
 		}
-
-//TODO: entfernen, sobald Dashboard fertig ist
-	if ($camefrom == "zeitraum")
-		{
-		$filterleadsto = "08_interne_wirkungsmessung_zeitraum_waehlen.php";
-		}
 	
-
 
 //Datumsauswahl auslesen
 $date1formatted = $_GET['date1'];
@@ -66,7 +59,6 @@ $lastyear = $thisyear -1;
 
 <script>
 //Datumsauswahl an JavaScript übergeben
-//TODO: Datumsauswahl vom Tool übernehmen lassen
 var gotdate1 = "<?php echo $date1formatted; ?>";
 var gotdate2 = "<?php echo $date2formatted; ?>";
 // Test:
@@ -295,14 +287,11 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
 		{
       	 window.location= filterleadsto+"?date1="+ date1.value + "&date2=" + date2.value;
     	
-    		//console.log("Logging: date1="+date1.value+" date2="+date2.value+" ");
     	}
     else 
     	
     	window.location= filterleadsto+"?date1="+ gotdate1 + "&date2=" + gotdate2;
-    	//console.log("Date(s) missing: date1="+date1.value+" date2="+date2.value+" ");
-    
-    	//TODO: Testausgaben entfernen
+
     	//TODO (@Anastasia?): Fehlermeldung, wenn ein Datum nicht ausgefüllt ist?
     	//TODO (@Anastasia?): Richtige Checkbox als schon ausgewählt anzeigen, wenn man vom Dashboard oder Balkendiagramm kommt?
 

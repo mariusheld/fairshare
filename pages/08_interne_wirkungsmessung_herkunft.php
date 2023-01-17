@@ -47,7 +47,6 @@ $date1_dm = date("d.m", $date1timestamp);
 $date1_Y = date("Y", $date1timestamp); 
 $date2_dm = date("d.m", $date2timestamp); 
 $date2_Y = date("Y", $date2timestamp); 
-//TODO: Prüfen, ob das tatsächlich das erste Messdatum ist/sein soll
 $erstesMessdatum_timestamp = strtotime("2020-01-01");
 $erstesMessdatum_dmY = date("d.m.Y", $erstesMessdatum_timestamp); 
 $monthago_timestamp = strtotime("-1 month"); 
@@ -101,17 +100,13 @@ else
 	$gewaehlterZeitraum = $date1_display . " - " . $date2_display; 
 	}
 
-//Mengen geretteter Lebensmittel abfragen
-//TODO: ggf. Gesamtmenge hier gar nicht abfragen
-$select_gesMenge = $db->prepare("SELECT SUM(BewegMenge) FROM Bestand_Bewegung WHERE LStatusKey='2'");
-$erfolg = $select_gesMenge->execute(); 
-
+//Menge geretteter Lebensmittel im Zeitraum insgesamt abfragen
 $select_ZeitraumMenge = $db->prepare("SELECT SUM(BewegMenge) FROM Bestand_Bewegung WHERE LStatusKey='2' AND BewegDatum BETWEEN :date1 AND :date2");
 $daten_zeitraum = array(
 	"date1" => $date1_ISO8601, 
 	"date2" => $date2_ISO8601 
 	);
-$select_ZeitraumMenge->execute($daten_zeitraum); 
+$erfolg = $select_ZeitraumMenge->execute($daten_zeitraum); 
 
 
 //Mengen geretteter Lebensmittel im Zeitraum nach Herkunft 
@@ -132,12 +127,11 @@ if ($select_HerkunftMengen == false)
 	die("Folgender Datenbankfehler ist aufgetreten: " . $fehler[2]);
 	}
 
-//Mengen geretteter Lebensmittel anzeigefähig machen
-$gesMenge = $select_gesMenge->fetchColumn();
+//Menge geretteter Lebensmittel anzeigefähig machen
 $ZeitraumMenge = $select_ZeitraumMenge->fetchColumn();
 
 
-// Ergebnistabelle aus dem PDO auslesen und als assoz. Feld $KategorienMengen bereitstellen 
+// Ergebnistabelle auslesen und als assoz. Feld $KategorienMengen bereitstellen 
 $HerkunftMengen = $select_HerkunftMengen->fetchAll();
 
 //Variablen für das Balkendiagramm
@@ -242,40 +236,70 @@ foreach ($HerkunftMengen as $NachHerkunft)
 			}
 		$Herkunft7kg = $NachHerkunft['KGfairteilt'];
 		$B7hidden = "";
-		}	
+		}
+	if ($NachHerkunft['RowNumber'] == "8") 
+		{
+		if ($NachHerkunft['Herkunft'] != NULL)
+			{
+			$Herkunft8Name =$NachHerkunft['Herkunft'];
+			}
+		else
+			{
+			$Herkunft8Name ="Unbekannt";
+			}
+		$Herkunft8kg = $NachHerkunft['KGfairteilt'];
+		$B8hidden = "";
+		}			
 				
 }
 	
+
+
+//Prozentzahlen für Balkendiagramm ausrechnen
+//Fehlervermeidung: Kein Divide-by-Zero Error wenn Zeitraum ausgewähl, in dem nichts gerettet wurde
+if ($ZeitraumMenge == 0)
+	{
+	$Herkunft1Prozent = 0; 
+	$Herkunft2Prozent = 0; 
+	$Herkunft3Prozent = 0; 
+	$Herkunft4Prozent = 0; 
+	$Herkunft5Prozent = 0; 
+	$Herkunft6Prozent = 0; 
+	$Herkunft7Prozent = 0; 
+	$Herkunft8Prozent = 0; 
+	}
+else 
+	{
+	$Herkunft1Prozent = $Herkunft1kg/$ZeitraumMenge *100; 
+	$Herkunft2Prozent = $Herkunft2kg/$ZeitraumMenge *100; 
+	$Herkunft3Prozent = $Herkunft3kg/$ZeitraumMenge *100;
+	$Herkunft4Prozent = $Herkunft4kg/$ZeitraumMenge *100;
+	$Herkunft5Prozent = $Herkunft5kg/$ZeitraumMenge *100;
+	$Herkunft6Prozent = $Herkunft6kg/$ZeitraumMenge *100;
+	$Herkunft7Prozent = $Herkunft7kg/$ZeitraumMenge *100;
+	$Herkunft8Prozent = $Herkunft8kg/$ZeitraumMenge *100;
+	}
+
 //Zahlen in deutsche Formatierung konvertieren
-
-//TODO: Fix! Wenn Zeitraum ausgewählt, in dem keine LM gerettet, Division by zero Error
-
 $Herkunft1kg_display = number_format($Herkunft1kg,1,",",".");
-$Herkunft1Prozent = $Herkunft1kg/$ZeitraumMenge *100; 
 $Herkunft1Prozent_display = number_format($Herkunft1Prozent,1,",",".");	
 
 $Herkunft2kg_display = number_format($Herkunft2kg,1,",",".");
-$Herkunft2Prozent = $Herkunft2kg/$ZeitraumMenge *100;
 $Herkunft2Prozent_display = number_format($Herkunft2Prozent,1,",",".");	
 
 $Herkunft3kg_display = number_format($Herkunft3kg,1,",",".");
-$Herkunft3Prozent = $Herkunft3kg/$ZeitraumMenge *100;
 $Herkunft3Prozent_display = number_format($Herkunft3Prozent,1,",",".");	
 
 $Herkunft4kg_display = number_format($Herkunft4kg,1,",",".");
-$Herkunft4Prozent = $Herkunft4kg/$ZeitraumMenge *100;
 $Herkunft4Prozent_display = number_format($Herkunft4Prozent,1,",",".");	
 
 $Herkunft5kg_display = number_format($Herkunft5kg,1,",",".");
-$Herkunft5Prozent = $Herkunft5kg/$ZeitraumMenge *100;
 $Herkunft5Prozent_display = number_format($Herkunft5Prozent,1,",",".");	
 
 $Herkunft6kg_display = number_format($Herkunft6kg,1,",",".");
-$Herkunft6Prozent = $Herkunft6kg/$ZeitraumMenge *100;
 $Herkunft6Prozent_display = number_format($Herkunft6Prozent,1,",",".");	
 
 $Herkunft7kg_display = number_format($Herkunft7kg,1,",",".");
-$Herkunft7Prozent = $Herkunft7kg/$ZeitraumMenge *100;
 $Herkunft7Prozent_display = number_format($Herkunft7Prozent,1,",",".");
 	
 
@@ -444,11 +468,10 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
         <!-- Footer --> 
         <div class="footer-fixed">
           <div class="footer-btn font-fira">
-<!-- TODO: Link zu Dashboard einfügen -->
             <a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>" class="cancel-button">Zurück</a>
           </div>
           <div class="footer-btn font-fira">
-<!-- TODO: Besprechen, ob der entfernt werden kann? -->
+<!-- TODO (@Anastasia): Button entfernen -->
             <a href='#' class="next-button">Export als CSV-Datei</a>
           </div>
         </div>

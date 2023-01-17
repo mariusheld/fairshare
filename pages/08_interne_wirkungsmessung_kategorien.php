@@ -47,7 +47,6 @@ $date1_dm = date("d.m", $date1timestamp);
 $date1_Y = date("Y", $date1timestamp); 
 $date2_dm = date("d.m", $date2timestamp); 
 $date2_Y = date("Y", $date2timestamp); 
-//TODO: Prüfen, ob das tatsächlich das erste Messdatum ist/sein soll
 $erstesMessdatum_timestamp = strtotime("2020-01-01");
 $erstesMessdatum_dmY = date("d.m.Y", $erstesMessdatum_timestamp); 
 $monthago_timestamp = strtotime("-1 month"); 
@@ -101,21 +100,16 @@ else
 	$gewaehlterZeitraum = $date1_display . " - " . $date2_display; 
 	}
 
-//Mengen geretteter Lebensmittel abfragen
-//TODO: ggf. Gesamtmenge hier gar nicht abfragen
-$select_gesMenge = $db->prepare("SELECT SUM(BewegMenge) FROM Bestand_Bewegung WHERE LStatusKey='2'");
-$erfolg = $select_gesMenge->execute(); 
-
+//Menge geretteter Lebensmittel im Zeitraum insgesamt abfragen
 $select_ZeitraumMenge = $db->prepare("SELECT SUM(BewegMenge) FROM Bestand_Bewegung WHERE LStatusKey='2' AND BewegDatum BETWEEN :date1 AND :date2");
 $daten_zeitraum = array(
 	"date1" => $date1_ISO8601, 
 	"date2" => $date2_ISO8601 
 	);
-$select_ZeitraumMenge->execute($daten_zeitraum); 
+$erfolg = $select_ZeitraumMenge->execute($daten_zeitraum); 
 
 
-//TODO: ersetzen durch Kategorien
-//Mengen geretteter Lebensmittel im Zeitraum nach Herkunft 
+//Mengen geretteter Lebensmittel im Zeitraum nach Kategorien 
 $select_KategorienMengen = $db->prepare("SELECT OKatName AS OberKategorie, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY KGfairteilt DESC) AS RowNumber
 		FROM (SELECT Bestand_Bewegung.LMKey, BewegMenge, BewegDatum, OKatName 
 		FROM (Bestand_Bewegung LEFT JOIN Lebensmittel ON Bestand_Bewegung.LMKey=Lebensmittel.LMKey)
@@ -134,12 +128,11 @@ if ($select_KategorienMengen == false)
 	die("Folgender Datenbankfehler ist aufgetreten: " . $fehler[2]);
 	}
 
-//Mengen geretteter Lebensmittel anzeigefähig machen
-$gesMenge = $select_gesMenge->fetchColumn();
+//Menge geretteter Lebensmittel anzeigefähig machen
 $ZeitraumMenge = $select_ZeitraumMenge->fetchColumn();
 
 
-// Ergebnistabelle aus dem PDO auslesen und als assoz. Feld $KategorienMengen bereitstellen 
+// Ergebnistabelle auslesen und als assoz. Feld $KategorienMengen bereitstellen 
 $KategorienMengen = $select_KategorienMengen->fetchAll();
 
 //Variablen für das Balkendiagramm
@@ -276,44 +269,62 @@ foreach ($KategorienMengen as $NachKategorien)
 		}				
 }
 	
+
+
+//Prozentzahlen für Balkendiagramm ausrechnen
+//Fehlervermeidung: Kein Divide-by-Zero Error wenn Zeitraum ausgewähl, in dem nichts gerettet wurde
+if ($ZeitraumMenge == 0)
+	{
+	$Kategorien1Prozent = 0; 
+	$Kategorien2Prozent = 0; 
+	$Kategorien3Prozent = 0; 
+	$Kategorien4Prozent = 0; 
+	$Kategorien5Prozent = 0; 
+	$Kategorien6Prozent = 0; 
+	$Kategorien7Prozent = 0; 
+	$Kategorien8Prozent = 0; 
+	$Kategorien9Prozent = 0; 
+	}
+else 
+	{
+	$Kategorien1Prozent = $Kategorien1kg/$ZeitraumMenge *100; 
+	$Kategorien2Prozent = $Kategorien2kg/$ZeitraumMenge *100; 
+	$Kategorien3Prozent = $Kategorien3kg/$ZeitraumMenge *100;
+	$Kategorien4Prozent = $Kategorien4kg/$ZeitraumMenge *100;
+	$Kategorien5Prozent = $Kategorien5kg/$ZeitraumMenge *100;
+	$Kategorien6Prozent = $Kategorien6kg/$ZeitraumMenge *100;
+	$Kategorien7Prozent = $Kategorien7kg/$ZeitraumMenge *100;
+	$Kategorien8Prozent = $Kategorien8kg/$ZeitraumMenge *100;
+	$Kategorien9Prozent = $Kategorien9kg/$ZeitraumMenge *100;
+	
+	}
+
 //Zahlen in deutsche Formatierung konvertieren
-
-//TODO: Fix! Wenn Zeitraum ausgewählt, in dem keine LM gerettet, Division by zero Error
-
 $Kategorien1kg_display = number_format($Kategorien1kg,1,",",".");
-$Kategorien1Prozent = $Kategorien1kg/$ZeitraumMenge *100; 
 $Kategorien1Prozent_display = number_format($Kategorien1Prozent,1,",",".");	
 
 $Kategorien2kg_display = number_format($Kategorien2kg,1,",",".");
-$Kategorien2Prozent = $Kategorien2kg/$ZeitraumMenge *100;
 $Kategorien2Prozent_display = number_format($Kategorien2Prozent,1,",",".");	
 
 $Kategorien3kg_display = number_format($Kategorien3kg,1,",",".");
-$Kategorien3Prozent = $Kategorien3kg/$ZeitraumMenge *100;
 $Kategorien3Prozent_display = number_format($Kategorien3Prozent,1,",",".");	
 
 $Kategorien4kg_display = number_format($Kategorien4kg,1,",",".");
-$Kategorien4Prozent = $Kategorien4kg/$ZeitraumMenge *100;
 $Kategorien4Prozent_display = number_format($Kategorien4Prozent,1,",",".");	
 
 $Kategorien5kg_display = number_format($Kategorien5kg,1,",",".");
-$Kategorien5Prozent = $Kategorien5kg/$ZeitraumMenge *100;
 $Kategorien5Prozent_display = number_format($Kategorien5Prozent,1,",",".");	
 
 $Kategorien6kg_display = number_format($Kategorien6kg,1,",",".");
-$Kategorien6Prozent = $Kategorien6kg/$ZeitraumMenge *100;
 $Kategorien6Prozent_display = number_format($Kategorien6Prozent,1,",",".");	
 
 $Kategorien7kg_display = number_format($Kategorien7kg,1,",",".");
-$Kategorien7Prozent = $Kategorien7kg/$ZeitraumMenge *100;
 $Kategorien7Prozent_display = number_format($Kategorien7Prozent,1,",",".");
 	
 $Kategorien8kg_display = number_format($Kategorien8kg,1,",",".");
-$Kategorien8Prozent = $Kategorien8kg/$ZeitraumMenge *100;
 $Kategorien8Prozent_display = number_format($Kategorien8Prozent,1,",",".");
 
 $Kategorien9kg_display = number_format($Kategorien9kg,1,",",".");
-$Kategorien9Prozent = $Kategorien9kg/$ZeitraumMenge *100;
 $Kategorien9Prozent_display = number_format($Kategorien9Prozent,1,",",".");
 
 ?>
@@ -490,12 +501,12 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
         <!-- Footer --> 
         <div class="footer-fixed">
           <div class="footer-btn font-fira">
-<!-- TODO: Link zu Dashboard einfügen -->
+
             <a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>" class="cancel-button">Zurück</a>
           </div>
           <div class="footer-btn font-fira">
-<!-- TODO: Besprechen, ob der entfernt werden kann? -->
-            <a href='#' class="next-button">Export als CSV-Datei</a>
+<!-- TODO (@Anastasia): Button entfernen -->
+            <a href='#' class="next-button">Export als CSV-Datei</a>  
           </div>
         </div>
   </div>

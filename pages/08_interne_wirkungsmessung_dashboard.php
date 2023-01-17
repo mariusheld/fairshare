@@ -46,7 +46,6 @@ $date1_dm = date("d.m", $date1timestamp);
 $date1_Y = date("Y", $date1timestamp); 
 $date2_dm = date("d.m", $date2timestamp); 
 $date2_Y = date("Y", $date2timestamp); 
-//TODO: Prüfen, ob das tatsächlich das erste Messdatum ist/sein soll
 $erstesMessdatum_timestamp = strtotime("2020-01-01");
 $erstesMessdatum_dmY = date("d.m.Y", $erstesMessdatum_timestamp); 
 $monthago_timestamp = strtotime("-1 month"); 
