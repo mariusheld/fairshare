@@ -292,12 +292,6 @@ ORDER BY KGfairteilt DESC
 */
 
 
-//TODO: Tabelle aus Query in relevante Variablen übertragen
-//TODO: Prozentanteil jeder Kategorie ausrechnen (KGfairteilt/ZeitraumMenge*100)
-//TODO: Herkunftsbezeichnungen (per Variablen) in absteigender Reihenfolge in HTML einfügen
-//TODO: Zahlen per Variablen in richtiger Reihenfolge in HTML einfügen (deutsch formatiert)
-
-
 ?>
 
 <script>
@@ -339,7 +333,7 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
         <p>Zeitraum</p>
       </div>  
       <div class="time-button" >
-        <a href='08_interne_wirkungsmessung_zeitraum_waehlen.php?camefrom=herkunft' class="link-button">  
+        <a href='<?php echo '08_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=herkunft'; ?>' class="link-button">  
           <i class='fa fa-clock-o'  style="font-size:30px;"></i>
           <div class="button-text">
             <p class="font-fira"><?php echo $gewaehlterZeitraum ?></p>
@@ -354,7 +348,7 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
 
         <div class="balkendiagram-container">
             <!-- Button close the page -->  
-<!-- TODO: Link zu Dashboard einfügen -->
+
             <a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>"><div class="button-previous-page"></div></a>
 
             <!-- Titel -->  

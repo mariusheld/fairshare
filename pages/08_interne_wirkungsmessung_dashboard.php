@@ -243,7 +243,7 @@ var date1formatted = "<?php echo $date1formatted; ?>";
         <p>Zeitraum</p>
       </div>  
       <div class="time-button" >
-        <a href='08_interne_wirkungsmessung_zeitraum_waehlen.php?camefrom=dashboard' class="link-button">  
+        <a href='<?php echo '08_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=dashboard'; ?>' class="link-button">  
           <i class='fa fa-clock-o'  style="font-size:30px;"></i>
           <div class="button-text">
             <p class="font-fira"><?php echo $gewaehlterZeitraum ?></p>
