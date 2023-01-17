@@ -205,12 +205,9 @@ $herkunft = array(
                                 <div class="popup active">
                                     <div class="popup-header">
                                          <img src='<?php echo $icons[$zeile['OKatKey']] ?>'>
-                                        <h5><?php echo $zeile['Bezeichnung'] ?></h5>
+                                        <h5><?php echo $zeile['Bezeichnung'] ?> entsorgen</h5>
                                     </div>
-                                    <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge
-                                        des
-                                        Lebensmittels
-                                        möchtest du entsorgen?</p>
+                                    <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge des Lebensmittels möchtest du entsorgen?</p>
 
                                     <form action="" class="popup-form">
                                         <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
@@ -228,13 +225,16 @@ $herkunft = array(
                         <div class="overlay" id="popup_lebensmittel_fairteilen-<?php echo $zähler ?>">
                             <div class="popup-wrapper">
                                 <div class="popup active">
-                                    <h3>FAIRTEILEN?</h3>
-                                    <p>
-                                        Möchtest du das Lebensmittel 
-                                        <span class="marked-green"><?php echo $zeile['Bezeichnung'] ?> (<?php echo $zeile['Gewicht']?> kg)</span> 
-                                        wirklich als fairteilt markieren? Dadurch verschwindet der Eintrag aus der Übersicht.
-                                    </p>
-
+                                    <div class="popup-header">
+                                        <img src="<?php echo $icons[$zeile['OKatKey']] ?>">
+                                        <h5><?php echo $zeile['Bezeichnung'] ?> fairteilen?</h5>
+                                    </div>
+                                    <p>Wenn du Lebensmittel als fairteilt markierst verschwinden sie aus der Übersicht. Welche Menge des Lebensmittels möchtest du fairteilen?</p>
+                                    <form action="" class="popup-form">
+                                        <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
+                                        <input type="number" id="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>">
+                                        <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
+                                    </form>
                                     <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_abbrechen(this)">Abbrechen</button>
                                     <button class="primary-btn" id="fairteilen"
                                         onclick="window.location.href='admin.php?fairteilen=1'">Fairteilen</button>
