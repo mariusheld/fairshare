@@ -255,7 +255,7 @@ consolelog($_SESSION["array"]);
         </table>
         <div class="add-icon">
           <!-- WEITERLEITUNG zur 03_foodsaver_hinzufuegen Seite, um ein neues Element anzulegen -->
-          <a href="03_foodsaver_hinzufuegen.php">
+          <a href="03_foodsaver_hinzufuegen.php?hinzufuegen=<?php echo $key; ?>">
             <img src="../media/add_icon.svg" alt="add_icon" />
           </a>
         </div>

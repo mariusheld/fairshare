@@ -18,13 +18,6 @@ exitHilfe.onclick = function () {
   fsHilfe.style.display = "none";
 };
 
-// Schließen wenn außerhalb des Pop-ups gedrückt wird
-//window.onclick = function (event) {
-  //if (event.target == fsHilfe) {
-    //fsHilfe.style.display = "none";
-  //}
-//};
-
 //----------------JavaScript für fs-nicht-erlaubte-lm Overlay, genutzt in 03-----------------------------//
 //Overlay auswählen
 var fsNichtErlaubteLm = document.getElementById("fsNichtErlaubteLm");
@@ -45,18 +38,42 @@ exitNichtErlaubteLm.onclick = function () {
   fsNichtErlaubteLm.style.display = "none";
 };
 
-// Schließen wenn außerhalb des Pop-ups gedrückt wird
-//window.onclick = function (event) {
-  //if (event.target == fsNichtErlaubteLm) {
-    //fsNichtErlaubteLm.style.display = "none";
-  //}
-//};
-
 
 //----------------JavaScript für fs-hinzufuegen-abbr Overlay, genutzt in 03-----------------------------//
+
+try {
+var fsHinzufuegenZurueck = document.getElementById("fsHinzufuegenZurueck");
+
+var openHinzufuegenZurueck = document.getElementById("openHinzufuegenZurueck");
+
+//Das schließt das Overlay
+var exitHinzufuegenZurueck = document.getElementsByClassName("exitButton")[0];
+
+//Leitet auf Startseite weiter
+var nextHinzufuegenZurueck = document.getElementsByClassName("nextButton")[0];
+
+openHinzufuegenZurueck.onclick = function() {
+fsHinzufuegenZurueck.style.display = "block";
+}
+   
+//Schließen nach Button drücken
+exitHinzufuegenZurueck.onclick = function() {
+fsHinzufuegenZurueck.style.display = "none";
+}
+  
+//Weiterleitung zur Startseite
+nextHinzufuegenZurueck.onclick = function() {
+fsHinzufuegenZurueck.style.display = "none";
+
+document.getElementById("exit-fsHinzufuegenAbbr").onclick = function () {
+document.getElementById("fsHinzufuegenZurueck").style.display = "none";
+}
+}
+
+} catch (error) {
 //Overlay auswählen
 var fsHinzufuegenAbbr = document.getElementById("fsHinzufuegenAbbr");
-      
+
 //Das öffnet das Overlay
 var openHinzufuegenAbbr = document.getElementById("openHinzufuegenAbbr");
       
@@ -70,7 +87,7 @@ var nextHinzufuegenAbbr = document.getElementsByClassName("nextButton")[0];
 openHinzufuegenAbbr.onclick = function() {
 fsHinzufuegenAbbr.style.display = "block";
 }
-      
+   
 //Schließen nach Button drücken
 exitHinzufuegenAbbr.onclick = function() {
 fsHinzufuegenAbbr.style.display = "none";
@@ -79,8 +96,15 @@ fsHinzufuegenAbbr.style.display = "none";
 //Weiterleitung zur Startseite
 nextHinzufuegenAbbr.onclick = function() {
 fsHinzufuegenAbbr.style.display = "none";
-// window.open(href = '../pages/02_foodsaver_start.php');
 }
+
+document.getElementById("exit-fsHinzufuegenAbbr").onclick = function () {
+  document.getElementById("fsHinzufuegenAbbr").style.display = "none";
+}
+}
+
+
+
 
 //----------------JavaScript für Formular-InfoPopups, genutzt in 03-----------------------------//
 //List of OpenIcon HTML Elements

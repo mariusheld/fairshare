@@ -19,10 +19,10 @@ function consolelog($data, bool $quotes = false)
 
 consolelog($FSkey);
 
-$select_FS_LMGewicht = $db->prepare("SELECT SUM(Gewicht) FROM Lieferung LEFT JOIN Lebensmittel ON Lieferung.LMKey=Lebensmittel.LMKey WHERE FSKey = :test");
+$select_FS_LMGewicht = $db->prepare("SELECT SUM(Gewicht) FROM Lieferung LEFT JOIN Lebensmittel ON Lieferung.LMKey=Lebensmittel.LMKey WHERE FSKey = :FSKey");
 
 $daten_FS_LMGewicht = array (
-	"test" => $FSkey,
+	"FSKey" => $FSkey,
 	);
 
 $select_FS_LMGewicht->execute($daten_FS_LMGewicht);
@@ -31,8 +31,8 @@ consolelog($daten_FS_LMGewicht);
 consolelog($select_FS_LMGewicht->execute($daten_FS_LMGewicht));
 
 
-$test2 = $select_FS_LMGewicht->fetchColumn();
-consolelog($test2);
+$gewicht = $select_FS_LMGewicht->fetchColumn();
+consolelog($gewicht);
 
 // Session wird zerstört und resettet
 session_destroy();
@@ -62,7 +62,7 @@ session_destroy();
 
     <div id="endscreen-content">
         <div>
-            <h1 id="endscreen-title"><?php echo $test2; ?> Kilogramm</h1>
+            <h1 id="endscreen-title"><?php echo $gewicht; ?> Kilogramm</h1>
             <p id="endscreen-text">Lebensmittel hast du bisher für die Raupe gerettet!</p>
             <p id="endscreen-text-danke">Danke für deinen Beitrag!</p>
             <button id="endscreen-button">Beenden</button>

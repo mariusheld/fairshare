@@ -466,7 +466,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                 </div>
                             </div>
-                            <input name="allergene" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
+                            <input name="allergene" class="input" type="text" maxlength="200" value="<?php if (isset($_GET['editieren'])) {
                                 echo $_SESSION["array"][$_GET['editieren']]->Allergene;
                             } else {
                                 echo $allergene;
@@ -477,13 +477,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label class="grid-title">
                                 Anmerkungen
                             </label>
-                            <textarea name="anmerkung" rows="1" class="input" style="text-align: left">
-                            <?php if (isset($_GET['editieren'])) {
+                            <input name="anmerkung" class="input" type="text" maxlength="200" value="<?php if (isset($_GET['editieren'])) {
                                 echo $_SESSION["array"][$_GET['editieren']]->Anmerkungen;
                             } else {
                                 echo $anmerkung;
-                            } ?>
-                            </textarea>
+                            } ?>"/>
                         </div>
                     </div>
                 </div>
@@ -497,7 +495,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="action-wrap">
                 <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
-                <a id="openHinzufuegenAbbr">Abbrechen</a>
+                <?php if (isset($_GET['editieren'])) {
+                    echo "<a id='openHinzufuegenZurueck'>Zurück</a>";
+                } else {
+                    echo "<a id='openHinzufuegenAbbr'>Abbrechen</a>";
+                } ?>
+
+
                 <?php if (isset($_GET['editieren'])) {
                     echo "<input class='continue-button' type='submit' form='myform' value='Aktualisieren'>";
                 } else {
@@ -615,20 +619,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <!-- OVERLAY fsHinzufuegenAbbr -->
-    <div id="fsHinzufuegenAbbr">
+    <!-- OVERLAY Änderung der ID für die verschiedenen Zustände -->
+    <div id="<?php if (isset($_GET['editieren'])) {
+                    echo "fsHinzufuegenZurueck";
+                } else {
+                    echo "fsHinzufuegenAbbr";
+                } ?>">
         <div class="popupklein">
-            <h3 class="popupheader">Zurück zur Übersicht</h3>
-            <p class="textpopup">Deine Angaben werden nicht gespeichert.
-                <br />Bist du sicher, dass du zurück zur Übersicht willst?
-            </p>
-            <div class="button-spacing-popup">
-                <a class="exitButton" id="exit-fsHinzufuegenAbbr">
-                    <h5>Nein, doch nicht</h5>
-                </a>
-                <a class="nextButton" href="../pages/02_foodsaver_start.php">
-                    <h5>Ja, zur Übersicht</h5>
-                </a>
-            </div>
+        <h3 class="popupheader">Zurück zur Übersicht</h3>
+            <!-- OVERLAY Änderung des Texts und der Verlinkungen für die verschiedenen Zustände -->
+                     <p class="textpopup">  <?php if (isset($_GET['editieren'])){
+                            echo "Deine Änderungen";
+                        } else {
+                            echo "Deine Angaben";
+                            } ?> 
+                            werden nicht gespeichert.
+                        <br />Bist du sicher, dass du zurück zur Übersicht willst?
+                    </p>
+                    <div class="button-spacing-popup">
+                        <a class="exitButton" id="exit-fsHinzufuegenAbbr">
+                            <h5>Nein, doch nicht</h5>
+                        </a>
+                        <a class="nextButton"  <?php if ((isset($_GET['editieren'])) || (isset($_GET['hinzufuegen']))){
+                                echo 'href="../pages/04_foodsaver_uebersicht.php"';
+                            } else {
+                                echo 'href="../pages/02_foodsaver_start.php"';
+                            }?>>
+                            <h5>Ja, zur Übersicht</h5>
+                        </a>
+                    </div>
         </div>
     </div>
     <!-- Script Overlays -->
@@ -645,9 +664,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("fsNichtErlaubteLm").style.display = "none";
             };
         }
-        document.getElementById("exit-fsHinzufuegenAbbr").onclick = function () {
-            document.getElementById("fsHinzufuegenAbbr").style.display = "none";
-        };
     </script>
 </body>
 
