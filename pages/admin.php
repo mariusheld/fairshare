@@ -211,7 +211,7 @@ $herkunft = array(
 
                                     <form action="" class="popup-form">
                                         <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
-                                        <input type="number" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>">
+                                        <input type="number" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" value="<?php echo $zeile['Gewicht'] ?>">
                                         <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
                                     </form>
 
@@ -232,7 +232,7 @@ $herkunft = array(
                                     <p>Wenn du Lebensmittel als fairteilt markierst verschwinden sie aus der Übersicht. Welche Menge des Lebensmittels möchtest du fairteilen?</p>
                                     <form action="" class="popup-form">
                                         <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
-                                        <input type="number" id="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>">
+                                        <input type="number" id="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" value="<?php echo $zeile['Gewicht'] ?>">
                                         <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
                                     </form>
                                     <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_abbrechen(this)">Abbrechen</button>
