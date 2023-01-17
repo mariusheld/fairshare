@@ -251,7 +251,7 @@ $herkunft = array(
                                             <img src="<?php echo $icons[$zeile['OKatKey']] ?>">
                                             <h5><?php echo $zeile['Bezeichnung'] ?></h5>
                                         </div>
-                                        <div class="close-btn" id="close">
+                                        <div class="close-btn" id="<?php echo $zähler ?>" onclick="close_lebensmittel_ansehen(this)">
                                             <img src="../media/cross.svg" alt="Schließen">
                                         </div>
                                     </div>

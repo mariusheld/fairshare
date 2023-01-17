@@ -87,6 +87,10 @@ function open_lebensmittel_ansehen(ansehen_btn) {
     open_close_options(ansehen_btn.parentElement.previousElementSibling);
 }
 
+function close_lebensmittel_ansehen(close_btn) {
+    document.getElementById("popup_lebensmittel_ansehen-" + close_btn.id).style.display = 'none'; 
+}
+
 // function entsorgen_abbrechen(abbrechen_btn) {
 //     document.getElementById("popup_lebensmittel_entsorgen-" + abbrechen_btn.id).style.display = 'none';
 // }
