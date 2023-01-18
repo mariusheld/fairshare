@@ -57,19 +57,31 @@ function open_close_options(options_btn) {
         } 
 
     } else if (old != options_btn) {
-        if(options_btn.id == "bubble") {
+        if(options_btn.id == "bubble" && old.id != "bubble") {
             old.nextElementSibling.style.display = 'none';
             old.src = '../media/edit_icon.svg';
             options_btn.nextElementSibling.style.display = 'flex';
             options_btn.src = '../media/cross.svg';
             old = options_btn;
-        } else {
+        } else if(options_btn.id != "bubble" && old.id != "bubble"){
+            old.nextElementSibling.style.display = 'none';
+            old.src = '../media/edit_icon.svg';
+            options_btn.nextElementSibling.style.display = 'flex';
+            options_btn.src = '../media/cross.svg';
+            old = options_btn;
+        } else if(options_btn.id == "bubble" && old.id == "bubble"){
             old.nextElementSibling.style.display = 'none';
             old.src = '../media/comment_icon.svg';
             options_btn.nextElementSibling.style.display = 'flex';
             options_btn.src = '../media/cross.svg';
             old = options_btn;
-        }
+        } else if(options_btn.id != "bubble" && old.id == "bubble"){
+            old.nextElementSibling.style.display = 'none';
+            old.src = '../media/comment_icon.svg';
+            options_btn.nextElementSibling.style.display = 'flex';
+            options_btn.src = '../media/cross.svg';
+            old = options_btn;
+        }        
     }
 }
 
