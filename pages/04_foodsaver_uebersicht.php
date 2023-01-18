@@ -66,7 +66,8 @@ function sendList($dbeintragArray, $conn)
     $BewegDatum = date("Y-m-d h:i:sa");
     $BewegMenge = $lebensmittelEintrag['Gewicht'];
 
-    $BestandBewegungQuery = "INSERT INTO `Bestand_Bewegung` (`LMkey`, `LStatusKey`, `BewegDatum`, `BewegMenge`) VALUES ('$LMkeyBestandBewegung', '$LStatusKey', '$BewegDatum', '$BewegMenge')";
+    $BestandBewegungQuery = "INSERT INTO `Bestand_Bewegung` (`LMkey`, `LStatusKey`, `BewegDatum`, `BewegMenge`, `EntsorgGrund`)
+    VALUES ('$LMkeyBestandBewegung', '$LStatusKey', now(), '$BewegMenge', NULL)";
     mysqli_query($conn, $BestandBewegungQuery);
   }
 }
@@ -94,7 +95,7 @@ $icon_obst_url = '../media/kategorien/icon_obst.svg';
 $icon_trockenprodukte_url = '../media/kategorien/icon_trockenprodukte.svg';
 $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 
-consolelog($_SESSION["array"]);
+consolelog($dbeintragArray);
 ?>
 
 <!DOCTYPE html>

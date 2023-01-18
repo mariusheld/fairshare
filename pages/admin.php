@@ -22,33 +22,35 @@ if (!$erfolg) {
 
 
 $conn = $db_handle->connectDB();
-$InitialeAbgabeQuery = "SELECT * FROM `bestand_bewegung` WHERE `lstatuskey` = 1";
+$InitialeAbgabeQuery = "SELECT * FROM Bestand_Bewegung WHERE LStatusKey = 1";
 $InitialeAbgabeResult = mysqli_query($conn, $InitialeAbgabeQuery);
 while ($row = mysqli_fetch_assoc($InitialeAbgabeResult)) {
     $InitialeAbgabeSet[] = $row;
 }
 // --
-$FairteilteAbgabeQuery = "SELECT * FROM `bestand_bewegung` WHERE `lstatuskey` = 2";
+$FairteilteAbgabeQuery = "SELECT * FROM Bestand_Bewegung WHERE LStatusKey = 2";
 $FairteilteAbgabeResult = mysqli_query($conn, $FairteilteAbgabeQuery);
 while ($row = mysqli_fetch_assoc($FairteilteAbgabeResult)) {
     $FairteilteAbgabeSet[] = $row;
 }
 
-foreach($FairteilteAbgabeSet as $key => $value) {
-    foreach($InitialeAbgabeSet as $key2 => $value2) {
-        if($value['LMkey'] == $value2['LMkey']) {
-            $InitialeAbgabeSet[$key2]['BewegMenge'] = $value2['BewegMenge'] - $value['BewegMenge'];   
+if ($FairteilteAbgabeSet != 0) {
+    foreach($FairteilteAbgabeSet as $key => $value) {
+        foreach($InitialeAbgabeSet as $key2 => $value2) {
+            if($value['LMkey'] == $value2['LMkey']) {
+                $InitialeAbgabeSet[$key2]['BewegMenge'] = $value2['BewegMenge'] - $value['BewegMenge'];   
+            }
         }
     }
-}
-$filteredSet = $InitialeAbgabeSet;
+    $filteredSet = $InitialeAbgabeSet;
 
-foreach ($AlleLebensmittelResult as $key => $value) {
-    foreach($filteredSet as $key2 => $value2) {
-        if ($value['LMkey'] == $value2['LMkey']) {
-            $AlleLebensmittelResult[$key]['Gewicht'] = $value2['BewegMenge'];
-            if ($AlleLebensmittelResult[$key]['Gewicht'] == 0) {
-                unset($AlleLebensmittelResult[$key]);
+    foreach ($AlleLebensmittelResult as $key => $value) {
+        foreach($filteredSet as $key2 => $value2) {
+            if ($value['LMkey'] == $value2['LMkey']) {
+                $AlleLebensmittelResult[$key]['Gewicht'] = $value2['BewegMenge'];
+                if ($AlleLebensmittelResult[$key]['Gewicht'] == 0) {
+                    unset($AlleLebensmittelResult[$key]);
+                }
             }
         }
     }
