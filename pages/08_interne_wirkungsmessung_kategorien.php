@@ -364,17 +364,12 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
     <header>
       <h1 class="font-londrina">MENGE GERETTETER LEBENSMITTEL</h1>
       <div class="header-btn">
-      <div class="font-fira header-btn-title">
-        <p>Zeitraum</p>
-      </div>  
-      <div class="time-button" >
-        <a href='<?php echo '08_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=kategorien'; ?>' class="link-button">  
-          <i class='fa fa-clock-o'  style="font-size:30px;"></i>
-          <div class="button-text">
-            <p class="font-fira"><?php echo $gewaehlterZeitraum ?></p>
-          </div>
-        </a>
-      </div>
+	  	<div class="logout" id="logout">
+            <p class="logouttext font-fira">
+                Abmelden
+            </p>
+            <img alt="ausloggen" src="../media/lock_icon.svg" width="48" height="48" />
+        </div>
       </div>
     </header>
 
@@ -499,16 +494,25 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
         </div>
     </div>
         <!-- Footer --> 
-        <div class="footer-fixed">
-          <div class="footer-btn font-fira">
-
-            <a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>" class="cancel-button">Zurück</a>
-          </div>
-          <div class="footer-btn font-fira">
-<!-- TODO (@Anastasia): Button entfernen -->
-            <a href='#' class="next-button">Export als CSV-Datei</a>  
-          </div>
-        </div>
+		<div class="action-container">
+			<div class="time-button" >
+				<a href='<?php echo '08_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=kategorien'; ?>' class="link-button">  
+				<i class='fa fa-clock-o'  style="font-size:34px; color: #99BB44;"></i>
+				<div class="button-text">
+					<p class="font-fira"><?php echo $gewaehlterZeitraum ?></p>
+				</div>
+				</a>
+      		</div>
+			<div class="footer-fixed">
+				<div class="footer-btn font-fira">
+					<a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>" class="cancel-button">Zurück</a>
+				</div>
+				<div class="footer-btn font-fira" style="padding-right: 0px;">
+		<!-- TODO (@Anastasia): Button entfernen -->
+					<a href='#' class="next-button">Export als CSV-Datei</a>  
+				</div>
+			</div>
+		</div>
   </div>
 </body>
 <script>

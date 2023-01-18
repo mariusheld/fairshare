@@ -169,7 +169,7 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
 <script>
     //DatePicker - Auswahl und Verbindung mit Input Feldern
     $(function ($) {
-    
+
         $("#divDatepicker").datepicker({
             numberOfMonths: 1,
             regional: 'de',
@@ -209,74 +209,131 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
             }
         });
     });       
-    </script>
-    
-    <script>
-        //Input Felder - Verbindung mit DatePicker
-        function startChanged(val) {
-            $("#divDatepicker").datepicker("setDate", new Date(val));
-            }
-        function endChanged(val) {
-            $("#divDatepicker").datepicker("setDate", new Date(val));
-        }
-    </script> 
-    <script>
-        //Auswahl der Zeitabschnitte - Verbindung mit DatePicker und Input Feldern
-        const radioFullTime = document.getElementById("radio1");
-        const radioThisYear = document.getElementById("radio2");
-        const radioLastYear = document.getElementById("radio3");
-        const radioLast12Months = document.getElementById("radio4");
-        const radioLastMonth = document.getElementById("radio5");
-        const radioCustom = document.getElementById("radio6");
-        const date1 = document.getElementById("input1");
-        const date2 = document.getElementById("input2");
 
-        radioFullTime.addEventListener("click", function() {
-            let today = new Date();
-            date1.value = '01.01.2020';
-            $("#divDatepicker").datepicker("setDate", new Date(date1));
-            date2.value = `${today.getDate().toString().padStart(2, "0")}.${(today.getMonth()+1).toString().padStart(2, "0")}.${today.getFullYear()}`;
-            $("#divDatepicker").datepicker("setDate", new Date(date2));
-        });
-        radioThisYear.addEventListener("click", function() {
-            let today = new Date();
-            let currentYear = new Date().getFullYear();
-            $("#divDatepicker").datepicker("setDate", new Date(date1));
-            date1.value = `01.01.${currentYear}`;
-            date2.value = `${today.getDate().toString().padStart(2, "0")}.${(today.getMonth()+1).toString().padStart(2, "0")}.${today.getFullYear()}`;
-            $("#divDatepicker").datepicker("setDate", new Date(date2));
-        });
-        radioLastYear.addEventListener("click", function() {
-            let lastYear = new Date().getFullYear()- 1;
-            date1.value = `01.01.${lastYear}`;
-            $("#divDatepicker").datepicker("setDate", new Date(date1));
-            date2.value = `31.12.${lastYear}`;
-            $("#divDatepicker").datepicker("setDate", new Date(date2));
-        });
-        radioLast12Months.addEventListener("click", function() {
-            let today = new Date();
-            let oneYearAgo = new Date();
-            oneYearAgo.setFullYear(today.getFullYear() - 1);
-            date1.value = `${oneYearAgo.getDate().toString().padStart(2, "0")}.${(oneYearAgo.getMonth()+1).toString().padStart(2, "0")}.${oneYearAgo.getFullYear()}`;
-            $("#divDatepicker").datepicker("setDate", new Date(date1));
-            date2.value = `${today.getDate().toString().padStart(2, "0")}.${(today.getMonth()+1).toString().padStart(2, "0")}.${today.getFullYear()}`;
-            $("#divDatepicker").datepicker("setDate", new Date(date2));
-        });
-        radioLastMonth.addEventListener("click", function() {
-            let today = new Date();
-            let lastMonth = new Date();
-            lastMonth.setMonth(lastMonth.getMonth() - 1);
-            date1.value = `${lastMonth.getDate().toString().padStart(2, "0")}.${(lastMonth.getMonth()+1).toString().padStart(2, "0")}.${lastMonth.getFullYear()}`;
-            $("#divDatepicker").datepicker("setDate", new Date(date1));
-            date2.value = `${today.getDate().toString().padStart(2, "0")}.${(today.getMonth()+1).toString().padStart(2, "0")}.${today.getFullYear()}`;
-            $("#divDatepicker").datepicker("setDate", new Date(date2));
-        });
-        radioCustom.addEventListener("click", function() {
-            date1.value = ''
-            date2.value = ''
-            $("#divDatepicker").datepicker("setDate", new Date(date1));
-            $("#divDatepicker").datepicker("setDate", new Date(date2));
-        });
+    //Input Felder - Verbindung mit DatePicker
+    function startChanged(val) {
+        $("#divDatepicker").datepicker("setDate", new Date(val));
+        }
+    function endChanged(val) {
+        $("#divDatepicker").datepicker("setDate", new Date(val));
+    }
+
+    //Auswahl der Zeitabschnitte - Verbindung mit DatePicker und Input Feldern
+    const radioFullTime = document.getElementById("radio1");
+    const radioThisYear = document.getElementById("radio2");
+    const radioLastYear = document.getElementById("radio3");
+    const radioLast12Months = document.getElementById("radio4");
+    const radioLastMonth = document.getElementById("radio5");
+    const radioCustom = document.getElementById("radio6");
+    const date1 = document.getElementById("input1");
+    const date2 = document.getElementById("input2");
+    var newLastMonth = false;
+
+    function clearAll() {
+        date1.value = ''
+        date2.value = ''
+        $("#divDatepicker").datepicker("setDate", new Date(date1));
+        $("#divDatepicker").datepicker("setDate", new Date(date2));
+    }
+
+    radioFullTime.addEventListener("click", function() {
+        let today = new Date();
+        clearAll();
+        date1.value = '01.01.2020';
+        $("#divDatepicker").datepicker("setDate", new Date(date1));
+        date2.value = `${today.getDate().toString().padStart(2, "0")}.${(today.getMonth()+1).toString().padStart(2, "0")}.${today.getFullYear()}`;
+        $("#divDatepicker").datepicker("setDate", new Date(date2));
+    });
+    radioThisYear.addEventListener("click", function() {
+        let today = new Date();
+        let currentYear = new Date().getFullYear();
+        clearAll();
+        date1.value = `01.01.${currentYear}`;
+        $("#divDatepicker").datepicker("setDate", new Date(date1));
+        date2.value = `${today.getDate().toString().padStart(2, "0")}.${(today.getMonth()+1).toString().padStart(2, "0")}.${today.getFullYear()}`;
+        $("#divDatepicker").datepicker("setDate", new Date(date2));
+    });
+    radioLastYear.addEventListener("click", function() {
+        let lastYear = new Date().getFullYear()- 1;
+        clearAll();
+        date1.value = `01.01.${lastYear}`;
+        $("#divDatepicker").datepicker("setDate", new Date(date1));
+        date2.value = `31.12.${lastYear}`;
+        $("#divDatepicker").datepicker("setDate", new Date(date2));
+    });
+    radioLast12Months.addEventListener("click", function() {
+        let today = new Date();
+        let oneYearAgo = new Date();
+        oneYearAgo.setFullYear(today.getFullYear() - 1);
+        clearAll();
+        date1.value = `${oneYearAgo.getDate().toString().padStart(2, "0")}.${(oneYearAgo.getMonth()+1).toString().padStart(2, "0")}.${oneYearAgo.getFullYear()}`;
+        $("#divDatepicker").datepicker("setDate", new Date(date1));
+        date2.value = `${today.getDate().toString().padStart(2, "0")}.${(today.getMonth()+1).toString().padStart(2, "0")}.${today.getFullYear()}`;
+        $("#divDatepicker").datepicker("setDate", new Date(date2));
+    });
+    radioLastMonth.addEventListener("click", function() {
+        newLastMonth = true;
+        let today = new Date();
+        let lastMonth = new Date();
+        lastMonth.setMonth(lastMonth.getMonth() - 1);
+        let firstDayOfLastMonth = new Date(lastMonth.getFullYear(), lastMonth.getMonth(), 1);
+        let lastDayOfLastMonth = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0);
+        clearAll();
+        date1.value = `${firstDayOfLastMonth.getDate().toString().padStart(2, "0")}.${(firstDayOfLastMonth.getMonth()+1).toString().padStart(2, "0")}.${firstDayOfLastMonth.getFullYear()}`;
+        $("#divDatepicker").datepicker("setDate", new Date(date1));
+        date2.value = `${lastDayOfLastMonth.getDate().toString().padStart(2, "0")}.${(lastDayOfLastMonth.getMonth()+1).toString().padStart(2, "0")}.${lastDayOfLastMonth.getFullYear()}`;
+        $("#divDatepicker").datepicker("setDate", new Date(date2));
+        document.querySelector(".ui-datepicker-prev").click();
+        newLastMonth = false;
+    });
+    radioCustom.addEventListener("click", function() {
+        clearAll();
+    });
+
+
+    //Checkbox Letzter Monat - dynamischer Auswahl für jeden nächsten/letzten Monat durch Buttons
+    $(document).on('click', '.ui-datepicker-next', function () {
+        if (document.getElementById('radio5').checked) {
+            if (newLastMonth == false) {
+                    newLastMonth = true;
+                    startDate = document.getElementById("input1").value;                  
+                    dateArr = startDate.split(".")
+                    day = dateArr[0];
+                    month = dateArr[1]-1;
+                    year = dateArr[2];
+                    inputDate = new Date(year, month ,day);
+                    firstDayOfNextMonth = new Date(inputDate.getFullYear(), inputDate.getMonth()+1, 1);
+                    lastDayOfNextMonth = new Date(inputDate.getFullYear(), inputDate.getMonth()+2, 0); 
+                    clearAll();      
+                    date1.value = `${firstDayOfNextMonth.getDate().toString().padStart(2, "0")}.${(firstDayOfNextMonth.getMonth()+1).toString().padStart(2, "0")}.${firstDayOfNextMonth.getFullYear()}`;
+                    $("#divDatepicker").datepicker("setDate", new Date(firstDayOfNextMonth));
+                    date2.value = `${lastDayOfNextMonth.getDate().toString().padStart(2, "0")}.${(lastDayOfNextMonth.getMonth()+1).toString().padStart(2, "0")}.${lastDayOfNextMonth.getFullYear()}`;
+                    $("#divDatepicker").datepicker("setDate", new Date(lastDayOfNextMonth));
+                    newLastMonth = false;
+                } 
+            }
+    })
+    $(document).on('click', '.ui-datepicker-prev', function () {
+        if (document.getElementById('radio5').checked) {
+            if (newLastMonth == false) {
+                    newLastMonth = true;
+                    startDate = document.getElementById("input1").value;
+                    dateArr = startDate.split(".");
+                    day = dateArr[0];
+                    month = dateArr[1]-1;
+                    year = dateArr[2];
+                    currentDate = new Date(year, month ,day);
+                    firstDayOfPreviousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+                    lastDayOfPreviousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() , 0);   
+                    clearAll();                  
+                    date1.value = `${firstDayOfPreviousMonth.getDate().toString().padStart(2, "0")}.${(firstDayOfPreviousMonth.getMonth()+1).toString().padStart(2, "0")}.${firstDayOfPreviousMonth.getFullYear()}`;
+                    $("#divDatepicker").datepicker("setDate", new Date(firstDayOfPreviousMonth));
+                    date2.value = `${lastDayOfPreviousMonth.getDate().toString().padStart(2, "0")}.${(firstDayOfPreviousMonth.getMonth()+1).toString().padStart(2, "0")}.${firstDayOfPreviousMonth.getFullYear()}`;
+                    $("#divDatepicker").datepicker("setDate", new Date(lastDayOfPreviousMonth));
+                    newLastMonth = false;
+                } 
+            }
+    })
 
 
     //Datumsauswahl an PHP übergeben 

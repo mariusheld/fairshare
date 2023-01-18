@@ -238,17 +238,12 @@ var date1formatted = "<?php echo $date1formatted; ?>";
     <header>
       <h1 class="font-londrina">MENGE GERETTETER LEBENSMITTEL</h1>
       <div class="header-btn">
-      <div class="font-fira header-btn-title">
-        <p>Zeitraum</p>
-      </div>  
-      <div class="time-button" >
-        <a href='<?php echo '08_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=dashboard'; ?>' class="link-button">  
-          <i class='fa fa-clock-o'  style="font-size:30px;"></i>
-          <div class="button-text">
-            <p class="font-fira"><?php echo $gewaehlterZeitraum ?></p>
-          </div>
-        </a>
-      </div>
+        <div class="logout" id="logout">
+            <p class="logouttext font-fira">
+                Abmelden
+            </p>
+            <img alt="ausloggen" src="../media/lock_icon.svg" width="48" height="48" />
+        </div>
       </div>
     </header>
 
@@ -373,7 +368,7 @@ var date1formatted = "<?php echo $date1formatted; ?>";
           </a> 
           <!-- Liste der Herkünfte --> 
           <a href="<?php echo '08_interne_wirkungsmessung_herkunft.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
-            <div class="block">
+            <div class="block" style="min-height: 225px;">
               <div style="display: inline-block;">
                 <p class="font-fira description" style="float:left;"><strong>Nach Herkunft</strong></p>
                 <div class="font-fira list-category">
@@ -412,8 +407,13 @@ var date1formatted = "<?php echo $date1formatted; ?>";
     </div>
         <!-- Footer --> 
         <div class="action-container">
-          <div class="footer-btn font-fira">
-            <a href="#" class="cancel-button">Lagerübersicht</a>
+          <div class="time-button" >
+            <a href='<?php echo '08_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=dashboard'; ?>' class="link-button">  
+              <i class='fa fa-clock-o'  style="font-size:34px; color: #99BB44;"></i>
+              <div class="button-text">
+                <p class="font-fira"><?php echo $gewaehlterZeitraum ?></p>
+              </div>
+            </a>
           </div>
           <div class="footer-btn font-fira">
             <a href='#' class="next-button">Export als CSV-Datei</a>
