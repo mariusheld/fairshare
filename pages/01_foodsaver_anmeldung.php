@@ -1,6 +1,9 @@
 <?php
 session_start();
-$passwordErr = $_SESSION['passwordErr'];
+$passwordErr = false;
+if (isset($_GET['error'])) {
+    $passwordErr = true;
+}
 $_SESSION["foodsaverLogin"] = false;
 // Passwort Formular Validierung
 function test_input($data)
@@ -24,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ./dashboard.php");
     } else {
         $_SESSION['passwordErr'] = true;
-        header("Location: ./011_foodsaver_anmeldung.php");
+        header("Location: ./01_foodsaver_anmeldung.php?error=true");
     }
 }
 
@@ -44,27 +47,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Londrina Solid">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Sans">
     <link rel="stylesheet" href="../css/foodsaver_anmeldung.css">
-    <link rel="stylesheet" href="../css/adminstyle.css"/> 
-    <link rel="stylesheet" href="../css/formularstyle.css"/> 
+    <link rel="stylesheet" href="../css/adminstyle.css" />
+    <link rel="stylesheet" href="../css/formularstyle.css" />
 </head>
 
 <body>
     <!-- Header der Anwendung -->
     <header>
-        <img src="../media/logo.svg" alt="Raupe Logo" style="padding-left: 0;">
-        <a href="#" class="MitarbeiterLogin" id="login">
-                <span style="letter-spacing: -0.9px; font-weight: 800;">Mitarbeiter*in</span>
-                <button id="startscreen-mitarbeiter-button"><svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
-                        width="28px" height="28px" fill="#99BB44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF"
-                        class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
-                    </svg></button>
-            </a>
+        <img src="../media/logo.svg" alt="Raupe Logo" style="padding-left: 0;" id="logo">
+        <div class="MitarbeiterLogin" id="login">
+            <span>Mitarbeiter*in</span>
+            <button id="startscreen-mitarbeiter-button">
+                <svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
+                    width="28px" height="28px" fill="#99BB44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF"
+                    class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+                </svg>
+            </button>
+        </div>
     </header>
 
-       <!-- Anmeldemaske -->
-       <div class="seiteninhalt" style="text-align: left;">
+    <!-- Anmeldemaske -->
+    <div class="seiteninhalt" style="text-align: left;">
         <form class="Anmeldeformular" id="myform" method="POST" action="02_foodsaver_start.php">
             <div class="col-3">
                 <label id="labelvorname" for="">Vorname</label>
@@ -92,29 +97,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="checkbox" name="datacheck" id="datacheck" style="margin-top: -14px;"/>
                 <img alt="nocheck" width="32px" height="32px" src="../media/checkbox.svg" id="checkboxunchecked" class="checkbox" style="margin-left: -30px; margin-top: 0px;">
                 <img alt="check" width="32px" height="32px" " src="../media/checkbox_checked.svg" class="checkboxchecked" style="margin-left: -30px; margin-top: 0px;">
-                <p class="dataschutz" >
-                Ich stimme zu, dass die Raupe meine Daten zur Auswertung 
-                der Wirkungsmessung verwendet. Persönliche Daten werden 
-                nicht an Dritte weitergegeben.
+                <p class="dataschutz">
+                    Ich stimme zu, dass die Raupe meine Daten zur Auswertung 
+                    der Wirkungsmessung verwendet. Persönliche Daten werden 
+                    nicht an Dritte weitergegeben.
                 </p>
             </div>
-         </form>
+        </form>
     </div>
     <!--Footer-->
     <footer id="footer" style="visibility: visible;">
-			<div class="action-container">
-                <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
-                <div id="openNichtErlaubteLm" style="visibility:hidden">
-                    <img src="../media/icon_help_mini.svg" alt="icon_help" />
-                    <p>Nicht erlaubte Lebensmittel</p>
-                </div>
-                <div class="action-wrap">
-                    <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
-                    <button style="margin-top:0px" id="btnbreakup" type="button" onclick="window.location.href ='011_foodsaver_anmeldung.php'">Zurück</button>
-                    <input class="continue-button" type="submit" form="myform" onclick="return formcheck()" value="Registrierung" style="width: 228px">
-                </div>
+        <div class="action-container">
+            <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
+            <div id="openNichtErlaubteLm" style="visibility:hidden">
+                <img src="../media/icon_help_mini.svg" alt="icon_help" />
+                <p>Nicht erlaubte Lebensmittel</p>
             </div>
-		</footer>
+            <div class="action-wrap">
+                <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
+                <button style="margin-top:0px" id="btnbreakup" type="button"
+                    onclick="window.location.href ='011_foodsaver_anmeldung.php'">Zurück</button>
+                <input class="continue-button" type="submit" form="myform" onclick="return formcheck()"
+                    value="Registrierung" style="width: 228px">
+            </div>
+        </div>
+    </footer>
 
     <!-- ---------- OVERLAYS ----------- -->
     <!-- Anmelde Overlay -->
@@ -127,24 +134,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="eingabe">
                     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
                         autocomplete="off">
-                        <?php
-                        if ($passwordErr == false) { ?>
-                        <input class="eingabefeld" name="password" id="eingabe" type="password"
-                            style='text-align: center; font-size: 20px;'>
-                        <?php }
-                        if ($passwordErr == true) {
-                        ?>
-                        <input class="eingabefeld" name="password" id="eingabe" type="password"
-                            style='border: 2px solid red; width: 468; height: 42px;'>
-                        <p class="vergessen" id="vergessen" style='color: red; display: block;'>
-                            Kennwort falsch
-                        </p>
+                        <?php if ($passwordErr == true) { ?>
+                            <input class="eingabefeld" name="password" id="eingabe" type="password"
+                                style='text-align: center; border: 2px solid #E97878; width: 468; height: 42px;'>
+                            <p class="vergessen" id="vergessen" style='color: #E97878; display: block;'>
+                                Kennwort falsch
+                            </p>
+                        <?php } else { ?>
+                            <input class="eingabefeld" name="password" id="eingabe" type="password"
+                                style='text-align: center; font-size: 20px;'>
                         <?php } ?>
 
                         <div class="buttonscontainer" id="bcontainer">
                             <div class="buttonwhite" id="breakup">
                                 <p class="buttontext" style="color: #99BB44">
-                                    Abrechen
+                                    Abbrechen
                                 </p>
                             </div>
                             <div class="buttongreen">
@@ -157,11 +161,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <script>
-        //Variable für Fehlermeldung
-        let passwordErr = <?php echo json_encode($passwordErr); ?>;
-
-          //Funktion zur Formularüberprüfung
-          function formcheck() {
+        //Funktion zur Formularüberprüfung
+        function formcheck() {
             var dataschutz = document.getElementById("datacheck").checked;
             var email = document.getElementById('email').value;
             var tel = document.getElementById('tel').value;
@@ -172,14 +173,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else if (email == '' && tel == '') {
                 window.alert('kontakt fehlt');
                 return false;
-            } else if(dataschutz == false) {
+            } else if (dataschutz == false) {
                 document.getElementById("checkboxunchecked").src = "../media/datacheck_empty.png"
                 return false;
-            }else {
+            } else {
                 return true;
             }
         }
-        
+
         document.getElementById('logo').onclick = function () {
             window.location.href = '../index.php';
         }
@@ -193,10 +194,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Button der das modale Fenster schließst
         var span = document.getElementsByClassName('buttonwhite')[0];
 
+        // Falsches Passwort Logik
+        //Variable für Fehlermeldung
+        let passwordErr = <?php echo json_encode($passwordErr); ?>;
         // Modales Fenster öffnen 
         if (passwordErr == true) {
             modal.style.display = 'flex';
         }
+
         btn.onclick = function () {
             modal.style.display = 'flex';
         }
@@ -204,8 +209,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         span.onclick = function () {
             modal.style.display = 'none';
             eingabe.value = '';
-            eingabe.style.border = 'none';
-            vergessen.style.display = 'none';
             bcontainer.style.paddingtop = '64px';
             eingabe.style.height = '46px';
             eingabe.style.width = '472px';
@@ -215,8 +218,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (event.target == modal) {
                 modal.style.display = 'none';
                 eingabe.value = '';
-                eingabe.style.border = 'none';
-                vergessen.style.display = 'none';
                 bcontainer.style.paddingtop = '64px';
                 eingabe.style.height = '46px';
                 eingabe.style.width = '472px';

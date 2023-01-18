@@ -35,6 +35,10 @@ header img {
     cursor: pointer;
 }
 
+button {
+    cursor: pointer;
+}
+
 /* Formatierung für Login im Header */
 .MitarbeiterLogin {
     display: flex;
@@ -160,8 +164,6 @@ form>p {
     border: 2px solid #E5E5E3;
     border-radius: 8px;
     margin-left: 13px;
-
-    cursor: pointer;
 }
 
 #login-logo {
@@ -236,8 +238,6 @@ p.vergessen {
     line-height: 17px;
     text-align: left;
     color: #BEBEB9;
-    padding-left: 0px;
-    margin-top: 0px;
     padding-top: 9px;
     order: -1;
 }
@@ -264,7 +264,8 @@ input.buttongreen {
     font-family: 'Fira Sans';
     font-weight: 600;
     font-size: 18px;
-    margin: 0;
+    margin: 0;    
+    cursor: pointer;
 }
 
 input.buttongreen:hover {
@@ -277,6 +278,11 @@ div.buttonwhite {
     width: 228px;
     border: 2px solid #E6E5E3;
     border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
 }
 
 div.buttonwhite:hover {
@@ -290,7 +296,6 @@ p.buttontext {
     font-weight: 600;
     font-size: 18px;
     margin: 0;
-    padding-top: 15px;
 }
 
 /*Logout Buttons*/
