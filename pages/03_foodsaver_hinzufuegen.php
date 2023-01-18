@@ -139,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // ---- CREATE OBJECTS -------
-    $unkritisch = date("Y-m-d", time() + 1000000);
+    $unkritisch = date("Y-m-d", time() + 999999999);
     $one = date("Y-m-d", time() + 86400);
     $two = date("Y-m-d", time() + 172800);
     $three = date("Y-m-d", time() + 259200);
@@ -193,7 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Datenbankeintrag erstellen
     $dbeintrag = array($lieferung, $lebensmittel);
 
-    if ($_SESSION["editieren"] >= 0 && empty($lmbezErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
+    if (isset($_SESSION["editieren"]) && $_SESSION["editieren"] >= 0 && empty($lmbezErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
         !empty($lebensmittel->OKatKey && $lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)) {
         $replacement = array($_SESSION['editieren'] => $eintrag);
         $_SESSION["array"] = array_replace($_SESSION["array"], $replacement);
@@ -254,10 +254,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="grid">
                         <!-- Lebensmittel INPUT -->
                         <div class="grid-col-4">
-                            <label class="grid-title" style="<?php if($lmbezErr) echo"color: #E97878;"?>">
+                        <label id="lebensmittelLabel" class="grid-title" style="<?php if($lmbezErr) echo"color: #E97878;"?>">
                                 Lebensmittel
                             </label>
-                            <input name="LMBez" class="input <?php if($lmbezErr) echo"error"?>" type="text" 
+                            <input name="LMBez" class="input <?php if($lmbezErr) echo"error"?>" type="text" oninput="inputError(event, 'lebensmittelLabel')"
                             value="<?php if (isset($_GET['editieren'])) {
                                 echo $_SESSION["array"][$_GET['editieren']]->Lebensmittel;
                             } else {
@@ -283,7 +283,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <!-- Kategorie auswählen -->
                         <div class="grid-col-6">
-                            <div class="grid-title" style="<?php if($kategorieErr) echo"color: #E97878;"?>">
+                            <div id="kategorieLabel" class="grid-title" style="<?php if($kategorieErr) echo"color: #E97878;"?>">
                                 <label>
                                     Kategorie
                                 </label>
@@ -317,7 +317,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     );
                                     ?>
                                     <div class="radio-container kategorie">
-                                    <input type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php 
+                                    <input class="katInput" type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php 
                                         if (isset($OKatKey) && $OKatKey == $row['OKatKey']) {
                                             echo "checked";
                                         } else if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Kategorie == $row['OKatKey']) {
@@ -340,7 +340,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="grid">
                         <!-- Herkunft INPUT -->
                         <div class="grid-col-6">
-                            <label class="grid-title" style="<?php if($herkunftErr) echo"color: #E97878;"?>">
+                        <label id="herkunftLabel" class="grid-title" style="<?php if($herkunftErr) echo"color: #E97878;"?>">
                                 Wo gerettet?
                             </label>
                             <div class="haltbarkeit-grid">
@@ -349,7 +349,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 foreach ($herkunftkategorien as $key => $row) {
                                     ?>
                                     <div class="radio-container haltbarkeit">
-                                    <input type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
+                                    <input class="herkunftInput" type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
                                         <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey']) {
                                             echo "checked";
                                         } else if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Herkunft == $row['HerkunftKey']) {
@@ -380,7 +380,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <!-- Menge INPUT  -->
                         <div class="grid-col-3">
-                            <div class="grid-title" style="<?php if($mengeErr) echo"color: #E97878;"?>">
+                        <div id="mengeLabel" class="grid-title" style="<?php if($mengeErr) echo"color: #E97878;"?>">
                                 <label>
                                     Menge (in kg)
                                 </label>
@@ -398,7 +398,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                 </div>
                             </div>
-                            <input name="menge" class="input <?php if($mengeErr) echo"error"?>" type="number" step="0.1" min="0" value="<?php if (isset($_GET['editieren'])) {
+                            <input name="menge" class="input <?php if($mengeErr) echo"error"?>" type="number" step="0.1" min="0" oninput="inputError(event, 'mengeLabel')"
+                            value="<?php if (isset($_GET['editieren'])) {
                                 echo $_SESSION["array"][$_GET['editieren']]->Menge;
                             } else {
                                 echo $menge;
@@ -500,7 +501,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     echo "<a id='openHinzufuegenAbbr'>Abbrechen</a>";
                 } ?>
-
 
                 <?php if (isset($_GET['editieren'])) {
                     echo "<input class='continue-button' type='submit' form='myform' value='Aktualisieren'>";

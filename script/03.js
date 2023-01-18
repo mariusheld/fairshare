@@ -135,3 +135,38 @@ window.onclick = function (event) {
     openIcon[2].style.display = "block";
   }
 };
+
+// Inpufelder Error-Handling
+function inputError(event, id) { 
+  element = event.target;
+  element.classList.remove("error");
+  document.getElementById(id).style = "none";
+}
+
+// Auswahlfelder Error-Handling
+// kategorieInput
+var katElements = document.getElementsByClassName("katInput");
+var kategorieItems = document.getElementsByClassName("category-item");
+for (let katItem of katElements) {
+  katItem.onclick = function () {
+    document.getElementById("kategorieLabel").style = "none";
+    for (let i in kategorieItems) {
+      if (kategorieItems[i].classList.contains("error")) {
+        kategorieItems[i].classList.remove("error");
+      }
+    }
+  };
+}
+// herkunftInput
+var herkunftElements = document.getElementsByClassName("herkunftInput");
+var herkunftItems = document.getElementsByClassName("haltbarkeit-item");
+for (let herkunftItem of herkunftElements) {
+  herkunftItem.onclick = function () {
+    document.getElementById("herkunftLabel").style = "none";
+    for (let i in herkunftItems) {
+      if (herkunftItems[i].classList.contains("error")) {
+        herkunftItems[i].classList.remove("error");
+      }
+    }
+  };
+}
