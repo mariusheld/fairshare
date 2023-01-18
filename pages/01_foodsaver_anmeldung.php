@@ -89,9 +89,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <p id="telormail" class="col-6">Trage deine E-Mail oder deine Telefonnummer ein.</p>
             <div class="col-6 datenschutz" style="display: flex; flex-direction: row; padding-top: 32px;">
-                <input type="checkbox" name="datacheck" id="datacheck" style="margin-top: -14px"/>
-                <img alt="nocheck" width="32px" height="32px" style="margin-top:0px" src="../media/checkbox.svg" id="checkboxunchecked" class="checkbox" style="margin-left: -23px; margin-top: -14px;">
-                <img alt="check" width="32px" height="32px" style="margin-top:0px" src="../media/checkbox_checked.svg" class="checkboxchecked"/ style="margin-left: -23px; margin-top: -14px;">
+                <input type="checkbox" name="datacheck" id="datacheck" style="margin-top: -14px;"/>
+                <img alt="nocheck" width="32px" height="32px" src="../media/checkbox.svg" id="checkboxunchecked" class="checkbox" style="margin-left: -30px; margin-top: 0px;">
+                <img alt="check" width="32px" height="32px" " src="../media/checkbox_checked.svg" class="checkboxchecked" style="margin-left: -30px; margin-top: 0px;">
                 <p class="dataschutz" >
                 Ich stimme zu, dass die Raupe meine Daten zur Auswertung 
                 der Wirkungsmessung verwendet. Persönliche Daten werden 
