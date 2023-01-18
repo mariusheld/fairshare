@@ -46,8 +46,8 @@ if ($date1formatted != NULL)
 
 if ($date2formatted != NULL)
 	{
-	$date2timestamp = strtotime($date2formatted);
-	$date2_ISO8601 = date("Y-m-d", $date2timestamp);
+	$date2timestamp = strtotime($date2formatted . "23:59:59"); 
+	$date2_ISO8601 = date("Y-m-d H:i:s", $date2timestamp);
 	}
 
 
