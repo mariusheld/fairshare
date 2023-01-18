@@ -103,7 +103,7 @@ if (!$erfolg) {
     </div>
 
     <div id="startscreen-footer">
-        <p id="startscreen-footer-text">Raupe Immersatt, Stuttgart 2023</p>
+        <a id="startscreen-footer-text" href="pages/09_credits.php">Ein Lehrprojekt der HdM Stuttgart</a>
     </div>
     
     <script>
