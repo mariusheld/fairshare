@@ -41,6 +41,29 @@ a {
     left: 50px;
 }
 
+.anmerkung {
+    position: absolute;
+    right: 0;
+    padding: 20px;
+    width: 245px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 10;
+    display: none;
+}
+
+.anmerkung h5 {
+    margin: 0 0 4px;
+    font-size: 18px;
+}
+
+.anmerkung p {
+    margin: 0;
+}
+
 .overlay {
     background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
@@ -376,6 +399,7 @@ a {
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
     border-radius: 8px;
     padding: 0 16px;
+    flex-direction: column;
 }
 
 .options li {

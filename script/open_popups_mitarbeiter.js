@@ -27,6 +27,13 @@ function close_KeineBoxen() {
 }
 
 
+// Anmerkungen -------------------------------------------------------------------
+
+// function open_anmerkung(btn) {
+//     btn.nextElementSibling.style.display = 'flex';
+//     btn.src = '../media/cross.svg';
+// }
+
 // Kontextmenü
 
 var old = null;
@@ -35,20 +42,34 @@ function open_close_options(options_btn) {
     
     if (old == null) {
         options_btn.src = '../media/cross.svg';
-        options_btn.nextElementSibling.style.display = 'block';
-        old = options_btn.id;
+        options_btn.nextElementSibling.style.display = 'flex';
+        old = options_btn;
 
-    } else if (old == options_btn.id){
-        options_btn.src = '../media/edit_icon.svg';
-        options_btn.nextElementSibling.style.display = 'none';
-        old = null;
+    } else if (old == options_btn){
+        if(options_btn.id == "bubble") {
+            options_btn.src = '../media/comment_icon.svg';
+            options_btn.nextElementSibling.style.display = 'none';
+            old = null;
+        } else {
+            options_btn.src = '../media/edit_icon.svg';
+            options_btn.nextElementSibling.style.display = 'none';
+            old = null;
+        } 
 
-    } else if (old != options_btn.id) {
-        document.getElementById(old).nextElementSibling.style.display = 'none';
-        document.getElementById(old).src = '../media/edit_icon.svg';
-        options_btn.nextElementSibling.style.display = 'block';
-        options_btn.src = '../media/cross.svg';
-        old = options_btn.id;
+    } else if (old != options_btn) {
+        if(options_btn.id == "bubble") {
+            old.nextElementSibling.style.display = 'none';
+            old.src = '../media/edit_icon.svg';
+            options_btn.nextElementSibling.style.display = 'flex';
+            options_btn.src = '../media/cross.svg';
+            old = options_btn;
+        } else {
+            old.nextElementSibling.style.display = 'none';
+            old.src = '../media/comment_icon.svg';
+            options_btn.nextElementSibling.style.display = 'flex';
+            options_btn.src = '../media/cross.svg';
+            old = options_btn;
+        }
     }
 }
 

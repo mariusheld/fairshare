@@ -191,8 +191,14 @@ $herkunft = array(
                             } 
                             // if else Abfrage des Anmerkungsicons 
                             if ($zeile['Anmerkung']) { ?>
-                                <td style='text-align: right'>
-                                    <img id='bubble' alt='dots' src='../media/comment_icon.svg' width='48px;' />
+                                <td style='text-align: right; position: relative;'>
+                                    <img id='bubble' alt='dots' src='../media/comment_icon.svg' width='48px;' onclick="open_close_options(this)"/>
+                                   
+                                    <!-- Anmerkung Pop-Up -->
+                                    <div class="anmerkung"">
+                                        <h5>Anmerkung:</h5>
+                                        <p><?php echo $zeile['Anmerkung'] ?></p>
+                                    </div>
                                 </td>
 
                             <?php } else { ?>
@@ -217,6 +223,8 @@ $herkunft = array(
                                 </ul>
                             </td>
                         </tr>
+
+                        
 
                         <!-- Popup "Lebensmittel entsorgen" -->
                         <div class="overlay" id="popup_lebensmittel_entsorgen-<?php echo $zähler ?>">
