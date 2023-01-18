@@ -10,6 +10,14 @@
     --error-red: #E97878;
 }
 
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
 .MitarbeiterLogin {
     display: flex;
     align-items: center;
@@ -267,6 +275,8 @@
     font-size: 18px;
     box-sizing: border-box;
     margin-top: 40px;
+
+    text-align: center;
 }
 
 .center-btn {

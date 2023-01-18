@@ -1,35 +1,84 @@
 <?php
-//Datenbankverbindung aufbauen
-require_once("../dbconnect/dbconnect.inc.php");
-
 //Session eröffnen
 session_start();
+//Datenbankverbindung aufbauen
+require_once("../dbconnect/dbconnect.inc.php");
+$db_handle = new DBController();
 
 //Sessionlogin lokal speichern
 $login = $_SESSION['login'];
 
-//Abfrage an Datenbank senden
-//Wenn Datenbank alles Anzeigen soll wegen Kisten Bug: "SELECT*FROM Lebensmittel WHERE LMkey >= 13"
-$query = $db->prepare("SELECT*FROM Lebensmittel ORDER BY VerteilDeadline");
-$erfolg = $query->execute();
+// ----------- QUERYS -----------
 
-
+$AlleLebensmittelQuery = $db->prepare("SELECT * FROM Lebensmittel ORDER BY VerteilDeadline");
+$erfolg = $AlleLebensmittelQuery->execute();
+//Zellenweise Verarbeitung der Datenbankabfrage
+$AlleLebensmittelResult = $AlleLebensmittelQuery->fetchAll();
 //Fehlertest
 if (!$erfolg) {
     $fehler = $query->errorInfo();
     die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
 }
 
+
+$conn = $db_handle->connectDB();
+$InitialeAbgabeQuery = "SELECT * FROM `bestand_bewegung` WHERE `lstatuskey` = 1";
+$InitialeAbgabeResult = mysqli_query($conn, $InitialeAbgabeQuery);
+while ($row = mysqli_fetch_assoc($InitialeAbgabeResult)) {
+    $InitialeAbgabeSet[] = $row;
+}
+// --
+$FairteilteAbgabeQuery = "SELECT * FROM `bestand_bewegung` WHERE `lstatuskey` = 2";
+$FairteilteAbgabeResult = mysqli_query($conn, $FairteilteAbgabeQuery);
+while ($row = mysqli_fetch_assoc($FairteilteAbgabeResult)) {
+    $FairteilteAbgabeSet[] = $row;
+}
+
+foreach($FairteilteAbgabeSet as $key => $value) {
+    foreach($InitialeAbgabeSet as $key2 => $value2) {
+        if($value['LMkey'] == $value2['LMkey']) {
+            $InitialeAbgabeSet[$key2]['BewegMenge'] = $value2['BewegMenge'] - $value['BewegMenge'];   
+        }
+    }
+}
+$filteredSet = $InitialeAbgabeSet;
+
+foreach ($AlleLebensmittelResult as $key => $value) {
+    foreach($filteredSet as $key2 => $value2) {
+        if ($value['LMkey'] == $value2['LMkey']) {
+            $AlleLebensmittelResult[$key]['Gewicht'] = $value2['BewegMenge'];
+            if ($AlleLebensmittelResult[$key]['Gewicht'] == 0) {
+                unset($AlleLebensmittelResult[$key]);
+            }
+        }
+    }
+}
+$filteredLebensmittel = $AlleLebensmittelResult;
+
+//Abfrage an Datenbank senden
+if (isset($_GET['entsorgenKey'])) {
+    $entsorgenKey = $_GET['entsorgenKey'];
+    $EntsorgenQuery = $db->prepare("UPDATE `bestand_bewegung` SET `LStatusKey` = '3' WHERE `bestand_bewegung`.`LMkey` = $entsorgenKey");
+    $erfolg = $EntsorgenQuery->execute();
+    //Fehlertest
+    if (!$erfolg) {
+        $fehler = $query->errorInfo();
+        die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
+    }
+    //Seite neu laden
+    header("Location: admin.php");
+}
+
 //Array für die Icons in der Lagerübersicht
 $icons = array(
-    1 => "../media/kategorien/icon_backwaren-salzig.svg",
-    2 => "../media/kategorien/icon_backwaren-suess.svg",
-    3 => "../media/kategorien/icon_gemuese.svg",
-    4 => "../media/kategorien/icon_konserven.svg",
-    5 => "../media/kategorien/icon_kuehlprodukte.svg",
-    6 => "../media/kategorien/icon_obst.svg",
-    7 => "../media/kategorien/sonstiges.svg",
-    8 => "../media/kategorien/icon_trockenprodukte.svg",
+    1 => "../media/kategorien/icon_gemuese.svg",
+    2 => "../media/kategorien/icon_obst.svg",
+    3 => "../media/kategorien/icon_backwaren-suess.svg",
+    4 => "../media/kategorien/icon_backwaren-salzig.svg",
+    5 => "../media/kategorien/icon_trockenprodukte.svg",
+    6 => "../media/kategorien/icon_kuehlprodukte.svg",
+    7 => "../media/kategorien/icon_konserven.svg",
+    8 => "../media/kategorien/sonstiges.svg",
 );
 
 $herkunft = array(
@@ -73,7 +122,7 @@ $herkunft = array(
                     </p>
                     <div class="logout" id="logout">
                         <p class="logouttext">
-                            Ausloggen
+                            Abmelden
                         </p>
                         <img alt="ausloggen" src="../media/lock_icon.svg" width="48" height="48" />
                     </div>
@@ -93,30 +142,13 @@ $herkunft = array(
                     <!--Tabelleninhalt-->
 
                     <?php
-                    //Zellenweise Verarbeitung der Datenbankabfrage
-                    $result = $query->fetchAll();
-
-                    //Konsolenausgabe der Datenbankabfrage (nur möglich nach einem fetchAll() befehl der Abfrage)
-                    // echo "<script>console.log(" . json_encode($result) . ");</script>";
-                    function consolelog($data, bool $quotes = false)
-                    {
-                        $output = json_encode($data);
-                        if ($quotes) {
-                            echo "<script>console.log('{$output}' );</script>";
-                        } else {
-                            echo "<script>console.log({$output} );</script>";
-                        }
-                    }
-
-                    consolelog($result);
-
                     $zähler = 0;
 
                     //Datumsberechnung
                     $jetzt = time();
                     // $result['VerteilDeadline'] = strtotime($result['VerteilDeadline']);
                 
-                    foreach ($result as $key => $zeile) {
+                    foreach ($filteredLebensmittel as $key => $zeile) {
                         $zähler += 1;
                         $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt) / (60 * 60 * 24));
                         $ablaufdatum = $zeile['VerteilDeadline']; ?>
@@ -136,7 +168,7 @@ $herkunft = array(
                                         <div class='tablecontainer'>
                                             <img width='48px' alt='lmicon' src='<?php echo $icons[$zeile['OKatKey']] ?>'>
                                             <div id='bezeichnung-<?php echo $zähler ?>'
-                                                style='font-weight: 600; padding-left: 16px; color: red'>
+                                                style='font-weight: 600; padding-left: 16px; color: #E97878'>
                                             <?php echo $zeile['Bezeichnung'] ?>
                                             </div>
                                         </div>
@@ -147,29 +179,14 @@ $herkunft = array(
                                 <?php echo $zeile['Gewicht'] ?> kg
                             </td>
                             <!-- //If Else Abfrage für Rotfärbung der abgelaufenen Lebensmitel und Kühlicon FÄLLE: rot+Kühl, rot+oKühl, schwarz+Kühl, schwarz+oKühl -->
-                            <?php if ($zeile['Kuehlware'] == 0 && $ablaufdatum > 0) {
-                                echo "<td>" . $zeile['VerteilDeadline'] . " Tage </td>";
-                            } else if ($zeile['Kuehlware'] == 1 && $ablaufdatum > 0) { ?>
-                                    <td>
-                                        <div class='tablecontainer'>
-                                            <div><?php echo $zeile['VerteilDeadline'] ?> Tage</div> <img style='padding-left: 16px;'
-                                                alt='coolicnon' src='../media/freeze_icon.svg' width='32'>
-                                        </div>
-                                    </td>
-
-                            <?php } else if ($zeile['Kuehlware'] == 1 && $ablaufdatum <= 0) { ?>
-                                        <td style='color: red'><?php echo $zeile['VerteilDeadline'] ?> Tage </td>
-
-                            <?php } else { ?>
-                                        <td style='color: red'>
-                                            <div class='tablecontainer'>
-                                                <div>
-                                            <?php echo $zeile['VerteilDeadline'] ?> Tage
-                                                </div>
-                                                <img style='padding-left: 16px;' alt='coolicnon' src='../media/freeze_icon.svg' width='32'>
-                                            </div>
-                                        </td>
-                            <?php }
+                            <?php 
+                            if ($ablaufdatum < 9999) { ?>
+                                <td <?php if($ablaufdatum <= 0) echo"style='color: #E97878'"; ?>> 
+                                    <?php echo $zeile['VerteilDeadline']; ?> Tage
+                                </td>
+                            <?php  } else { 
+                                echo"<td>unkritisch</td>";
+                            } 
                             // if else Abfrage des Anmerkungsicons 
                             if ($zeile['Anmerkung']) { ?>
                                 <td style='text-align: right'>
@@ -216,7 +233,7 @@ $herkunft = array(
                                     </form>
 
                                     <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="entsorgen_abbrechen(this)">Abbrechen</button>
-                                    <button class="primary-btn-red">Entsorgen</button>
+                                    <a href="admin.php?entsorgenKey=<?php echo $zeile['LMkey']?>" class="primary-btn-red">Entsorgen</a>
                                 </div>
                             </div>
                         </div>

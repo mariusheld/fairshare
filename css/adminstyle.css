@@ -20,6 +20,10 @@ button {
 	cursor: pointer;
 }
 
+a {
+	text-decoration: none;
+}
+
 /*Formatierung Navigationsleiste*/
 div.navbar {
 	position: fixed;
@@ -52,11 +56,6 @@ div.navlink {
 div.navbar ul li {
 	display: inline-block;
 	width: 49%;
-}
-
-#logo {
-	padding-top: 25px;
-	padding-left: 32px;
 }
 
 #question {
@@ -129,9 +128,8 @@ p.vergessen {
 	font-weight: 600;
 	font-size: 14px;
 	line-height: 17px;
-	text-align: right;
+	text-align: left;
 	color: #BEBEB9;
-	padding-left: 325px;
 	margin-top: 0px;
 	padding-top: 9px;
 	order: -1;
@@ -185,7 +183,6 @@ p.buttontext {
 	font-weight: 600;
 	font-size: 18px;
 	margin: 0;
-	padding-top: 15px;
 }
 
 /*Logout Buttons*/
@@ -374,4 +371,8 @@ div.tablecontainer {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+}
+
+#login {
+	cursor: pointer;
 }
