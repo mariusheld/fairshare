@@ -79,7 +79,7 @@ if ($userunbekannt == "unbekannt") {
 
 <body>
     <header style="padding-left: 0;">
-        <a href="../index.php" ><img src="../media/logo.svg" style="margin-left:0"></a>
+        <a href="../index.php" ><img src="../media/logo.svg" style="margin-left:0" width="200px"></a>
         <div href="#" class="MitarbeiterLogin" id="login">
             <span>Mitarbeiter*in</span>
             <button id="startscreen-mitarbeiter-button"><svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
