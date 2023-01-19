@@ -150,7 +150,7 @@ if ($userunbekannt == "unbekannt") {
             </div>
         </form>
         <div class="formvariabel" style="text-align: left;">
-            <form class="anmeldung" method="POST">
+            <form id="anmeldung" class="anmeldung" method="POST" action="013_foodsaver_anmeldung_skript.php">
                 <div class="anmeldungmail" id="anmail">
                     <label for="mail">Deine E-Mail</label></br>
                     <input type="email" id="mail" name="mail" style="width:310px; height: 46px;" />
@@ -177,7 +177,7 @@ if ($userunbekannt == "unbekannt") {
             <div class="action-wrap">
                 <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
                 <button style="margin-top:0px" id="btnbreakup" type="button" onclick="buttoncheck(this)">Zurück</button>
-                <input class="continue-button" type="submit" form="myform" value="Anmeldung" style="width: 228px">
+                <input class="continue-button" type="submit" form="anmeldung" value="Anmeldung" style="width: 228px">
             </div>
         </div>
     </footer>
