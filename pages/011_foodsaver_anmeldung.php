@@ -31,6 +31,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+// User Bekannt?
+//session_name("user");
+$userunbekannt = $_SESSION["userstatus"];
+//echo $userunbekannt;
+
+
+if ($userunbekannt == "unbekannt") {
+    //echo "test";
+    unset($_SESSION["userstatus"]);
+    ?>
+    <!-- ---------- OVERLAYS ----------- -->
+    <!-- User nicht bekannt Overlay -->
+    <div class="helper" id="overtrigger" style="display: flex;">
+        <div class="overlayparent" style="display: flex;">
+            <div class="overlaychild" style="display: flex;">
+               <p class="olhead">
+                Achtung!
+               </p>
+               <p style="text-align: center; font-weight: 600; line-height: 28px; font-size: 18px; font-family: 'Fira Sans'; padding-top: 24px;">
+                    Leider konnten wir deine Anmeldedaten nicht in unserer Datenbank finden. Bitte registriere dich, um das FairShaire System zu nutzen.
+               </p>
+               <button id="btnallesklar" style="margin-top: 24px;" class="buttonwhite">
+                Alles klar!
+               </button>
+            </div>
+        </div>
+    </div>
+    <?php
+}
 ?>
 
 <!DOCTYPE html>
