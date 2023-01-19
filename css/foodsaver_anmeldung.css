@@ -362,7 +362,7 @@ button.buttonwhite:hover {
 }
 
 /*Auswahl Anmeldemöglichkeit Fenster*/
-div.seiteninhalt {
+div.seiteninhalt-anmeldung {
     text-align: center;
     position: absolute;
     left: 50%;
@@ -471,6 +471,8 @@ button.reg {
     line-height: 26px;
 }
 footer {
+    position: fixed;
+    bottom: 0;
     visibility:hidden;
 }
 button:hover {

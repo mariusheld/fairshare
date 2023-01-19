@@ -130,7 +130,7 @@ if ($userunbekannt == "unbekannt") {
     </div>
 
     <!--Seiteninhalt-->
-    <div class="seiteninhalt">
+    <div class="seiteninhalt-anmeldung">
         <div id="regcontainer" class="regcontainer">
             <div class="header">
                 Zum ersten mal hier?

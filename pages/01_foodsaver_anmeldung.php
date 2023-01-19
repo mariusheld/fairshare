@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
 
     <!-- Anmeldemaske -->
-    <div class="seiteninhalt" style="text-align: left;">
+    <div class="seiteninhalt-anmeldung" style="text-align: left;">
         <form class="Anmeldeformular" id="myform" method="POST" action="013_foodsaver_anmeldung_skript.php">
             <div class="col-3">
                 <label id="labelvorname" for="">Vorname</label>
