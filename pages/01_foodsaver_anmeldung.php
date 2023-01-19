@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Login auf True setzen 
         $_SESSION['login'] = true;
         // Weiterleiten
-        header("Location: ./dashboard.php");
+        header("Location: ./08_interne_wirkungsmessung_dashboard.php");
     } else {
         $_SESSION['passwordErr'] = true;
         header("Location: ./01_foodsaver_anmeldung.php?error=true");
