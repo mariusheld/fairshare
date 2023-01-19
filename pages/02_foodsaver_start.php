@@ -32,12 +32,10 @@ if (!empty($_SESSION['vorname'])) {
 // echo "<script>console.log('{$_SESSION["vorname"]}', '{$_SESSION["nachname"]}', '{$_SESSION["foodID"]}', '{$_SESSION["email"]}', '{$_SESSION["tel"]}');</script>";
 
 ///Insert in die Datenbank
-echo "<script>console.log(" . json_encode($_SESSION["bekannt"]) . ");</script>";
-if ($_SESSION["bekannt"] == "0"){
-$eintragFS = $db->prepare("INSERT INTO Foodsaver (FoodsharingID, Vorname, Nachname, TelNr, Email)
-VALUES (?, ?, ?, ?, ?)"); //$foodID, $vorname, $nachname, $tel, $email
-$eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["tel"], $_SESSION["email"]));
-unset($_SESSION["bekannt"]);
+if ($_SESSION["bekannt"] == false){
+  $eintragFS = $db->prepare("INSERT INTO Foodsaver (FoodsharingID, Vorname, Nachname, TelNr, Email)
+  VALUES (?, ?, ?, ?, ?)"); //$foodID, $vorname, $nachname, $tel, $email
+  $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["tel"], $_SESSION["email"]));
 }
 ?>
 

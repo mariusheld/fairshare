@@ -559,7 +559,8 @@ Foodsaver Übersicht
 .wrap {
     display: flex;
     flex-direction: column;
-    padding: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
     height: 100%;
     width: 100%;
     overflow-y: scroll;
@@ -580,6 +581,7 @@ Foodsaver Übersicht
 }
 
 .table-headers {
+    padding-top: 32px;
     padding-bottom: 16px;
     margin-bottom: 16px;
     /* text concrete  */

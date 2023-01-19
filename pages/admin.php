@@ -28,6 +28,7 @@ while ($row = mysqli_fetch_assoc($InitialeAbgabeResult)) {
     $InitialeAbgabeSet[] = $row;
 }
 // --
+$FairteilteAbgabeSet = [];
 $FairteilteAbgabeQuery = "SELECT * FROM Bestand_Bewegung WHERE LStatusKey = 2";
 $FairteilteAbgabeResult = mysqli_query($conn, $FairteilteAbgabeQuery);
 while ($row = mysqli_fetch_assoc($FairteilteAbgabeResult)) {
@@ -143,214 +144,219 @@ $herkunft = array(
             </div>
             <!--Seiteninhalt-->
             <div class="seiteninhalt">
-                <table>
-                    <!--Tabellenkopf-->
-                    <tr>
-                        <th style="width: 45%;">Lebensmittel</th>
-                        <th style="width: 20%;">Menge</th>
-                        <th>Genießbar</th>
-                        <th style="width: 50px;"></th>
-                        <th style="width: 50px;"></th>
-                    </tr>
-                    <!--Tabelleninhalt-->
-
-                    <?php
-                    $zähler = 0;
-
-                    //Datumsberechnung
-                    $jetzt = time();
-                    // $result['VerteilDeadline'] = strtotime($result['VerteilDeadline']);
-                
-                    foreach ($filteredLebensmittel as $key => $zeile) {
-                        $zähler += 1;
-                        $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt) / (60 * 60 * 24));
-                        $ablaufdatum = $zeile['VerteilDeadline']; ?>
+                <div class="wrap">
+                    <table>
+                        <!--Tabellenkopf-->
                         <tr>
-                            <?php
-                            if ($ablaufdatum > 0) { ?>
-                                <td class='lmicon'>
-                                    <div class='tablecontainer'>
-                                        <img width='48px' alt='lmicon' src='<?php echo $icons[$zeile['OKatKey']] ?>'>
-                                        <div id='bezeichnung- <?php echo $zähler ?>' style='font-weight: 600; padding-left: 16px;'>
-                                            <?php echo $zeile['Bezeichnung'] ?>
-                                        </div>
-                                    </div>
-                                </td>
-                            <?php } else if ($ablaufdatum <= 0) { ?>
+                            <th style="width: 45%;">Lebensmittel</th>
+                            <th style="width: 20%;">Menge</th>
+                            <th>Genießbar</th>
+                            <th style="width: 50px;"></th>
+                            <th style="width: 50px;"></th>
+                        </tr>
+                        <!--Tabelleninhalt-->
+
+                        <?php
+                        $zähler = 0;
+
+                        //Datumsberechnung
+                        $jetzt = time();
+                        // $result['VerteilDeadline'] = strtotime($result['VerteilDeadline']);
+                    
+                        foreach ($filteredLebensmittel as $key => $zeile) {
+                            $zähler += 1;
+                            
+                            $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt)  / (60 * 60 * 24) + 1);
+                            $ablaufdatum = $zeile['VerteilDeadline']; 
+                            consolelog($jetzt);
+                            ?>
+                            <tr>
+                                <?php
+                                if ($ablaufdatum > 0) { ?>
                                     <td class='lmicon'>
                                         <div class='tablecontainer'>
-                                            <img width='48px' alt='lmicon' src='<?php echo $iconsred[$zeile['OKatKey']] ?>'>
-                                            <div id='bezeichnung-<?php echo $zähler ?>'
-                                                style='font-weight: 600; padding-left: 16px; color: #E97878'>
-                                            <?php echo $zeile['Bezeichnung'] ?>
+                                            <img width='48px' alt='lmicon' src='<?php echo $icons[$zeile['OKatKey']] ?>'>
+                                            <div id='bezeichnung- <?php echo $zähler ?>' style='font-weight: 600; padding-left: 16px;'>
+                                                <?php echo $zeile['Bezeichnung'] ?>
                                             </div>
                                         </div>
                                     </td>
-                            <?php } ?>
+                                <?php } else if ($ablaufdatum <= 0) { ?>
+                                        <td class='lmicon'>
+                                            <div class='tablecontainer'>
+                                                <img width='48px' alt='lmicon' src='<?php echo $iconsred[$zeile['OKatKey']] ?>'>
+                                                <div id='bezeichnung-<?php echo $zähler ?>'
+                                                    style='font-weight: 600; padding-left: 16px; color: #E97878'>
+                                                <?php echo $zeile['Bezeichnung'] ?>
+                                                </div>
+                                            </div>
+                                        </td>
+                                <?php } ?>
 
-                            <td id='gewicht-<?php echo $zähler ?>'>
-                                <?php echo $zeile['Gewicht'] ?> kg
-                            </td>
-                            <!-- //If Else Abfrage für Rotfärbung der abgelaufenen Lebensmitel und Kühlicon FÄLLE: rot+Kühl, rot+oKühl, schwarz+Kühl, schwarz+oKühl -->
-                            <?php 
-                            if ($ablaufdatum < 9999) { ?>
-                                <td <?php if($ablaufdatum <= 0) echo"style='color: #E97878'"; ?>> 
-                                    <?php echo $zeile['VerteilDeadline']; ?> Tage
+                                <td id='gewicht-<?php echo $zähler ?>'>
+                                    <?php echo $zeile['Gewicht'] ?> kg
                                 </td>
-                            <?php  } else { 
-                                echo"<td>unkritisch</td>";
-                            } 
-                            // if else Abfrage des Anmerkungsicons 
-                            if ($zeile['Anmerkung']) { ?>
-                                <td style='text-align: right; position: relative;'>
-                                    <img id='bubble' class="open_icon" alt='dots' src='../media/comment_icon.svg' width='48px;' onclick="open_close_options(this)"/>
-                                   
-                                    <!-- Anmerkung Pop-Up -->
-                                    <div class="anmerkung">
-                                        <h5>Anmerkung:</h5>
-                                        <p><?php echo $zeile['Anmerkung'] ?></p>
-                                    </div>
-                                </td>
-
-                            <?php } else { ?>
-                                <td style='text-align: right'>
-                                    <img id='bubble' style='visibility:hidden' alt='dots' src='../media/comment_icon.svg'
-                                        width='48px;' />
-                                </td>
-                            <?php } ?>
-                            <td style='text-align: right; position: relative;'>
-                                <img id='options-btn-<?php echo $zähler ?>' class="open_icon" onclick='open_close_options(this)' alt='dots'
-                                    src='../media/edit_icon.svg' width='48px;' style='cursor: pointer;' />
-                                <ul class='options' id='<?php echo $zähler ?>'>
-                                    <li onclick='open_lebensmittel_ansehen(this)' id="<?php echo $zähler ?>">
-                                        <img src='../media/eye.svg' alt=''><span>Ansehen</span>
-                                    </li>
-                                    <li onclick='open_lebensmittel_fairteilen(this)' id="<?php echo $zähler ?>">
-                                        <img src='../media/arrows.svg' alt=''><span>Fairteilen</span>
-                                    </li>
-                                    <li onclick='open_lebensmittel_entsorgen(this)' id="<?php echo $zähler ?>">
-                                        <img src='../media/trashbin.svg' alt=''><span>Entsorgen</span>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-
-                        
-
-                        <!-- Popup "Lebensmittel entsorgen" -->
-                        <div class="overlay" id="popup_lebensmittel_entsorgen-<?php echo $zähler ?>">
-                            <div class="popup-wrapper">
-                                <div class="popup active">
-                                    <div class="popup-header">
-                                         <img src='<?php echo $icons[$zeile['OKatKey']] ?>'>
-                                        <h5><?php echo $zeile['Bezeichnung'] ?> entsorgen</h5>
-                                    </div>
-                                    <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge des Lebensmittels möchtest du entsorgen?</p>
-
-                                    <form action="" class="popup-form">
-                                        <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
-                                        <input type="number" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" value="<?php echo $zeile['Gewicht'] ?>">
-                                        <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
-                                    </form>
-
-                                    <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="entsorgen_abbrechen(this)">Abbrechen</button>
-                                    <a href="admin.php?entsorgenKey=<?php echo $zeile['LMkey']?>" class="primary-btn-red">Entsorgen</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Popup "Lebensmittel fairteilen" -->
-                        <div class="overlay" id="popup_lebensmittel_fairteilen-<?php echo $zähler ?>">
-                            <div class="popup-wrapper">
-                                <div class="popup active">
-                                    <div class="popup-header">
-                                        <img src="<?php echo $icons[$zeile['OKatKey']] ?>">
-                                        <h5><?php echo $zeile['Bezeichnung'] ?> fairteilen?</h5>
-                                    </div>
-                                    <p>Wenn du Lebensmittel als fairteilt markierst verschwinden sie aus der Übersicht. Welche Menge des Lebensmittels möchtest du fairteilen?</p>
-                                    <form action="" class="popup-form">
-                                        <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
-                                        <input type="number" id="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" value="<?php echo $zeile['Gewicht'] ?>">
-                                        <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
-                                    </form>
-                                    <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_abbrechen(this)">Abbrechen</button>
-                                    <button class="primary-btn" id="fairteilen"
-                                        onclick="window.location.href='admin.php?fairteilen=1'">Fairteilen</button>
-                                </div>
-                            </div>
-                        </div>
-                          
-                        <!-- Popup "Lebensmittel ansehen" -->
-                        <div class="overlay" id="popup_lebensmittel_ansehen-<?php echo $zähler ?>">
-                            <div class="popup-wrapper">
-                                <div class="popup ansehen">
-                                    <div class="popup-header-cross">
-                                        <div class="container">
-                                            <img src="<?php echo $icons[$zeile['OKatKey']] ?>">
-                                            <h5><?php echo $zeile['Bezeichnung'] ?></h5>
-                                        </div>
-                                        <div class="close-btn" id="<?php echo $zähler ?>" onclick="close_lebensmittel_ansehen(this)">
-                                            <img src="../media/cross.svg" alt="Schließen">
-                                        </div>
-                                    </div>
-
-                                    <div class="info">
-                                        <div class="block">
-                                            <div class="zeile">
-                                                <div>Menge:</div>
-                                                <div><?php echo $zeile['Gewicht'] ?> kg</div>
-                                            </div>
-                                            <div class="zeile">
-                                                <div>Inhaltsstoffe:</div>
-                                                <div>-</div>
-                                            </div>
-                                            <div class="zeile">
-                                                <div>Genießbar bis:</div>
-                                                <div <?php if($ablaufdatum < 0) {echo "style='color: red'";}?>><?php echo $zeile['VerteilDeadline'] ?> Tage <?php if($zeile['Kuehlware'] == 0) {echo "<img style='position: absolute; margin-left: 8px;' width='20px' src='../media/freeze_icon.svg'>";}?></div>
-                                            </div>
-                                        </div>
-
-                                        <div class="block">
-                                            <div class="zeile">
-                                                <div>Geliefert von:</div>
-                                                <div>Jürgen</div>
-                                            </div>
-                                            <div class="zeile">
-                                                <div>E-Mail:</div>
-                                                <div>email.com</div>
-                                            </div>
-                                            <div class="zeile">
-                                                <div>Telefonnr:</div>
-                                                <div>10264606194316</div>
-                                            </div>
-                                        </div>
-
-                                        <div class="block last">
-                                            <div class="zeile">
-                                                <div>Gerettet von:</div>
-                                                <div><?php echo $herkunft[$zeile['HerkunftKey']] ?></div>
-                                            </div>
-                                            <div class="zeile">
-                                                <div>Gespendet am:</div>
-                                                <div>20.11.2022</div>
-                                            </div>
-                                            <div class="zeile">
-                                                <div>Anmerkungen:</div>
-                                                <div><?php echo $zeile['Anmerkung'] ?></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <!-- //If Else Abfrage für Rotfärbung der abgelaufenen Lebensmitel und Kühlicon FÄLLE: rot+Kühl, rot+oKühl, schwarz+Kühl, schwarz+oKühl -->
+                                <?php 
+                                if ($ablaufdatum < 9999) { ?>
+                                    <td <?php if($ablaufdatum <= 0) echo"style='color: #E97878'"; ?>> 
+                                        <?php echo $zeile['VerteilDeadline']; ?> <?php if($ablaufdatum == 1) echo"Tag"; else echo"Tage"; ?>
+                                    </td>
+                                <?php  } else { 
+                                    echo"<td>unkritisch</td>";
+                                } 
+                                // if else Abfrage des Anmerkungsicons 
+                                if ($zeile['Anmerkung']) { ?>
+                                    <td style='text-align: right; position: relative;'>
+                                        <img id='bubble' class="open_icon" alt='dots' src='../media/comment_icon.svg' width='48px;' onclick="open_close_options(this)"/>
                                     
-                                    <button class="secondary-btn-red">Entsorgen</button>
-                                    <button class="primary-btn">Fairteilen</button>
+                                        <!-- Anmerkung Pop-Up -->
+                                        <div class="anmerkung">
+                                            <h5>Anmerkung:</h5>
+                                            <p><?php echo $zeile['Anmerkung'] ?></p>
+                                        </div>
+                                    </td>
+
+                                <?php } else { ?>
+                                    <td style='text-align: right'>
+                                        <img id='bubble' style='visibility:hidden' alt='dots' src='../media/comment_icon.svg'
+                                            width='48px;' />
+                                    </td>
+                                <?php } ?>
+                                <td style='text-align: right; position: relative;'>
+                                    <img id='options-btn-<?php echo $zähler ?>' class="open_icon" onclick='open_close_options(this)' alt='dots'
+                                        src='../media/edit_icon.svg' width='48px;' style='cursor: pointer;' />
+                                    <ul class='options' id='<?php echo $zähler ?>'>
+                                        <li onclick='open_lebensmittel_ansehen(this)' id="<?php echo $zähler ?>">
+                                            <img src='../media/eye.svg' alt=''><span>Ansehen</span>
+                                        </li>
+                                        <li onclick='open_lebensmittel_fairteilen(this)' id="<?php echo $zähler ?>">
+                                            <img src='../media/arrows.svg' alt=''><span>Fairteilen</span>
+                                        </li>
+                                        <li onclick='open_lebensmittel_entsorgen(this)' id="<?php echo $zähler ?>">
+                                            <img src='../media/trashbin.svg' alt=''><span>Entsorgen</span>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            
+                            <!-- Popup "Lebensmittel entsorgen" -->
+                            <div class="overlay" id="popup_lebensmittel_entsorgen-<?php echo $zähler ?>">
+                                <div class="popup-wrapper">
+                                    <div class="popup active">
+                                        <div class="popup-header">
+                                            <img src='<?php echo $icons[$zeile['OKatKey']] ?>'>
+                                            <h5><?php echo $zeile['Bezeichnung'] ?> entsorgen</h5>
+                                        </div>
+                                        <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge des Lebensmittels möchtest du entsorgen?</p>
+
+                                        <form action="" class="popup-form">
+                                            <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
+                                            <input type="number" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" value="<?php echo $zeile['Gewicht'] ?>">
+                                            <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
+                                        </form>
+
+                                        <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="entsorgen_abbrechen(this)">Abbrechen</button>
+                                        <a href="admin.php?entsorgenKey=<?php echo $zeile['LMkey']?>" class="primary-btn-red">Entsorgen</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                   
-                    <?php
-                    }
-                    ?>
 
+                            <!-- Popup "Lebensmittel fairteilen" -->
+                            <div class="overlay" id="popup_lebensmittel_fairteilen-<?php echo $zähler ?>">
+                                <div class="popup-wrapper">
+                                    <div class="popup active">
+                                        <div class="popup-header">
+                                            <img src="<?php echo $icons[$zeile['OKatKey']] ?>">
+                                            <h5><?php echo $zeile['Bezeichnung'] ?> fairteilen?</h5>
+                                        </div>
+                                        <p>Wenn du Lebensmittel als fairteilt markierst verschwinden sie aus der Übersicht. Welche Menge des Lebensmittels möchtest du fairteilen?</p>
+                                        <form action="" class="popup-form">
+                                            <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
+                                            <input type="number" id="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" value="<?php echo $zeile['Gewicht'] ?>">
+                                            <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
+                                        </form>
+                                        <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_abbrechen(this)">Abbrechen</button>
+                                        <button class="primary-btn" id="fairteilen"
+                                            onclick="window.location.href='admin.php?fairteilen=1'">Fairteilen</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Popup "Lebensmittel ansehen" -->
+                            <div class="overlay" id="popup_lebensmittel_ansehen-<?php echo $zähler ?>">
+                                <div class="popup-wrapper">
+                                    <div class="popup ansehen">
+                                        <div class="popup-header-cross">
+                                            <div class="container">
+                                                <img src="<?php echo $icons[$zeile['OKatKey']] ?>">
+                                                <h5><?php echo $zeile['Bezeichnung'] ?></h5>
+                                            </div>
+                                            <div class="close-btn" id="<?php echo $zähler ?>" onclick="close_lebensmittel_ansehen(this)">
+                                                <img src="../media/cross.svg" alt="Schließen">
+                                            </div>
+                                        </div>
+
+                                        <div class="info">
+                                            <div class="block">
+                                                <div class="zeile">
+                                                    <div>Menge:</div>
+                                                    <div><?php echo $zeile['Gewicht'] ?> kg</div>
+                                                </div>
+                                                <div class="zeile">
+                                                    <div>Inhaltsstoffe:</div>
+                                                    <div>-</div>
+                                                </div>
+                                                <div class="zeile">
+                                                    <div>Genießbar bis:</div>
+                                                    <div <?php if($ablaufdatum < 0) {echo "style='color: red'";}?>><?php 
+                                                        echo $zeile['VerteilDeadline']; if($ablaufdatum == 1) echo" Tag"; else echo" Tage"; 
+                                                        if($zeile['Kuehlware'] == 0) {echo "<img style='position: absolute; margin-left: 8px;' width='20px' src='../media/freeze_icon.svg'>";}?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="block">
+                                                <div class="zeile">
+                                                    <div>Geliefert von:</div>
+                                                    <div>Jürgen</div>
+                                                </div>
+                                                <div class="zeile">
+                                                    <div>E-Mail:</div>
+                                                    <div>email.com</div>
+                                                </div>
+                                                <div class="zeile">
+                                                    <div>Telefonnr:</div>
+                                                    <div>10264606194316</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="block last">
+                                                <div class="zeile">
+                                                    <div>Gerettet von:</div>
+                                                    <div><?php echo $herkunft[$zeile['HerkunftKey']] ?></div>
+                                                </div>
+                                                <div class="zeile">
+                                                    <div>Gespendet am:</div>
+                                                    <div>20.11.2022</div>
+                                                </div>
+                                                <div class="zeile">
+                                                    <div>Anmerkungen:</div>
+                                                    <div><?php echo $zeile['Anmerkung'] ?></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <button class="secondary-btn-red">Entsorgen</button>
+                                        <button class="primary-btn">Fairteilen</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </table>
+                </div>
             </div>
             <!--Seiteninhalt-->
             <footer>
@@ -363,7 +369,6 @@ $herkunft = array(
                         </button></a>
                 </div>
             </footer>
-        </div>
         </div>
 
         <!-- ----------- OVERLAYS ------------ -->
@@ -426,14 +431,11 @@ $herkunft = array(
                         <h5>Lebensmittel</h5>
                     </div>
                     <p>Welche Menge des Lebensmittels möchtest du als fairteilt markieren?</p>
-
                     <form action="" class="popup-form">
                         <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
                         <input type="number" id="fairteil-menge">
                         <div class="bestand"></div>
                     </form>
-
-
                     <button class="secondary-btn" id="fairteilen-abbrechen">Abbrechen</button>
                     <button class="primary-btn" id="fairteilen"
                         onclick="window.location.href='admin.php?fairteilen=1'">Fairteilen</button>

@@ -5,6 +5,8 @@ $_SESSION['passwordErr'] = false;
 $_SESSION['login'] = false;
 $_SESSION["foodsaverLogin"] = false;
 $_SESSION["latestLMkey"] = 0;
+$_SESSION["userstatus"] = "";
+$_SESSION["bekannt"] = false;
 //Datenbankverbindung aufbauen
 require_once("dbconnect/dbconnect.inc.php");
 
