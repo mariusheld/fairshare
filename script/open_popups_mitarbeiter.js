@@ -83,6 +83,23 @@ function open_close_options(options_btn) {
             old = options_btn;
         }        
     }
+
+// Geöffnetes Pop-up schließt sich, weil außerhalb des Pop-ups gedrückt wird
+  var triggerIcons = document.getElementsByClassName("open_icon");
+
+  window.onclick = function (event) {
+    if (event.target.classList[0] != "open_icon") {
+      if(options_btn.id == "bubble") {
+        options_btn.src = '../media/comment_icon.svg';
+        options_btn.nextElementSibling.style.display = 'none';
+        old = null;
+      } else {
+        options_btn.src = '../media/edit_icon.svg';
+        options_btn.nextElementSibling.style.display = 'none';
+        old = null;
+      } 
+    }
+  };
 }
 
 // Pop-Up: "Lebensmittel fairteilen"-------------------------------------------------------------------
