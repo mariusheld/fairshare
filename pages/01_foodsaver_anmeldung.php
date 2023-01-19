@@ -171,7 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 window.alert('nichts eingegeben');
                 return false;
             } else if (email == '' && tel == '') {
-                window.alert('kontakt fehlt');
+                window.alert('Kontaktangaben fehlen (Email oder Telefonnumer)');
                 return false;
             } else if (dataschutz == false) {
                 document.getElementById("checkboxunchecked").src = "../media/datacheck_empty.png"

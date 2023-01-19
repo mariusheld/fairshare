@@ -12,7 +12,7 @@ $conn = $db_handle->connectDB();
 // Array wird geleert 
 $_SESSION["array"] = array();
 
-$letzteBox = false;
+$letzteBox = 0;
 $Zeitpunkt = date("Y-m-d H:i:s");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     mysqli_select_db($conn, "u-projraupe");
-    $finalCheckQuery = "INSERT INTO `BVerfuegbarkeit` (`Zeitpunkt`, `NochVerfuegbar`) VALUES ('$Zeitpunkt', '$letzteBox')";
+    $finalCheckQuery = "INSERT INTO `BVerfuegbarkeit` (`Zeitpunkt`, `NochVerfuegbar`) VALUES (now(), '$letzteBox')";
     mysqli_query($conn, $finalCheckQuery);
     header("Location: ./06_foodsaver_endscreen.php");
 }

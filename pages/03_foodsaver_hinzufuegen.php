@@ -166,7 +166,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lieferung = (object) [
         'FSkey' => $FSkey,
         'LMkey' => $LMkey,
-        'LieferDatum' => date('Y-m-d'),
     ];
 
     $lebensmittel = (object) [

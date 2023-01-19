@@ -7,7 +7,11 @@ session_start();
 require_once("../dbconnect/dbconnect.inc.php");
 
 //Prüfen ob Vorname vorhanden, um festzustellen, ob von Registrierungsseite oder Anmeldungsseite kommt
-$seitencheck =  $_POST["vorname"];
+if(isset($_POST["vorname"])){
+    $seitencheck = true;
+} else {
+    $seitencheck = false;
+}
 
 if ($seitencheck) {
     //Variablen aus dem Registrierungsformular holen
@@ -21,7 +25,7 @@ if ($seitencheck) {
     $dbtel = false;
     $dbID = false;
 
-        if ($mail) {
+    if ($mail) {
         //Abfrage an Datenbank senden
         $querymail = $db->prepare("SELECT*FROM Foodsaver WHERE Foodsaver.Email = '$mail'");
         $erfolg = $querymail->execute();
@@ -110,8 +114,9 @@ if ($seitencheck) {
             $_SESSION["email"] =$resultmail[0]["Email"];
             $_SESSION["tel"] = $resultmail[0]["TelNr"];
             $_SESSION["foodsaverLogin"] = true;
+            $_SESSION["bekannt"] = $bekannt;
             header("Location: ./02_foodsaver_start.php");
-           // echo $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["foodID"], $_SESSION["email"], $_SESSION["tel"];
+            // echo $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["foodID"], $_SESSION["email"], $_SESSION["tel"];
         } else if ($dbtel == "1") {
             $_SESSION["vorname"] = $resulttel[0]["Vorname"];
             $_SESSION["nachname"] = $resulttel[0]["Nachname"];
@@ -119,8 +124,9 @@ if ($seitencheck) {
             $_SESSION["email"] =$resulttel[0]["Email"];
             $_SESSION["tel"] = $resulttel[0]["TelNr"];
             $_SESSION["foodsaverLogin"] = true;
+            $_SESSION["bekannt"] = $bekannt;
             header("Location: ./02_foodsaver_start.php");
-           //echo $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["foodID"], $_SESSION["email"], $_SESSION["tel"];
+            // echo $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["foodID"], $_SESSION["email"], $_SESSION["tel"];
         } else if ($dbID == "1"){
             $_SESSION["vorname"] = $resultID[0]["Vorname"];
             $_SESSION["nachname"] = $resultID[0]["Nachname"];
@@ -128,8 +134,9 @@ if ($seitencheck) {
             $_SESSION["email"] =$resultID[0]["Email"];
             $_SESSION["tel"] = $resultID[0]["TelNr"];
             $_SESSION["foodsaverLogin"] = true;
+            $_SESSION["bekannt"] = $bekannt;
             header("Location: ./02_foodsaver_start.php");
-           //echo $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["foodID"], $_SESSION["email"], $_SESSION["tel"];
+            //echo $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["foodID"], $_SESSION["email"], $_SESSION["tel"];
         }
     }
 
@@ -141,13 +148,22 @@ if ($seitencheck) {
 
 
 } else {
+    
     //Übertragen der POST Daten aus der Anmeldeseite 
-    $mail = $_POST["mail"];
-    $tel = $_POST["tel"];
-    $ID = $_POST["ID"];
-
+    if(isset($_POST["mail"]) && $_POST["mail"] != ""){
+        $mail = $_POST["mail"];
+    } else if (isset($_POST["tel"]) && $_POST["tel"] != ""){
+        $tel = $_POST["tel"];
+    } else if (isset($_POST["ID"]) && $_POST["ID"] != ""){
+        $ID = $_POST["ID"];
+    } else {
+        $mail = "error";
+        $tel = "error";
+        $ID = "error";
+    }
+    // echo "<script>console.log(" .json_encode($tel). ");</script>";
     //Abfrage, was aus Datenbank gezogen wurde
-    if ($mail) {
+    if (isset($mail)) {
         //Abfrage an Datenbank senden
         $querymail = $db->prepare("SELECT*FROM Foodsaver WHERE Foodsaver.Email = '$mail'");
         $erfolg = $querymail->execute();
@@ -168,6 +184,7 @@ if ($seitencheck) {
             $_SESSION["email"] =$resultmail[0]["Email"];
             $_SESSION["tel"] = $resultmail[0]["TelNr"];
             $_SESSION["foodsaverLogin"] = true;
+            $_SESSION["bekannt"] = true;
             header("Location: ./02_foodsaver_start.php");
 
         }
@@ -177,7 +194,7 @@ if ($seitencheck) {
             $fehler = $querymail->errorInfo();
             die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
         }
-    } else if ($tel) {
+    } else if (isset($tel)) {
         //Abfrage an Datenbank senden
         $querytel = $db->prepare("SELECT*FROM Foodsaver WHERE Foodsaver.TelNr = '$tel'");
         $erfolg = $querytel->execute();
@@ -187,7 +204,6 @@ if ($seitencheck) {
 
         //Check ob Array befüllt ist
         $anzahl = count($resulttel);
-
         if ($anzahl == 0) {
             $_SESSION["userstatus"] = "unbekannt";
             header("Location: ./011_foodsaver_anmeldung.php");
@@ -198,6 +214,7 @@ if ($seitencheck) {
             $_SESSION["email"] =$resulttel[0]["Email"];
             $_SESSION["tel"] = $resulttel[0]["TelNr"];
             $_SESSION["foodsaverLogin"] = true;
+            $_SESSION["bekannt"] = true;
             header("Location: ./02_foodsaver_start.php");
         }
 
@@ -206,7 +223,7 @@ if ($seitencheck) {
             $fehler = $querytel->errorInfo();
             die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
         }
-    } else if ($ID) {
+    } else if (isset($ID)) {
         //Abfrage an Datenbank senden
         $queryID = $db->prepare("SELECT*FROM Foodsaver WHERE Foodsaver.FoodsharingID = '$ID'");
         $erfolg = $queryID->execute();
@@ -227,6 +244,7 @@ if ($seitencheck) {
             $_SESSION["email"] =$resultID[0]["Email"];
             $_SESSION["tel"] = $resultID[0]["TelNr"];
             $_SESSION["foodsaverLogin"] = true;
+            $_SESSION["bekannt"] = true;
             header("Location: ./02_foodsaver_start.php");
         }
 

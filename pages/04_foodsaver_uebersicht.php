@@ -39,9 +39,8 @@ function sendList($dbeintragArray, $conn)
 
     $FSkey = $lieferungEintrag['FSkey'];
     $LMkeyLieferung = $lieferungEintrag['LMkey'];
-    $LieferDatum = $lieferungEintrag['LieferDatum'];
 
-    $lieferungQuery = "INSERT INTO `Lieferung` (`FSkey`, `LMkey`, `LieferDatum`) VALUES ('$FSkey', '$LMkeyLieferung', '$LieferDatum')";
+    $lieferungQuery = "INSERT INTO `Lieferung` (`FSkey`, `LMkey`, `LieferDatum`) VALUES ('$FSkey', '$LMkeyLieferung', now())";
     mysqli_query($conn, $lieferungQuery);
 
     // LEBENSMITTEL QUERY
