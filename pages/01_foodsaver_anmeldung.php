@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <header>
         <img src="../media/logo.svg" alt="Raupe Logo" style="padding-left: 0;" id="logo">
         <div class="MitarbeiterLogin" id="login">
-            <span>Mitarbeiter*in</span>
+            <span style="letter-spacing: -0.9px; font-weight: 800;">Mitarbeiter*in</span>
             <button id="startscreen-mitarbeiter-button">
                 <svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
                     width="28px" height="28px" fill="#99BB44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF"
