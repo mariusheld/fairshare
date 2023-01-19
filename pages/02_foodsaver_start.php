@@ -21,13 +21,8 @@ while ($row = mysqli_fetch_assoc($LMkeyResult)) {
   $_SESSION["latestLMkey"] = $key[0]['LMkey'];
 }
 
-if (!empty($_POST['vorname'])) {
+if (!empty($_SESSION['vorname'])) {
   //Variablen aus POST holen
-  $_SESSION["vorname"] = $_POST['vorname'];
-  $_SESSION["nachname"] = $_POST['nachname'];
-  $_SESSION["foodID"] = $_POST['foodID'];
-  $_SESSION["email"] = $_POST['email'];
-  $_SESSION["tel"] = $_POST['tel'];
   $_SESSION["foodsaverLogin"] = true;
 } else {
   header("Location: ../index.php");
@@ -36,10 +31,14 @@ if (!empty($_POST['vorname'])) {
 //Konsolen Kontrolle ob POST liefert
 // echo "<script>console.log('{$_SESSION["vorname"]}', '{$_SESSION["nachname"]}', '{$_SESSION["foodID"]}', '{$_SESSION["email"]}', '{$_SESSION["tel"]}');</script>";
 
-//Insert in die Datenbank
+///Insert in die Datenbank
+echo "<script>console.log(" . json_encode($_SESSION["bekannt"]) . ");</script>";
+if ($_SESSION["bekannt"] == "0"){
 $eintragFS = $db->prepare("INSERT INTO Foodsaver (FoodsharingID, Vorname, Nachname, TelNr, Email)
 VALUES (?, ?, ?, ?, ?)"); //$foodID, $vorname, $nachname, $tel, $email
 $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["tel"], $_SESSION["email"]));
+unset($_SESSION["bekannt"]);
+}
 ?>
 
 
