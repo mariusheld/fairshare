@@ -83,6 +83,17 @@ $icons = array(
     8 => "../media/kategorien/sonstiges.svg",
 );
 
+$iconsred = array(
+    1 => "../media/kategorien/icon_gemuese_red.svg",
+    2 => "../media/kategorien/icon_obst_red.svg",
+    3 => "../media/kategorien/icon_backwaren-suess_red.svg",
+    4 => "../media/kategorien/icon_backwaren-salzig_red.svg",
+    5 => "../media/kategorien/icon_trockenprodukte_red.svg",
+    6 => "../media/kategorien/icon_kuehlprodukte_red.svg",
+    7 => "../media/kategorien/icon_konserven_red.svg",
+    8 => "../media/kategorien/sonstiges_red.svg",
+);
+
 $herkunft = array(
     1 => "Supermarkt",
     2 => "Wochenmarkt",
@@ -168,7 +179,7 @@ $herkunft = array(
                             <?php } else if ($ablaufdatum <= 0) { ?>
                                     <td class='lmicon'>
                                         <div class='tablecontainer'>
-                                            <img width='48px' alt='lmicon' src='<?php echo $icons[$zeile['OKatKey']] ?>'>
+                                            <img width='48px' alt='lmicon' src='<?php echo $iconsred[$zeile['OKatKey']] ?>'>
                                             <div id='bezeichnung-<?php echo $zähler ?>'
                                                 style='font-weight: 600; padding-left: 16px; color: #E97878'>
                                             <?php echo $zeile['Bezeichnung'] ?>
