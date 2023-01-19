@@ -79,7 +79,7 @@ if ($userunbekannt == "unbekannt") {
 
 <body>
     <header style="padding-left: 0;">
-        <a href="../index.php" ><img src="../media/logo.svg" style="margin-left:0" width="200px"></a>
+        <img src="../media/logo.svg" style="margin-left:0" id="logo">
         <div href="#" class="MitarbeiterLogin" id="login">
             <span>Mitarbeiter*in</span>
             <button id="startscreen-mitarbeiter-button"><svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
@@ -288,6 +288,10 @@ if ($userunbekannt == "unbekannt") {
                 document.getElementById("ID").value = "";
 
             }
+        }
+
+        document.getElementById('logo').onclick = function () {
+            window.location.href = '../index.php';
         }
 
         //JavaScript für das PopUp

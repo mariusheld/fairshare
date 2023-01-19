@@ -184,6 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         document.getElementById('logo').onclick = function () {
             window.location.href = '../index.php';
         }
+
         //JavaScript für das PopUp
         // Modales Fenster 
         var modal = document.getElementById('overtrigger');

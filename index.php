@@ -84,7 +84,7 @@ if (!$erfolg) {
     </div>
     <!-- Overlay-->
     <div id="startscreen-header">
-        <img id="logo" src="media/logo.svg" alt="fairshare" width="200px">
+        <img id="logo" src="media/logo.svg" alt="fairshare">
         <!-- <div id="startscreen-mitarbeiter-login">
             <p id="startscreen-mitarbeiter">Mitarbeiter*in</p>
             <button id="startscreen-mitarbeiter-button"><svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,7 @@ if (!$erfolg) {
     </div>
 
     <div id="startscreen-footer">
-        <a id="startscreen-footer-text" href="pages/09_credits.php">Ein Lehrprojekt der HdM Stuttgart</a>
+        <a id="startscreen-footer-text" href="pages/09_credits.html">Ein Lehrprojekt der HdM Stuttgart</a>
     </div>
     
     <script>

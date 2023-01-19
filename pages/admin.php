@@ -168,7 +168,6 @@ $herkunft = array(
                             
                             $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt)  / (60 * 60 * 24) + 1);
                             $ablaufdatum = $zeile['VerteilDeadline']; 
-                            consolelog($jetzt);
                             ?>
                             <tr>
                                 <?php
