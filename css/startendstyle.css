@@ -7,12 +7,16 @@ body {
     font-size: 13pt;
     font-style: normal;
     width: 100%;
+    background-color: #99BB44;
+    border: none;
 }
 
 #startscreen,
 #endscreen {
     background-image: url('../media/startscreen.gif');
-    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
 }
 
 #startscreen-header,
