@@ -195,7 +195,7 @@ $herkunft = array(
                                     <img id='bubble' alt='dots' src='../media/comment_icon.svg' width='48px;' onclick="open_close_options(this)"/>
                                    
                                     <!-- Anmerkung Pop-Up -->
-                                    <div class="anmerkung"">
+                                    <div class="anmerkung">
                                         <h5>Anmerkung:</h5>
                                         <p><?php echo $zeile['Anmerkung'] ?></p>
                                     </div>

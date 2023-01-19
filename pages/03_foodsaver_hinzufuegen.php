@@ -502,6 +502,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="action-wrap">
                 <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
+                <!-- Darstellung der Buttons abhängig von der Seite, von der der Nutzer kommt -->
                 <?php if (isset($_GET['editieren'])) {
                     echo "<a id='openHinzufuegenZurueck'>Zurück</a>";
                 } else {
@@ -626,6 +627,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- OVERLAY fsHinzufuegenAbbr -->
     <!-- OVERLAY Änderung der ID für die verschiedenen Zustände -->
+    <!-- editieren: Bearbeiten LM 04, hinzufuegen: Hinzufuegen LM 04 -->
     <div id="<?php if (isset($_GET['editieren'])) {
                     echo "fsHinzufuegenZurueck";
                 } else {

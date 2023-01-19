@@ -180,35 +180,33 @@ consolelog($dbeintragArray);
                   <?php
                   if ($array[$key]['Anmerkungen'] == true || $array[$key]['Allergene'] == true) { ?>
                     <img src='../media/comment_icon.svg' alt='comment_icon'
-                      id="anmerkungButton:<?php echo $array[$key]['id'] ?>"
-                      onClick='changeAnmerkung("<?php echo $array[$key]['id'] ?>")' class="open_icon" />
+                      id="bubble" onClick='open_close_options(this)' class="open_icon" />
                     <?php
-                  }
+                  };
                   ?>
-                  <!-- OVERLAY TRIGGER -->
-                  <img src="../media/edit_icon.svg" alt="edit_icon" id="editButton:<?php echo $array[$key]['id'] ?>"
-                    onClick="changeBearbeiten('<?php echo $array[$key]['id'] ?>')" class="open_icon" />
 
                   <!-- Overlay fs-anmerkung-allergene -->
-                  <div id="overlay:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-anmerkungen popup">
+                  <div class="fs-uebersicht-anmerkungen popup">
                     <div class="popup-anmerkung">
                       <?php if ($row['Anmerkungen'] == true) {
                         echo "<h5>Anmerkung:</h5>";
                         echo "<p>" . $array[$key]['Anmerkungen'] . "</p>";
-                      }
-                      ;
+                      };
                       ?>
                       <?php if ($row['Allergene'] == true) {
                         echo "<h5 class='header2'>Allergene und Inhaltsstoffe:</h5>";
                         echo "<p>" . $array[$key]['Allergene'] . "</p>";
-                      }
-                      ;
+                      };
                       ?>
                     </div>
                   </div>
 
+                  <!-- OVERLAY TRIGGER -->
+                  <img src="../media/edit_icon.svg" alt="edit_icon" id="options-btn-<?php echo $array[$key]['id'] ?>"
+                  class="open_icon" onclick="open_close_options(this)"/>
+
                   <!-- Overlay fs-lm-optionen -->
-                  <div id="overlayBearbeiten:<?php echo $array[$key]['id'] ?>" class="fs-uebersicht-bearbeiten popup">
+                  <div class="fs-uebersicht-bearbeiten popup">
                     <div class="popup-uebersicht-bearbeiten">
                       <a class="bearbeiten" href="03_foodsaver_hinzufuegen.php?editieren=<?php echo $key; ?> ">
                         <img src="../media/bearbeiten.svg" alt="Stift zum Bearbeiten">

@@ -46,7 +46,7 @@ nextUebersichtAbbr.onclick = function () {
   fsUebersichtAbbr.style.display = "none";
   // window.open(href = "../index.php");
 };
-
+ 
 
 //----------------JavaScript für fs-lm-verstauen Overlay, genutzt in 04 -----------------------------//
 //Overlay auswählen
@@ -73,69 +73,82 @@ function abbr() {
   header("Location: ../index.php");
 }
 
-var fsLmLoeschen = document.getElementById("fsLmLoeschen");
 
-let anmerkungen = false
-let bearbeiten = false
+//----------------Öffnen uns schließen der Bearbeiten und Anmerkung/Allergene Overlays-----------------------------//
 
-function changeAnmerkung(id){
-  if (bearbeiten == false) {
-    if (anmerkungen == false){
-      anmerkungen = true;
-      document.getElementById("anmerkungButton:" + id).setAttribute("src", "../media/cross.svg");
-      document.getElementById("overlay:" + id).style.display = "block";
-    } else {
-      anmerkungen = false;
-      document.getElementById("anmerkungButton:" + id).setAttribute("src", "../media/comment_icon.svg");
-      document.getElementById("overlay:" + id).style.display = "none";
+var old = null;
+
+function open_close_options(options_btn) {
+    
+  // Kein Pop-up ist geöffnet
+    if (old == null) {
+        options_btn.src = '../media/cross.svg';
+        options_btn.nextElementSibling.style.display = 'flex';
+        old = options_btn;
+
+  // Geöffnetes Pop-up wird wieder geschlossen
+    } else if (old == options_btn){
+        if(options_btn.id == "bubble") {
+            options_btn.src = '../media/comment_icon.svg';
+            options_btn.nextElementSibling.style.display = 'none';
+            old = null;
+        } else {
+            options_btn.src = '../media/edit_icon.svg';
+            options_btn.nextElementSibling.style.display = 'none';
+            old = null;
+        } 
+
+  // Geöffnetes Pop-up schließt sich, weil ein anderes Pop-up aufgeht    
+    } else if (old != options_btn) {
+        if(options_btn.id == "bubble" && old.id != "bubble") {
+            old.nextElementSibling.style.display = 'none';
+            old.src = '../media/edit_icon.svg';
+            options_btn.nextElementSibling.style.display = 'flex';
+            options_btn.src = '../media/cross.svg';
+            old = options_btn;
+        } else if(options_btn.id != "bubble" && old.id != "bubble"){
+            old.nextElementSibling.style.display = 'none';
+            old.src = '../media/edit_icon.svg';
+            options_btn.nextElementSibling.style.display = 'flex';
+            options_btn.src = '../media/cross.svg';
+            old = options_btn;
+        } else if(options_btn.id == "bubble" && old.id == "bubble"){
+            old.nextElementSibling.style.display = 'none';
+            old.src = '../media/comment_icon.svg';
+            options_btn.nextElementSibling.style.display = 'flex';
+            options_btn.src = '../media/cross.svg';
+            old = options_btn;
+        } else if(options_btn.id != "bubble" && old.id == "bubble"){
+            old.nextElementSibling.style.display = 'none';
+            old.src = '../media/comment_icon.svg';
+            options_btn.nextElementSibling.style.display = 'flex';
+            options_btn.src = '../media/cross.svg';
+            old = options_btn;
+        }        
     }
+
+  // Geöffnetes Pop-up schließt sich, weil außerhalb des Pop-ups gedrückt wird
+  var triggerIcons = document.getElementsByClassName("open_icon");
+
+  window.onclick = function (event) {
+    if (event.target.classList[0] != "open_icon") {
+      if(options_btn.id == "bubble") {
+        options_btn.src = '../media/comment_icon.svg';
+        options_btn.nextElementSibling.style.display = 'none';
+        old = null;
+    } else {
+        options_btn.src = '../media/edit_icon.svg';
+        options_btn.nextElementSibling.style.display = 'none';
+        old = null;
+    } 
   }
+};
 }
 
-function changeBearbeiten(id){
-  if (anmerkungen == false){
-    if (bearbeiten == false){
-      bearbeiten = true;
-      document.getElementById("editButton:" + id).setAttribute("src", "../media/cross.svg");
-      document.getElementById("overlayBearbeiten:" + id).style.display = "block";
-    } else {
-      bearbeiten = false;
-      document.getElementById("editButton:" + id).setAttribute("src", "../media/edit_icon.svg");
-      document.getElementById("overlayBearbeiten:" + id).style.display = "none";
-    }
-  }
-}
-
+//----------------Öffnen des Overlays Lm-löschen-----------------------------//
 function openLoeschen(id) {
-  console.log(document.getElementById("overlayLoeschen:" + id))
   document.getElementById("overlayLoeschen:" + id).style.display = "block";
   document.getElementById("grauer-hintergrund").style.display = "block";
 }
-
-function loeschenAbbr(id) { 
-  console.log("clickAbbr");
-  document.getElementById("overlayLoeschen:" + id).style.display = "none";
-}
-
-// Schließen wenn außerhalb des Pop-ups gedrückt wird
-var popups = document.getElementsByClassName("popup");
-var triggerIcons = document.getElementsByClassName("open_icon");
-window.onclick = function (event) {
-  if (event.target.classList[0] != "open_icon") {
-    console.log("click")
-    for (let item of popups) {
-      for (let trigger of triggerIcons) {
-        if (trigger.id.length < 38) {
-          bearbeiten = false;
-          document.getElementById(trigger.id).setAttribute("src", "../media/edit_icon.svg");
-        } else {
-          anmerkungen = false;
-          document.getElementById(trigger.id).setAttribute("src", "../media/comment_icon.svg");
-        } 
-      }
-      item.style.display = "none";
-    }
-  }
-};
 
 
