@@ -103,7 +103,7 @@ if ($seitencheck) {
             $_SESSION["tel"] = $_POST["tel"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = $bekannt;
-            header("Location: ./012_foodsaver_anmeldung_feedback.html");
+            header("Location: ./012_foodsaver_anmeldung_feedback.php");
     } else {
         //wenn bekannt, dann Daten aus der Datenbankabfrage vom bekannten Nutzer in die Session 
         if ($dbmail == "1") {
