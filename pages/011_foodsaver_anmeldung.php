@@ -181,7 +181,7 @@ if ($userunbekannt == "unbekannt") {
                 </div>
                 <div class="anmeldungid" id="anid">
                     <label for="ID">Deine Foodsaver-ID</label></br>
-                    <input type="text" id="ID" pattern="[0-9]{6}" name="ID" style="width:310px; height: 46px;" />
+                    <input type="text" id="ID" name="ID" style="width:310px; height: 46px;" />
                 </div>
             </form>
         </div>

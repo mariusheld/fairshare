@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="col-3">
                 <label id="labeltel" for="">Telefonnummer</label>
-                <input type="tel" id="tel" placeholder="0176 95432189"  pattern="[0-9]" name="tel">
+                <input type="tel" id="tel" placeholder="0176 95432189"  name="tel">
             </div>
 
             <p id="telormail" class="col-6">Trage deine E-Mail oder deine Telefonnummer ein.</p>
