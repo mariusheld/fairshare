@@ -21,6 +21,7 @@ $result = $query->fetchColumn(); //fetch_column()
 //$gewicht = $result[0];
 //$gewicht = array_sum($gewichtarray);
 $gewicht = intval($result);
+$gewicht = round($gewicht / 1000, $precision = 2);
 
 
      //Konsolenausgabe der Datenbankabfrage (nur möglich nach einem fetchAll() befehl der Abfrage)
@@ -98,7 +99,7 @@ if (!$erfolg) {
 
     <div id="startscreen-content">
         <div>
-            <h1 id="startscreen-title"><?php echo $gewicht ?> Kilogramm</h1>
+            <h1 id="startscreen-title"><?php echo $gewicht ?> TONNEN</h1>
             <p id="startscreen-text">Lebensmittel wurden bisher gerettet.</p>
             <button id="startscreen-button">Tippe, um zu beginnen</button>
         </div>
