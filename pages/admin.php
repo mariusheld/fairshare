@@ -166,7 +166,7 @@ $herkunft = array(
                         foreach ($filteredLebensmittel as $key => $zeile) {
                             $zähler += 1;
                             
-                            $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt)  / (60 * 60 * 24) + 1);
+                            $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt)  / (60 * 60 * 24), $precision = 1, $mode= PHP_ROUND_HALF_DOWN);
                             $ablaufdatum = $zeile['VerteilDeadline']; 
                             ?>
                             <tr>
