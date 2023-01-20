@@ -168,18 +168,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             var tel = document.getElementById('tel').value;
             var vorname = document.getElementById('vorname').value;
             if (email == '' && tel == '' && vorname == '') {
-                window.alert('nichts eingegeben');
+                //Label Rot färben
+                document.getElementById("labelvorname").style.color = "#E97878";
+                document.getElementById("labelemail").style.color = "#E97878";
+                document.getElementById("labeltel").style.color = "#E97878";
+                document.getElementById("telormail").style.color = "#E97878";
+                //Datacheck Rot färben
+                document.getElementById("checkboxunchecked").src = "../media/datacheck_empty.png"
+                //Input Border Rot färben
+                document.getElementById("vorname").style.border = "2px solid #E97878";
+                document.getElementById("tel").style.border = "2px solid #E97878";
+                document.getElementById("email").style.border = "2px solid #E97878";
                 return false;
             } else if (email == '' && tel == '') {
-                window.alert('Kontaktangaben fehlen (Email oder Telefonnumer)');
+                //Label Rot färben
+                document.getElementById("labelemail").style.color = "#E97878";
+                document.getElementById("labeltel").style.color = "#E97878";
+                document.getElementById("telormail").style.color = "#E97878";
+                //Dataschutz Rot färben
+                document.getElementById("checkboxunchecked").src = "../media/datacheck_empty.png"
+                //Input Border Rot
+                document.getElementById("tel").style.border = "2px solid #E97878";
+                document.getElementById("email").style.border = "2px solid #E97878";
                 return false;
-            } else if (dataschutz == false) {
+            } else if((email != "" || tel !="") && vorname == ""){
+                document.getElementById("labelvorname").style.color = "#E97878";
+                document.getElementById("vorname").style.border = "2px solid #E97878";
+                document.getElementById("checkboxunchecked").src = "../media/datacheck_empty.png"
+          } else if (dataschutz == false) {
                 document.getElementById("checkboxunchecked").src = "../media/datacheck_empty.png"
                 return false;
             } else {
                 return true;
             }
         }
+
+        //Sobald etwas eingegeben wird, wird Rotfärbung aufgehoben
+        email.onkeyup = () =>{
+                document.getElementById("email").style.border = "none";
+                document.getElementById("labelemail").style.color = "#BEBEB9";
+                document.getElementById("labeltel").style.color = "#BEBEB9";
+                document.getElementById("telormail").style.color = "#BEBEB9";
+                document.getElementById("tel").style.border = "none";
+        }
+        tel.onkeyup = () =>{
+                document.getElementById("email").style.border = "none";
+                document.getElementById("labelemail").style.color = "#BEBEB9";
+                document.getElementById("labeltel").style.color = "#BEBEB9";
+                document.getElementById("telormail").style.color = "#BEBEB9";
+                document.getElementById("tel").style.border = "none";
+        }
+        vorname.onkeyup = () =>{
+                document.getElementById("vorname").style.border = "none";
+                document.getElementById("labelvorname").style.color = "#BEBEB9";
+        }
+
+        document.getElementById('logo').onclick = function () {
+            window.location.href = '../index.php';
+        }
+
 
         document.getElementById('logo').onclick = function () {
             window.location.href = '../index.php';
