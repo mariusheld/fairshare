@@ -51,6 +51,9 @@ $erstesMessdatum_timestamp = strtotime("2020-01-01");
 $erstesMessdatum_dmY = date("d.m.Y", $erstesMessdatum_timestamp); 
 $monthago_timestamp = strtotime("-1 month"); 
 $monthago_dmY = date("d.m.Y", $monthago_timestamp);
+$monthago_mY = date("m.Y", $monthago_timestamp);
+$monthago_m = date("m", $monthago_timestamp);
+$monthago_leapyear = date("L", $monthago_timestamp); //returns 1 if it's a leap year, 0 if it's not
 $yearago_timestamp = strtotime("-1 year"); 
 $yearago_dmY = date("d.m.Y", $yearago_timestamp);
 
