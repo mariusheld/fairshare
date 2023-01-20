@@ -154,13 +154,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ---- CREATE OBJECTS -------
     $unkritisch = date("Y-m-d", time() + 999999999);
-    $one = date("Y-m-d", time() + 86400);
-    $two = date("Y-m-d", time() + 172800);
-    $three = date("Y-m-d", time() + 259200);
-    $four = date("Y-m-d", time() + 345600);
-    $five = date("Y-m-d", time() + 432000);
-    $six = date("Y-m-d", time() + 518400);
-    $week = date("Y-m-d", time() + 604800);
+    $one = date("Y-m-d H-i-s", time() + 86400);
+    $two = date("Y-m-d H-i-s", time() + 172800);
+    $three = date("Y-m-d H-i-s", time() + 259200);
+    $four = date("Y-m-d H-i-s", time() + 345600);
+    $five = date("Y-m-d H-i-s", time() + 432000);
+    $six = date("Y-m-d H-i-s", time() + 518400);
+    $week = date("Y-m-d H-i-s", time() + 604800);
 
     $daten = ["", $unkritisch, $one, $two, $three, $four, $five, $six, $week];
     $stufen = ["", "unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
