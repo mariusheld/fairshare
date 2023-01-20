@@ -286,6 +286,23 @@ div.buttonwhite:hover {
     color: #7F9D32;
 }
 
+div.buttonwhite2 {
+    height: 54px;
+    width: 228px;
+    border: 2px solid #E6E5E3;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+div.buttonwhite2:hover {
+    border: 2px solid #7F9D32;
+    color: #7F9D32;
+}
+
 p.buttontext {
     text-align: center;
     font-family: 'Fira Sans';
@@ -337,6 +354,29 @@ button.buttonwhite:hover {
 /*Modalisierung
 /* The Modal (background) */
 #overtrigger {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Black w/ opacity */
+}
+
+*Modalisierung
+/* The Modal (background) */
+#overtrigger2 {
     display: none;
     /* Hidden by default */
     position: fixed;

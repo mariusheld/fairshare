@@ -40,10 +40,11 @@ $userunbekannt = $_SESSION["userstatus"];
 if ($userunbekannt == "unbekannt") {
     //echo "test";
     unset($_SESSION["userstatus"]);
+    $userunbekannt = "";
     ?>
     <!-- ---------- OVERLAYS ----------- -->
     <!-- User nicht bekannt Overlay -->
-    <div class="helper" id="overtrigger" style="display: flex;">
+    <div class="helper" id="overtrigger2" style="display: flex;">
         <div class="overlayparent" style="display: flex;">
             <div class="overlaychild" style="display: flex;">
                <p class="olhead">
@@ -52,12 +53,31 @@ if ($userunbekannt == "unbekannt") {
                <p style="text-align: center; font-weight: 600; line-height: 28px; font-size: 18px; font-family: 'Fira Sans'; padding-top: 24px;">
                     Leider konnten wir deine Anmeldedaten nicht in unserer Datenbank finden. Bitte registriere dich, um das FairShaire System zu nutzen.
                </p>
-               <button id="btnallesklar" style="margin-top: 24px;" class="buttonwhite">
+               <button id="btnallesklar" style="margin-top: 24px;" class="buttonwhite2">
                 Alles klar!
                </button>
             </div>
         </div>
     </div>
+    <script>
+          //JavaScript für das PopUp Fehlermeldung Anmeldung
+        // Modales Fenster 
+        var modal2 = document.getElementById('overtrigger2');
+
+        // Button der das modale Fenster schließst
+        var span2 = document.getElementsByClassName('buttonwhite2')[0];
+
+         // Modales Fenster schließen wenn auf Abbrechen geklickt wird
+         span2.onclick = function () {
+            modal2.style.display = 'none';
+        }
+        // Modales Fenster schließen wenn außerhalb der Box geklickt wird
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal2.style.display = 'none';
+            }
+        }
+    </script>
     <?php
 }
 ?>
