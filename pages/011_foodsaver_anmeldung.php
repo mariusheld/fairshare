@@ -87,7 +87,7 @@ if ($userunbekannt == "unbekannt") {
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="author" content="Marius Held" />
+    <meta name="author" content="Lena Binder & Marius Held" />
     <title>Abgabeübersicht</title>
     <link rel="stylesheet" href="../css/adminstyle.css" />
     <link rel="stylesheet" href="../css/formularstyle.css" />
