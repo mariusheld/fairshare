@@ -350,7 +350,7 @@ $herkunft = array(
                                             </div>
                                         </div>
                                         
-                                        <button class="secondary-btn-red">Entsorgen</button>
+                                        <button class="secondary-btn-red" id="<?php echo $zähler ?>" onclick='close_lebensmittel_ansehen(this); open_lebensmittel_entsorgen(this)'>Entsorgen</button>
                                         <button class="primary-btn">Fairteilen</button>
                                     </div>
                                 </div>
