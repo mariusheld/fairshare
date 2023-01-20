@@ -122,7 +122,10 @@ consolelog($dbeintragArray);
     <header>
       <img src="../media/logo.svg" alt="logo" />
       <!-- fsHilfe Trigger -->
-      <img id="openHelp" src="../media/icon_help.svg" alt="icon_help" />
+      <div class="MitarbeiterLogin" id="login">
+            <span style="font-weight: 600; font-family: 'Fira Sans'; font-size: 16px; line-height: 19px; color: white; margin-right: -13px;">Anleitung</span>
+            <img id="openHelp" src="../media/icon_help.svg" alt="icon_help" />
+            </div>
     </header>
     <div class="content">
       <div class="wrap">

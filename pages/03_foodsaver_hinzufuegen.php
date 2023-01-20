@@ -251,7 +251,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 BOX PACKEN
             </h1>
             <!-- fsHilfe Trigger -->
+            <div class="MitarbeiterLogin" id="login">
+            <span style="font-weight: 600; font-family: 'Fira Sans'; font-size: 16px; line-height: 19px; color: white; margin-right: -13px;">Anleitung</span>
             <img id="openHelp" src="../media/icon_help.svg" alt="icon_help" />
+            </div>
         </header>
         <div class="content">
             <form id="myform" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">

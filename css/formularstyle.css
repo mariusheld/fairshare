@@ -1254,3 +1254,13 @@ width: 100%;
 .action-container .credits{
 position: fixed;
 }
+
+/*Anmeldungs Schriftzug oben rechts*/
+.MitarbeiterLogin {
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+}
