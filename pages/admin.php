@@ -198,8 +198,11 @@ $herkunft = array(
                                 <!-- //If Else Abfrage für Rotfärbung der abgelaufenen Lebensmitel und Kühlicon FÄLLE: rot+Kühl, rot+oKühl, schwarz+Kühl, schwarz+oKühl -->
                                 <?php 
                                 if ($ablaufdatum < 9999) { ?>
-                                    <td <?php if($ablaufdatum <= 0) echo"style='color: #E97878'"; ?>> 
-                                        <?php echo $zeile['VerteilDeadline']; ?> <?php if($ablaufdatum == 1) echo"Tag"; else echo"Tage"; ?>
+                                    <td <?php if ($ablaufdatum <= 0)
+                                        echo "style='display:flex; align-items:center; color: #E97878'"; 
+                                        echo "style='display:flex; align-items:center;'"; ?>> 
+                                        <?php echo $zeile['VerteilDeadline']; ?> <?php if($ablaufdatum == 1) echo"Tag"; else echo"Tage";
+                                        if ($zeile['Kuehlware'] == 1) {echo "<img style='margin-left: 12px;' width='27px' src='../media/freeze_icon.svg'>";}?>
                                     </td>
                                 <?php  } else { 
                                     echo"<td>unkritisch</td>";
@@ -309,8 +312,8 @@ $herkunft = array(
                                                 <div class="zeile">
                                                     <div>Genießbar bis:</div>
                                                     <div <?php if($ablaufdatum < 0) {echo "style='color: red'";}?>><?php 
-                                                        echo $zeile['VerteilDeadline']; if($ablaufdatum == 1) echo" Tag"; else echo" Tage"; 
-                                                        if($zeile['Kuehlware'] == 0) {echo "<img style='position: absolute; margin-left: 8px;' width='20px' src='../media/freeze_icon.svg'>";}?>
+                                                        echo $zeile['VerteilDeadline']; if($ablaufdatum == 1) echo" Tag"; else echo" Tage";
+                                                        if ($zeile['Kuehlware'] == 1) {echo "<img style='position: absolute; margin-left: 8px;' width='20px' src='../media/freeze_icon.svg'>";}?>
                                                     </div>
                                                 </div>
                                             </div>

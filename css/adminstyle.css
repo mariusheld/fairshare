@@ -365,9 +365,8 @@ th {
 td {
 	border-bottom: 2px solid #E5E5E3;
 	border-collapse: collapse;
-	padding-top: 16px;
-	padding-bottom: 16px;
 	color: #1E212B;
+	height: 80px;
 	font-size: 18px;
 	line-height: 26px;
 }
