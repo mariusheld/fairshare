@@ -385,7 +385,7 @@ $herkunft = array(
                     <div class="eingabe">
                         <div class="buttonscontainer">
                             <button class="buttonwhite">
-                                Abrechen
+                                Abbrechen
                             </button>
                             <div class="buttongreen">
                                 <button class="buttongreen" id="btnlogout" style="color: white" value="Abmelden">
