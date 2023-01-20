@@ -349,8 +349,7 @@ var filterleadsto = "<?php echo $filterleadsto; ?>";
     	
     	window.location= filterleadsto+"?date1="+ gotdate1 + "&date2=" + gotdate2;
 
-    	//TODO (@Anastasia?): Fehlermeldung, wenn ein Datum nicht ausgefüllt ist?
-    	//TODO (@Anastasia?): Richtige Checkbox als schon ausgewählt anzeigen, wenn man vom Dashboard oder Balkendiagramm kommt?
+    
 
     }
 	

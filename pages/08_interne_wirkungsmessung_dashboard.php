@@ -84,17 +84,63 @@ elseif ($date2formatted == $today_dmY)
 		{
 		$gewaehlterZeitraum = "Ges. Zeitraum"; 
 		}
-
+/*
 	elseif ($date1formatted == $monthago_dmY)
 		{
 		$gewaehlterZeitraum = "Letzter Monat"; 
 		} 
-		
+*/		
 	else 
 		{
 		$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
 		}
 	}
+
+elseif ($date1formatted == "01." . $monthago_mY)
+	{
+	if ($monthago_m == "01" || $monthago_m == "03" || $monthago_m == "05" || $monthago_m == "07" || $monthago_m == "08" || $monthago_m == "10" || $monthago_m == "12")
+		{
+		if ($date2formatted == "31." . $monthago_mY) 
+			{
+			$gewaehlterZeitraum = "Letzter Monat";
+			}			
+		else 
+			{
+			$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+			}
+		}
+	elseif ($monthago_m == "04" || $monthago_m == "06" || $monthago_m == "09" || $monthago_m == "11")
+			{
+			if ($date2formatted == "30." . $monthago_mY) 
+				{
+				$gewaehlterZeitraum = "Letzter Monat";
+				}			
+			else 
+				{
+				$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+				}
+			}
+		elseif ($monthago_m == "02")
+			{
+			if ($monthago_leapyear == 0 && $date2formatted == "28." . $monthago_mY  ) 
+				{
+				$gewaehlterZeitraum = "Letzter Monat";
+				}
+			elseif ($monthago_leapyear == 1 && $date2formatted == "29." . $monthago_mY  ) 
+				{
+				$gewaehlterZeitraum = "Letzter Monat";
+				}				
+			else 
+				{
+				$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+				}
+			}
+	else 
+		{
+		$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+		}
+	}
+
 else 
 	{ 
 	$gewaehlterZeitraum = $date1_display . " - " . $date2_display; 

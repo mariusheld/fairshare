@@ -51,6 +51,9 @@ $erstesMessdatum_timestamp = strtotime("2020-01-01");
 $erstesMessdatum_dmY = date("d.m.Y", $erstesMessdatum_timestamp); 
 $monthago_timestamp = strtotime("-1 month"); 
 $monthago_dmY = date("d.m.Y", $monthago_timestamp);
+$monthago_mY = date("m.Y", $monthago_timestamp);
+$monthago_m = date("m", $monthago_timestamp);
+$monthago_leapyear = date("L", $monthago_timestamp); //returns 1 if it's a leap year, 0 if it's not
 $yearago_timestamp = strtotime("-1 year"); 
 $yearago_dmY = date("d.m.Y", $yearago_timestamp);
 
@@ -84,17 +87,63 @@ elseif ($date2formatted == $today_dmY)
 		{
 		$gewaehlterZeitraum = "Ges. Zeitraum"; 
 		}
-
+/*
 	elseif ($date1formatted == $monthago_dmY)
 		{
 		$gewaehlterZeitraum = "Letzter Monat"; 
 		} 
-		
+*/			
 	else 
 		{
 		$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
 		}
 	}
+
+elseif ($date1formatted == "01." . $monthago_mY)
+	{
+	if ($monthago_m == "01" || $monthago_m == "03" || $monthago_m == "05" || $monthago_m == "07" || $monthago_m == "08" || $monthago_m == "10" || $monthago_m == "12")
+		{
+		if ($date2formatted == "31." . $monthago_mY) 
+			{
+			$gewaehlterZeitraum = "Letzter Monat";
+			}			
+		else 
+			{
+			$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+			}
+		}
+	elseif ($monthago_m == "04" || $monthago_m == "06" || $monthago_m == "09" || $monthago_m == "11")
+			{
+			if ($date2formatted == "30." . $monthago_mY) 
+				{
+				$gewaehlterZeitraum = "Letzter Monat";
+				}			
+			else 
+				{
+				$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+				}
+			}
+		elseif ($monthago_m == "02")
+			{
+			if ($monthago_leapyear == 0 && $date2formatted == "28." . $monthago_mY  ) 
+				{
+				$gewaehlterZeitraum = "Letzter Monat";
+				}
+			elseif ($monthago_leapyear == 1 && $date2formatted == "29." . $monthago_mY  ) 
+				{
+				$gewaehlterZeitraum = "Letzter Monat";
+				}				
+			else 
+				{
+				$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+				}
+			}
+	else 
+		{
+		$gewaehlterZeitraum = $date1_display . " - " . $date2_display;
+		}
+	}
+
 else 
 	{ 
 	$gewaehlterZeitraum = $date1_display . " - " . $date2_display; 
@@ -474,8 +523,8 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
 				<div class="footer-btn font-fira">
 					<a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>" class="cancel-button">Zurück</a>
 				</div>
+		<!-- TODO (@Anastasia): Button entfernen -->				
 				<div class="footer-btn font-fira" style="padding-right: 0px;">
-		<!-- TODO (@Anastasia): Button entfernen -->
 					<a href='#' class="next-button">Export als CSV-Datei</a>
 				</div>
 			</div>
