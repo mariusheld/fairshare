@@ -195,6 +195,256 @@ $herkunftresultset[] = $row;
 
 $herkunft = $herkunftresultset;
 
+// ----------------------------------------------------------------
+// ----------------------------------------------------------------
+// ---- JS Graph --------------------------------------------------
+// ----------------------------------------------------------------
+// ----------------------------------------------------------------
+
+
+// ---- Arrays für JS Graphen erstellen ----
+$zeitabschnitte = [];
+$abschnittmengen = [12, 19, 3, 5, 2, 3, 20, 33, 23, 12, 33, 10];
+
+
+// ---- Alle geretteten Lebensmittel pro Tag innerhalb des gewählten Zeitraumes abfragen ----
+$MengeByDayQuery = "SELECT SUM(BewegMenge) AS menge, BewegDatum AS `date`
+      FROM Bestand_Bewegung 
+      WHERE LStatusKey='2'
+      AND BewegDatum BETWEEN '$date1_ISO8601' AND '$date2_ISO8601'
+      GROUP BY DATE(BewegDatum)";
+$MengeByDayResult = mysqli_query($conn, $MengeByDayQuery);
+while ($row = mysqli_fetch_assoc($MengeByDayResult)) {
+ 
+ // $mengebydayresultset[] = $row;
+ $formdat = date("d.m.y", strtotime($row['date']));
+ $mengebydayresultset[$formdat] = $row;
+ 
+}
+$mengebyday = array();
+$mengebyday = $mengebydayresultset;
+
+//  print_r($mengebyday);
+
+
+// ---- Jeden Tag des gewählten Zeitabschnittes in Array speichern ----
+// ---- Neues Enddatum errechnen, das in die Perdiod einberechnet wird ---- 
+$calc_end_date = date('d-m-Y', strtotime("+1 day", strtotime($date2_ISO8601)));
+$perioddays = new DatePeriod(
+   new DateTime($date1_ISO8601),
+   new DateInterval('P1D'),
+   new DateTime($calc_end_date),
+);
+ 
+ // ---- Array für Tage erstellen ----
+ $displaymonths = array();
+ foreach($perioddays as $date){
+   $displaydays[] = $date->format('d.m.y');
+ }
+ 
+ 
+ // ---- Array für Wochen erstellen ---- 
+ $displayweeks = array();
+ foreach($perioddays as $date){
+   if(!in_array('KW ' .$date->format('W'). '', $displayweeks)){
+     $displayweeks[] = 'KW ' .$date->format('W'). '';
+   }
+ }
+ 
+ // ---- Array für Monate erstellen ----
+ $displaymonths = array();
+ foreach($perioddays as $date){
+   if(!in_array($date->format('M Y'), $displaymonths)){
+     $displaymonths[] = $date->format('M Y');
+   }
+ }
+ // echo 'displaymonths';
+ // print_r($displaymonths);
+ 
+ 
+ // ---- Array für Quartale erstellen ---- 
+ $displayquarters = array();
+ foreach($perioddays as $date){
+   $currentquarter = ceil($date->format('n')/3);
+   if($currentquarter == 1 && !in_array('Q1 ' .$date->format('Y'). '', $displayquarters)){
+     $displayquarters[] = 'Q1 ' .$date->format('Y'). '';
+   } else if($currentquarter == 2 && !in_array('Q2 ' .$date->format('Y'). '', $displayquarters)){
+     $displayquarters[] = 'Q2 ' .$date->format('Y'). '';
+   } else if($currentquarter == 3 && !in_array('Q3 '.$date->format('Y'). '', $displayquarters)){
+     $displayquarters[] = 'Q3 ' .$date->format('Y'). '';
+   } else if($currentquarter == 4 && !in_array('Q4 ' .$date->format('Y'). '', $displayquarters)){
+     $displayquarters[] = 'Q4 ' .$date->format('Y'). '';
+   }
+ }
+ // echo 'displayquarter';
+ // print_r($displayquarters);
+ 
+ // ---- Array für Jahre erstellen ----
+ $displayyears = array();
+ foreach($perioddays as $date){
+   if(!in_array($date->format('Y'), $displayyears)){
+     $displayyears[] = $date->format('Y');
+   }
+ }
+ 
+ 
+ 
+// ---- Array mit Mengen pro Tag erstellen ----
+$dayAmountArray = [];
+if(is_array($mengebyday)){
+ foreach($displaydays as $val){
+ 
+   if(array_key_exists($val, $mengebyday)){
+     $dayAmountArray[$val] = $mengebyday[$val]['menge'];
+   }
+   else{
+     $dayAmountArray[$val] = 0;
+   }
+     
+ }
+}
+// echo '$dayAmountArray';
+// print_r($dayAmountArray);
+// $abschnittmengenAusgelesen = implode(',', $dayAmountArray);
+// echo '$abschnittmengenAusgelesen: '.$abschnittmengenAusgelesen;
+
+
+// ---- Array mit Mengen pro Woche erstellen ----
+$mengebyweek = [];
+if(is_array($mengebyday)){
+ foreach($mengebyday as $val){
+   if(array_key_exists('KW '.date('W', strtotime($val['date'])), $mengebyweek)){
+     $mengebyweek['KW '.date('W', strtotime($val['date']))] = $mengebyweek['KW '.date('W', strtotime($val['date']))] + $val['menge'];
+   } else{
+     $mengebyweek['KW '.date('W', strtotime($val['date']))] = $val['menge'];
+   }
+ }
+}
+
+$weekAmountArray = [];
+foreach($displayweeks as $val){
+
+ if(array_key_exists($val, $mengebyweek)){
+   $weekAmountArray[$val] = $mengebyweek[$val];
+ } else{
+   $weekAmountArray[$val] = 0;
+ }
+}
+
+
+// ---- Array mit Mengen pro Monat erstellen ----
+$mengebymonth = [];
+if(is_array($mengebyday)){
+ foreach($mengebyday as $val){
+   if(array_key_exists(date('M Y', strtotime($val['date'])), $mengebymonth)){
+     $mengebymonth[date('M Y', strtotime($val['date']))] = $mengebymonth[date('M Y', strtotime($val['date']))] + $val['menge'];
+   } else{
+     $mengebymonth[date('M Y', strtotime($val['date']))] = $val['menge'];
+   }
+ }
+}
+
+$monthAmountArray = [];
+foreach($displaymonths as $val){
+
+ if(array_key_exists($val, $mengebymonth)){
+   $monthAmountArray[$val] = $mengebymonth[$val];
+ } else{
+   $monthAmountArray[$val] = 0;
+ }
+}
+// echo 'monthAmountArray';
+// print_r($monthAmountArray);
+
+
+
+// ---- Array mit Mengen pro Quartal erstellen ----
+$mengebyquarter = [];
+if(is_array($mengebyday)){
+ foreach($mengebyday as $val){
+   $date = date('n', strtotime($val['date']));
+   $currentquarter = ceil($date/3);
+   if(array_key_exists('Q'.$currentquarter. ' '.date('Y', strtotime($val['date'])), $mengebyquarter)){
+     $mengebyquarter['Q'.$currentquarter. ' '.date('Y', strtotime($val['date']))] = $mengebyquarter['Q'.$currentquarter. ' '.date('Y', strtotime($val['date']))] + $val['menge'];
+   } else{
+     $mengebyquarter['Q'.$currentquarter. ' '.date('Y', strtotime($val['date']))] = $val['menge'];
+   }
+ }
+}
+// echo 'mengebyquarter';
+// print_r($mengebyquarter);
+
+$quarterAmountArray = [];
+foreach($displayquarters as $val){
+
+ if(array_key_exists($val, $mengebyquarter)){
+   $quarterAmountArray[$val] = $mengebyquarter[$val];
+ } else{
+   $quarterAmountArray[$val] = 0;
+ }
+}
+// echo 'quarterAmountArray';
+// print_r($quarterAmountArray);
+
+
+
+// ---- Array mit Mengen pro Jahr erstellen ----
+$mengebyyear = [];
+if(is_array($mengebyday)){
+ foreach($mengebyday as $val){
+   if(array_key_exists(date('Y', strtotime($val['date'])), $mengebyyear)){
+     $mengebyyear[date('Y', strtotime($val['date']))] = $mengebyyear[date('Y', strtotime($val['date']))] + $val['menge'];
+   } else{
+     $mengebyyear[date('Y', strtotime($val['date']))] = $val['menge'];
+   }
+ }
+}
+
+$yearAmountArray = [];
+foreach($displayyears as $val){
+
+ if(array_key_exists($val, $mengebyyear)){
+   $yearAmountArray[$val] = $mengebyyear[$val];
+ } else{
+   $yearAmountArray[$val] = 0;
+ }
+}
+// echo 'yearAmountArray';
+// print_r($yearAmountArray);
+
+
+// ---- Tage zwischen den gewählten Daten berechnen ----
+$start_date = strtotime($date1_ISO8601);
+$end_date = strtotime($date2_ISO8601);
+$tage = ($end_date - $start_date)/60/60/24+1;
+
+
+
+// ---- Beide Arrays den richtigen Zeitabschnitten zuweisen --- 
+if($tage <= 12){
+ $zeitabschnitte = $displaydays;
+ $abschnittmengen = $dayAmountArray;
+} else if($tage > 12 && $tage <= 84){
+ $zeitabschnitte = $displayweeks;
+ $abschnittmengen = $weekAmountArray;
+} else if($tage > 84 && $tage <= 365){
+ $zeitabschnitte = $displaymonths;
+ $abschnittmengen = $monthAmountArray;
+} else if($tage > 365 && $tage <= 1094){
+ $zeitabschnitte = $displayquarters;
+ $abschnittmengen = $quarterAmountArray;
+} else if($tage > 1094){
+ $zeitabschnitte = $displayyears;
+ $abschnittmengen = $yearAmountArray;
+}
+
+
+// ---- Punkt anzeigen, wenn nur ein Tag ausgewählt ist ----
+$radius = 0;
+if($tage == 1){
+ $radius = 3;
+}
+
 ?>
 
 
@@ -286,7 +536,7 @@ var date1formatted = "<?php echo $date1formatted; ?>";
                       if(is_array($kategorien)){
                         foreach($kategorien as $key => $row){
                           $menge = (float) $row['menge'];
-                          $menge_ges = (float) $gesMenge;
+                          $menge_ges = (float) $ZeitraumMenge;
                           // $menge_ges = 24;
                           $prozent = $menge / $menge_ges * 100;
                           if($key < 3){
@@ -377,7 +627,7 @@ var date1formatted = "<?php echo $date1formatted; ?>";
                       if(is_array($herkunft)){
                         foreach($herkunft as $key => $row){
                           $menge = (float) $row['menge'];
-                          $menge_ges = (float) $gesMenge;
+                          $menge_ges = (float) $ZeitraumMenge;
                           // $menge_ges = 24;
                           $prozent = $menge / $menge_ges * 100;
                           if($key < 3){
@@ -415,22 +665,28 @@ var date1formatted = "<?php echo $date1formatted; ?>";
               </div>
             </a>
           </div>
-          <div class="footer-btn font-fira">
+          <div class="footer-btn font-fira" id="csv-export">
             <a href='#' class="next-button">Export als CSV-Datei</a>
           </div>
         </div>
   </div>
 </body>
 <script>
+  var csv_button = document.getElementById("csv-export");
+  csv_button.addEventListener("click", function(){
+    console.log('export');
+    location.href = "08_interne_wirkungsmessung_csvexport.php";
+  });
+
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
       type: 'line',
       data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], //Labels
+          labels: <?php echo json_encode($zeitabschnitte); ?>, //Labels
           datasets: [{
               label: null,
-              data: [12, 19, 3, 5, 2, 3, 20, 33, 23, 12, 33, 10], //Data für Liniendiagram
-              pointRadius: 0,  // Keine Punkte anzeigen
+              data: <?php echo json_encode($abschnittmengen); ?>, //Data für Liniendiagram
+              pointRadius: <?php echo $radius ?>,  // Keine Punkte anzeigen
               backgroundColor: 'rgb(153,187,68, 1)',
               borderColor: 'rgb(153,187,68, 1)',
               borderWidth: 5
