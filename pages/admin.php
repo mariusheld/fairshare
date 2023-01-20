@@ -20,7 +20,8 @@ if (!$erfolg) {
     die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
 }
 
-
+// --
+$InitialeAbgabeSet = [];
 $conn = $db_handle->connectDB();
 $InitialeAbgabeQuery = "SELECT * FROM Bestand_Bewegung WHERE LStatusKey = 1";
 $InitialeAbgabeResult = mysqli_query($conn, $InitialeAbgabeQuery);
@@ -34,9 +35,17 @@ $FairteilteAbgabeResult = mysqli_query($conn, $FairteilteAbgabeQuery);
 while ($row = mysqli_fetch_assoc($FairteilteAbgabeResult)) {
     $FairteilteAbgabeSet[] = $row;
 }
+// -- 
+$EntsorgteAbgabeSet = [];
+$EntsorgteAbgabeQuery = "SELECT * FROM Bestand_Bewegung WHERE LStatusKey = 3";
+$EntsorgteAbgabeResult = mysqli_query($conn, $EntsorgteAbgabeQuery);
+while ($row = mysqli_fetch_assoc($EntsorgteAbgabeResult)) {
+    $EntsorgteAbgabeSet[] = $row;
+}
+$bewegteAbgaben = array_merge($FairteilteAbgabeSet, $EntsorgteAbgabeSet);
 
-if ($FairteilteAbgabeSet != 0) {
-    foreach($FairteilteAbgabeSet as $key => $value) {
+if ($bewegteAbgaben != 0 && $InitialeAbgabeSet != 0) {
+    foreach($bewegteAbgaben as $key => $value) {
         foreach($InitialeAbgabeSet as $key2 => $value2) {
             if($value['LMkey'] == $value2['LMkey']) {
                 $InitialeAbgabeSet[$key2]['BewegMenge'] = $value2['BewegMenge'] - $value['BewegMenge'];   
@@ -57,20 +66,6 @@ if ($FairteilteAbgabeSet != 0) {
     }
 }
 $filteredLebensmittel = $AlleLebensmittelResult;
-
-//Abfrage an Datenbank senden
-if (isset($_GET['entsorgenKey'])) {
-    $entsorgenKey = $_GET['entsorgenKey'];
-    $EntsorgenQuery = $db->prepare("UPDATE `bestand_bewegung` SET `LStatusKey` = '3' WHERE `bestand_bewegung`.`LMkey` = $entsorgenKey");
-    $erfolg = $EntsorgenQuery->execute();
-    //Fehlertest
-    if (!$erfolg) {
-        $fehler = $query->errorInfo();
-        die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
-    }
-    //Seite neu laden
-    header("Location: admin.php");
-}
 
 //Array für die Icons in der Lagerübersicht
 $icons = array(
@@ -256,14 +251,15 @@ $herkunft = array(
                                         </div>
                                         <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge des Lebensmittels möchtest du entsorgen?</p>
 
-                                        <form action="" class="popup-form">
+                                        <form id="entsorgen-<?php echo $zähler ?>" method="POST" action="014_admin_skript.php" class="popup-form">
                                             <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
-                                            <input type="number" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" value="<?php echo $zeile['Gewicht'] ?>">
+                                            <input type="number" name="entsorgen-menge" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" 
+                                            value="<?php echo $zeile['Gewicht']; ?>">
+                                            <input type="hidden" id="lmkey" name="lmkey" value="<?php echo $zeile['LMkey'] ?>">
                                             <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
                                         </form>
-
                                         <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="entsorgen_abbrechen(this)">Abbrechen</button>
-                                        <a href="admin.php?entsorgenKey=<?php echo $zeile['LMkey']?>" class="primary-btn-red">Entsorgen</a>
+                                        <input type="submit" form="entsorgen-<?php echo $zähler ?>" class="primary-btn-red" value="Entsorgen"></input>
                                     </div>
                                 </div>
                             </div>
@@ -277,14 +273,15 @@ $herkunft = array(
                                             <h5><?php echo $zeile['Bezeichnung'] ?> fairteilen?</h5>
                                         </div>
                                         <p>Wenn du Lebensmittel als fairteilt markierst verschwinden sie aus der Übersicht. Welche Menge des Lebensmittels möchtest du fairteilen?</p>
-                                        <form action="" class="popup-form">
+                                        <form id="fairteilen-<?php echo $zähler ?>" method="POST" action="014_admin_skript.php" class="popup-form">
                                             <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
-                                            <input type="number" id="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" value="<?php echo $zeile['Gewicht'] ?>">
+                                            <input type="number" id="fairteil-menge" name="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" 
+                                            value="<?php echo $zeile['Gewicht']; ?>">
+                                            <input type="hidden" id="lmkey" name="lmkey" value="<?php echo $zeile['LMkey'] ?>">
                                             <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
                                         </form>
                                         <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_abbrechen(this)">Abbrechen</button>
-                                        <button class="primary-btn" id="fairteilen"
-                                            onclick="window.location.href='admin.php?fairteilen=1'">Fairteilen</button>
+                                        <input type="submit" form="fairteilen-<?php echo $zähler ?>" class="primary-btn" value="Fairteilen"></input>
                                     </div>
                                 </div>
                             </div>

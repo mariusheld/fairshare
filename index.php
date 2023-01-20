@@ -11,7 +11,7 @@ $_SESSION["bekannt"] = false;
 require_once("dbconnect/dbconnect.inc.php");
 
 //Lebensmittel-Abfrage an Datenbank senden
-$query = $db->prepare("SELECT SUM(Gewicht) FROM Lebensmittel")/*("SELECT SUM(BewegMenge) FROM `Bestand_Bewegung` WHERE Bestand_Bewegung.LStatusKey = 2")*/;   //Erster SQL Befehl gibt Auskunft über Menge im Lager an, zweiter SQL Befehl gibt bereits verteilte Menge an.
+$query = $db->prepare("SELECT SUM(BewegMenge) FROM `Bestand_Bewegung` WHERE Bestand_Bewegung.LStatusKey = 2")/*("SELECT SUM(BewegMenge) FROM `Bestand_Bewegung` WHERE Bestand_Bewegung.LStatusKey = 2")*/;   //Erster SQL Befehl gibt Auskunft über Menge im Lager an, zweiter SQL Befehl gibt bereits verteilte Menge an.
 $erfolg = $query->execute();
 
 //Zellenweise Verarbeitung der Datenbankabfrage
@@ -21,7 +21,7 @@ $result = $query->fetchColumn(); //fetch_column()
 //$gewicht = $result[0];
 //$gewicht = array_sum($gewichtarray);
 $gewicht = intval($result);
-$gewicht = round($gewicht / 1000, $precision = 2);
+$gewicht = round($gewicht / 1000, $precision = 3);
 
 
      //Konsolenausgabe der Datenbankabfrage (nur möglich nach einem fetchAll() befehl der Abfrage)
