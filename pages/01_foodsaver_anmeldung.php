@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="col-6">
                 <label for="">Deine Foodsaver-ID (optional / 6-stellige Nummer)</label>
-                <input type="text" name="foodID" pattern="[0-9]{6}">
+                <input style="text-align: left;" type="text" name="foodID" pattern="[0-9]{6}">
             </div>
             <div class="col-3">
                 <label id="labelemail" for="">E-Mail</label>
