@@ -44,6 +44,8 @@ $KategorieQuery = "SELECT*FROM OberKategorie ORDER BY OKatKey ASC";
 $KategorieResult = mysqli_query($conn, $KategorieQuery);
 $HerkunftQuery = "SELECT*FROM HerkunftsKategorie";
 $HerkunftResult = mysqli_query($conn, $HerkunftQuery);
+$AllergenQuery = "SELECT*FROM BekAllergene ORDER BY AllergenKey DESC LIMIT 1";
+$AllergenResult = mysqli_query($conn, $AllergenQuery);
 
 while ($row = mysqli_fetch_assoc($KategorieResult)) {
     $kategorieresultset[] = $row;
@@ -54,6 +56,10 @@ while ($row = mysqli_fetch_assoc($HerkunftResult)) {
 while ($row = mysqli_fetch_assoc($FSkeyResult)) {
     $latestFSkey[] = $row;
 }
+while ($row = mysqli_fetch_assoc($AllergenResult)) {
+    $latestAllergenKeyResult[] = $row;
+    $AllergenKey = $row['AllergenKey'] + 1;
+}
 
 // SET LMKEY -------------
 if (isset($_GET["editieren"])) {
@@ -63,8 +69,11 @@ if (isset($_GET["editieren"])) {
 }
 
 // SET FSKEY -------------
-$_SESSION['FSkey'] = $latestFSkey[0]['FSkey'];
+if ($_SESSION['FSkey'] == "") {
+    $_SESSION['FSkey'] = $latestFSkey[0]['FSkey'];
+}
 $FSkey = $_SESSION['FSkey'];
+
 // SET KATEGORIEN -------------
 $kategorien = $kategorieresultset;
 // SET HERKUNFTSKATEGORIEN -------------
@@ -162,12 +171,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Objekt, dass die Daten für die Übersicht speichert
-    $lieferung = (object) [
-        'FSkey' => $FSkey,
-        'LMkey' => $LMkey,
-    ];
-
     $lebensmittel = (object) [
         'LMkey' => $LMkey,
         'Bezeichnung' => $LMBez,
@@ -178,6 +181,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'Betrieb' => $betrieb,
         'OKatKey' => $OKatKey,
         'Herkunft' => $HerkunftKey,
+    ];
+
+    $allergeneObject = (object) [
+        'AllergenKey' => $AllergenKey,
+        'AllergenName' => $allergene,
+        'IstVorschlag' => '0',
     ];
 
     $eintrag = (object) [
@@ -195,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ];
 
     // Datenbankeintrag erstellen
-    $dbeintrag = array($lieferung, $lebensmittel);
+    $dbeintrag = array($lebensmittel, $allergeneObject);
 
     if (isset($_SESSION["editieren"]) && $_SESSION["editieren"] >= 0 && empty($lmbezErr) && empty($mengeErr) && empty($herkunftErr) && empty($kategorieErr) && empty($haltbarkeitErr) &&
         !empty($lebensmittel->OKatKey && $lebensmittel->Bezeichnung && $lebensmittel->Gewicht && $lebensmittel->VerteilDeadline)) {

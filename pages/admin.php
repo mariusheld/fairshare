@@ -204,8 +204,12 @@ $herkunft = array(
                                         <?php echo $zeile['VerteilDeadline']; ?> <?php if($ablaufdatum == 1) echo"Tag"; else echo"Tage";
                                         if ($zeile['Kuehlware'] == 1) {echo "<img style='margin-left: 12px;' width='27px' src='../media/freeze_icon.svg'>";}?>
                                     </td>
-                                <?php  } else { 
-                                    echo"<td>unkritisch</td>";
+                                <?php  } else { ?>
+                                    <td style="display:flex; align-items: center;">
+                                        unkritisch
+                                        <?php if ($zeile['Kuehlware'] == 1) {echo "<img style='margin-left: 12px;' width='27px' src='../media/freeze_icon.svg'>";} ?>
+                                    </td>
+                                <?php  
                                 } 
                                 // if else Abfrage des Anmerkungsicons 
                                 if ($zeile['Anmerkung']) { ?>

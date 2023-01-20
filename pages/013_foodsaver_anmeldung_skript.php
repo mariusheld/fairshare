@@ -5,7 +5,7 @@ session_start();
 
 //Datenbankverbindung aufbauen
 require_once("../dbconnect/dbconnect.inc.php");
-
+$_SESSION['FSkey'] = "";
 //Prüfen ob Vorname vorhanden, um festzustellen, ob von Registrierungsseite oder Anmeldungsseite kommt
 if(isset($_POST["vorname"])){
     $seitencheck = true;
@@ -90,7 +90,7 @@ if ($seitencheck) {
             $fehler = $queryID->errorInfo();
             die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
         }
-    }  
+    }
 
     //Abfragen, ob der Nutzer durch obiges Testen bekannt oder unbekannt ist
     if ($bekannt == false){
@@ -113,6 +113,7 @@ if ($seitencheck) {
             $_SESSION["foodID"] = $resultmail[0]["FoodsharingID"];
             $_SESSION["email"] =$resultmail[0]["Email"];
             $_SESSION["tel"] = $resultmail[0]["TelNr"];
+            $_SESSION['FSkey'] = $resultmail[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = $bekannt;
             header("Location: ./02_foodsaver_start.php");
@@ -123,6 +124,7 @@ if ($seitencheck) {
             $_SESSION["foodID"] = $resulttel[0]["FoodsharingID"];
             $_SESSION["email"] =$resulttel[0]["Email"];
             $_SESSION["tel"] = $resulttel[0]["TelNr"];
+            $_SESSION['FSkey'] = $resulttel[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = $bekannt;
             header("Location: ./02_foodsaver_start.php");
@@ -133,6 +135,7 @@ if ($seitencheck) {
             $_SESSION["foodID"] = $resultID[0]["FoodsharingID"];
             $_SESSION["email"] =$resultID[0]["Email"];
             $_SESSION["tel"] = $resultID[0]["TelNr"];
+            $_SESSION['FSkey'] = $resultID[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = $bekannt;
             header("Location: ./02_foodsaver_start.php");
@@ -183,6 +186,7 @@ if ($seitencheck) {
             $_SESSION["foodID"] = $resultmail[0]["FoodsharingID"];
             $_SESSION["email"] =$resultmail[0]["Email"];
             $_SESSION["tel"] = $resultmail[0]["TelNr"];
+            $_SESSION['FSkey'] = $resultmail[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = true;
             header("Location: ./02_foodsaver_start.php");
@@ -213,6 +217,7 @@ if ($seitencheck) {
             $_SESSION["foodID"] = $resulttel[0]["FoodsharingID"];
             $_SESSION["email"] =$resulttel[0]["Email"];
             $_SESSION["tel"] = $resulttel[0]["TelNr"];
+            $_SESSION['FSkey'] = $resulttel[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = true;
             header("Location: ./02_foodsaver_start.php");
@@ -243,6 +248,7 @@ if ($seitencheck) {
             $_SESSION["foodID"] = $resultID[0]["FoodsharingID"];
             $_SESSION["email"] =$resultID[0]["Email"];
             $_SESSION["tel"] = $resultID[0]["TelNr"];
+            $_SESSION['FSkey'] = $resultID[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = true;
             header("Location: ./02_foodsaver_start.php");

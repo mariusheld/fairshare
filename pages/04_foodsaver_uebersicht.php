@@ -34,17 +34,9 @@ function sendList($dbeintragArray, $conn)
 {
   mysqli_select_db($conn, "u-projraupe");
   foreach ($dbeintragArray as $dbEintrag) {
-    // LIEFERUNG QUERY
-    $lieferungEintrag = $dbEintrag[0];
-
-    $FSkey = $lieferungEintrag['FSkey'];
-    $LMkeyLieferung = $lieferungEintrag['LMkey'];
-
-    $lieferungQuery = "INSERT INTO `Lieferung` (`FSkey`, `LMkey`, `LieferDatum`) VALUES ('$FSkey', '$LMkeyLieferung', now())";
-    mysqli_query($conn, $lieferungQuery);
 
     // LEBENSMITTEL QUERY
-    $lebensmittelEintrag = $dbEintrag[1];
+    $lebensmittelEintrag = $dbEintrag[0];
 
     $LMkey = $lebensmittelEintrag['LMkey'];
     $Bezeichnung = $lebensmittelEintrag['Bezeichnung'];
@@ -59,10 +51,29 @@ function sendList($dbeintragArray, $conn)
     $lebensmittelQuery = "INSERT INTO `Lebensmittel` (`LMkey`, `Bezeichnung`, `VerteilDeadline`, `Anmerkung`, `Kuehlware`, `Gewicht`, `Betrieb`, `OKatKey`, `HerkunftKey`) VALUES ('$LMkey', '$Bezeichnung', '$VerteilDeadline', '$Anmerkung', '$Kuehlware', '$Gewicht', '$Betrieb', '$OKatKey', '$HerkunftKey')";
     mysqli_query($conn, $lebensmittelQuery);
 
+    // LIEFERUNG QUERY
+    $FSkey = $_SESSION['FSkey'];
+    $LMkeyLieferung = $lebensmittelEintrag['LMkey'];
+    $lieferungQuery = "INSERT INTO `Lieferung` (`FSkey`, `LMkey`, `LieferDatum`) VALUES ('$FSkey', '$LMkeyLieferung', now())";
+    mysqli_query($conn, $lieferungQuery);
+
+    // Allergene QUERY
+    $allergenenEintrag = $dbEintrag[1];
+
+    $LMkeyAllergene = $lebensmittelEintrag['LMkey'];
+    $AllergenKey = $allergenenEintrag['AllergenKey'];
+    $AllergenName = $allergenenEintrag['AllergenName'];
+    $IstVorschlag = $allergenenEintrag['IstVorschlag'];
+    if ($AllergenName != "") {
+      $bekallergeneQuery = "INSERT INTO `BekAllergene` (`AllergenKey`, `AllergenName`, `IstVorschlag`) VALUES ('$AllergenKey', '$AllergenName', '$IstVorschlag')";
+      $lmallergenQuery = "INSERT INTO `LM_Allergene` (`LMkey`, `AllergenKey`) VALUES ('$LMkeyAllergene', '$AllergenKey')";
+      mysqli_query($conn, $bekallergeneQuery);
+      mysqli_query($conn, $lmallergenQuery);
+    }
+
     // Bestand_Bewegung QUERY
-    $LMkeyBestandBewegung = $lieferungEintrag['LMkey'];
+    $LMkeyBestandBewegung = $lebensmittelEintrag['LMkey'];
     $LStatusKey = 1;
-    $BewegDatum = date("Y-m-d h:i:sa");
     $BewegMenge = $lebensmittelEintrag['Gewicht'];
 
     $BestandBewegungQuery = "INSERT INTO `Bestand_Bewegung` (`LMkey`, `LStatusKey`, `BewegDatum`, `BewegMenge`, `EntsorgGrund`)
