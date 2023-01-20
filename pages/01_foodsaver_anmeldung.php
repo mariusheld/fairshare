@@ -84,11 +84,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" name="foodID" pattern="[0-9]{6}">
             </div>
             <div class="col-3">
-                <label for="">E-Mail</label>
+                <label id="labelemail" for="">E-Mail</label>
                 <input type="email" id="email" name="email">
             </div>
             <div class="col-3">
-                <label for="">Telefonnummer</label>
+                <label id="labeltel" for="">Telefonnummer</label>
                 <input type="tel" id="tel" name="tel">
             </div>
 
