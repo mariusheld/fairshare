@@ -173,15 +173,15 @@ if ($userunbekannt == "unbekannt") {
             <form id="anmeldung" class="anmeldung" method="POST" action="013_foodsaver_anmeldung_skript.php">
                 <div class="anmeldungmail" id="anmail">
                     <label for="mail">Deine E-Mail</label></br>
-                    <input type="email" id="mail" name="mail" style="width:310px; height: 46px;" />
+                    <input type="email" id="mail" placeholder="raupe@immersatt.de" name="mail" style="width:310px; height: 46px;" />
                 </div>
                 <div class="anmeldungtel" id="antel">
                     <label for="tel">Deine Telefonnummer</label></br>
-                    <input type="tel" id="tel" name="tel" style="width:310px; height: 46px;" />
+                    <input type="tel" id="tel" name="tel" placeholder="0176 95432189"  pattern="[0-9]" style="width:310px; height: 46px;" />
                 </div>
                 <div class="anmeldungid" id="anid">
                     <label for="ID">Deine Foodsaver-ID</label></br>
-                    <input type="text" id="ID" name="ID" style="width:310px; height: 46px;" />
+                    <input type="text" id="ID" pattern="[0-9]{6}" name="ID" style="width:310px; height: 46px;" />
                 </div>
             </form>
         </div>
