@@ -273,7 +273,7 @@ if (isset($_GET['box']))
 
                                         <form id="entsorgen-<?php echo $zähler ?>" method="POST" action="014_admin_skript.php" class="popup-form">
                                             <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
-                                            <input type="number" name="entsorgen-menge" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" 
+                                            <input type="number" min="0" name="entsorgen-menge" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" 
                                             value="<?php echo $zeile['Gewicht']; ?>">
                                             <input type="hidden" id="lmkey" name="lmkey" value="<?php echo $zeile['LMkey'] ?>">
                                             <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
@@ -295,7 +295,7 @@ if (isset($_GET['box']))
                                         <p>Wenn du Lebensmittel als fairteilt markierst verschwinden sie aus der Übersicht. Welche Menge des Lebensmittels möchtest du fairteilen?</p>
                                         <form id="fairteilen-<?php echo $zähler ?>" method="POST" action="014_admin_skript.php?id=<?php echo $zähler ?>" class="popup-form">
                                             <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
-                                            <input type="number" id="fairteil-menge" name="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" 
+                                            <input type="number" min="0" id="fairteil-menge" name="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" 
                                             value="<?php echo $zeile['Gewicht']; ?>">
                                             <input type="hidden" id="lmkey" name="lmkey" value="<?php echo $zeile['LMkey'] ?>">
                                             <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
@@ -492,7 +492,7 @@ if (isset($_GET['box']))
                     <p>Welche Menge des Lebensmittels möchtest du als fairteilt markieren?</p>
                     <form action="" class="popup-form">
                         <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
-                        <input type="number" id="fairteil-menge">
+                        <input type="number" id="fairteil-menge" min="0">
                         <div class="bestand"></div>
                     </form>
                     <button class="secondary-btn" id="fairteilen-abbrechen">Abbrechen</button>
