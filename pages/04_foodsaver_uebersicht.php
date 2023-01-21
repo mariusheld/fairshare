@@ -19,16 +19,6 @@ $_SESSION["kuehlcheck"] = 0;
 $array = json_decode(json_encode($_SESSION["array"]), true);
 $dbeintragArray = json_decode(json_encode($_SESSION["dbeintragArray"]), true);
 
-function consolelog($data, bool $quotes = false)
-{
-  $output = json_encode($data);
-  if ($quotes) {
-    echo "<script>console.log('{$output}' );</script>";
-  } else {
-    echo "<script>console.log({$output} );</script>";
-  }
-}
-
 // Vollständiger Array mit allen Einträgen wird an die Datenbank übertragen. -------------------
 function sendList($dbeintragArray, $conn)
 {
@@ -105,7 +95,6 @@ $icon_obst_url = '../media/kategorien/icon_obst.svg';
 $icon_trockenprodukte_url = '../media/kategorien/icon_trockenprodukte.svg';
 $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 
-consolelog($dbeintragArray);
 ?>
 
 <!DOCTYPE html>

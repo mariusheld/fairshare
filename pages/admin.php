@@ -162,6 +162,7 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                     <table>
                         <!--Tabellenkopf-->
                         <tr>
+                            <th style="width: 50px;"></th>
                             <th style="width: 45%;">Lebensmittel</th>
                             <th style="width: 20%;">Menge</th>
                             <th>Genießbar</th>
@@ -211,6 +212,14 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                             $ablaufdatum = $zeile['VerteilDeadline']; 
                             ?>
                             <tr>
+                                <td class="mehrfachauswahl">
+                                    <div class="check-item">
+                                        <input name="check" type="checkbox" id="check-<?php echo $zähler ?>" onclick="addToMehrfachauswahl(this, <?php echo $zeile['Gewicht'];?>,<?php echo $zeile['LMkey']; ?>)"> 
+                                        <img src='../media/checkbox.svg' alt='checkbox' />
+                                        <img src='../media/checkbox_checked.svg' alt='checkbox_checked' />
+                                        <!-- </form> -->
+                                    </div>
+                                </td>
                                 <?php
                                 if ($ablaufdatum > 0) { ?>
                                     <td class='lmicon'>
@@ -432,11 +441,29 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                 </div>
             </div>
             <!--Seiteninhalt-->
-            <footer>
+            <footer id="mfwFooter" style="display: none;">
+                <div class="mfwFooter" style="width:100%;">
+                    <div>
+                        <h3>Mehrfachauswahl</h3>
+                    </div>
+                    <div>
+                        <a href="admin.php" class="secondary-btn" style="width: 228px; display: flex; justify-content: center; align-items: center; margin: 0;">Abbrechen</a>
+                        <button class="primary-btn-red" id="mfwEntsorgenBtn" onclick="mfwEntsorgen()" style="width:228px;">
+                        <img src="../media/arrows_white.svg" alt="Entsorgen">
+                        Entsorgen</button>
+                        <button class="primary-btn" id="mfwFairteilenBtn" onclick="mfwFairteilen()" style="width:228px;">
+                        <img src="../media/trashbin_white.svg" alt="Fairteilen">
+                        Fairteilen</button> 
+                    </div> 
+                </div>
+            </footer>
+            <footer id="footer">
                 <div class="footerbg">
-                    <a href="admin.php"><button class="refreshbutton" id="refreshdash">
+                    <a href="admin.php">
+                        <button class="refreshbutton" id="refreshdash">
                             Liste Aktualisieren
-                        </button></a>
+                        </button>
+                    </a>
                 </div>
             </footer>
         </div>
