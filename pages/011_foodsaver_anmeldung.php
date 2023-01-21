@@ -50,8 +50,8 @@ if ($userunbekannt == "unbekannt") {
                <p class="olhead">
                 Achtung!
                </p>
-               <p style="text-align: center; font-weight: 600; line-height: 28px; font-size: 18px; font-family: 'Fira Sans'; padding-top: 24px;">
-                    Leider konnten wir deine Anmeldedaten nicht in unserer Datenbank finden. Bitte registriere dich, um das FairShaire System zu nutzen.
+               <p style="text-align: center; font-weight: 400; line-height: 26px; font-size: 18px; font-family: 'Fira Sans'; padding-top: 24px;">
+                Leider konnten wir deine Anmeldedaten nicht in unserer Datenbank finden. Bitte registriere dich, um das FairShaire System zu nutzen.
                </p>
                <button id="btnallesklar" style="margin-top: 24px;" class="buttonwhite2">
                 Alles klar!
@@ -179,7 +179,7 @@ if ($userunbekannt == "unbekannt") {
                 </div>
                 <div class="anmeldungtel" id="antel">
                     <label for="tel">Deine Telefonnummer</label></br>
-                    <input type="tel" id="tel" name="tel" placeholder="0176 95432189"   style="width:310px; height: 46px;" />
+                    <input  type="tel" id="tel" placeholder="0176 95432189" name="tel" pattern="^[0-9-+\s()]*$" placeholder="0176 95432189"   style="width:310px; height: 46px;" />
                 </div>
                 <div class="anmeldungid" id="anid">
                     <label for="ID">Deine Foodsaver-ID</label></br>
