@@ -112,7 +112,7 @@ function fairteilen_abbrechen(abbrechen_btn) {
 }
 
 function close_fairteilt(fairteilt_btn) {
-    
+    document.getElementById("popup_lebensmittel_fairteilt-" + fairteilt_btn.id).style.display = 'none';
 }
 
 // document.getElementById('fairteilen').addEventListener('click', () => {

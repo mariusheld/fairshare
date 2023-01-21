@@ -318,7 +318,7 @@ if (isset($_GET['box']))
                                             <h5><?php echo $zeile['Bezeichnung'] ?> fairteilt</h5>
                                         </div>
                                         <p>Das Lebensmittel <span class="marked-green"><?php echo $zeile['Bezeichnung'] . " (" . $_GET['menge'] ." kg)"?></span> wurden in den Fairteiler gelegt.</p>
-                                        <button class="center-btn" id="<?php echo $zähler ?>" onclick="">Alles klar</button>
+                                        <button class="center-btn" id="<?php echo $zähler ?>" onclick="close_fairteilt(this)">Alles klar</button>
                                     </div>
                                 </div>
                             </div>
