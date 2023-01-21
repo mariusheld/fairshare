@@ -548,10 +548,11 @@ if ($login == true) {
           <!-- Block für Kategorien -->
           <a
             href="<?php echo '08_interne_wirkungsmessung_kategorien.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
-            <div class="block flx-container-sm">
+            <div class="block flx-container-sm" style="min-height: 239px;" >
               <!-- Liste der Kategorien -->
               <div style="display: inline;">
-                <p class="font-fira description"><strong>Nach Kategorien</strong></p>
+                <p class="font-fira description"><strong>Nach Kategorien</strong>
+                  <i class="fa fa-angle-right" aria-hidden="true" style="color: #99BB44; margin-left: 5px;"></i></p>
                 <div class="font-fira list-category">
                   <table>
                     <?php
@@ -592,6 +593,7 @@ if ($login == true) {
               </div>
               <!-- Bilder der Kategorien -->
               <div class="img-block">
+              <?php //if (!empty($kategorien)){ ?>
                 <img src="<?php if ($kategorien[0]['katkey'] == 1) {
                   echo $kat_icon_1;
                 } else if ($kategorien[0]['katkey'] == 2) {
@@ -643,6 +645,7 @@ if ($login == true) {
                 } else if ($kategorien[2]['katkey'] == 8) {
                   echo $kat_icon_8;
                 } ?>" class="img-category" style="width: 40px;">
+                <?php //} ?>
               </div>
             </div>
           </a>
@@ -651,7 +654,8 @@ if ($login == true) {
             href="<?php echo '08_interne_wirkungsmessung_herkunft.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
             <div class="block" style="min-height: 225px;">
               <div style="display: inline-block;">
-                <p class="font-fira description" style="float:left;"><strong>Nach Herkunft</strong></p>
+                <p class="font-fira description" style="float:left;"><strong>Nach Herkunft</strong>
+                <i class="fa fa-angle-right" aria-hidden="true" style="color: #99BB44; margin-left: 5px;"></i></p>
                 <div class="font-fira list-category">
                   <table>
                     <?php

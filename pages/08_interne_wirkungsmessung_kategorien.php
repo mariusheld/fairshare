@@ -553,14 +553,8 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
 				</div>
 				</a>
       		</div>
-			<div class="footer-fixed">
-				<div class="footer-btn font-fira">
-					<a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>" class="cancel-button">Zurück</a>
-				</div>
-				<div class="footer-btn font-fira" style="padding-right: 0px;">
-		<!-- TODO (@Anastasia): Button entfernen -->
-					<a href='#' class="next-button">Export als CSV-Datei</a>  
-				</div>
+			<div class="footer-btn font-fira">
+				<a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>" class="cancel-button">Zurück</a>
 			</div>
 		</div>
   </div>
