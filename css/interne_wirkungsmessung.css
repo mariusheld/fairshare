@@ -76,7 +76,7 @@ header a {
     height: 94px;
     width: 100%;
     margin: auto;
-    z-index: 10;
+    z-index: 1;
     background: #FFFDFD;
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
     display: flex;
@@ -542,3 +542,108 @@ p.logouttext {
     padding-right: 5vh;
 }
 
+
+/* Abmelden Overlay Klassen */
+
+/* The Modal (background) */
+#logout-overlay {
+	display: none;
+	/* Hidden by default */
+	position: fixed;
+	/* Stay in place */
+	z-index: 1;
+	/* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	/* Enable scroll if needed */
+	background-color: rgb(0, 0, 0);
+	/* Fallback color */
+	background-color: rgba(0, 0, 0, 0.3);
+	/* Black w/ opacity */
+}
+
+div.overlayparent {
+  width: 100%;
+  height: 100%;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*Das eigentliche PopUp*/
+div.overlaychild {
+	width: 536px;
+	height: 287px;
+	background: #FFFDFD;
+	box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+	border-radius: 16px;
+	margin-top: 0;
+	/*Positionierung der inneren Elemente*/
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+/*Headline im PopUp*/
+p.olhead {
+	margin: 0;
+	font-family: "Londrina Solid";
+	font-size: 36px;
+	text-transform: uppercase;
+	padding-top: 6px;
+}
+
+div.eingabe {
+	padding-top: 24px;
+}
+
+/*Positionierung der Buttons*/
+div.buttonscontainer {
+	display: flex;
+	flex-direction: row;
+	gap: 16px;
+	margin: 0;
+	padding-top: 24px;
+	order: 0;
+}
+
+/*Formatierung der Buttons*/
+.buttongreen {
+	height: 54px;
+	width: 228px;
+	background: #99BB44;
+	box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+	border-radius: 16px;
+	border: none;
+	text-align: center;
+	font-family: 'Fira Sans';
+	font-weight: 600;
+	font-size: 18px;
+	margin: 0;
+}
+
+.buttongreen:hover {
+	background-color: #7F9D32;
+	color: white;
+}
+
+.buttonwhite {
+	height: 54px;
+	width: 228px;
+	border: 2px solid #E6E5E3;
+	border-radius: 16px;
+  background: white;
+  font-family: 'Fira Sans';
+  color: #99BB44;
+	font-weight: 600;
+	font-size: 18px;
+	margin: 0;
+}
+
+.buttonwhite:hover {
+	border: 2px solid #7F9D32;
+	color: #7F9D32;
+}
