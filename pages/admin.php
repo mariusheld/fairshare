@@ -325,35 +325,32 @@ if (isset($_GET['box']))
                                             <input type="number" min="0" id="fairteil-menge" name="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" 
                                             value="<?php echo $zeile['Gewicht']; ?>">
                                             <input type="hidden" id="lmkey" name="lmkey" value="<?php echo $zeile['LMkey'] ?>">
+                                            <input type="hidden" id="bezeichnung" name="bezeichnung" value="<?php echo $zeile['Bezeichnung'] ?>">
+                                            <input type="hidden" id="okatkey" name="okatkey" value="<?php echo $zeile['OKatKey'] ?>">
+                                            <input type="hidden" id="menge" name="menge" value="<?php echo $zeile['Gewicht'] ?>">
                                             <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
                                         </form>
                                         <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_abbrechen(this)">Abbrechen</button>
-                                        <input type="submit" form="fairteilen-<?php echo $zähler ?>" class="primary-btn" value="Fairteilen"></input>
+                                        <button class="primary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_bestätigen(this)">Fairteilen</button>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Popup "Lebensmittel wurde fairteilt" -->
-                            <?php
-                            if(isset($_GET['fairteilt']) && $_GET['fairteilt'] == $zähler) {
-                                
-                            ?>
-                                
-                            <div class="overlay" id="popup_lebensmittel_fairteilt-<?php echo $zähler ?>" style="display: flex;">
+                            <!-- Popup "Lebensmittel fairteilen bestätigen" -->
+                            <div class="overlay" id="popup_lebensmittel_fairteilen_bestätigen-<?php echo $zähler ?>">
                                 <div class="popup-wrapper">
                                     <div class="popup active">
                                         <div class="popup-header">
                                             <img src="<?php echo $icons[$zeile['OKatKey']] ?>">
-                                            <h5><?php echo $zeile['Bezeichnung'] ?> fairteilt</h5>
+                                            <h5><?php echo $zeile['Bezeichnung'] ?> fairteilen?</h5>
                                         </div>
-                                        <p>Das Lebensmittel <span class="marked-green"><?php echo $zeile['Bezeichnung'] . " (" . $_GET['menge'] ." kg)"?></span> wurden in den Fairteiler gelegt.</p>
-                                        <button class="center-btn" id="<?php echo $zähler ?>" onclick="close_fairteilt(this)">Alles klar</button>
+                                        <p>Möchtest du das Lebensmittel <span class="marked-green"><?php echo $zeile['Bezeichnung'] . " (" . $zeile['Gewicht'] ." kg)"?></span> 
+                                        wirklich als fairteilt markieren? Dadurch verschwindet der Eintrag aus der Übersicht.</p>
+                                        <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_bestätigen_abbrechen(this)">Abbrechen</button>
+                                        <input type="submit" form="fairteilen-<?php echo $zähler ?>" class="primary-btn" value="Fairteilen"></input>
                                     </div>
                                 </div>
                             </div>
-                            <?php 
-                            }
-                            ?>
 
                             <!-- Popup "Lebensmittel ansehen" -->
                             <div class="overlay" id="popup_lebensmittel_ansehen-<?php echo $zähler ?>">
@@ -446,6 +443,26 @@ if (isset($_GET['box']))
         </div>
 
         <!-- ----------- OVERLAYS ------------ -->
+
+        <!-- Popup "Lebensmittel wurde fairteilt" -->
+        <?php
+        if(isset($_GET['Bezeichnung']) && $_GET['OKatKey'] && $_GET['Menge']) {
+        ?>
+        <div class="overlay" id="popup_lebensmittel_fairteilt-<?php echo $zähler ?>" style="display: flex;">
+            <div class="popup-wrapper">
+                <div class="popup active">
+                    <div class="popup-header">
+                        <img src="<?php echo $icons[$_GET['OKatKey']] ?>">
+                        <h5><?php echo $_GET['Bezeichnung'] ?> fairteilt</h5>
+                    </div>
+                    <p>Das Lebensmittel <span class="marked-green"><?php echo $_GET['Bezeichnung']. " (" . $_GET['Menge'] ." kg)"?></span> wurden in den Fairteiler gelegt.</p>
+                    <button class="center-btn" id="<?php echo $zähler ?>" onclick="close_fairteilt(this)">Alles klar</button>
+                </div>
+            </div>
+        </div>
+        <?php 
+        }
+        ?>
 
         <!--Logout Overlay-->
         <div class="helper" id="overtrigger">

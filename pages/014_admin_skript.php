@@ -32,6 +32,6 @@ if (isset($_POST["fairteil-menge"])) {
   }
   // Seite neu laden
   
-  header("Location: admin.php?fairteilt=" . $_GET['id'] . "&menge=" . $_POST["fairteil-menge"]);
+  header("Location: admin.php?Bezeichnung=" . $_POST['bezeichnung'] . "&OKatKey=" . $_POST["okatkey"] . "&Menge=" . $_POST["menge"]);
 }
 ?>

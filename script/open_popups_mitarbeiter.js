@@ -107,7 +107,6 @@ function open_lebensmittel_fairteilen(fairteilen_btn) {
 }
 
 function fairteilen_abbrechen(abbrechen_btn) {
-    console.log(abbrechen_btn.id)
     document.getElementById("popup_lebensmittel_fairteilen-" + abbrechen_btn.id).style.display = 'none';
 }
 
@@ -115,10 +114,14 @@ function close_fairteilt(fairteilt_btn) {
     document.getElementById("popup_lebensmittel_fairteilt-" + fairteilt_btn.id).style.display = 'none';
 }
 
-// document.getElementById('fairteilen').addEventListener('click', () => {
-//     window.location.href='admin.php?fairteilen=1';
-// });
-
+// Pop-Up: "Lebensmittel fairteilen bestätigen"---------------------------------------------------------
+function fairteilen_bestätigen(fairteilen_btn) {
+    document.getElementById('popup_lebensmittel_fairteilen-' + fairteilen_btn.id).style.display = 'none';
+    document.getElementById('popup_lebensmittel_fairteilen_bestätigen-' + fairteilen_btn.id).style.display = 'flex';
+}
+function fairteilen_bestätigen_abbrechen(abbrechen_btn) {
+    document.getElementById("popup_lebensmittel_fairteilen_bestätigen-" + abbrechen_btn.id).style.display = 'none';
+}
 
 // Pop-Up: "Lebensmittel entsorgen"-------------------------------------------------------------------
 
@@ -141,9 +144,5 @@ function open_lebensmittel_ansehen(ansehen_btn) {
 function close_lebensmittel_ansehen(close_btn) {
     document.getElementById("popup_lebensmittel_ansehen-" + close_btn.id).style.display = 'none'; 
 }
-
-// function entsorgen_abbrechen(abbrechen_btn) {
-//     document.getElementById("popup_lebensmittel_entsorgen-" + abbrechen_btn.id).style.display = 'none';
-// }
 
 
