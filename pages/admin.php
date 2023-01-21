@@ -105,17 +105,16 @@ $BVerfuegbarkeit = $db->prepare("SELECT `NochVerfuegbar` FROM `BVerfuegbarkeit` 
 $BVerfuegbarkeit->execute();
 
 //Zellenweise Verarbeitung der Datenbankabfrage
- $BoxResult = $BVerfuegbarkeit->fetchColumn();
+$BoxResult = $BVerfuegbarkeit->fetchColumn();
 
-
- //Wenn der Boxen key gesetzt wird (passiert wenn Mitarbeiter*in auf "Boxen nachgefüllt" drückt) dann wird BVerfuegbarkeit der letzten Eintrags auf 0 (-> Boxen verfügbar) gesetzt
-if (isset($_GET['box']))
+//Wenn der Boxen key gesetzt wird (passiert wenn Mitarbeiter*in auf "Boxen nachgefüllt" drückt) dann wird BVerfuegbarkeit der letzten Eintrags auf 0 (-> Boxen verfügbar) gesetzt
+if (isset($_GET['box']) && $_GET['box'] == 1)
 {
     $BVerfuegbarkeit =  $db->prepare("UPDATE `BVerfuegbarkeit` SET `NochVerfuegbar` = '0'  ORDER BY `BVerfuegKey` DESC LIMIT 1");
     $BAktualisiert = $BVerfuegbarkeit->execute();
     
-    $BoxResult = $BVerfuegbarkeit->fetchColumn();
-    }
+    $BoxResult = 0;
+}
 ?>
 
 <!DOCTYPE html>
@@ -193,7 +192,7 @@ if (isset($_GET['box']))
                                 $zeitangabe = "";
                                 if (($tage == 1 || $tage == -1) && $stunden == 1) {
                                     $zeitangabe = $tage . " Tag ". $stunden . " Stunde";
-                                } else if (($tage == 1 || $tage == -1) && ($stunden > 1 || $stunden == 0)) {
+                                } else if (($tage == 1 || $tage == -1) && ($stunden > 1)) {
                                     $zeitangabe = $tage . " Tag ". $stunden . " Stunden";
                                 } else if ($tage > 1 && $stunden == 1) {
                                     $zeitangabe = $tage . " Tage ". $stunden . " Stunde";
@@ -300,7 +299,7 @@ if (isset($_GET['box']))
 
                                         <form id="entsorgen-<?php echo $zähler ?>" method="POST" action="014_admin_skript.php" class="popup-form">
                                             <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
-                                            <input type="number" min="0" name="entsorgen-menge" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" 
+                                            <input type="number" min="0" step="0.1" name="entsorgen-menge" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" 
                                             value="<?php echo $zeile['Gewicht']; ?>">
                                             <input type="hidden" id="lmkey" name="lmkey" value="<?php echo $zeile['LMkey'] ?>">
                                             <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
@@ -322,7 +321,7 @@ if (isset($_GET['box']))
                                         <p>Wenn du Lebensmittel als fairteilt markierst verschwinden sie aus der Übersicht. Welche Menge des Lebensmittels möchtest du fairteilen?</p>
                                         <form id="fairteilen-<?php echo $zähler ?>" method="POST" action="014_admin_skript.php?id=<?php echo $zähler ?>" class="popup-form">
                                             <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
-                                            <input type="number" min="0" id="fairteil-menge" name="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" 
+                                            <input type="number" min="0" step="0.1" id="fairteil-menge" name="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" 
                                             value="<?php echo $zeile['Gewicht']; ?>">
                                             <input type="hidden" id="lmkey" name="lmkey" value="<?php echo $zeile['LMkey'] ?>">
                                             <input type="hidden" id="bezeichnung" name="bezeichnung" value="<?php echo $zeile['Bezeichnung'] ?>">
@@ -444,25 +443,6 @@ if (isset($_GET['box']))
 
         <!-- ----------- OVERLAYS ------------ -->
 
-        <!-- Popup "Lebensmittel wurde fairteilt" -->
-        <?php
-        if(isset($_GET['Bezeichnung']) && $_GET['OKatKey'] && $_GET['Menge']) {
-        ?>
-        <div class="overlay" id="popup_lebensmittel_fairteilt-<?php echo $zähler ?>" style="display: flex;">
-            <div class="popup-wrapper">
-                <div class="popup active">
-                    <div class="popup-header">
-                        <img src="<?php echo $icons[$_GET['OKatKey']] ?>">
-                        <h5><?php echo $_GET['Bezeichnung'] ?> fairteilt</h5>
-                    </div>
-                    <p>Das Lebensmittel <span class="marked-green"><?php echo $_GET['Bezeichnung']. " (" . $_GET['Menge'] ." kg)"?></span> wurden in den Fairteiler gelegt.</p>
-                    <button class="center-btn" id="<?php echo $zähler ?>" onclick="close_fairteilt(this)">Alles klar</button>
-                </div>
-            </div>
-        </div>
-        <?php 
-        }
-        ?>
 
         <!--Logout Overlay-->
         <div class="helper" id="overtrigger">
@@ -502,23 +482,55 @@ if (isset($_GET['box']))
         </div>
 
         <!-- Popup "Keine Boxen" -->
-        <div class="overlay" id="popup_keine_boxen" style="display: <?php if ($BoxResult == 1) {
+        <?php if (isset($_GET['Bezeichnung']) && $BoxResult == 1) { ?>
+            <div class="overlay" id="popup_lebensmittel_fairteilt-<?php echo $zähler ?>" style="display: flex;">
+                <div class="popup-wrapper">
+                    <div class="popup active">
+                        <div class="popup-header">
+                            <img src="<?php echo $icons[$_GET['OKatKey']] ?>">
+                            <h5><?php echo $_GET['Bezeichnung'] ?> fairteilt</h5>
+                        </div>
+                        <p>Das Lebensmittel <span class="marked-green"><?php echo $_GET['Bezeichnung']. " (" . $_GET['Menge'] ." kg)"?></span> wurden in den Fairteiler gelegt.</p>
+                        <button class="center-btn" id="<?php echo $zähler ?>" onclick="close_fairteilt(this)">Alles klar</button>
+                    </div>
+                </div>
+            </div>
+        <?php } else if(isset($_GET['Bezeichnung']) && $_GET['OKatKey'] && $_GET['Menge']) { ?>
+            <div class="overlay" id="popup_lebensmittel_fairteilt-<?php echo $zähler ?>" style="display: flex;">
+                <div class="popup-wrapper">
+                    <div class="popup active">
+                        <div class="popup-header">
+                            <img src="<?php echo $icons[$_GET['OKatKey']] ?>">
+                            <h5><?php echo $_GET['Bezeichnung'] ?> fairteilt</h5>
+                        </div>
+                        <p>Das Lebensmittel <span class="marked-green"><?php echo $_GET['Bezeichnung']. " (" . $_GET['Menge'] ." kg)"?></span> wurden in den Fairteiler gelegt.</p>
+                        <button class="center-btn" id="<?php echo $zähler ?>" onclick="close_fairteilt(this)">Alles klar</button>
+                    </div>
+                </div>
+            </div>
+        <?php } else if (isset($_GET['entsorgen'])) {?>
+            <!-- // Popup "Lebensmittel entsorgt" -->
+        <?php } else { ?>
+            <div class="overlay" id="popup_keine_boxen" style="display: <?php if ($BoxResult == 1) {
                                 echo "flex";
                             } else {
                                 echo "none";
                             } ?>">
-            <div class="popup-wrapper">
-                <div class="popup active">
-                    <h3>HOPPLA!</h3>
-                    <p>Jemand hat gerade die letzte Box genommen. <br> Sieh nach und sorge für Nachschub.</p>
-                    <button id="close_keine_boxen" class="secondary-btn" onclick="close_KeineBoxen();">Später erinnern</button>
-                    <a class="primary-btn" style="text-align: center" onclick="close_KeineBoxen();" href="<?php if ($BoxResult == 1) {echo "admin.php?box=1";} ?>" >
-                    Boxen nachgefüllt
-                    </a>
-                    
+                <div class="popup-wrapper">
+                    <div class="popup active">
+                        <h3>HOPPLA!</h3>
+                        <p>Jemand hat gerade die letzte Box genommen. <br> Sieh nach und sorge für Nachschub.</p>
+                        <button id="close_keine_boxen" class="secondary-btn" onclick="close_KeineBoxen();">Später erinnern</button>
+                        <!-- <a id="close_keine_boxen" class="secondary-btn" onclick="close_KeineBoxen();" href="admin.php?box=2">Später erinnern</a> -->
+                        <a class="primary-btn" style="text-align: center" onclick="close_KeineBoxen();" href="admin.php?box=1">
+                        Boxen nachgefüllt
+                        </a>
+                        
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
+
 
         <!-- Popup "Lebensmittel fairteilen" -->
         <div class="overlay" id="popup_lebensmittel_fairteilen">
@@ -531,7 +543,7 @@ if (isset($_GET['box']))
                     <p>Welche Menge des Lebensmittels möchtest du als fairteilt markieren?</p>
                     <form action="" class="popup-form">
                         <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
-                        <input type="number" id="fairteil-menge" min="0">
+                        <input type="number" id="fairteil-menge" min="0" step="0.1">
                         <div class="bestand"></div>
                     </form>
                     <button class="secondary-btn" id="fairteilen-abbrechen">Abbrechen</button>

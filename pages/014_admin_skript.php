@@ -15,7 +15,7 @@ if (isset($_POST["entsorgen-menge"])) {
     die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
   }
   // Seite neu ladens
-  header("Location: admin.php");
+  header("Location: admin.php?entsorgen=erfolgreich");
 }
 
 if (isset($_POST["fairteil-menge"])) {
