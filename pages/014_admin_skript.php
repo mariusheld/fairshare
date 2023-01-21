@@ -31,6 +31,7 @@ if (isset($_POST["fairteil-menge"])) {
     die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
   }
   // Seite neu laden
-  header("Location: admin.php");
+  
+  header("Location: admin.php?fairteilt=" . $_GET['id'] . "&menge=" . $_POST["fairteil-menge"]);
 }
 ?>
