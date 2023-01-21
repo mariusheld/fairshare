@@ -10,7 +10,7 @@ $login = $_SESSION['login'];
 
 // ----------- QUERYS -----------
 
-$AlleLebensmittelQuery = $db->prepare("SELECT * FROM Lebensmittel ORDER BY VerteilDeadline");
+$AlleLebensmittelQuery = $db->prepare("SELECT * FROM (Lebensmittel LEFT JOIN Lieferung ON Lebensmittel.LMkey=Lieferung.LMKey) LEFT JOIN Foodsaver ON Lieferung.FSkey=Foodsaver.FSKey ORDER BY VerteilDeadline");
 $erfolg = $AlleLebensmittelQuery->execute();
 //Zellenweise Verarbeitung der Datenbankabfrage
 $AlleLebensmittelResult = $AlleLebensmittelQuery->fetchAll();
@@ -67,6 +67,8 @@ if ($bewegteAbgaben != 0 && $InitialeAbgabeSet != 0) {
 }
 $filteredLebensmittel = $AlleLebensmittelResult;
 
+
+
 //Array für die Icons in der Lagerübersicht
 $icons = array(
     1 => "../media/kategorien/icon_gemuese.svg",
@@ -100,11 +102,11 @@ $herkunft = array(
 );
 
 //Zugriff auf db um Verfügbarkeit der  boxen zu prüfen
-$BVerfuegbarkeit = $db->prepare("SELECT `NochVerfuegbar` FROM `BVerfuegbarkeit` ORDER BY `BVerfuegKey` DESC LIMIT 1");
-$BVerfuegbarkeit->execute();
+// $BVerfuegbarkeit = $db->prepare("SELECT `NochVerfuegbar` FROM `BVerfuegbarkeit` ORDER BY `BVerfuegKey` DESC LIMIT 1");
+// $BVerfuegbarkeit->execute();
 
 //Zellenweise Verarbeitung der Datenbankabfrage
-$BoxResult = $BVerfuegbarkeit->fetchColumn();
+// $BoxResult = $BVerfuegbarkeit->fetchColumn();
 
 function consolelog($data, bool $quotes = false)
 {
@@ -116,8 +118,8 @@ function consolelog($data, bool $quotes = false)
   }
 }
 
-consolelog($BoxResult);
-consolelog(($_GET['box']));
+// consolelog($BoxResult);
+// consolelog(($_GET['box']));
 
 
 if (isset($_GET['box']))
@@ -343,9 +345,19 @@ if (isset($_GET['box']))
                                                 </div>
                                                 <div class="zeile">
                                                     <div>Genießbar bis:</div>
-                                                    <div <?php if($ablaufdatum < 0) {echo "style='color: red'";}?>><?php 
-                                                        echo $zeile['VerteilDeadline']; if($ablaufdatum == 1) echo" Tag"; else echo" Tage";
-                                                        if ($zeile['Kuehlware'] == 1) {echo "<img style='position: absolute; margin-left: 8px;' width='20px' src='../media/freeze_icon.svg'>";}?>
+                                                    <div <?php if($ablaufdatum < 0) {echo "style='color: #E97878'";}?>><?php
+                                                    if($ablaufdatum > 9999) {
+                                                        echo "unkritisch";
+                                                    } else {
+                                                        echo $zeile['VerteilDeadline'];
+                                                        if ($ablaufdatum == 1) {
+                                                            echo " Tag";
+                                                        } else {
+                                                            echo" Tage";
+                                                        }
+                                                    }
+                                                    
+                                                    if ($zeile['Kuehlware'] == 1) {echo "<img style='position: absolute; margin-left: 8px;' width='20px' src='../media/freeze_icon.svg'>";}?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -353,15 +365,15 @@ if (isset($_GET['box']))
                                             <div class="block">
                                                 <div class="zeile">
                                                     <div>Geliefert von:</div>
-                                                    <div>Jürgen</div>
+                                                    <div><?php echo $zeile['Vorname'] ?></div>
                                                 </div>
                                                 <div class="zeile">
                                                     <div>E-Mail:</div>
-                                                    <div>email.com</div>
+                                                    <div><?php echo $zeile['Email'] ?></div>
                                                 </div>
                                                 <div class="zeile">
                                                     <div>Telefonnr:</div>
-                                                    <div>10264606194316</div>
+                                                    <div><?php echo $zeile['TelNr'] ?></div>
                                                 </div>
                                             </div>
 
@@ -396,7 +408,7 @@ if (isset($_GET['box']))
             <footer>
                 <div class="footerbg">
                     <!-- Nur zu Testzwecken, später entfernen -->
-                    <button id="open_nicht_genießbar">Nicht genießbar</button>
+                    <button id="open_nicht_genießbar" onclick="open_NichtGenießbar()">Nicht genießbar</button>
                     <a href="admin.php"><button class="refreshbutton" id="refreshdash">
                             Liste Aktualisieren
                         </button></a>
