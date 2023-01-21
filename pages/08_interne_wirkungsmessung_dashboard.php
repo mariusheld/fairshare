@@ -7,8 +7,24 @@ $db_handle = new DBController();
 $conn = $db_handle->connectDB();
 
 //Datumsauswahl auslesen
-$date1formatted = $_GET['date1'];
+
+if (isset($_GET['date1']))
+	{
+	$date1formatted = $_GET['date1'];
+	}
+else 
+	{
+	$date1formatted = NULL; 
+	}
+
+if (isset($_GET['date2']))
+	{
 $date2formatted = $_GET['date2'];
+	}
+else 
+	{
+	$date2formatted = NULL; 
+	}
 
 
 
