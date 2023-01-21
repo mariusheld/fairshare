@@ -182,7 +182,17 @@ if (isset($_GET['box']))
                             $zähler += 1;
                             
                             $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt)  / (60 * 60 * 24), $precision = 1, $mode= PHP_ROUND_HALF_DOWN);
-                            $ablaufdatum = $zeile['VerteilDeadline']; 
+                            
+                            if ($zeile['VerteilDeadline'] < 9999) {
+                                $timestring = strval($zeile['VerteilDeadline']);
+                                $splitarray = explode(".", $timestring);
+                                $tage = $splitarray[0];
+                                $stunden = round(($splitarray[1] * 2.4), $precision = 0);
+                                $zeitangabe = $tage . " Tag(e) " . $stunden . " Stunde(n)";
+
+                                $ablaufdatum = $zeile['VerteilDeadline']; 
+                            }
+
                             ?>
                             <tr>
                                 <?php
@@ -216,7 +226,7 @@ if (isset($_GET['box']))
                                     <td <?php if ($ablaufdatum <= 0)
                                         echo "style='display:flex; align-items:center; color: #E97878'"; 
                                         echo "style='display:flex; align-items:center;'"; ?>> 
-                                        <?php echo $zeile['VerteilDeadline']; ?> <?php if($ablaufdatum == 1) echo"Tag"; else echo"Tage";
+                                        <?php echo $zeitangabe; ?> <?php 
                                         if ($zeile['Kuehlware'] == 1) {echo "<img style='margin-left: 12px;' width='27px' src='../media/freeze_icon.svg'>";}?>
                                     </td>
                                 <?php  } else { ?>
@@ -358,12 +368,7 @@ if (isset($_GET['box']))
                                                     if($ablaufdatum > 9999) {
                                                         echo "unkritisch";
                                                     } else {
-                                                        echo $zeile['VerteilDeadline'];
-                                                        if ($ablaufdatum == 1) {
-                                                            echo " Tag";
-                                                        } else {
-                                                            echo" Tage";
-                                                        }
+                                                        echo $zeitangabe;
                                                     }
 
                                                     if ($zeile['Kuehlware'] == 1) {echo "<img style='position: absolute; margin-left: 8px;' width='20px' src='../media/freeze_icon.svg'>";}?>
