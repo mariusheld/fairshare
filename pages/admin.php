@@ -104,6 +104,36 @@ $herkunft = array(
     6 => "Sonstiges"
 );
 
+//Zugriff auf db um Verfügbarkeit der  boxen zu prüfen
+$BVerfuegbarkeit = $db->prepare("SELECT `NochVerfuegbar` FROM `BVerfuegbarkeit` ORDER BY `BVerfuegKey` DESC LIMIT 1");
+$BVerfuegbarkeit->execute();
+
+//Zellenweise Verarbeitung der Datenbankabfrage
+$BoxResult = $BVerfuegbarkeit->fetchColumn();
+
+function consolelog($data, bool $quotes = false)
+{
+  $output = json_encode($data);
+  if ($quotes) {
+    echo "<script>console.log('{$output}' );</script>";
+  } else {
+    echo "<script>console.log({$output} );</script>";
+  }
+}
+
+consolelog($BoxResult);
+consolelog(($_GET['box']));
+
+
+if (isset($_GET['box']))
+{
+    $BVerfuegbarkeit =  $db->prepare("UPDATE `BVerfuegbarkeit` SET `NochVerfuegbar` = '0' WHERE `NochVerfuegbar` = '1' ORDER BY `BVerfuegKey` DESC LIMIT 1");
+    $BAktualisiert = $BVerfuegbarkeit->execute();
+    
+    consolelog($BAktualisiert);
+    consolelog("test2");
+
+    }
 ?>
 
 <!DOCTYPE html>
@@ -117,6 +147,7 @@ $herkunft = array(
         integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/adminstyle.css" />
     <link rel="stylesheet" href="../css/popup_styles.css">
+    <link rel="icon" type="image/png" href="../media/favicon.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&family=Londrina+Solid:wght@300;400&display=swap');
     </style>
@@ -369,7 +400,6 @@ $herkunft = array(
                 <div class="footerbg">
                     <!-- Nur zu Testzwecken, später entfernen -->
                     <button id="open_nicht_genießbar">Nicht genießbar</button>
-                    <button id="open_keine_boxen">Keine Boxen</button>
                     <a href="admin.php"><button class="refreshbutton" id="refreshdash">
                             Liste Aktualisieren
                         </button></a>
@@ -417,13 +447,20 @@ $herkunft = array(
         </div>
 
         <!-- Popup "Keine Boxen" -->
-        <div class="overlay" id="popup_keine_boxen">
+        <div class="overlay" id="popup_keine_boxen" style="display: <?php if ($BoxResult == 1) {
+                                echo "flex";
+                            } else {
+                                echo "none";
+                            } ?>">
             <div class="popup-wrapper">
                 <div class="popup active">
                     <h3>HOPPLA!</h3>
                     <p>Jemand hat gerade die letzte Box genommen. <br> Sieh nach und sorge für Nachschub.</p>
-                    <button id="close_keine_boxen" class="secondary-btn">Später erinnern</button>
-                    <button class="primary-btn">Boxen nachgefüllt</button>
+                    <button id="close_keine_boxen" class="secondary-btn" onclick="close_KeineBoxen();">Später erinnern</button>
+                    <a class="primary-btn" style="text-align: center" href="<?php if ($BoxResult == 1) {echo "admin.php?box=1";} ?>" onclick="close_KeineBoxen();" >
+                    Boxen nachgefüllt
+                    </a>
+                    
                 </div>
             </div>
         </div>

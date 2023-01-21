@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-6 datenschutz" style="display: flex; flex-direction: row; padding-top: 32px;">
                 <input type="checkbox" name="datacheck" id="datacheck" style="margin-top: -14px;"/>
                 <img alt="nocheck" width="32px" height="32px" src="../media/checkbox.svg" id="checkboxunchecked" class="checkbox" style="margin-left: -30px; margin-top: 0px;">
-                <img alt="check" width="32px" height="32px" " src="../media/checkbox_checked.svg" class="checkboxchecked" style="margin-left: -30px; margin-top: 0px;">
+                <img alt="check" width="32px" height="32px" src="../media/checkbox_checked.svg" class="checkboxchecked" style="margin-left: -30px; margin-top: 0px;">
                 <p class="dataschutz">
                     Ich stimme zu, dass die Raupe meine Daten zur Auswertung 
                     der Wirkungsmessung verwendet. Persönliche Daten werden 

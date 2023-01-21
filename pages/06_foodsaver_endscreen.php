@@ -62,7 +62,7 @@ session_destroy();
 
     <div id="endscreen-content">
         <div>
-            <h1 id="endscreen-title"><?php echo $gewicht; ?> Kilogramm</h1>
+            <h1 id="endscreen-title"><?php echo $gewicht; ?> KILOGRAMM</h1>
             <p id="endscreen-text">Lebensmittel hast du bisher für die Raupe gerettet!</p>
             <p id="endscreen-text-danke">Danke für deinen Beitrag!</p>
             <button id="endscreen-button">Beenden</button>

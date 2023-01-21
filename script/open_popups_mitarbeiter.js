@@ -15,9 +15,6 @@ function close_NichtGenießbar() {
 
 // Pop-Up: "Keine Boxen"-------------------------------------------------------------------
 
-document.getElementById('open_keine_boxen').addEventListener('click', open_KeineBoxen);
-document.getElementById('close_keine_boxen').addEventListener('click', close_KeineBoxen);
-
 function open_KeineBoxen() {
     document.getElementById('popup_keine_boxen').style.display = 'flex';
 }

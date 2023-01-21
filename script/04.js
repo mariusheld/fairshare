@@ -68,12 +68,6 @@ exitLmVerstauen.onclick = function () {
   fsLmVerstauen.style.display = "none";
 };
 
-function abbr() {
-  session_destroy();
-  header("Location: ../index.php");
-}
-
-
 //----------------Öffnen uns schließen der Bearbeiten und Anmerkung/Allergene Overlays-----------------------------//
 
 var old = null;
