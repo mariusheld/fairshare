@@ -43,7 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>
         FAIRSHARE
     </title>
-
+    <link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
+    <link rel="manifest" href="../favicon/manifest.json" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Londrina Solid">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Sans">
     <link rel="stylesheet" href="../css/foodsaver_anmeldung.css">

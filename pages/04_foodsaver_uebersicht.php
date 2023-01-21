@@ -117,6 +117,8 @@ consolelog($dbeintragArray);
   <title>
     FAIRSHARE
   </title>
+  <link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
+  <link rel="manifest" href="../favicon/manifest.json" />
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -134,9 +136,10 @@ consolelog($dbeintragArray);
       <img src="../media/logo.svg" alt="logo" />
       <!-- fsHilfe Trigger -->
       <div class="MitarbeiterLogin" id="login">
-            <span style="font-weight: 600; font-family: 'Fira Sans'; font-size: 16px; line-height: 19px; color: white; margin-right: -13px;">Anleitung</span>
-            <img id="openHelp" src="../media/icon_help.svg" alt="icon_help" />
-            </div>
+        <span
+          style="font-weight: 600; font-family: 'Fira Sans'; font-size: 16px; line-height: 19px; color: white; margin-right: -13px;">Anleitung</span>
+        <img id="openHelp" src="../media/icon_help.svg" alt="icon_help" />
+      </div>
     </header>
     <div class="content">
       <div class="wrap">
@@ -192,10 +195,11 @@ consolelog($dbeintragArray);
                   <!-- OVERLAY TRIGGER -->
                   <?php
                   if ($array[$key]['Anmerkungen'] == true || $array[$key]['Allergene'] == true) { ?>
-                    <img src='../media/comment_icon.svg' alt='comment_icon'
-                      id="bubble" onClick='open_close_options(this)' class="open_icon" />
+                    <img src='../media/comment_icon.svg' alt='comment_icon' id="bubble" onClick='open_close_options(this)'
+                      class="open_icon" />
                     <?php
-                  };
+                  }
+                  ;
                   ?>
 
                   <!-- Overlay fs-anmerkung-allergene -->
@@ -204,19 +208,21 @@ consolelog($dbeintragArray);
                       <?php if ($row['Anmerkungen'] == true) {
                         echo "<h5>Anmerkung:</h5>";
                         echo "<p>" . $array[$key]['Anmerkungen'] . "</p>";
-                      };
+                      }
+                      ;
                       ?>
                       <?php if ($row['Allergene'] == true) {
                         echo "<h5 class='header2'>Allergene und Inhaltsstoffe:</h5>";
                         echo "<p>" . $array[$key]['Allergene'] . "</p>";
-                      };
+                      }
+                      ;
                       ?>
                     </div>
                   </div>
 
                   <!-- OVERLAY TRIGGER -->
                   <img src="../media/edit_icon.svg" alt="edit_icon" id="options-btn-<?php echo $array[$key]['id'] ?>"
-                  class="open_icon" onclick="open_close_options(this)"/>
+                    class="open_icon" onclick="open_close_options(this)" />
 
                   <!-- Overlay fs-lm-optionen -->
                   <div class="fs-uebersicht-bearbeiten popup">

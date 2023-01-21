@@ -1,0 +1,17 @@
+{
+    "short_name": "Fairshare",
+    "name": "Fairshare Tool für das Café Raupe in Stuttgart",
+    "icons": [
+      {
+        "src": "favicon.ico",
+        "type": "image/png",
+        "sizes": "32x32"
+      }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff"
+  }
+  
+  

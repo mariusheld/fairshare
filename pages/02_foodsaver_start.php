@@ -32,7 +32,7 @@ if (!empty($_SESSION['vorname'])) {
 // echo "<script>console.log('{$_SESSION["vorname"]}', '{$_SESSION["nachname"]}', '{$_SESSION["foodID"]}', '{$_SESSION["email"]}', '{$_SESSION["tel"]}');</script>";
 
 ///Insert in die Datenbank
-if ($_SESSION["bekannt"] == false){
+if ($_SESSION["bekannt"] == false) {
   $eintragFS = $db->prepare("INSERT INTO Foodsaver (FoodsharingID, Vorname, Nachname, TelNr, Email)
   VALUES (?, ?, ?, ?, ?)"); //$foodID, $vorname, $nachname, $tel, $email
   $eintragFS->execute(array($_SESSION["foodID"], $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["tel"], $_SESSION["email"]));
@@ -49,6 +49,8 @@ if ($_SESSION["bekannt"] == false){
   <title>
     FAIRSHARE
   </title>
+  <link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
+  <link rel="manifest" href="../favicon/manifest.json" />
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -65,9 +67,10 @@ if ($_SESSION["bekannt"] == false){
       <img src="../media/logo.svg" alt="logo" />
       <!-- fsHilfe Trigger -->
       <div class="MitarbeiterLogin" id="login">
-            <span style="font-weight: 600; font-family: 'Fira Sans'; font-size: 16px; line-height: 19px; color: white; margin-right: -13px;">Anleitung</span>
-            <img id="openHelp" src="../media/icon_help.svg" alt="icon_help" />
-            </div>
+        <span
+          style="font-weight: 600; font-family: 'Fira Sans'; font-size: 16px; line-height: 19px; color: white; margin-right: -13px;">Anleitung</span>
+        <img id="openHelp" src="../media/icon_help.svg" alt="icon_help" />
+      </div>
     </header>
     <div class="content">
       <img src="../media/background.svg" alt="background_image" class="background"></img>

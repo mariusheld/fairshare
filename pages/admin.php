@@ -124,7 +124,9 @@ if (isset($_GET['box']))
 <head>
     <meta charset="UTF-8" />
     <meta name="author" content="Marius Held" />
-    <title>Abgabeübersicht</title>
+    <title>FAIRSHARE</title>
+    <link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
+    <link rel="manifest" href="../favicon/manifest.json" />
     <script src="https://code.jquery.com/jquery-3.6.2.min.js"
         integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/adminstyle.css" />
