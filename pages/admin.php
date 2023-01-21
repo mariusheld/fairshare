@@ -102,34 +102,20 @@ $herkunft = array(
 );
 
 //Zugriff auf db um Verfügbarkeit der  boxen zu prüfen
-// $BVerfuegbarkeit = $db->prepare("SELECT `NochVerfuegbar` FROM `BVerfuegbarkeit` ORDER BY `BVerfuegKey` DESC LIMIT 1");
-// $BVerfuegbarkeit->execute();
+$BVerfuegbarkeit = $db->prepare("SELECT `NochVerfuegbar` FROM `BVerfuegbarkeit` ORDER BY `BVerfuegKey` DESC LIMIT 1");
+$BVerfuegbarkeit->execute();
 
 //Zellenweise Verarbeitung der Datenbankabfrage
-// $BoxResult = $BVerfuegbarkeit->fetchColumn();
-
-function consolelog($data, bool $quotes = false)
-{
-  $output = json_encode($data);
-  if ($quotes) {
-    echo "<script>console.log('{$output}' );</script>";
-  } else {
-    echo "<script>console.log({$output} );</script>";
-  }
-}
-
-// consolelog($BoxResult);
-// consolelog(($_GET['box']));
+ $BoxResult = $BVerfuegbarkeit->fetchColumn();
 
 
+ //Wenn der Boxen key gesetzt wird (passiert wenn Mitarbeiter*in auf "Boxen nachgefüllt" drückt) dann wird BVerfuegbarkeit der letzten Eintrags auf 0 (-> Boxen verfügbar) gesetzt
 if (isset($_GET['box']))
 {
-    $BVerfuegbarkeit =  $db->prepare("UPDATE `BVerfuegbarkeit` SET `NochVerfuegbar` = '0' WHERE `NochVerfuegbar` = '1' ORDER BY `BVerfuegKey` DESC LIMIT 1");
+    $BVerfuegbarkeit =  $db->prepare("UPDATE `BVerfuegbarkeit` SET `NochVerfuegbar` = '0'  ORDER BY `BVerfuegKey` DESC LIMIT 1");
     $BAktualisiert = $BVerfuegbarkeit->execute();
     
-    consolelog($BAktualisiert);
-    consolelog("test2");
-
+    $BoxResult = $BVerfuegbarkeit->fetchColumn();
     }
 ?>
 
@@ -466,7 +452,7 @@ if (isset($_GET['box']))
                     <h3>HOPPLA!</h3>
                     <p>Jemand hat gerade die letzte Box genommen. <br> Sieh nach und sorge für Nachschub.</p>
                     <button id="close_keine_boxen" class="secondary-btn" onclick="close_KeineBoxen();">Später erinnern</button>
-                    <a class="primary-btn" style="text-align: center" href="<?php if ($BoxResult == 1) {echo "admin.php?box=1";} ?>" onclick="close_KeineBoxen();" >
+                    <a class="primary-btn" style="text-align: center" onclick="close_KeineBoxen();" href="<?php if ($BoxResult == 1) {echo "admin.php?box=1";} ?>" >
                     Boxen nachgefüllt
                     </a>
                     
