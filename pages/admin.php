@@ -356,7 +356,7 @@ if (isset($_GET['box']))
                                                             echo" Tage";
                                                         }
                                                     }
-                                                    
+
                                                     if ($zeile['Kuehlware'] == 1) {echo "<img style='position: absolute; margin-left: 8px;' width='20px' src='../media/freeze_icon.svg'>";}?>
                                                     </div>
                                                 </div>
@@ -384,7 +384,7 @@ if (isset($_GET['box']))
                                                 </div>
                                                 <div class="zeile">
                                                     <div>Gespendet am:</div>
-                                                    <div>20.11.2022</div>
+                                                    <div><?php echo substr((strval($zeile['LieferDatum'])), 0, -9) ?></div>
                                                 </div>
                                                 <div class="zeile">
                                                     <div>Anmerkungen:</div>
