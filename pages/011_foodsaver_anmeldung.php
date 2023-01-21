@@ -179,7 +179,7 @@ if ($userunbekannt == "unbekannt") {
                 </div>
                 <div class="anmeldungtel" id="antel">
                     <label for="tel">Deine Telefonnummer</label></br>
-                    <input type="tel" id="tel" name="tel" placeholder="0176 95432189"  pattern="[0-9]" style="width:310px; height: 46px;" />
+                    <input type="tel" id="tel" name="tel" placeholder="0176 95432189"   style="width:310px; height: 46px;" />
                 </div>
                 <div class="anmeldungid" id="anid">
                     <label for="ID">Deine Foodsaver-ID</label></br>
