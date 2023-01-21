@@ -179,16 +179,35 @@ if (isset($_GET['box']))
                         // $result['VerteilDeadline'] = strtotime($result['VerteilDeadline']);
                     
                         foreach ($filteredLebensmittel as $key => $zeile) {
-                            $zähler += 1;
-                            
+                            $zähler += 1;                           
                             $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt)  / (60 * 60 * 24), $precision = 1, $mode= PHP_ROUND_HALF_DOWN);
-                            
                             if ($zeile['VerteilDeadline'] < 9999) {
                                 $timestring = strval($zeile['VerteilDeadline']);
                                 $splitarray = explode(".", $timestring);
-                                $tage = $splitarray[0];
-                                $stunden = round(($splitarray[1] * 2.4), $precision = 0);
-                                $zeitangabe = $tage . " Tag(e) " . $stunden . " Stunde(n)";
+                                $tage = $splitarray[0];       
+                                if (isset($splitarray[1])){
+                                    $stunden = round(($splitarray[1] * 2.4), $precision = 0);
+                                } else {
+                                    $stunden = 0;
+                                }
+                                $zeitangabe = "";
+                                if ($tage == 1 || $tage == -1 && $stunden == 1) {
+                                    $zeitangabe = $tage . " Tag ". $stunden . " Stunde";
+                                } else if (($tage == 1 || $tage == -1) && ($stunden > 1 || $stunden == 0)) {
+                                    $zeitangabe = $tage . " Tag ". $stunden . " Stunden";
+                                } else if ($tage > 1 && $stunden == 1) {
+                                    $zeitangabe = $tage . " Tage ". $stunden . " Stunde";
+                                } else if ($tage > 1 && $stunden == 0) {
+                                    $zeitangabe = $tage . " Tage ";
+                                } else if ($tage == 0 && $stunden > 0) {
+                                    $zeitangabe = $stunden . " Stunden";
+                                } else if ($tage == 1 && $stunden == 0) {
+                                    $zeitangabe = $tage . " Tag";
+                                } else if ($tage == 0 && $stunden == 1) {
+                                    $zeitangabe = $stunden . " Stunde";
+                                } else {
+                                    $zeitangabe = $tage . " Tage ". $stunden . " Stunden";
+                                }
                             }
                             $ablaufdatum = $zeile['VerteilDeadline']; 
                             ?>
