@@ -189,10 +189,8 @@ if (isset($_GET['box']))
                                 $tage = $splitarray[0];
                                 $stunden = round(($splitarray[1] * 2.4), $precision = 0);
                                 $zeitangabe = $tage . " Tag(e) " . $stunden . " Stunde(n)";
-
-                                $ablaufdatum = $zeile['VerteilDeadline']; 
                             }
-
+                            $ablaufdatum = $zeile['VerteilDeadline']; 
                             ?>
                             <tr>
                                 <?php
