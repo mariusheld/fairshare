@@ -5,7 +5,6 @@
         <meta name="author" content="Marius Held"/>
         <title>Abgabeübersicht</title>
         <link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
-        <link rel="manifest" href="../favicon/manifest.json" />
         <link rel="stylesheet" href="../css/adminstyle.css"/> 
         <link rel="stylesheet" href="../css/formularstyle.css"/> 
         <link rel="stylesheet" href="../css/foodsaver_anmeldung.css"/> 

@@ -48,7 +48,6 @@ if (!$erfolg) {
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&family=Londrina+Solid&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico">
-    <link rel="manifest" href="./favicon/manifest.json" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 

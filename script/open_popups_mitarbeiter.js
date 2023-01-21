@@ -179,3 +179,4 @@ function mfwFairteilen() {
 function mfwEntsorgen() {
     window.location.href = "./014_admin_skript.php?mfwArrayEntsorgen=" + mfwArray;
 }
+

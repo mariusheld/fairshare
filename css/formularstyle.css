@@ -417,9 +417,9 @@ Foodsaver Hinzufügen
     gap: 8px;
 }
 
-.category-item > img {
-	width: 56px;
-	height: 56px;
+.category-item>img {
+    width: 56px;
+    height: 56px;
 }
 
 .category-item p {
@@ -541,6 +541,7 @@ Foodsaver Hinzufügen
     grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: 0 8px;
 }
+
 .slider-steps div {
     font-size: 12px;
     display: flex;
@@ -1205,54 +1206,57 @@ Foodsaver Übersicht
 
 /*--------------------------------Credits---------------------------------*/
 .grid-credits {
-width: 100%;
+    width: 100%;
 
-/* handle items  */
-display: grid;
-align-items: start;
-grid-template-columns: repeat(12, minmax(0, 1fr));
-grid-template-rows: 1fr;
-gap: 16px;
+    /* handle items  */
+    display: grid;
+    align-items: start;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: 1fr;
+    gap: 16px;
+
+    padding-left: 32px;
 }
 
 .col-1-credits {
-grid-column-start: 3;
-grid-column-end: 6;
+    grid-column-start: 2;
+    grid-column-end: 6;
 
 }
 
 .col-2-credits {
-grid-column-start: 7;
-grid-column-end: 10;
+    grid-column-start: 7;
+    grid-column-end: 12;
 }
 
-.col-1-credits > h5, .col-2-credits > h5  {
-text-align: left;
-margin-bottom: 0;
+.col-1-credits>h5,
+.col-2-credits>h5 {
+    text-align: left;
+    margin-bottom: 0;
 }
 
-.grid-credits > h5 {
-text-align: left;
-grid-column-start: 3;
-grid-column-end: 8;
-margin-bottom: 0;
-margin-top: 48px;
+.grid-credits>h5 {
+    text-align: left;
+    grid-column-start: 2;
+    grid-column-end: 8;
+    margin-bottom: 0;
+    margin-top: 36px;
 }
 
 .creditsZurueck {
-margin-top: 20px;
-margin-bottom: 20px;
-margin-right: 32px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 32px;
 }
 
-.footer{
-display: flex;
-justify-content: end;
-width: 100%;
+.footer {
+    display: flex;
+    justify-content: end;
+    width: 100%;
 }
 
-.action-container .credits{
-position: fixed;
+.action-container .credits {
+    position: fixed;
 }
 
 /*Anmeldungs Schriftzug oben rechts*/
