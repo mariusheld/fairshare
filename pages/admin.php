@@ -191,7 +191,7 @@ if (isset($_GET['box']))
                                     $stunden = 0;
                                 }
                                 $zeitangabe = "";
-                                if ($tage == 1 || $tage == -1 && $stunden == 1) {
+                                if (($tage == 1 || $tage == -1) && $stunden == 1) {
                                     $zeitangabe = $tage . " Tag ". $stunden . " Stunde";
                                 } else if (($tage == 1 || $tage == -1) && ($stunden > 1 || $stunden == 0)) {
                                     $zeitangabe = $tage . " Tag ". $stunden . " Stunden";
