@@ -364,8 +364,10 @@ GROUP BY HerkunftName
 ORDER BY KGfairteilt DESC
 */
 
-
-?>
+// Login Session
+$login = $_SESSION['login'];
+if ($login == true) {
+  ?>
 
 <script>
 //Datumsauswahl an JavaScript übergeben
@@ -525,6 +527,26 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
 			</div>
 		</div>
   </div>
+      <!--Logout Overlay-->
+	  <div>
+      <div class="overlayparent" id="logout-overlay">
+        <div class="overlaychild" style="height: 191px;">
+          <p class="olhead">
+            Abmelden?
+          </p>
+          <div class="eingabe">
+            <div class="buttonscontainer">
+              <button class="buttonwhite" id="abmeldenAbbr">
+                Abbrechen
+              </button>
+              <button class="buttongreen" id="abmeldenBtn" style="color: white" value="Abmelden">
+                Abmelden
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 <script>
     //Get first bar and calculate the width of each next bar
@@ -540,8 +562,40 @@ var gotdate2 = "<?php echo $date2_ISO8601; ?>";
         bar.style.width = `${width}px`;
     }
     });
+
+	// Modale Box ansprechen
+    var abmeldenOverlay = document.getElementById('logout-overlay');
+    var abmeldenTrigger = document.getElementById('logout');
+    // Buttons definieren, welche die modale Box triggern
+    var abmeldenBtn = document.getElementById('abmeldenBtn');
+    // abmeldenAbbr Element ansprechen
+    var abmeldenAbbr = document.getElementById('abmeldenAbbr');
+
+    // Funktion, dass sich die modale Box öffnet, wenn der Button getriggert wird
+    abmeldenTrigger.onclick = function () {
+      abmeldenOverlay.style.display = 'flex';
+    }
+    // Bei Klick auf Abbrechen -> Fenster schließen
+    abmeldenAbbr.onclick = function () {
+      abmeldenOverlay.style.display = 'none';
+    }
+    //User drückt auf Abmelden
+    abmeldenBtn.onclick = function () {
+      window.location.href = '../index.php'
+    }
+    // Fenster schließen beim Klick außerhalb des Fensters
+    window.onclick = function (event) {
+      if (event.target == abmeldenOverlay) {
+        abmeldenOverlay.style.display = 'none';
+      }
+    }
 </script>
 
-
-
 </html>
+
+<?php
+} else {
+  session_destroy();
+  header("Location: ../index.php");
+}
+?>
