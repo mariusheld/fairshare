@@ -388,7 +388,13 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                                                 </div>
                                                 <div class="zeile">
                                                     <div>Inhaltsstoffe:</div>
-                                                    <div><?php echo $zeile['AllergenName'] ?></div>
+                                                    <div>
+                                                        <?php if($zeile['AllergenName']) {
+                                                            echo $zeile['AllergenName'];
+                                                        } else {
+                                                            echo "-";
+                                                        }?>
+                                                    </div>
                                                 </div>
                                                 <div class="zeile">
                                                     <div>Genießbar bis:</div>
