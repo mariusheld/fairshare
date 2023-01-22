@@ -10,19 +10,22 @@ $login = $_SESSION['login'];
 
 // ----------- QUERYS -----------
 
-$AlleLebensmittelQuery = $db->prepare("SELECT * FROM (((Lebensmittel LEFT JOIN Lieferung ON Lebensmittel.LMkey=Lieferung.LMKey) LEFT JOIN Foodsaver ON Lieferung.FSkey=Foodsaver.FSKey) LEFT JOIN LM_Allergene ON Lebensmittel.LMkey=LM_Allergene.LMKey) LEFT JOIN BekAllergene ON LM_Allergene.AllergenKey=BekAllergene.AllergenKey  ORDER BY VerteilDeadline");
-$erfolg = $AlleLebensmittelQuery->execute();
-//Zellenweise Verarbeitung der Datenbankabfrage
-$AlleLebensmittelResult = $AlleLebensmittelQuery->fetchAll();
-//Fehlertest
-if (!$erfolg) {
-    $fehler = $query->errorInfo();
-    die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
+$conn = $db_handle->connectDB();
+// --
+$AlleLebensmittelQuery = 
+"SELECT Lebensmittel.LMKey AS LMkey, Lebensmittel.Bezeichnung, Lebensmittel.Gewicht, Lebensmittel.Betrieb, Lebensmittel.Anmerkung, Lebensmittel.HerkunftKey, Lebensmittel.Kuehlware, Lieferung.LieferDatum, Lebensmittel.OKatKey, Lebensmittel.VerteilDeadline, BekAllergene.AllergenName, Foodsaver.Email, Foodsaver.Nachname, Foodsaver.TelNr, Foodsaver.Vorname
+FROM (((Lebensmittel 
+LEFT JOIN Lieferung ON Lebensmittel.LMkey=Lieferung.LMKey) 
+LEFT JOIN Foodsaver ON Lieferung.FSkey=Foodsaver.FSKey) 
+LEFT JOIN LM_Allergene ON Lebensmittel.LMkey=LM_Allergene.LMKey) 
+LEFT JOIN BekAllergene ON LM_Allergene.AllergenKey=BekAllergene.AllergenKey  ORDER BY VerteilDeadline";
+$AlleLebensmittelResult = mysqli_query($conn, $AlleLebensmittelQuery);
+while ($row = mysqli_fetch_assoc($AlleLebensmittelResult)) {
+    $AlleLebensmittelSet[] = $row;
 }
 
 // --
 $InitialeAbgabeSet = [];
-$conn = $db_handle->connectDB();
 $InitialeAbgabeQuery = "SELECT * FROM Bestand_Bewegung WHERE LStatusKey = 1";
 $InitialeAbgabeResult = mysqli_query($conn, $InitialeAbgabeQuery);
 while ($row = mysqli_fetch_assoc($InitialeAbgabeResult)) {
@@ -54,20 +57,20 @@ if ($bewegteAbgaben != 0 && $InitialeAbgabeSet != 0) {
     }
     $filteredSet = $InitialeAbgabeSet;
 
-    foreach ($AlleLebensmittelResult as $key => $value) {
+    foreach ($AlleLebensmittelSet as $key => $value) {
         foreach($filteredSet as $key2 => $value2) {
             if ($value['LMkey'] == $value2['LMkey']) {
-                $AlleLebensmittelResult[$key]['Gewicht'] = $value2['BewegMenge'];
-                if ($AlleLebensmittelResult[$key]['Gewicht'] == 0) {
-                    unset($AlleLebensmittelResult[$key]);
+                $AlleLebensmittelSet[$key]['Gewicht'] = $value2['BewegMenge'];
+                if ($AlleLebensmittelSet[$key]['Gewicht'] == 0) {
+                    unset($AlleLebensmittelSet[$key]);
                 }
             }
         }
     }
 }
-$filteredLebensmittel = $AlleLebensmittelResult;
+$filteredLebensmittel = $AlleLebensmittelSet;
 
-
+// ----------- ICONS -----------
 //Array für die Icons in der Lagerübersicht
 $icons = array(
     1 => "../media/kategorien/icon_gemuese.svg",
@@ -100,6 +103,7 @@ $herkunft = array(
     6 => "Sonstiges"
 );
 
+// ----------- Letzte Box genommen -----------
 //Zugriff auf db um Verfügbarkeit der  boxen zu prüfen
 $BVerfuegbarkeit = $db->prepare("SELECT `NochVerfuegbar` FROM `BVerfuegbarkeit` ORDER BY `BVerfuegKey` DESC LIMIT 1");
 $BVerfuegbarkeit->execute();
@@ -115,6 +119,50 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
     
     $BoxResult = 0;
 }
+
+// ----------- Lebensmittel Fairteilen und Entsorgen -----------
+$lmkey = $_SESSION['lmkey'];
+$bewegMenge = $_SESSION['bewegMenge'];
+$bezeichnung = $_SESSION['bezeichnung'];
+$okatkey = $_SESSION['okatkey'];
+if (isset($_POST["fairteil-menge"])) {
+    $_SESSION['lmkey'] = $_POST["lmkey"];
+    $_SESSION['bewegMenge'] = $_POST["fairteil-menge"];
+    $_SESSION['bezeichnung'] = $_POST["bezeichnung"];
+    $_SESSION['okatkey'] = $_POST["okatkey"];
+}
+if (isset($_GET['fairteilen'])) {
+    $LStatusKey = 2;
+    $EntsorgenQuery = $db->prepare("INSERT INTO `Bestand_Bewegung` (`LMkey`, `LStatusKey`, `BewegDatum`, `BewegMenge`, `EntsorgGrund`)
+    VALUES ('$lmkey', '$LStatusKey', now(), '$bewegMenge', NULL)");
+    $erfolg = $EntsorgenQuery->execute();
+    // Fehlertest
+    if (!$erfolg) {
+      $fehler = $query->errorInfo();
+      die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
+    }
+    // Seite neu laden
+    header("Location: admin.php?Bezeichnung=" . $bezeichnung . "&OKatKey=" . $okatkey . "&Menge=" . $bewegMenge);
+}
+
+
+//Abfrage an Datenbank senden
+if (isset($_POST["entsorgen-menge"])) {
+    $lmkey = $_POST["lmkey"];
+    $bewegMenge = $_POST["entsorgen-menge"];
+    $LStatusKey = 3;
+    $EntsorgenQuery = $db->prepare("INSERT INTO `Bestand_Bewegung` (`LMkey`, `LStatusKey`, `BewegDatum`, `BewegMenge`, `EntsorgGrund`)
+      VALUES ('$lmkey', '$LStatusKey', now(), '$bewegMenge', NULL)");
+    $erfolg = $EntsorgenQuery->execute();
+    // Fehlertest
+    if (!$erfolg) {
+      $fehler = $query->errorInfo();
+      die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
+    }
+    // Seite neu ladens
+    header("Location: admin.php?entsorgen=erfolgreich");
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -312,7 +360,7 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                                         </div>
                                         <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge des Lebensmittels möchtest du entsorgen?</p>
 
-                                        <form id="entsorgen-<?php echo $zähler ?>" method="POST" action="014_admin_skript.php" class="popup-form">
+                                        <form id="entsorgen-<?php echo $zähler ?>" method="POST" action="admin.php" class="popup-form">
                                             <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
                                             <input type="number" min="0" step="0.1" name="entsorgen-menge" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" 
                                             value="<?php echo $zeile['Gewicht']; ?>">
@@ -334,7 +382,7 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                                             <h5><?php echo $zeile['Bezeichnung'] ?> fairteilen?</h5>
                                         </div>
                                         <p>Wenn du Lebensmittel als fairteilt markierst verschwinden sie aus der Übersicht. Welche Menge des Lebensmittels möchtest du fairteilen?</p>
-                                        <form id="fairteilen-<?php echo $zähler ?>" method="POST" action="014_admin_skript.php?id=<?php echo $zähler ?>" class="popup-form">
+                                        <form id="fairteilen-<?php echo $zähler ?>" method="POST" action="admin.php?id=<?php echo $zähler ?>" class="popup-form">
                                             <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
                                             <input type="number" min="0" step="0.1" id="fairteil-menge" name="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" 
                                             value="<?php echo $zeile['Gewicht']; ?>">
@@ -345,23 +393,23 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                                             <div class="bestand">/ <?php echo $zeile['Gewicht'] ?> Kg</div>
                                         </form>
                                         <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_abbrechen(this)">Abbrechen</button>
-                                        <button class="primary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_bestätigen(this)">Fairteilen</button>
+                                        <input type="submit" form="fairteilen-<?php echo $zähler ?>" class="primary-btn" value="Fairteilen"></input>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Popup "Lebensmittel fairteilen bestätigen" -->
-                            <div class="overlay" id="popup_lebensmittel_fairteilen_bestätigen-<?php echo $zähler ?>">
+                            <div class="overlay" id="popup_lebensmittel_fairteilen_bestätigen-<?php echo $zähler ?>" <?php if (isset($_GET["id"]) && $_GET['id'] == $zähler) echo "style='display: flex'"; ?>>
                                 <div class="popup-wrapper">
                                     <div class="popup active">
                                         <div class="popup-header">
                                             <img src="<?php echo $icons[$zeile['OKatKey']] ?>">
                                             <h5><?php echo $zeile['Bezeichnung'] ?> fairteilen?</h5>
                                         </div>
-                                        <p>Möchtest du das Lebensmittel <span class="marked-green"><?php echo $zeile['Bezeichnung'] . " (" . $zeile['Gewicht'] ." kg)"?></span> 
+                                        <p>Möchtest du das Lebensmittel <span class="marked-green"><?php echo $zeile['Bezeichnung']; if (isset($_POST["fairteil-menge"])) echo " (" . $_POST["fairteil-menge"] . " kg)" ?></span> 
                                         wirklich als fairteilt markieren? Dadurch verschwindet der Eintrag aus der Übersicht.</p>
                                         <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_bestätigen_abbrechen(this)">Abbrechen</button>
-                                        <input type="submit" form="fairteilen-<?php echo $zähler ?>" class="primary-btn" value="Fairteilen"></input>
+                                        <a class="primary-btn" href="admin.php?fairteilen=true" style="text-align: center">Fairteilen</a>
                                     </div>
                                 </div>
                             </div>
@@ -549,7 +597,9 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
             </div>
         <?php } else if (isset($_GET['entsorgen'])) {?>
             <!-- // Popup "Lebensmittel entsorgt" -->
-        <?php } else { ?>
+        <?php } else if (isset($_GET['id'])) {?>
+            <!-- // Popup "Lebensmittel fairteilen bestätigen" -->
+        <?php }else { ?>
             <div class="overlay" id="popup_keine_boxen" style="display: <?php if ($BoxResult == 1) {
                                 echo "flex";
                             } else {
@@ -565,43 +615,6 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                         Boxen nachgefüllt
                         </a>
                         
-                    </div>
-                </div>
-            </div>
-        <?php } ?>
-
-
-        <!-- Popup "Lebensmittel fairteilen" -->
-        <div class="overlay" id="popup_lebensmittel_fairteilen">
-            <div class="popup-wrapper">
-                <div class="popup active">
-                    <div class="popup-header">
-                        <img src="../media/kategorien/icon_backwaren-suess.svg" alt="Backwaren Süß">
-                        <h5>Lebensmittel</h5>
-                    </div>
-                    <p>Welche Menge des Lebensmittels möchtest du als fairteilt markieren?</p>
-                    <form action="" class="popup-form">
-                        <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
-                        <input type="number" id="fairteil-menge" min="0" step="0.1">
-                        <div class="bestand"></div>
-                    </form>
-                    <button class="secondary-btn" id="fairteilen-abbrechen">Abbrechen</button>
-                    <button class="primary-btn" id="fairteilen"
-                        onclick="window.location.href='admin.php?fairteilen=1'">Fairteilen</button>
-                </div>
-            </div>
-        </div>
-
-        <?php
-        if (isset($_GET['fairteilen'])) { ?>
-            <div class='overlay' id='popup_lebensmittel_fairteilt'>
-                <div class='popup-wrapper'>
-                    <div class='popup active'>
-                        <div class='popup-header'>
-                            <h3>PRODUKT FAIRTEILT</h3>
-                        </div>
-                        <p>Das Lebensmittel wurde in den Fairteiler gelegt.</p>
-                        <button class='center-btn'>Alles klar</button>
                     </div>
                 </div>
             </div>

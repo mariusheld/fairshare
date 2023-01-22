@@ -7,6 +7,11 @@ $_SESSION["foodsaverLogin"] = false;
 $_SESSION["latestLMkey"] = 0;
 $_SESSION["userstatus"] = "";
 $_SESSION["bekannt"] = false;
+
+$_SESSION['lmkey'] = "";
+$_SESSION['bewegMenge'] = "";
+$_SESSION['bezeichnung'] = "";
+$_SESSION['okatkey'] = "";
 //Datenbankverbindung aufbauen
 require_once("dbconnect/dbconnect.inc.php");
 
