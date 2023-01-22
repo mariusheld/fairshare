@@ -1,351 +1,354 @@
 /*Formatierungen Startscreen/Endscreen */
 body {
-    line-height: 150%;
-    margin: 0;
-    background-color: white;
-    color: black;
-    font-size: 13pt;
-    font-style: normal;
-    width: 100%;
-    background-color: #99BB44;
-    border: none;
+  line-height: 150%;
+  margin: 0;
+  background-color: white;
+  color: black;
+  font-size: 13pt;
+  font-style: normal;
+  width: 100%;
+  height: 100vh;
+  background-color: #99bb44;
+  border: none;
 }
 
-#startscreen,
-#endscreen {
-    background-image: url('../media/startscreen.gif');
-    background-repeat: no-repeat;
-    background-position: center;
-
+#gif {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-content: center;
+  justify-content: center;
 }
 
 #startscreen-header,
 #endscreen-header {
-    height: 88px;
-    display: flex;
-    align-items: center;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
 }
 
 #logo {
-    height: 35px;
-    padding-left: 32px;
+  height: 35px;
+  padding-left: 32px;
 }
 
 #startscreen-mitarbeiter-login {
-    display: flex;
-    justify-content: right;
-    flex: 2;
-    margin-right: 32px;
+  display: flex;
+  justify-content: right;
+  flex: 2;
+  margin-right: 32px;
 }
 
 #startscreen-mitarbeiter {
-    color: #FFFFFF;
-    font-family: 'Fira Sans';
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19.2px;
+  color: #ffffff;
+  font-family: "Fira Sans";
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19.2px;
 }
 
 #startscreen-mitarbeiter-button {
-    width: 48px;
-    height: 48px;
-    background-color: #99BB44;
-    border: 2px solid #E5E5E3;
-    border-radius: 8px;
-    margin-left: 13px;
+  width: 48px;
+  height: 48px;
+  background-color: #99bb44;
+  border: 2px solid #e5e5e3;
+  border-radius: 8px;
+  margin-left: 13px;
 }
 
 #login-logo {
-    margin: 4px auto auto auto;
+  margin: 4px auto auto auto;
 }
 
 #startscreen-content,
 #endscreen-content {
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 #startscreen-title,
 #endscreen-title {
-    color: #FFFFFF;
-    font-family: 'Londrina Solid', cursive;
-    font-weight: 400;
-    font-size: 64px;
-    line-height: 75.71px;
-    margin: 0px;
+  color: #ffffff;
+  font-family: "Londrina Solid", cursive;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 75.71px;
+  margin: 0px;
 }
 
 #startscreen-text,
 #endscreen-text {
-    color: #FFFFFF;
-    font-family: 'Fira Sans';
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 28.8px;
-    margin: 16px 0px 40px 0px;
+  color: #ffffff;
+  font-family: "Fira Sans";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28.8px;
+  margin: 16px 0px 40px 0px;
 }
 
 #endscreen-text {
-    color: #FFFFFF;
-    font-family: 'Fira Sans';
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 28.8px;
-    margin: 16px 0px 0px 0px;
+  color: #ffffff;
+  font-family: "Fira Sans";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28.8px;
+  margin: 16px 0px 0px 0px;
 }
 
 #endscreen-text-danke {
-    color: #FFFFFF;
-    font-family: 'Fira Sans';
-    font-weight: 800;
-    font-size: 24px;
-    line-height: 28.8px;
-    margin: 0px 0px 40px 0px;
+  color: #ffffff;
+  font-family: "Fira Sans";
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 28.8px;
+  margin: 0px 0px 40px 0px;
 }
 
 #startscreen-button,
 #endscreen-button {
-    background-color: #FFFFFF;
-    width: 310px;
-    height: 54px;
-    border: none;
-    border-radius: 16px;
-    margin: 0px;
-    color: #99BB44;
-    font-family: 'Fira Sans';
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 26px;
+  background-color: #ffffff;
+  width: 310px;
+  height: 54px;
+  border: none;
+  border-radius: 16px;
+  margin: 0px;
+  color: #99bb44;
+  font-family: "Fira Sans";
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 26px;
 }
 
 /*Hover Effekt für Button*/
 #startscreen-button:hover,
 #endscreen-button:hover {
-    color: #7F9D32;
+  color: #7f9d32;
 }
 
 #startscreen-button:hover,
 #endscreen-button:hover,
 #startscreen-mitarbeiter-button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #startscreen-footer,
 #endscreen-footer {
-    width: 100%;
-    height: 26px;
-    margin-bottom: 39px;
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    text-align: center;
-    justify-content: center;
+  width: 100%;
+  height: 26px;
+  margin-bottom: 39px;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  justify-content: center;
 }
 
 #startscreen-footer-text,
 #endscreen-footer-text {
-    color: #FFFFFF;
-    font-family: 'Fira Sans';
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 26px;
+  color: #ffffff;
+  font-family: "Fira Sans";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
 }
 
 /*AnmeldePopUp*/
 /*Formatierung des Overlays*/
 /*Seiteninhalt & Grundpositionierung*/
 div.helper {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
 div.overlayparent {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 /*Das eigentliche PopUp*/
 div.overlaychild {
-    width: 536px;
-    height: 287px;
-    background: #FFFDFD;
-    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-    border-radius: 16px;
-    margin-top: 0;
-    /*Positionierung der inneren Elemente*/
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+  width: 536px;
+  height: 287px;
+  background: #fffdfd;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  margin-top: 0;
+  /*Positionierung der inneren Elemente*/
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 /*Headline im PopUp*/
 p.olhead {
-    margin: 0;
-    font-family: "Londrina Solid";
-    font-size: 36px;
-    text-transform: uppercase;
-    padding-top: 6px;
+  margin: 0;
+  font-family: "Londrina Solid";
+  font-size: 36px;
+  text-transform: uppercase;
+  padding-top: 6px;
 }
 
 /*Kennworteingabe*/
 div.eingabe {
-    padding-top: 24px;
+  padding-top: 24px;
 }
 
 input.eingabefeld {
-    width: 472px;
-    height: 46px;
-    background: #F2F1F0;
-    border: none;
-    border-radius: 8px;
+  width: 472px;
+  height: 46px;
+  background: #f2f1f0;
+  border: none;
+  border-radius: 8px;
 }
 
-input[type=text] {
-    font-family: "Fira Sans";
-    font-size: 16px;
-    text-align: center;
+input[type="text"] {
+  font-family: "Fira Sans";
+  font-size: 16px;
+  text-align: center;
 }
 
 p.vergessen {
-    display: none;
-    font-family: 'Fira Sans';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: left;
-    color: #BEBEB9;
-    padding-left: 0px;
-    margin-top: 0px;
-    padding-top: 9px;
-    order: -1;
+  display: none;
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: left;
+  color: #bebeb9;
+  padding-left: 0px;
+  margin-top: 0px;
+  padding-top: 9px;
+  order: -1;
 }
 
 /*Positionierung der Buttons*/
 div.buttonscontainer {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    margin: 0;
-    padding-top: 32px;
-    order: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin: 0;
+  padding-top: 32px;
+  order: 0;
 }
 
 /*Formatierung der Buttons*/
 input.buttongreen {
-    height: 54px;
-    width: 228px;
-    background: #99BB44;
-    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-    border-radius: 16px;
-    border: none;
-    text-align: center;
-    font-family: 'Fira Sans';
-    font-weight: 600;
-    font-size: 18px;
-    margin: 0;
+  height: 54px;
+  width: 228px;
+  background: #99bb44;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  border: none;
+  text-align: center;
+  font-family: "Fira Sans";
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
 }
 
 input.buttongreen:hover {
-    background-color: #7F9D32;
-    color: white;
-    cursor: pointer;
+  background-color: #7f9d32;
+  color: white;
+  cursor: pointer;
 }
 
 div.buttonwhite {
-    height: 54px;
-    width: 228px;
-    border: 2px solid #E6E5E3;
-    border-radius: 16px;
+  height: 54px;
+  width: 228px;
+  border: 2px solid #e6e5e3;
+  border-radius: 16px;
 }
 
 div.buttonwhite:hover {
-    border: 2px solid #7F9D32;
-    color: #7F9D32;
-    cursor: pointer;
+  border: 2px solid #7f9d32;
+  color: #7f9d32;
+  cursor: pointer;
 }
 
 p.buttontext {
-    text-align: center;
-    font-family: 'Fira Sans';
-    font-weight: 600;
-    font-size: 18px;
-    margin: 0;
-    padding-top: 15px;
+  text-align: center;
+  font-family: "Fira Sans";
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+  padding-top: 15px;
 }
 
 /*Logout Buttons*/
 /*Formatierung der Buttons*/
 button.buttongreen {
-    height: 54px;
-    width: 228px;
-    background: #99BB44;
-    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-    border-radius: 16px;
-    border: none;
-    text-align: center;
-    font-family: 'Fira Sans';
-    font-weight: 600;
-    font-size: 18px;
-    margin: 0;
+  height: 54px;
+  width: 228px;
+  background: #99bb44;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  border: none;
+  text-align: center;
+  font-family: "Fira Sans";
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
 }
 
 button.buttongreen:hover {
-    background-color: #7F9D32;
-    color: white;
+  background-color: #7f9d32;
+  color: white;
 }
 
 button.buttonwhite {
-    height: 54px;
-    width: 228px;
-    border: 2px solid #E6E5E3;
-    border-radius: 16px;
-    text-align: center;
-    font-family: 'Fira Sans';
-    font-weight: 600;
-    font-size: 18px;
-    margin: 0;
-    color: #99BB44;
-    background-color: white;
+  height: 54px;
+  width: 228px;
+  border: 2px solid #e6e5e3;
+  border-radius: 16px;
+  text-align: center;
+  font-family: "Fira Sans";
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+  color: #99bb44;
+  background-color: white;
 }
 
 button.buttonwhite:hover {
-    color: #7F9D32;
-    border: 2px solid #7F9D32;
+  color: #7f9d32;
+  border: 2px solid #7f9d32;
 }
 
 /*Modalisierung
 /* The Modal (background) */
 #overtrigger {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.3);
-    /* Black w/ opacity */
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Black w/ opacity */
 }
 
 /*Bubble ausblenden, wenn kein Kommentar vorhanden*/
 #bubble {
-    display: none;
+  display: none;
 }

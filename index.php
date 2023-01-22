@@ -16,15 +16,12 @@ $_SESSION['okatkey'] = "";
 require_once("dbconnect/dbconnect.inc.php");
 
 //Lebensmittel-Abfrage an Datenbank senden
-$query = $db->prepare("SELECT SUM(BewegMenge) FROM `Bestand_Bewegung` WHERE Bestand_Bewegung.LStatusKey = 2")/*("SELECT SUM(BewegMenge) FROM `Bestand_Bewegung` WHERE Bestand_Bewegung.LStatusKey = 2")*/;   //Erster SQL Befehl gibt Auskunft über Menge im Lager an, zweiter SQL Befehl gibt bereits verteilte Menge an.
+$query = $db->prepare("SELECT SUM(BewegMenge) FROM `Bestand_Bewegung` WHERE Bestand_Bewegung.LStatusKey = 2");
 $erfolg = $query->execute();
 
 //Zellenweise Verarbeitung der Datenbankabfrage
-$result = $query->fetchColumn(); //fetch_column()
+$result = $query->fetchColumn();
 
-//Gewicht der fairteilten Lebensmittel berechnen !!!!!!!!! Hier liegt irgendwo der Fehler, Kilogramm werden leider nicht angezeigt weil Array angeblich leer ist
-//$gewicht = $result[0];
-//$gewicht = array_sum($gewichtarray);
 $gewicht = intval($result);
 $gewicht = round($gewicht / 1000, $precision = 3);
 
@@ -53,8 +50,13 @@ if (!$erfolg) {
 </head>
 
 <body id="startscreen">
+    <div id="gif">
+        <img src="media/startscreen.gif" alt="Wackelnde Lebensmittel GIF" class="gif">
+    </div>
     <!--Overlay-->
-    <div class="helper" id="overtrigger" <?php if ($login == true) { echo "style='display:flex;'"; } ?>>
+    <div class="helper" id="overtrigger" <?php if ($login == true) {
+        echo "style='display:flex;'";
+    } ?>>
         <div class="overlayparent">
             <div class="overlaychild">
                 <p class="olhead">
@@ -63,14 +65,20 @@ if (!$erfolg) {
                 <div class="eingabe">
                     <form action="pages/10_lageruebersicht.php" method="POST" autocomplete="off">
                         <input class="eingabefeld" name="password" id="eingabe" type="password"
-                            style="text-align: center; font-size: 20px;" <?php if ($login == true) { echo "style='border:
-                            2px solid red; width: 468; height: 42px;'"; } ?>>
-                        <p class="vergessen" id="vergessen" <?php if ($login == true) { echo "style='color: red; display:
-                            block;'"; } ?>>
+                            style="text-align: center; font-size: 20px;" <?php if ($login == true) {
+                                echo "style='border:
+                            2px solid red; width: 468; height: 42px;'";
+                            } ?>>
+                        <p class="vergessen" id="vergessen" <?php if ($login == true) {
+                            echo "style='color: red; display:
+                            block;'";
+                        } ?>>
                             Kennwort falsch
                         </p>
-                        <div class="buttonscontainer" id="bcontainer" <?php if ($login == true) { echo
-                            "style='padding-top: 24px'"; } ?>>
+                        <div class="buttonscontainer" id="bcontainer" <?php if ($login == true) {
+                            echo
+                                "style='padding-top: 24px'";
+                        } ?>>
                             <div class="buttonwhite" id="breakup">
                                 <p class="buttontext" style="color: #99BB44">
                                     Abrechen
@@ -88,20 +96,13 @@ if (!$erfolg) {
     <!-- Overlay-->
     <div id="startscreen-header">
         <img id="logo" src="media/logo.svg" alt="fairshare">
-        <!-- <div id="startscreen-mitarbeiter-login">
-            <p id="startscreen-mitarbeiter">Mitarbeiter*in</p>
-            <button id="startscreen-mitarbeiter-button"><svg id="login-logo" xmlns="http://www.w3.org/2000/svg"
-                    width="28px" height="28px" fill="#99BB44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF"
-                    class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
-                </svg></button>
-        </div> -->
     </div>
 
     <div id="startscreen-content">
         <div>
-            <h1 id="startscreen-title"><?php echo $gewicht ?> TONNEN</h1>
+            <h1 id="startscreen-title">
+                <?php echo $gewicht ?> TONNEN
+            </h1>
             <p id="startscreen-text">Lebensmittel wurden bisher gerettet.</p>
             <button id="startscreen-button">Tippe, um zu beginnen</button>
         </div>
@@ -110,7 +111,7 @@ if (!$erfolg) {
     <div id="startscreen-footer">
         <a id="startscreen-footer-text" href="pages/17_credits.html">Ein Lehrprojekt der HdM Stuttgart</a>
     </div>
-    
+
     <script>
         //Weiterleitung zum Foodsaver Anmeldeprozess
         var startscreenButton = document.getElementById('startscreen-button');

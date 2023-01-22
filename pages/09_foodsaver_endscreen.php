@@ -42,7 +42,9 @@ session_destroy();
 </head>
 
 <body id="endscreen">
-
+    <div id="gif">
+        <img src="../media/startscreen.gif" alt="Wackelnde Lebensmittel GIF" class="gif">
+    </div>
     <div id="endscreen-header">
         <img id="logo" src="../media/logo.svg" alt="fairshare" height="50px">
     </div>

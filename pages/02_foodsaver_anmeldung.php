@@ -155,7 +155,7 @@ if ($userunbekannt == "unbekannt") {
     <div class="seiteninhalt-anmeldung">
         <div id="regcontainer" class="regcontainer">
             <div class="header">
-                Zum ersten mal hier?
+                Zum ersten Mal hier?
             </div>
             <a href="01_foodsaver_registrierung.php">
                 <button class="reg">Registrieren</button>
@@ -175,13 +175,11 @@ if ($userunbekannt == "unbekannt") {
             <form id="anmeldung" class="anmeldung" method="POST" action="04_foodsaver_anmeldung_skript.php">
                 <div class="anmeldungmail" id="anmail">
                     <label for="mail">Deine E-Mail</label></br>
-                    <input type="email" id="mail" placeholder="raupe@immersatt.de" name="mail"
-                        style="width:310px; height: 46px;" />
+                    <input type="email" id="mail" name="mail" style="width:310px; height: 46px;" />
                 </div>
                 <div class="anmeldungtel" id="antel">
                     <label for="tel">Deine Telefonnummer</label></br>
-                    <input type="tel" id="tel" placeholder="0176 95432189" name="tel" pattern="^[0-9-+\s()]*$"
-                        placeholder="0176 95432189" style="width:310px; height: 46px;" />
+                    <input type="tel" id="tel" name="tel" pattern="^[0-9-+\s()]*$" style="width:310px; height: 46px;" />
                 </div>
                 <div class="anmeldungid" id="anid">
                     <label for="ID">Deine Foodsaver-ID</label></br>

@@ -72,11 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form class="Anmeldeformular" id="myform" method="POST" action="04_foodsaver_anmeldung_skript.php">
             <div class="col-3">
                 <label id="labelvorname" for="">Vorname</label>
-                <input type="text" style="text-align: left;" required id="vorname" placeholder="Raupe" name="vorname">
+                <input type="text" style="text-align: left;" required id="vorname" name="vorname">
             </div>
             <div class="col-3" id="dummy">
                 <label for="">Nachname (optional)</label>
-                <input style="text-align: left;" type="text" placeholder="Immersatt" name="nachname">
+                <input style="text-align: left;" type="text" name="nachname">
             </div>
             <div class="col-6">
                 <label for="">Deine Foodsaver-ID (optional / 6-stellige Nummer)</label>
@@ -84,11 +84,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="col-3">
                 <label id="labelemail" for="">E-Mail</label>
-                <input type="email" id="email" placeholder="raupe@immersatt.de" name="email">
+                <input type="email" id="email" name="email">
             </div>
             <div class="col-3">
                 <label id="labeltel" for="">Telefonnummer</label>
-                <input type="tel" id="tel" placeholder="0176 95432189" name="tel" pattern="^[0-9-+\s()]*$">
+                <input type="tel" id="tel" name="tel" pattern="^[0-9-+\s()]*$">
             </div>
 
             <p id="telormail" class="col-6">Trage deine E-Mail oder deine Telefonnummer ein.</p>
