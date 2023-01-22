@@ -10,7 +10,7 @@ $login = $_SESSION['login'];
 
 // ----------- QUERYS -----------
 
-$AlleLebensmittelQuery = $db->prepare("SELECT * FROM (Lebensmittel LEFT JOIN Lieferung ON Lebensmittel.LMkey=Lieferung.LMKey) LEFT JOIN Foodsaver ON Lieferung.FSkey=Foodsaver.FSKey ORDER BY VerteilDeadline");
+$AlleLebensmittelQuery = $db->prepare("SELECT * FROM (((Lebensmittel LEFT JOIN Lieferung ON Lebensmittel.LMkey=Lieferung.LMKey) LEFT JOIN Foodsaver ON Lieferung.FSkey=Foodsaver.FSKey) LEFT JOIN LM_Allergene ON Lebensmittel.LMkey=LM_Allergene.LMKey) LEFT JOIN BekAllergene ON LM_Allergene.AllergenKey=BekAllergene.AllergenKey  ORDER BY VerteilDeadline");
 $erfolg = $AlleLebensmittelQuery->execute();
 //Zellenweise Verarbeitung der Datenbankabfrage
 $AlleLebensmittelResult = $AlleLebensmittelQuery->fetchAll();
@@ -262,14 +262,20 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                                 <?php  
                                 } 
                                 // if else Abfrage des Anmerkungsicons 
-                                if ($zeile['Anmerkung']) { ?>
+                                if ($zeile['Anmerkung'] || $zeile['AllergenName']) { ?>
                                     <td style='text-align: right; position: relative;'>
                                         <img id='bubble' class="open_icon" alt='dots' src='../media/comment_icon.svg' width='48px;' onclick="open_close_options(this)"/>
                                     
                                         <!-- Anmerkung Pop-Up -->
                                         <div class="anmerkung">
-                                            <h5>Anmerkung:</h5>
-                                            <p><?php echo $zeile['Anmerkung'] ?></p>
+                                            <?php if ($zeile['Anmerkung']) { ?>
+                                                <h5>Anmerkung:</h5>
+                                                <p><?php echo $zeile['Anmerkung'] ?></p>
+                                            <?php } ?>
+                                            <?php if ($zeile['AllergenName']) { ?>
+                                                <h5 <?php if ($zeile['Anmerkung']) { ?> style="margin-top: 32px;"<?php } ?>>Allergene und Inhaltsstoffe:</h5>
+                                                <p><?php echo $zeile['AllergenName'] ?></p>
+                                            <?php } ?>
                                         </div>
                                     </td>
 
@@ -382,7 +388,7 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                                                 </div>
                                                 <div class="zeile">
                                                     <div>Inhaltsstoffe:</div>
-                                                    <div>-</div>
+                                                    <div><?php echo $zeile['AllergenName'] ?></div>
                                                 </div>
                                                 <div class="zeile">
                                                     <div>Genießbar bis:</div>
