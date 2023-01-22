@@ -593,7 +593,7 @@ if ($login == true) {
               </div>
               <!-- Bilder der Kategorien -->
               <div class="img-block">
-                <?php //if (!empty($kategorien)){ ?>
+              <?php if (!empty($kategorien[0])){ ?>
                 <img src="<?php if ($kategorien[0]['katkey'] == 1) {
                   echo $kat_icon_1;
                 } else if ($kategorien[0]['katkey'] == 2) {
@@ -611,6 +611,8 @@ if ($login == true) {
                 } else if ($kategorien[0]['katkey'] == 8) {
                   echo $kat_icon_8;
                 } ?>" class="img-category" style="width: 70px;"><br>
+              <?php } 
+              if (!empty($kategorien[1])){ ?>
                 <img src="<?php if ($kategorien[1]['katkey'] == 1) {
                   echo $kat_icon_1;
                 } else if ($kategorien[1]['katkey'] == 2) {
@@ -628,6 +630,8 @@ if ($login == true) {
                 } else if ($kategorien[1]['katkey'] == 8) {
                   echo $kat_icon_8;
                 } ?>" class="img-category" style="width: 50px;"><br>
+              <?php } 
+              if (!empty($kategorien[2])){ ?>
                 <img src="<?php if ($kategorien[2]['katkey'] == 1) {
                   echo $kat_icon_1;
                 } else if ($kategorien[2]['katkey'] == 2) {
@@ -645,7 +649,7 @@ if ($login == true) {
                 } else if ($kategorien[2]['katkey'] == 8) {
                   echo $kat_icon_8;
                 } ?>" class="img-category" style="width: 40px;">
-                <?php //} ?>
+              <?php } ?>
               </div>
             </div>
           </a>

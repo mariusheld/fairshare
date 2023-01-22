@@ -360,7 +360,7 @@ if ($login == true) {
 					</a>
 
 					<!-- Titel -->
-					<div class="font-fira">
+					<div class="font-fira" style="padding-left: 20px;">
 						<h2>Lebensmittel nach Kategorien</h2>
 					</div>
 					<!-- Bar Diagram -->
