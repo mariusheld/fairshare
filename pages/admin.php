@@ -164,7 +164,7 @@ if (isset($_GET['box']) && $_GET['box'] == 1)
                         <tr>
                             <th style="width: 50px;"></th>
                             <th style="width: 45%;">Lebensmittel</th>
-                            <th style="width: 20%;">Menge</th>
+                            <th style="width: 15%;">Menge</th>
                             <th>Genießbar</th>
                             <th style="width: 50px;"></th>
                             <th style="width: 50px;"></th>
