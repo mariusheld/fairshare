@@ -431,6 +431,15 @@ div.tablecontainer {
 }
 
 .mfwFooter button {
+	width: 228px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	margin: 0;
+}
+.mfwFooter a {
+	width: 228px;
 	display: flex;
 	align-items: center;
 	justify-content: center;

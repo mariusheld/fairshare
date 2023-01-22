@@ -1,9 +1,9 @@
 /* Allgemein  */
 /*------------------Allgemein-------------------------*/
-
 body {
     height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 
 h3 {
@@ -127,16 +127,21 @@ header img:last-child {
 .content form {
     /* fixe breite ist variabel und kann auch entfernt werden. Auf 1024px wird das Formular aber immer so aussehen wie in den Designs */
     width: 960px;
-    padding: 32px;
+    padding-top: 32px;
+    padding-bottom: 32px;
 }
 
 /* Action Container ist das untereste Element und beinhaltet die Aktionsfelder (buttons) */
-.action-container {
+footer {
     /* positioning */
     height: 94px;
     /* width: 1024px; */
     width: 100%;
     margin: auto;
+}
+
+.action-container {
+    height: 94px;
     z-index: 1;
     /* white */
     background: #FFFDFD;
@@ -350,6 +355,7 @@ Foodsaver Hinzufügen
 
 /* Grid Titel Styling */
 .grid-title {
+    position: relative;
     height: 17px;
     display: flex;
     align-items: center;
@@ -572,6 +578,8 @@ Foodsaver Übersicht
     height: 100%;
     width: 100%;
     overflow-y: scroll;
+    
+    align-items: center;
 }
 
 .add-icon {
@@ -1179,7 +1187,7 @@ Foodsaver Übersicht
 }
 
 #left-aligned {
-    transform: translate(-107%, -10%);
+    transform: translate(-105%, -10%);
 }
 
 #hilfeKategorien,
@@ -1225,14 +1233,13 @@ Foodsaver Übersicht
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-template-rows: 1fr;
     gap: 16px;
-
-    padding-left: 32px;
+    padding-top: 32px;
+    padding-bottom: 32px;
 }
 
 .col-1-credits {
     grid-column-start: 2;
     grid-column-end: 6;
-
 }
 
 .col-2-credits {
@@ -1243,15 +1250,15 @@ Foodsaver Übersicht
 .col-1-credits>h5,
 .col-2-credits>h5 {
     text-align: left;
-    margin-bottom: 0;
+    margin: 0;
+    margin-top: 12px;
 }
 
 .grid-credits>h5 {
     text-align: left;
     grid-column-start: 2;
     grid-column-end: 8;
-    margin-bottom: 0;
-    margin-top: 36px;
+    margin: 0;
 }
 
 .creditsZurueck {
