@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ./12_interne_wirkungsmessung_dashboard.php");
     } else {
         $_SESSION['passwordErr'] = true;
-        header("Location: ./011_foodsaver_anmeldung.php?error=true");
+        header("Location: ./02_foodsaver_anmeldung.php?error=true");
     }
 }
 
