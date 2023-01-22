@@ -1171,6 +1171,10 @@ Foodsaver Übersicht
     border-radius: 20px;
 }
 
+#left-aligned {
+    transform: translate(-107%, -10%);
+}
+
 #hilfeKategorien,
 #hilfeMenge,
 #hilfeAllergene {

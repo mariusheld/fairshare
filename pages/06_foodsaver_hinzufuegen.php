@@ -411,7 +411,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <!-- OVERLAY hilfeMenge -->
                                 <div id="hilfeMenge">
-                                    <div class="outline">
+                                    <div class="outline" id="left-aligned">
                                         <p>Unter dem Waschbecken findest Du die Waage.</p>
                                     </div>
                                 </div>
@@ -479,7 +479,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <!-- OVERLAY hilfeAllergene -->
                                 <div id="hilfeAllergene">
-                                    <div class="outline">
+                                    <div class="outline" id="left-aligned">
                                         <p>Bei Lebensmitteln mit Allergenen oder anderen kritischen Inhaltsstoffen,
                                             diese bitte angeben.</p>
                                     </div>
