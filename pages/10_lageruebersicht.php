@@ -222,20 +222,6 @@ if (isset($_GET['entsorgen'])) {
 
                         <?php
                         $zähler = 0;
-
-                        function consolelog($data, bool $quotes = false)
-                        {
-                            $output = json_encode($data);
-                        if ($quotes) {
-                            echo "<script>console.log('{$output}' );</script>";
-                        } else {
-                            echo "<script>console.log({$output} );</script>";
-                        }
-                        }
-
-
-
-
                         //Datumsberechnung
                         $jetzt = time();
 
@@ -243,7 +229,6 @@ if (isset($_GET['entsorgen'])) {
                         foreach ($filteredLebensmittel as $key => $zeile) {
                             $zähler += 1;                           
                             $zeile['VerteilDeadline'] = round((strtotime($zeile['VerteilDeadline']) - $jetzt)  / (60 * 60));
-                            consolelog($zeile['VerteilDeadline']);
                             if ($zeile['VerteilDeadline'] < 9999) {
 
                                 $stunden = strval($zeile['VerteilDeadline']);

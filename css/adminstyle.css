@@ -14,6 +14,7 @@ body {
 	font-size: 13pt;
 	font-style: normal;
 	height: 100vh;
+	overflow: hidden;
 }
 
 button {
