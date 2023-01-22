@@ -108,12 +108,6 @@ function fairteilen_abbrechen(abbrechen_btn) {
   ).style.display = "none";
 }
 
-function close_fairteilt(fairteilt_btn) {
-  document.getElementById(
-    "popup_lebensmittel_fairteilt-" + fairteilt_btn.id
-  ).style.display = "none";
-}
-
 // Pop-Up: "Lebensmittel fairteilen bestätigen"---------------------------------------------------------
 function fairteilen_bestätigen(fairteilen_btn) {
   document.getElementById(
@@ -144,6 +138,21 @@ function entsorgen_abbrechen(abbrechen_btn) {
   ).style.display = "none";
 }
 
+// Pop-Up: "Lebensmittel entsrogen bestätigen"---------------------------------------------------------
+function entsorgen_bestätigen(fairteilen_btn) {
+  document.getElementById(
+    "popup_lebensmittel_entsorgen-" + fairteilen_btn.id
+  ).style.display = "none";
+  document.getElementById(
+    "popup_lebensmittel_entsorgen_bestätigen-" + fairteilen_btn.id
+  ).style.display = "flex";
+}
+function entsorgen_bestätigen_abbrechen(abbrechen_btn) {
+  document.getElementById(
+    "popup_lebensmittel_entsorgen_bestätigen-" + abbrechen_btn.id
+  ).style.display = "none";
+}
+
 // Pop-Up: "Lebensmittel ansehen"-------------------------------------------------------------------
 
 function open_lebensmittel_ansehen(ansehen_btn) {
@@ -171,12 +180,28 @@ function addToMehrfachauswahl(element, menge, prelmkey) {
   }
   document.getElementById("mfwFooter").style = "display: flex";
   document.getElementById("footer").style = "display: none";
+  if (mfwArray.length == 0) {
+    document.getElementById("mfwFooter").style = "display: none";
+    document.getElementById("footer").style = "display: block";
+  }
+}
+
+function mfwEntsorgenBtn() {
+  document.getElementById('popup_mfw_entsorgen_bestätigen').style.display = 'flex';
+}
+function mfwFairteilenBtn() {
+  document.getElementById('popup_mfw_fairteilen_bestätigen').style.display = 'flex';
 }
 
 function mfwFairteilen() {
-  window.location.href =
-    "./11_lageruebersicht_skript.php?mfwArrayFairteilen=" + mfwArray;
+  window.location.href = "./11_lageruebersicht_skript.php?mfwArrayFairteilen=" + mfwArray;
 }
 function mfwEntsorgen() {
   window.location.href = "./11_lageruebersicht_skript.php?mfwArrayEntsorgen=" + mfwArray;
+}
+// -- abbrechen
+function mfw_bestätigen_abbrechen(abbrechen_btn) {
+  document.getElementById("popup_mfw_entsorgen_bestätigen").style.display = "none";
+  document.getElementById("popup_mfw_fairteilen_bestätigen").style.display = "none";
+  window.location.href = "./10_lageruebersicht.php?mfwAbbrechen";
 }

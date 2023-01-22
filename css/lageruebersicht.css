@@ -127,7 +127,7 @@ a {
     font-size: 28px;
     font-weight: 400;
     color: var(--onyx);
-    margin: 0 0 20px;
+    margin: 0;
     line-height: 32px;
     grid-column: span 2;
 }
