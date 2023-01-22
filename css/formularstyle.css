@@ -89,6 +89,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    z-index: 1;
 }
 
 header h1 {
@@ -1270,7 +1272,7 @@ Foodsaver Übersicht
 .footer {
     display: flex;
     justify-content: end;
-    width: 100%;
+    width: 100vw;
 }
 
 .action-container .credits {

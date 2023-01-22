@@ -23,7 +23,7 @@ $erfolg = $query->execute();
 $result = $query->fetchColumn();
 
 $gewicht = intval($result);
-$gewicht = round($gewicht / 1000, $precision = 3);
+$gewicht = round($gewicht / 1000, $precision = 2);
 
 
 //Fehlertest

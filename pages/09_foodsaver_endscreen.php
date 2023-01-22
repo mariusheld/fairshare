@@ -19,7 +19,7 @@ $daten_FS_LMGewicht = array(
 //SQL Abfrage ausführen
 $select_FS_LMGewicht->execute($daten_FS_LMGewicht);
 $gewicht = $select_FS_LMGewicht->fetchColumn();
-
+$gewicht = round($gewicht, $precision = 2);
 // Session wird zerstört und resettet
 session_destroy();
 ?>

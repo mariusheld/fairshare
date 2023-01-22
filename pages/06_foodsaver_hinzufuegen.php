@@ -267,269 +267,273 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </header>
         <div class="content">
-            <form id="myform" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                <div class="grid-spacing">
-                    <div class="grid">
-                        <!-- Lebensmittel INPUT -->
-                        <div class="grid grid-col-6 container">
-                            <div class="grid-col-4">
-                                <label id="lebensmittelLabel" class="grid-title" style="<?php if($lmbezErr) echo"color: #E97878;"?>">
-                                    Lebensmittel
+            <div class="wrap">
+                <form id="myform" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <div class="grid-spacing">
+                        <div class="grid">
+                            <!-- Lebensmittel INPUT -->
+                            <div class="grid grid-col-6 container">
+                                <div class="grid-col-4">
+                                    <label id="lebensmittelLabel" class="grid-title" style="<?php if($lmbezErr) echo"color: #E97878;"?>">
+                                        Lebensmittel
+                                    </label>
+                                    <input name="LMBez" class="input <?php if($lmbezErr) echo"error"?>" type="text" oninput="inputError(event, 'lebensmittelLabel')"
+                                    value="<?php if (isset($_GET['editieren'])) {
+                                        echo $_SESSION["array"][$_GET['editieren']]->Lebensmittel;
+                                    } else {
+                                        echo $LMBez;
+                                    } ?>" />
+                                </div>
+                                <!-- Kühlen Check? -->
+                                <div class="grid-col-2">
+                                    <div class="kuehlcheck">
+                                        <div class="check-item">
+                                            <input name="kuehlcheck" type="checkbox" id="kuehlen" value="true"
+                                            <?php
+                                            if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Kuehlen == "1") {
+                                                echo "checked";
+                                            } else if ($kuehlcheck == "1") {
+                                                echo "checked";
+                                            }?>> 
+                                            <img src='../media/checkbox.svg' alt='checkbox' />
+                                            <img src='../media/checkbox_checked.svg' alt='checkbox_checked' />
+                                            In den Kühlschrank
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Kategorie auswählen -->
+                            <div class="grid-col-6">
+                                <div id="kategorieLabel" class="grid-title" style="<?php if($kategorieErr) echo"color: #E97878;"?>">
+                                    <label>
+                                        Kategorie
+                                    </label>
+                                    <!-- OVERLAY Trigger -->
+                                    <div>
+                                        <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
+                                            alt="icon_help" />
+                                        <img class="open_icon hilfeKategorien" height="22px"
+                                            src="../media/icon_help_mini.svg" alt="icon_help" />
+                                    </div>
+                                    <!-- OVERLAY hilfeKategorien -->
+                                    <div id="hilfeKategorien">
+                                        <div class="outline">
+                                            <p>Bei Lebensmitteln verschiedener Kategorien, bitte Sonstiges auswählen.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="category-grid">
+                                    <?php
+                                    // LOOP TILL END OF DATA
+                                    foreach ($kategorien as $key => $row) {
+                                        $iconList = array(
+                                            $icon_gemuese_url,
+                                            $icon_obst_url,
+                                            $icon_backwaren_suess_url,
+                                            $icon_backwaren_salzig_url,
+                                            $icon_trockenprodukte_url,
+                                            $icon_kuehlprodukte_url,
+                                            $icon_konserven_url,
+                                            $icon_sonstiges_url,
+                                        );
+                                        ?>
+                                        <div class="radio-container kategorie">
+                                        <input class="katInput" type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php 
+                                            if (isset($OKatKey) && $OKatKey == $row['OKatKey']) {
+                                                echo "checked";
+                                            } else if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Kategorie == $row['OKatKey']) {
+                                                echo "checked";
+                                            }
+                                            ?>>
+                                            <div class="category-item <?php if($kategorieErr) echo"error"?>">
+                                                <?php echo "<img src='" . $iconList[$key] . "'>" ?>
+                                                <p>
+                                                    <?php echo $row['OKatName'] ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid">
+                            <!-- Herkunft INPUT -->
+                            <div class="grid-col-6">
+                            <label id="herkunftLabel" class="grid-title" style="<?php if($herkunftErr) echo"color: #E97878;"?>">
+                                    Wo gerettet?
                                 </label>
-                                <input name="LMBez" class="input <?php if($lmbezErr) echo"error"?>" type="text" oninput="inputError(event, 'lebensmittelLabel')"
-                                value="<?php if (isset($_GET['editieren'])) {
-                                    echo $_SESSION["array"][$_GET['editieren']]->Lebensmittel;
+                                <div class="haltbarkeit-grid">
+                                    <?php
+                                    // LOOP TILL END OF DATA
+                                    foreach ($herkunftkategorien as $key => $row) {
+                                        ?>
+                                        <div class="radio-container haltbarkeit">
+                                        <input class="herkunftInput" type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
+                                            <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey']) {
+                                                echo "checked";
+                                            } else if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Herkunft == $row['HerkunftKey']) {
+                                                echo "checked";
+                                            }
+                                            ?>>
+                                            <div class="haltbarkeit-item <?php if($herkunftErr) echo"error"?>">
+                                                <p>
+                                                    <?php echo $row['HerkunftName'] ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <!-- Betriebsname INPUT -->
+                            <div class="grid-col-3">
+                                <label class="grid-title">
+                                    Betriebsname
+                                </label>
+                                <input name="betrieb" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
+                                    echo $_SESSION["array"][$_GET['editieren']]->Betrieb;
                                 } else {
-                                    echo $LMBez;
+                                    echo $betrieb;
                                 } ?>" />
                             </div>
-                            <!-- Kühlen Check? -->
-                            <div class="grid-col-2">
-                                <div class="kuehlcheck">
-                                    <div class="check-item">
-                                        <input name="kuehlcheck" type="checkbox" id="kuehlen" value="true"
-                                        <?php
-                                        if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Kuehlen == "1") {
-                                            echo "checked";
-                                        } else if ($kuehlcheck == "1") {
-                                            echo "checked";
-                                        }?>> 
-                                        <img src='../media/checkbox.svg' alt='checkbox' />
-                                        <img src='../media/checkbox_checked.svg' alt='checkbox_checked' />
-                                        In den Kühlschrank
+                            <!-- Menge INPUT  -->
+                            <div class="grid-col-3">
+                            <div id="mengeLabel" class="grid-title" style="<?php if($mengeErr) echo"color: #E97878;"?>">
+                                    <label>
+                                        Menge (in kg)
+                                    </label>
+                                    <!-- OVERLAY Trigger-->
+                                    <div>
+                                        <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
+                                            alt="icon_help" />
+                                        <img class="open_icon hilfeMenge" height="22px" src="../media/icon_help_mini.svg"
+                                            alt="icon_help" />
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Kategorie auswählen -->
-                        <div class="grid-col-6">
-                            <div id="kategorieLabel" class="grid-title" style="<?php if($kategorieErr) echo"color: #E97878;"?>">
-                                <label>
-                                    Kategorie
-                                </label>
-                                <!-- OVERLAY Trigger -->
-                                <div>
-                                    <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
-                                        alt="icon_help" />
-                                    <img class="open_icon hilfeKategorien" height="22px"
-                                        src="../media/icon_help_mini.svg" alt="icon_help" />
-                                </div>
-                                <!-- OVERLAY hilfeKategorien -->
-                                <div id="hilfeKategorien">
-                                    <div class="outline">
-                                        <p>Bei Lebensmitteln verschiedener Kategorien, bitte Sonstiges auswählen.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="category-grid">
-                                <?php
-                                // LOOP TILL END OF DATA
-                                foreach ($kategorien as $key => $row) {
-                                    $iconList = array(
-                                        $icon_gemuese_url,
-                                        $icon_obst_url,
-                                        $icon_backwaren_suess_url,
-                                        $icon_backwaren_salzig_url,
-                                        $icon_trockenprodukte_url,
-                                        $icon_kuehlprodukte_url,
-                                        $icon_konserven_url,
-                                        $icon_sonstiges_url,
-                                    );
-                                    ?>
-                                    <div class="radio-container kategorie">
-                                    <input class="katInput" type="radio" name="OKatKey" value="<?php echo $row['OKatKey'] ?>" <?php 
-                                        if (isset($OKatKey) && $OKatKey == $row['OKatKey']) {
-                                            echo "checked";
-                                        } else if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Kategorie == $row['OKatKey']) {
-                                            echo "checked";
-                                        }
-                                        ?>>
-                                        <div class="category-item <?php if($kategorieErr) echo"error"?>">
-                                            <?php echo "<img src='" . $iconList[$key] . "'>" ?>
-                                            <p>
-                                                <?php echo $row['OKatName'] ?>
-                                            </p>
+                                    <!-- OVERLAY hilfeMenge -->
+                                    <div id="hilfeMenge">
+                                        <div class="outline" id="left-aligned">
+                                            <p>Unter dem Waschbecken findest Du die Waage.</p>
                                         </div>
                                     </div>
-                                    <?php
-                                }
-                                ?>
+                                </div>
+                                <input name="menge" class="input <?php if($mengeErr) echo"error"?>" type="number" step="0.1" min="0" oninput="inputError(event, 'mengeLabel')"
+                                value="<?php if (isset($_GET['editieren'])) {
+                                    echo $_SESSION["array"][$_GET['editieren']]->Menge;
+                                } else {
+                                    echo $menge;
+                                } ?>" />
                             </div>
-                        </div>
-                    </div>
-                    <div class="grid">
-                        <!-- Herkunft INPUT -->
-                        <div class="grid-col-6">
-                        <label id="herkunftLabel" class="grid-title" style="<?php if($herkunftErr) echo"color: #E97878;"?>">
-                                Wo gerettet?
-                            </label>
-                            <div class="haltbarkeit-grid">
-                                <?php
-                                // LOOP TILL END OF DATA
-                                foreach ($herkunftkategorien as $key => $row) {
-                                    ?>
-                                    <div class="radio-container haltbarkeit">
-                                    <input class="herkunftInput" type="radio" name="HerkunftKey" value="<?php echo $row['HerkunftKey'] ?>"
-                                        <?php if (isset($HerkunftKey) && $HerkunftKey == $row['HerkunftKey']) {
-                                            echo "checked";
-                                        } else if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Herkunft == $row['HerkunftKey']) {
-                                            echo "checked";
-                                        }
-                                        ?>>
-                                        <div class="haltbarkeit-item <?php if($herkunftErr) echo"error"?>">
-                                            <p>
-                                                <?php echo $row['HerkunftName'] ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
-                                ?>
-                            </div>
-                        </div>
-                        <!-- Betriebsname INPUT -->
-                        <div class="grid-col-3">
-                            <label class="grid-title">
-                                Betriebsname
-                            </label>
-                            <input name="betrieb" class="input" type="text" value="<?php if (isset($_GET['editieren'])) {
-                                echo $_SESSION["array"][$_GET['editieren']]->Betrieb;
-                            } else {
-                                echo $betrieb;
-                            } ?>" />
-                        </div>
-                        <!-- Menge INPUT  -->
-                        <div class="grid-col-3">
-                        <div id="mengeLabel" class="grid-title" style="<?php if($mengeErr) echo"color: #E97878;"?>">
-                                <label>
-                                    Menge (in kg)
+                            <!-- Haltbarkeit INPUT -->
+                            <div class="grid-col-6">
+                                <label class="grid-title" style="<?php if($haltbarkeitErr) echo"color: #E97878;"?>">
+                                    Wie lange genießbar?
                                 </label>
-                                <!-- OVERLAY Trigger-->
-                                <div>
-                                    <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
-                                        alt="icon_help" />
-                                    <img class="open_icon hilfeMenge" height="22px" src="../media/icon_help_mini.svg"
-                                        alt="icon_help" />
+                                <div class="rangeslider">
+                                    <img height="6px" src="../media/range-thumb-left.svg" alt="range-thumb">
+                                    <input id="input" type="range" min="1" max="8" value="<?php
+                                        if (isset($_GET['editieren'])) {
+                                            $stufen = ["", "unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
+                                            $value = array_search($_SESSION["array"][$_GET['editieren']]->Genießbar, $stufen);
+                                            echo $value;
+                                        } else {
+                                            echo "0";
+                                        }
+                                        ?>" name="haltbarkeit" class="slider">
+                                    <img height="6px" src="../media/range-thumb-right.svg" alt="range-thumb">
                                 </div>
-                                <!-- OVERLAY hilfeMenge -->
-                                <div id="hilfeMenge">
-                                    <div class="outline" id="left-aligned">
-                                        <p>Unter dem Waschbecken findest Du die Waage.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <input name="menge" class="input <?php if($mengeErr) echo"error"?>" type="number" step="0.1" min="0" oninput="inputError(event, 'mengeLabel')"
-                            value="<?php if (isset($_GET['editieren'])) {
-                                echo $_SESSION["array"][$_GET['editieren']]->Menge;
-                            } else {
-                                echo $menge;
-                            } ?>" />
-                        </div>
-                        <!-- Haltbarkeit INPUT -->
-                        <div class="grid-col-6">
-                            <label class="grid-title" style="<?php if($haltbarkeitErr) echo"color: #E97878;"?>">
-                                Wie lange genießbar?
-                            </label>
-                            <div class="rangeslider">
-                                <img height="6px" src="../media/range-thumb-left.svg" alt="range-thumb">
-                                <input id="input" type="range" min="1" max="8" value="<?php
-                                    if (isset($_GET['editieren'])) {
-                                        $stufen = ["", "unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
-                                        $value = array_search($_SESSION["array"][$_GET['editieren']]->Genießbar, $stufen);
-                                        echo $value;
-                                    } else {
-                                        echo "0";
-                                    }
-                                    ?>" name="haltbarkeit" class="slider">
-                                <img height="6px" src="../media/range-thumb-right.svg" alt="range-thumb">
-                            </div>
-                            <div class="slider-steps">
-                                <?php
-                                    $steps = ["unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
-                                    foreach ($steps as $key => $step) { ?>
-                                    <div id="<?php echo $key + 1 ?>">
-                                        <?php echo $step ?>                                      
-                                    </div>
-                                <?php } ?>
-                                <script>
-                                    var input = document.getElementById('input');
-                                    input.oninput = function () {
-                                        for(i = 1; i <= 8; i++) {
-                                            if(i == input.value) {
-                                                document.getElementById(i).style.color = "#99BB44";
-                                            } else {
-                                                document.getElementById(i).style.color = "#BEBEB9";
+                                <div class="slider-steps">
+                                    <?php
+                                        $steps = ["unkritisch", "1 Tag", "2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "1 Woche"];
+                                        foreach ($steps as $key => $step) { ?>
+                                        <div id="<?php echo $key + 1 ?>">
+                                            <?php echo $step ?>                                      
+                                        </div>
+                                    <?php } ?>
+                                    <script>
+                                        var input = document.getElementById('input');
+                                        input.oninput = function () {
+                                            for(i = 1; i <= 8; i++) {
+                                                if(i == input.value) {
+                                                    document.getElementById(i).style.color = "#99BB44";
+                                                } else {
+                                                    document.getElementById(i).style.color = "#BEBEB9";
+                                                }
                                             }
-                                        }
-                                    };
-                                    input.oninput();
-                                </script>
-                            </div>
-                        </div>
-                        <!-- Allergene INPUT  -->
-                        <div class="grid-col-6">
-                            <div class="grid-title">
-                                <label>
-                                    Allergene und Inhaltsstoffe
-                                </label>
-                                <!-- OVERLAY Trigger-->
-                                <div>
-                                    <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
-                                        alt="icon_help" />
-                                    <img class="open_icon hilfeAllergene" height="22px"
-                                        src="../media/icon_help_mini.svg" alt="icon_help" />
+                                        };
+                                        input.oninput();
+                                    </script>
                                 </div>
-                                <!-- OVERLAY hilfeAllergene -->
-                                <div id="hilfeAllergene">
-                                    <div class="outline" id="left-aligned">
-                                        <p>Bei Lebensmitteln mit Allergenen oder anderen kritischen Inhaltsstoffen,
-                                            diese bitte angeben.</p>
+                            </div>
+                            <!-- Allergene INPUT  -->
+                            <div class="grid-col-6">
+                                <div class="grid-title">
+                                    <label>
+                                        Allergene und Inhaltsstoffe
+                                    </label>
+                                    <!-- OVERLAY Trigger-->
+                                    <div>
+                                        <img class="close_icon" height="22px" src="../media/overlay_schließen.svg"
+                                            alt="icon_help" />
+                                        <img class="open_icon hilfeAllergene" height="22px"
+                                            src="../media/icon_help_mini.svg" alt="icon_help" />
+                                    </div>
+                                    <!-- OVERLAY hilfeAllergene -->
+                                    <div id="hilfeAllergene">
+                                        <div class="outline" id="left-aligned">
+                                            <p>Bei Lebensmitteln mit Allergenen oder anderen kritischen Inhaltsstoffen,
+                                                diese bitte angeben.</p>
+                                        </div>
                                     </div>
                                 </div>
+                                <input name="allergene" class="input" type="text" maxlength="200" value="<?php if (isset($_GET['editieren'])) {
+                                    echo $_SESSION["array"][$_GET['editieren']]->Allergene;
+                                } else {
+                                    echo $allergene;
+                                } ?>"/>
                             </div>
-                            <input name="allergene" class="input" type="text" maxlength="200" value="<?php if (isset($_GET['editieren'])) {
-                                echo $_SESSION["array"][$_GET['editieren']]->Allergene;
-                            } else {
-                                echo $allergene;
-                            } ?>"/>
-                        </div>
-                        <!-- Anmerkungen INPUT -->
-                        <div class="grid-col-6">
-                            <label class="grid-title">
-                                Anmerkungen
-                            </label>
-                            <input name="anmerkung" class="input" type="text" maxlength="200" value="<?php if (isset($_GET['editieren'])) {
-                                echo $_SESSION["array"][$_GET['editieren']]->Anmerkungen;
-                            } else {
-                                echo $anmerkung;
-                            } ?>"/>
+                            <!-- Anmerkungen INPUT -->
+                            <div class="grid-col-6">
+                                <label class="grid-title">
+                                    Anmerkungen
+                                </label>
+                                <input name="anmerkung" class="input" type="text" maxlength="200" value="<?php if (isset($_GET['editieren'])) {
+                                    echo $_SESSION["array"][$_GET['editieren']]->Anmerkungen;
+                                } else {
+                                    echo $anmerkung;
+                                } ?>"/>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-        <div class="action-container">
-            <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
-            <div id="openNichtErlaubteLm">
-                <img src="../media/icon_help_mini.svg" alt="icon_help" />
-                <p>Nicht erlaubte Lebensmittel</p>
-            </div>
-            <div class="action-wrap">
-                <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
-                <!-- Darstellung der Buttons abhängig von der Seite, von der der Nutzer kommt -->
-                <?php if (isset($_GET['editieren'])) {
-                    echo "<a id='openHinzufuegenZurueck'>Zurück</a>";
-                } else {
-                    echo "<a id='openHinzufuegenAbbr'>Abbrechen</a>";
-                } ?>
+        <footer>
+            <div class="action-container">
+                <!-- OVERLAY Trigger Nicht erlaubte Lebensmittel -->
+                <div id="openNichtErlaubteLm">
+                    <img src="../media/icon_help_mini.svg" alt="icon_help" />
+                    <p>Nicht erlaubte Lebensmittel</p>
+                </div>
+                <div class="action-wrap">
+                    <!-- SENDEN des Formulars und WEITERLEITUNG zur Foodsaver Übersicht -->
+                    <!-- Darstellung der Buttons abhängig von der Seite, von der der Nutzer kommt -->
+                    <?php if (isset($_GET['editieren'])) {
+                        echo "<a id='openHinzufuegenZurueck'>Zurück</a>";
+                    } else {
+                        echo "<a id='openHinzufuegenAbbr'>Abbrechen</a>";
+                    } ?>
 
-                <?php if (isset($_GET['editieren'])) {
-                    echo "<input class='continue-button' type='submit' form='myform' value='Aktualisieren'>";
-                } else {
-                    echo "<input class='continue-button' type='submit' form='myform' value='Hinzufügen'>";
-                } ?>
+                    <?php if (isset($_GET['editieren'])) {
+                        echo "<input class='continue-button' type='submit' form='myform' value='Aktualisieren'>";
+                    } else {
+                        echo "<input class='continue-button' type='submit' form='myform' value='Hinzufügen'>";
+                    } ?>
             </div>
+        </footer>
         </div>
     </div>
 

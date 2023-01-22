@@ -267,7 +267,8 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         </div>
       </div>
     </div>
-    <div class="action-container">
+    <footer>    
+      <div class="action-container">
       <!-- OVERLAY Trigger Lebensmittel verstauen, id im div-tag setzen ist besser -->
       <div id="openLmVerstauen">
         <img src="../media/icon_help_mini.svg" alt="icon_help" />
@@ -280,6 +281,8 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         <a href='07_foodsaver_uebersicht.php?send=true' class="continue-button">Abschließen</a>
       </div>
     </div>
+  </footer>
+
   </div>
 
   <!-- ----------------- ALLE OVERLAYS ---------------- -->
