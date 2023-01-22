@@ -271,34 +271,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="grid-spacing">
                     <div class="grid">
                         <!-- Lebensmittel INPUT -->
-                        <div class="grid-col-4">
-                        <label id="lebensmittelLabel" class="grid-title" style="<?php if($lmbezErr) echo"color: #E97878;"?>">
-                                Lebensmittel
-                            </label>
-                            <input name="LMBez" class="input <?php if($lmbezErr) echo"error"?>" type="text" oninput="inputError(event, 'lebensmittelLabel')"
-                            value="<?php if (isset($_GET['editieren'])) {
-                                echo $_SESSION["array"][$_GET['editieren']]->Lebensmittel;
-                            } else {
-                                echo $LMBez;
-                            } ?>" />
-                        </div>
-                        <!-- Kühlen Check? -->
-                        <div class="grid-col-2">
-                            <div class="kuehlcheck">
-                                <div class="check-item">
-                                    <input name="kuehlcheck" type="checkbox" id="kuehlen" value="true"
-                                    <?php
-                                    if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Kuehlen == "1") {
-                                        echo "checked";
-                                    } else if ($kuehlcheck == "1") {
-                                        echo "checked";
-                                    }?>> 
-                                    <img src='../media/checkbox.svg' alt='checkbox' />
-                                    <img src='../media/checkbox_checked.svg' alt='checkbox_checked' />
-                                    In den Kühlschrank
+                        <div class="grid grid-col-6 container">
+                            <div class="grid-col-4">
+                                <label id="lebensmittelLabel" class="grid-title" style="<?php if($lmbezErr) echo"color: #E97878;"?>">
+                                    Lebensmittel
+                                </label>
+                                <input name="LMBez" class="input <?php if($lmbezErr) echo"error"?>" type="text" oninput="inputError(event, 'lebensmittelLabel')"
+                                value="<?php if (isset($_GET['editieren'])) {
+                                    echo $_SESSION["array"][$_GET['editieren']]->Lebensmittel;
+                                } else {
+                                    echo $LMBez;
+                                } ?>" />
+                            </div>
+                            <!-- Kühlen Check? -->
+                            <div class="grid-col-2">
+                                <div class="kuehlcheck">
+                                    <div class="check-item">
+                                        <input name="kuehlcheck" type="checkbox" id="kuehlen" value="true"
+                                        <?php
+                                        if (isset($_GET['editieren']) && $_SESSION["array"][$_GET['editieren']]->Kuehlen == "1") {
+                                            echo "checked";
+                                        } else if ($kuehlcheck == "1") {
+                                            echo "checked";
+                                        }?>> 
+                                        <img src='../media/checkbox.svg' alt='checkbox' />
+                                        <img src='../media/checkbox_checked.svg' alt='checkbox_checked' />
+                                        In den Kühlschrank
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        
                         <!-- Kategorie auswählen -->
                         <div class="grid-col-6">
                             <div id="kategorieLabel" class="grid-title" style="<?php if($kategorieErr) echo"color: #E97878;"?>">
