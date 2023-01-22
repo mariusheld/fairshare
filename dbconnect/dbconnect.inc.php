@@ -47,8 +47,8 @@ class DBController
 
 ?>
 
-<!-- Nur zu Testzwecken -->
 <?php
+// <!-- Nur zu Testzwecken -->
 /*
 	$servername = "localhost";
 	$user = "root";
