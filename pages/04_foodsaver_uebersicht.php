@@ -185,7 +185,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                   if ($array[$key]['Anmerkungen'] == true || $array[$key]['Allergene'] == true) { ?>
                     <img src='../media/comment_icon.svg' alt='comment_icon' id="bubble" onClick='open_close_options(this)'
                       class="open_icon" />
-                    <?php
+                  <?php
                   }
                   ;
                   ?>
@@ -255,7 +255,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                 </div>
               </td>
             </tr>
-            <?php
+          <?php
           }
           ?>
         </table>

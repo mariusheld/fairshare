@@ -2,37 +2,23 @@
 // Session initialisieren, damit php erkennt welche Session im nächsten Schritt gemeint ist
 session_start();
 
+//--------------Gerettete LM für aktuellen FS auslesen-------------//
 //Datenbankverbindung aufbauen
 require_once("../dbconnect/dbconnect.inc.php");
 
+//FSkey aus session holen
 $FSkey = $_SESSION['FSkey'];
 
-function consolelog($data, bool $quotes = false)
-{
-  $output = json_encode($data);
-  if ($quotes) {
-    echo "<script>console.log('{$output}' );</script>";
-  } else {
-    echo "<script>console.log({$output} );</script>";
-  }
-}
-
-consolelog($FSkey);
-
+//SQL Abfrage vorbereiten
 $select_FS_LMGewicht = $db->prepare("SELECT SUM(Gewicht) FROM Lieferung LEFT JOIN Lebensmittel ON Lieferung.LMKey=Lebensmittel.LMKey WHERE FSKey = :FSKey");
 
-$daten_FS_LMGewicht = array (
-	"FSKey" => $FSkey,
-	);
-
+//FSkey in das Array eintragen
+$daten_FS_LMGewicht = array(
+    "FSKey" => $FSkey,
+);
+//SQL Abfrage ausführen
 $select_FS_LMGewicht->execute($daten_FS_LMGewicht);
-
-consolelog($daten_FS_LMGewicht);
-consolelog($select_FS_LMGewicht->execute($daten_FS_LMGewicht));
-
-
 $gewicht = $select_FS_LMGewicht->fetchColumn();
-consolelog($gewicht);
 
 // Session wird zerstört und resettet
 session_destroy();
@@ -63,7 +49,9 @@ session_destroy();
 
     <div id="endscreen-content">
         <div>
-            <h1 id="endscreen-title"><?php echo $gewicht; ?> KILOGRAMM</h1>
+            <h1 id="endscreen-title">
+                <?php echo $gewicht; ?> KILOGRAMM
+            </h1>
             <p id="endscreen-text">Lebensmittel hast du bisher für die Raupe gerettet!</p>
             <p id="endscreen-text-danke">Danke für deinen Beitrag!</p>
             <button id="endscreen-button">Beenden</button>

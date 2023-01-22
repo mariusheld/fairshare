@@ -24,10 +24,6 @@ $gewicht = intval($result);
 $gewicht = round($gewicht / 1000, $precision = 3);
 
 
-     //Konsolenausgabe der Datenbankabfrage (nur möglich nach einem fetchAll() befehl der Abfrage)
-     echo "<script>console.log(" . json_encode($gewicht) . ");</script>";
-
-
 //Fehlertest
 if (!$erfolg) {
     $fehler = $query->errorInfo();

@@ -44,9 +44,7 @@ exitUebersichtAbbr.onclick = function () {
 //Weiterleitung zur Startseite
 nextUebersichtAbbr.onclick = function () {
   fsUebersichtAbbr.style.display = "none";
-  // window.open(href = "../index.php");
 };
- 
 
 //----------------JavaScript für fs-lm-verstauen Overlay, genutzt in 04 -----------------------------//
 //Overlay auswählen
@@ -73,70 +71,69 @@ exitLmVerstauen.onclick = function () {
 var old = null;
 
 function open_close_options(options_btn) {
-    
   // Kein Pop-up ist geöffnet
-    if (old == null) {
-        options_btn.src = '../media/cross.svg';
-        options_btn.nextElementSibling.style.display = 'flex';
-        old = options_btn;
+  if (old == null) {
+    options_btn.src = "../media/cross.svg";
+    options_btn.nextElementSibling.style.display = "flex";
+    old = options_btn;
 
-  // Geöffnetes Pop-up wird wieder geschlossen
-    } else if (old == options_btn){
-        if(options_btn.id == "bubble") {
-            options_btn.src = '../media/comment_icon.svg';
-            options_btn.nextElementSibling.style.display = 'none';
-            old = null;
-        } else {
-            options_btn.src = '../media/edit_icon.svg';
-            options_btn.nextElementSibling.style.display = 'none';
-            old = null;
-        } 
-
-  // Geöffnetes Pop-up schließt sich, weil ein anderes Pop-up aufgeht    
-    } else if (old != options_btn) {
-        if(options_btn.id == "bubble" && old.id != "bubble") {
-            old.nextElementSibling.style.display = 'none';
-            old.src = '../media/edit_icon.svg';
-            options_btn.nextElementSibling.style.display = 'flex';
-            options_btn.src = '../media/cross.svg';
-            old = options_btn;
-        } else if(options_btn.id != "bubble" && old.id != "bubble"){
-            old.nextElementSibling.style.display = 'none';
-            old.src = '../media/edit_icon.svg';
-            options_btn.nextElementSibling.style.display = 'flex';
-            options_btn.src = '../media/cross.svg';
-            old = options_btn;
-        } else if(options_btn.id == "bubble" && old.id == "bubble"){
-            old.nextElementSibling.style.display = 'none';
-            old.src = '../media/comment_icon.svg';
-            options_btn.nextElementSibling.style.display = 'flex';
-            options_btn.src = '../media/cross.svg';
-            old = options_btn;
-        } else if(options_btn.id != "bubble" && old.id == "bubble"){
-            old.nextElementSibling.style.display = 'none';
-            old.src = '../media/comment_icon.svg';
-            options_btn.nextElementSibling.style.display = 'flex';
-            options_btn.src = '../media/cross.svg';
-            old = options_btn;
-        }        
+    // Geöffnetes Pop-up wird wieder geschlossen
+  } else if (old == options_btn) {
+    if (options_btn.id == "bubble") {
+      options_btn.src = "../media/comment_icon.svg";
+      options_btn.nextElementSibling.style.display = "none";
+      old = null;
+    } else {
+      options_btn.src = "../media/edit_icon.svg";
+      options_btn.nextElementSibling.style.display = "none";
+      old = null;
     }
+
+    // Geöffnetes Pop-up schließt sich, weil ein anderes Pop-up aufgeht
+  } else if (old != options_btn) {
+    if (options_btn.id == "bubble" && old.id != "bubble") {
+      old.nextElementSibling.style.display = "none";
+      old.src = "../media/edit_icon.svg";
+      options_btn.nextElementSibling.style.display = "flex";
+      options_btn.src = "../media/cross.svg";
+      old = options_btn;
+    } else if (options_btn.id != "bubble" && old.id != "bubble") {
+      old.nextElementSibling.style.display = "none";
+      old.src = "../media/edit_icon.svg";
+      options_btn.nextElementSibling.style.display = "flex";
+      options_btn.src = "../media/cross.svg";
+      old = options_btn;
+    } else if (options_btn.id == "bubble" && old.id == "bubble") {
+      old.nextElementSibling.style.display = "none";
+      old.src = "../media/comment_icon.svg";
+      options_btn.nextElementSibling.style.display = "flex";
+      options_btn.src = "../media/cross.svg";
+      old = options_btn;
+    } else if (options_btn.id != "bubble" && old.id == "bubble") {
+      old.nextElementSibling.style.display = "none";
+      old.src = "../media/comment_icon.svg";
+      options_btn.nextElementSibling.style.display = "flex";
+      options_btn.src = "../media/cross.svg";
+      old = options_btn;
+    }
+  }
 
   // Geöffnetes Pop-up schließt sich, weil außerhalb des Pop-ups gedrückt wird
   var triggerIcons = document.getElementsByClassName("open_icon");
 
   window.onclick = function (event) {
     if (event.target.classList[0] != "open_icon") {
-      if(options_btn.id == "bubble") {
-        options_btn.src = '../media/comment_icon.svg';
-        options_btn.nextElementSibling.style.display = 'none';
+      if (options_btn.id == "bubble") {
+        options_btn.src = "../media/comment_icon.svg";
+        options_btn.nextElementSibling.style.display = "none";
         old = null;
-    } else {
-        options_btn.src = '../media/edit_icon.svg';
-        options_btn.nextElementSibling.style.display = 'none';
+      } else {
+        options_btn.src = "../media/edit_icon.svg";
+        options_btn.nextElementSibling.style.display = "none";
         old = null;
-    } 
-  }
-};
+      }
+    }
+  };
 }
 
 //----------------Öffnen des Overlays Lm-löschen-----------------------------//
@@ -144,5 +141,3 @@ function openLoeschen(id) {
   document.getElementById("overlayLoeschen:" + id).style.display = "block";
   document.getElementById("grauer-hintergrund").style.display = "block";
 }
-
-

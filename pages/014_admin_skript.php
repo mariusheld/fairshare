@@ -35,16 +35,6 @@ if (isset($_POST["fairteil-menge"])) {
   header("Location: admin.php?Bezeichnung=" . $_POST['bezeichnung'] . "&OKatKey=" . $_POST["okatkey"] . "&Menge=" . $_POST["menge"]);
 }
 
-function consolelog($data, bool $quotes = false)
-{
-  $output = json_encode($data);
-  if ($quotes) {
-    echo "<script>console.log('{$output}' );</script>";
-  } else {
-    echo "<script>console.log({$output} );</script>";
-  }
-}
-
 if (isset($_GET['mfwArrayFairteilen'])) {
   $myArrayString = $_GET['mfwArrayFairteilen'];
   $myArrayObjects = explode("|", $myArrayString);

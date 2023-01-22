@@ -470,8 +470,8 @@ if ($login == true) {
     var erstesMessdatum = "<?php echo $erstesMessdatum_dmY; ?>";
     var date1formatted = "<?php echo $date1formatted; ?>";
 
-    // Test:
-    //alert("date1="+gotdate1+" & date2="+gotdate2);
+      // Test:
+      //alert("date1="+gotdate1+" & date2="+gotdate2);
 
   </script>
 
@@ -547,11 +547,12 @@ if ($login == true) {
           <!-- Block für Kategorien -->
           <a
             href="<?php echo '08_interne_wirkungsmessung_kategorien.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
-            <div class="block flx-container-sm" style="min-height: 239px;" >
+            <div class="block flx-container-sm" style="min-height: 239px;">
               <!-- Liste der Kategorien -->
               <div style="display: inline;">
                 <p class="font-fira description"><strong>Nach Kategorien</strong>
-                  <i class="fa fa-angle-right" aria-hidden="true" style="color: #99BB44; margin-left: 5px;"></i></p>
+                  <i class="fa fa-angle-right" aria-hidden="true" style="color: #99BB44; margin-left: 5px;"></i>
+                </p>
                 <div class="font-fira list-category">
                   <table>
                     <?php
@@ -571,7 +572,7 @@ if ($login == true) {
                               <?php echo $row['katname'] ?>
                             </td>
                           </tr>
-                          <?php
+                        <?php
                         } else {
                           ?>
                           <tr class="list-category-sml">
@@ -582,7 +583,7 @@ if ($login == true) {
                               <?php echo $row['katname'] ?>
                             </td>
                           </tr>
-                          <?php
+                        <?php
                         }
                       }
                     }
@@ -592,7 +593,7 @@ if ($login == true) {
               </div>
               <!-- Bilder der Kategorien -->
               <div class="img-block">
-              <?php //if (!empty($kategorien)){ ?>
+                <?php //if (!empty($kategorien)){ ?>
                 <img src="<?php if ($kategorien[0]['katkey'] == 1) {
                   echo $kat_icon_1;
                 } else if ($kategorien[0]['katkey'] == 2) {
@@ -654,7 +655,8 @@ if ($login == true) {
             <div class="block" style="min-height: 225px;">
               <div style="display: inline-block;">
                 <p class="font-fira description" style="float:left;"><strong>Nach Herkunft</strong>
-                <i class="fa fa-angle-right" aria-hidden="true" style="color: #99BB44; margin-left: 5px;"></i></p>
+                  <i class="fa fa-angle-right" aria-hidden="true" style="color: #99BB44; margin-left: 5px;"></i>
+                </p>
                 <div class="font-fira list-category">
                   <table>
                     <?php
@@ -674,7 +676,7 @@ if ($login == true) {
                               <?php echo $row['herkunftname'] ?>
                             </td>
                           </tr>
-                          <?php
+                        <?php
                         } else {
                           ?>
                           <tr class="list-category-sml">
@@ -685,7 +687,7 @@ if ($login == true) {
                               <?php echo $row['herkunftname'] ?>
                             </td>
                           </tr>
-                          <?php
+                        <?php
                         }
                       }
                     }
@@ -825,7 +827,7 @@ if ($login == true) {
 
   </html>
 
-  <?php
+<?php
 } else {
   session_destroy();
   header("Location: ../index.php");

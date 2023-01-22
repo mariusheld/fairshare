@@ -38,73 +38,70 @@ exitNichtErlaubteLm.onclick = function () {
   fsNichtErlaubteLm.style.display = "none";
 };
 
-
 //----------------JavaScript für fs-hinzufuegen-abbr Overlay, genutzt in 03-----------------------------//
 
 try {
-var fsHinzufuegenZurueck = document.getElementById("fsHinzufuegenZurueck");
+  var fsHinzufuegenZurueck = document.getElementById("fsHinzufuegenZurueck");
 
-var openHinzufuegenZurueck = document.getElementById("openHinzufuegenZurueck");
+  var openHinzufuegenZurueck = document.getElementById(
+    "openHinzufuegenZurueck"
+  );
 
-//Das schließt das Overlay
-var exitHinzufuegenZurueck = document.getElementsByClassName("exitButton")[0];
+  //Das schließt das Overlay
+  var exitHinzufuegenZurueck = document.getElementsByClassName("exitButton")[0];
 
-//Leitet auf Startseite weiter
-var nextHinzufuegenZurueck = document.getElementsByClassName("nextButton")[0];
+  //Leitet auf Startseite weiter
+  var nextHinzufuegenZurueck = document.getElementsByClassName("nextButton")[0];
 
-openHinzufuegenZurueck.onclick = function() {
-fsHinzufuegenZurueck.style.display = "block";
-}
-   
-//Schließen nach Button drücken
-exitHinzufuegenZurueck.onclick = function() {
-fsHinzufuegenZurueck.style.display = "none";
-}
-  
-//Weiterleitung zur Startseite
-nextHinzufuegenZurueck.onclick = function() {
-fsHinzufuegenZurueck.style.display = "none";
+  openHinzufuegenZurueck.onclick = function () {
+    fsHinzufuegenZurueck.style.display = "block";
+  };
 
-document.getElementById("exit-fsHinzufuegenAbbr").onclick = function () {
-document.getElementById("fsHinzufuegenZurueck").style.display = "none";
-}
-}
+  //Schließen nach Button drücken
+  exitHinzufuegenZurueck.onclick = function () {
+    fsHinzufuegenZurueck.style.display = "none";
+  };
 
+  //Weiterleitung zur Startseite
+  nextHinzufuegenZurueck.onclick = function () {
+    fsHinzufuegenZurueck.style.display = "none";
+
+    document.getElementById("exit-fsHinzufuegenAbbr").onclick = function () {
+      document.getElementById("fsHinzufuegenZurueck").style.display = "none";
+    };
+  };
 } catch (error) {
-//Overlay auswählen
-var fsHinzufuegenAbbr = document.getElementById("fsHinzufuegenAbbr");
+  //Overlay auswählen
+  var fsHinzufuegenAbbr = document.getElementById("fsHinzufuegenAbbr");
 
-//Das öffnet das Overlay
-var openHinzufuegenAbbr = document.getElementById("openHinzufuegenAbbr");
-      
-//Das schließt das Overlay
-var exitHinzufuegenAbbr = document.getElementsByClassName("exitButton")[0];
+  //Das öffnet das Overlay
+  var openHinzufuegenAbbr = document.getElementById("openHinzufuegenAbbr");
 
-//Leitet auf Startseite weiter
-var nextHinzufuegenAbbr = document.getElementsByClassName("nextButton")[0];
-      
-//Öffnen wenn icon geklickt wird
-openHinzufuegenAbbr.onclick = function() {
-fsHinzufuegenAbbr.style.display = "block";
+  //Das schließt das Overlay
+  var exitHinzufuegenAbbr = document.getElementsByClassName("exitButton")[0];
+
+  //Leitet auf Startseite weiter
+  var nextHinzufuegenAbbr = document.getElementsByClassName("nextButton")[0];
+
+  //Öffnen wenn icon geklickt wird
+  openHinzufuegenAbbr.onclick = function () {
+    fsHinzufuegenAbbr.style.display = "block";
+  };
+
+  //Schließen nach Button drücken
+  exitHinzufuegenAbbr.onclick = function () {
+    fsHinzufuegenAbbr.style.display = "none";
+  };
+
+  //Weiterleitung zur Startseite
+  nextHinzufuegenAbbr.onclick = function () {
+    fsHinzufuegenAbbr.style.display = "none";
+  };
+
+  document.getElementById("exit-fsHinzufuegenAbbr").onclick = function () {
+    document.getElementById("fsHinzufuegenAbbr").style.display = "none";
+  };
 }
-   
-//Schließen nach Button drücken
-exitHinzufuegenAbbr.onclick = function() {
-fsHinzufuegenAbbr.style.display = "none";
-}
-
-//Weiterleitung zur Startseite
-nextHinzufuegenAbbr.onclick = function() {
-fsHinzufuegenAbbr.style.display = "none";
-}
-
-document.getElementById("exit-fsHinzufuegenAbbr").onclick = function () {
-  document.getElementById("fsHinzufuegenAbbr").style.display = "none";
-}
-}
-
-
-
 
 //----------------JavaScript für Formular-InfoPopups, genutzt in 03-----------------------------//
 //List of OpenIcon HTML Elements
@@ -137,7 +134,7 @@ window.onclick = function (event) {
 };
 
 // Inpufelder Error-Handling
-function inputError(event, id) { 
+function inputError(event, id) {
   element = event.target;
   element.classList.remove("error");
   document.getElementById(id).style = "none";
