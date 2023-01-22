@@ -62,6 +62,7 @@ a {
 
 .anmerkung p {
     margin: 0;
+    text-align: left;
 }
 
 .overlay {
