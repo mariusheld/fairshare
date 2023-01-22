@@ -61,7 +61,7 @@ if (!$erfolg) {
                     Kennwort
                 </p>
                 <div class="eingabe">
-                    <form action="pages/admin.php" method="POST" autocomplete="off">
+                    <form action="pages/10_lageruebersicht.php" method="POST" autocomplete="off">
                         <input class="eingabefeld" name="password" id="eingabe" type="password"
                             style="text-align: center; font-size: 20px;" <?php if ($login == true) { echo "style='border:
                             2px solid red; width: 468; height: 42px;'"; } ?>>
@@ -108,14 +108,14 @@ if (!$erfolg) {
     </div>
 
     <div id="startscreen-footer">
-        <a id="startscreen-footer-text" href="pages/09_credits.html">Ein Lehrprojekt der HdM Stuttgart</a>
+        <a id="startscreen-footer-text" href="pages/17_credits.html">Ein Lehrprojekt der HdM Stuttgart</a>
     </div>
     
     <script>
         //Weiterleitung zum Foodsaver Anmeldeprozess
         var startscreenButton = document.getElementById('startscreen-button');
         startscreenButton.onclick = function () {
-            window.location.href = 'pages/011_foodsaver_anmeldung.php';
+            window.location.href = 'pages/02_foodsaver_anmeldung.php';
         }
         // Modales Fenster 
         var modal = document.getElementById('overtrigger');

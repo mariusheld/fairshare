@@ -142,7 +142,7 @@ if (isset($_GET['fairteilen'])) {
       die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
     }
     // Seite neu laden
-    header("Location: admin.php?Bezeichnung=" . $bezeichnung . "&OKatKey=" . $okatkey . "&Menge=" . $bewegMenge);
+    header("Location: 10_lageruebersicht.php?Bezeichnung=" . $bezeichnung . "&OKatKey=" . $okatkey . "&Menge=" . $bewegMenge);
 }
 
 
@@ -160,7 +160,7 @@ if (isset($_POST["entsorgen-menge"])) {
       die("Folgender Datenbankfehler ist aufgetreten:" . $fehler[2]);
     }
     // Seite neu ladens
-    header("Location: admin.php?entsorgen=erfolgreich");
+    header("Location: 10_lageruebersicht.php?entsorgen=erfolgreich");
   }
 
 ?>
@@ -170,14 +170,13 @@ if (isset($_POST["entsorgen-menge"])) {
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="author" content="Marius Held" />
     <title>FAIRSHARE</title>
     <link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
     
     <script src="https://code.jquery.com/jquery-3.6.2.min.js"
         integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/adminstyle.css" />
-    <link rel="stylesheet" href="../css/popup_styles.css">
+    <link rel="stylesheet" href="../css/lageruebersicht.css">
     <link rel="icon" type="image/png" href="../media/favicon.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&family=Londrina+Solid:wght@300;400&display=swap');
@@ -360,7 +359,7 @@ if (isset($_POST["entsorgen-menge"])) {
                                         </div>
                                         <p>Wenn du Lebensmittel entsorgst verschwinden sie aus der Datenanalyse. Welche Menge des Lebensmittels möchtest du entsorgen?</p>
 
-                                        <form id="entsorgen-<?php echo $zähler ?>" method="POST" action="admin.php" class="popup-form">
+                                        <form id="entsorgen-<?php echo $zähler ?>" method="POST" action="10_lageruebersicht.php" class="popup-form">
                                             <label class="popup-form-label" for="entsorgen-menge">Menge (in kg)</label>
                                             <input type="number" min="0" step="0.1" name="entsorgen-menge" id="entsorgen-menge" max="<?php echo $zeile['Gewicht'] ?>" 
                                             value="<?php echo $zeile['Gewicht']; ?>">
@@ -382,7 +381,7 @@ if (isset($_POST["entsorgen-menge"])) {
                                             <h5><?php echo $zeile['Bezeichnung'] ?> fairteilen?</h5>
                                         </div>
                                         <p>Wenn du Lebensmittel als fairteilt markierst verschwinden sie aus der Übersicht. Welche Menge des Lebensmittels möchtest du fairteilen?</p>
-                                        <form id="fairteilen-<?php echo $zähler ?>" method="POST" action="admin.php?id=<?php echo $zähler ?>" class="popup-form">
+                                        <form id="fairteilen-<?php echo $zähler ?>" method="POST" action="10_lageruebersicht.php?id=<?php echo $zähler ?>" class="popup-form">
                                             <label class="popup-form-label" for="fairteil-menge">Menge (in kg)</label>
                                             <input type="number" min="0" step="0.1" id="fairteil-menge" name="fairteil-menge" max="<?php echo $zeile['Gewicht'] ?>" 
                                             value="<?php echo $zeile['Gewicht']; ?>">
@@ -409,7 +408,7 @@ if (isset($_POST["entsorgen-menge"])) {
                                         <p>Möchtest du das Lebensmittel <span class="marked-green"><?php echo $zeile['Bezeichnung']; if (isset($_POST["fairteil-menge"])) echo " (" . $_POST["fairteil-menge"] . " kg)" ?></span> 
                                         wirklich als fairteilt markieren? Dadurch verschwindet der Eintrag aus der Übersicht.</p>
                                         <button class="secondary-btn" id="<?php echo $zähler ?>" onclick="fairteilen_bestätigen_abbrechen(this)">Abbrechen</button>
-                                        <a class="primary-btn" href="admin.php?fairteilen=true" style="text-align: center">Fairteilen</a>
+                                        <a class="primary-btn" href="10_lageruebersicht.php?fairteilen=true" style="text-align: center">Fairteilen</a>
                                     </div>
                                 </div>
                             </div>
@@ -507,7 +506,7 @@ if (isset($_POST["entsorgen-menge"])) {
                         <h3>Mehrfachauswahl</h3>
                     </div>
                     <div>
-                        <a href="admin.php" class="secondary-btn" style="width: 228px; display: flex; justify-content: center; align-items: center; margin: 0;">Abbrechen</a>
+                        <a href="10_lageruebersicht.php" class="secondary-btn" style="width: 228px; display: flex; justify-content: center; align-items: center; margin: 0;">Abbrechen</a>
                         <button class="primary-btn-red" id="mfwEntsorgenBtn" onclick="mfwEntsorgen()" style="width:228px;">
                         <img src="../media/arrows_white.svg" alt="Entsorgen">
                         Entsorgen</button>
@@ -519,7 +518,7 @@ if (isset($_POST["entsorgen-menge"])) {
             </footer>
             <footer id="footer">
                 <div class="footerbg">
-                    <a href="admin.php">
+                    <a href="10_lageruebersicht.php">
                         <button class="refreshbutton" id="refreshdash">
                             Liste Aktualisieren
                         </button>
@@ -610,8 +609,8 @@ if (isset($_POST["entsorgen-menge"])) {
                         <h3>HOPPLA!</h3>
                         <p>Jemand hat gerade die letzte Box genommen. <br> Sieh nach und sorge für Nachschub.</p>
                         <button id="close_keine_boxen" class="secondary-btn" onclick="close_KeineBoxen();">Später erinnern</button>
-                        <!-- <a id="close_keine_boxen" class="secondary-btn" onclick="close_KeineBoxen();" href="admin.php?box=2">Später erinnern</a> -->
-                        <a class="primary-btn" style="text-align: center" onclick="close_KeineBoxen();" href="admin.php?box=1">
+                        <!-- <a id="close_keine_boxen" class="secondary-btn" onclick="close_KeineBoxen();" href="10_lageruebersicht.php?box=2">Später erinnern</a> -->
+                        <a class="primary-btn" style="text-align: center" onclick="close_KeineBoxen();" href="10_lageruebersicht.php?box=1">
                         Boxen nachgefüllt
                         </a>
                         
@@ -621,7 +620,7 @@ if (isset($_POST["entsorgen-menge"])) {
         <?php } ?>
 
         <!-- Script zum Öffnen der Pop-Ups -->
-        <script type="text/javascript" src="../script/open_popups_mitarbeiter.js"></script>
+        <script type="text/javascript" src="../script/10.js"></script>
         <!-- Script zum Öffnen und Schließen des Logout Overlays -->
         <?php
         echo "

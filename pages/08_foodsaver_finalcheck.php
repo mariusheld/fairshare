@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_select_db($conn, "u-projraupe");
     $finalCheckQuery = "INSERT INTO `BVerfuegbarkeit` (`Zeitpunkt`, `NochVerfuegbar`) VALUES (now(), '$letzteBox')";
     mysqli_query($conn, $finalCheckQuery);
-    header("Location: ./06_foodsaver_endscreen.php");
+    header("Location: ./09_foodsaver_endscreen.php");
 }
 ?>
 
@@ -163,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Script Overlay fs-hilfe -->
     <?php
-    echo '<script type="text/javascript" src="../script/05.js">
+    echo '<script type="text/javascript" src="../script/08.js">
         </script>
         ';
     ?>

@@ -212,7 +212,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dbReplacement = array($_SESSION['editieren'] => $dbeintrag);
         $_SESSION["array"] = array_replace($_SESSION["array"], $replacement);
         $_SESSION["dbeintragArray"] = array_replace($_SESSION["dbeintragArray"], $dbReplacement);
-        header("Location: ./04_foodsaver_uebersicht.php");
+        header("Location: ./07_foodsaver_uebersicht.php");
         exit();
     } else {
         // ----------- add Object to Uebersicht --------
@@ -225,7 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             array_push($_SESSION["dbeintragArray"], $dbeintrag);
             $_SESSION["latestLMkey"] = $_SESSION["latestLMkey"] + 1;
             $_SESSION["kuehlcheck"] = 0;
-            header("Location: ./04_foodsaver_uebersicht.php");
+            header("Location: ./07_foodsaver_uebersicht.php");
             exit();
         }
     }
@@ -661,9 +661,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <h5>Nein, doch nicht</h5>
                         </a>
                         <a class="nextButton"  <?php if ((isset($_GET['editieren'])) || (isset($_GET['hinzufuegen']))){
-                                echo 'href="../pages/04_foodsaver_uebersicht.php"';
+                                echo 'href="../pages/07_foodsaver_uebersicht.php"';
                             } else {
-                                echo 'href="../pages/02_foodsaver_start.php"';
+                                echo 'href="../pages/05_foodsaver_start.php"';
                             }?>>
                             <h5>Ja, zur Übersicht</h5>
                         </a>
@@ -672,7 +672,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <!-- Script Overlays -->
     <?php
-    echo '<script type="text/javascript" src="../script/03.js">
+    echo '<script type="text/javascript" src="../script/06.js">
         </script>
         ';
     ?>

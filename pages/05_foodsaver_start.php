@@ -28,9 +28,6 @@ if (!empty($_SESSION['vorname'])) {
   header("Location: ../index.php");
 }
 
-//Konsolen Kontrolle ob POST liefert
-// echo "<script>console.log('{$_SESSION["vorname"]}', '{$_SESSION["nachname"]}', '{$_SESSION["foodID"]}', '{$_SESSION["email"]}', '{$_SESSION["tel"]}');</script>";
-
 ///Insert in die Datenbank
 if ($_SESSION["bekannt"] == false) {
   $eintragFS = $db->prepare("INSERT INTO Foodsaver (FoodsharingID, Vorname, Nachname, TelNr, Email)
@@ -79,7 +76,7 @@ if ($_SESSION["bekannt"] == false) {
           HAST DU GERETTET?
         </h1>
         <!-- WEITERLEITUNG zur 03_foodsaver_hinzufuegen Seite -->
-        <a href="../pages/03_foodsaver_hinzufuegen.php">
+        <a href="../pages/06_foodsaver_hinzufuegen.php">
           <img src="../media/add_icon.svg" alt="add_icon" />
         </a>
       </div>
@@ -183,7 +180,7 @@ if ($_SESSION["bekannt"] == false) {
 
   <!-- Script Overlays -->
   <?php
-  echo '<script type="text/javascript" src="../script/02.js">
+  echo '<script type="text/javascript" src="../script/05.js">
         </script>
         ';
   ?>

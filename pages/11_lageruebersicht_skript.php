@@ -21,7 +21,7 @@ if (isset($_GET['mfwArrayFairteilen'])) {
       }
     }
   }
-  header("Location: admin.php?success=true");
+  header("Location: 10_lageruebersicht.php?success=true");
 }
 
 if (isset($_GET['mfwArrayEntsorgen'])) {
@@ -45,7 +45,7 @@ if (isset($_GET['mfwArrayEntsorgen'])) {
       }
     }
   }
-  header("Location: admin.php?success=true");
+  header("Location: 10_lageruebersicht.php?success=true");
 }
 
 ?>

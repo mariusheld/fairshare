@@ -116,19 +116,20 @@ $daten_zeitraum = array(
 $erfolg = $select_ZeitraumMenge->execute($daten_zeitraum);
 
 
-//Mengen geretteter Lebensmittel im Zeitraum nach Herkunft 
-$select_HerkunftMengen = $db->prepare("SELECT HerkunftName AS Herkunft, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY KGfairteilt DESC) AS RowNumber
-		FROM (SELECT Bestand_Bewegung.LMKey, BewegMenge, BewegDatum, HerkunftName 
+//Mengen geretteter Lebensmittel im Zeitraum nach Kategorien 
+$select_KategorienMengen = $db->prepare("SELECT OKatName AS OberKategorie, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY KGfairteilt DESC) AS RowNumber
+		FROM (SELECT Bestand_Bewegung.LMKey, BewegMenge, BewegDatum, OKatName 
 		FROM (Bestand_Bewegung LEFT JOIN Lebensmittel ON Bestand_Bewegung.LMKey=Lebensmittel.LMKey)
-		LEFT JOIN HerkunftsKategorie ON Lebensmittel.HerkunftKey=HerkunftsKategorie.HerkunftKey
-		WHERE LStatusKey=2 AND BewegDatum BETWEEN :date1 AND :date2) AS FairteiltesHerk
-		GROUP BY HerkunftName
+		LEFT JOIN OberKategorie ON Lebensmittel.OKatKey=OberKategorie.OKatKey
+		WHERE LStatusKey=2 AND BewegDatum BETWEEN :date1 AND :date2) AS FairteiltesOKat
+		GROUP BY OKatName
 		ORDER BY KGfairteilt DESC");
-$select_HerkunftMengen->execute($daten_zeitraum);
+$select_KategorienMengen->execute($daten_zeitraum);
+
 
 
 // Fehlerüberprüfung
-if ($select_HerkunftMengen == false) {
+if ($select_KategorienMengen == false) {
 	$fehler = $db->errorInfo();
 	die("Folgender Datenbankfehler ist aufgetreten: " . $fehler[2]);
 }
@@ -138,7 +139,7 @@ $ZeitraumMenge = $select_ZeitraumMenge->fetchColumn();
 
 
 // Ergebnistabelle auslesen und als assoz. Feld $KategorienMengen bereitstellen 
-$HerkunftMengen = $select_HerkunftMengen->fetchAll();
+$KategorienMengen = $select_KategorienMengen->fetchAll();
 
 //Variablen für das Balkendiagramm
 $B1hidden = "hidden";
@@ -148,82 +149,93 @@ $B4hidden = "hidden";
 $B5hidden = "hidden";
 $B6hidden = "hidden";
 $B7hidden = "hidden";
+$B8hidden = "hidden";
+$B9hidden = "hidden";
 
-foreach ($HerkunftMengen as $NachHerkunft) {
-	if ($NachHerkunft['RowNumber'] == "1") {
-		if ($NachHerkunft['Herkunft'] != NULL) {
-			$Herkunft1Name = $NachHerkunft['Herkunft'];
+
+foreach ($KategorienMengen as $NachKategorien) {
+	if ($NachKategorien['RowNumber'] == "1") {
+		if ($NachKategorien['OberKategorie'] != NULL) {
+			$Kategorien1Name = $NachKategorien['OberKategorie'];
 		} else {
-			$Herkunft1Name = "Unbekannt";
+			$Kategorien1Name = "Unbekannt";
 		}
-		$Herkunft1kg = $NachHerkunft['KGfairteilt'];
+		$Kategorien1kg = $NachKategorien['KGfairteilt'];
 		$B1hidden = "";
 
 	}
-	if ($NachHerkunft['RowNumber'] == "2") {
-		if ($NachHerkunft['Herkunft'] != NULL) {
-			$Herkunft2Name = $NachHerkunft['Herkunft'];
+	if ($NachKategorien['RowNumber'] == "2") {
+		if ($NachKategorien['OberKategorie'] != NULL) {
+			$Kategorien2Name = $NachKategorien['OberKategorie'];
 		} else {
-			$Herkunft2Name = "Unbekannt";
+			$Kategorien2Name = "Unbekannt";
 		}
-		$Herkunft2kg = $NachHerkunft['KGfairteilt'];
+		$Kategorien2kg = $NachKategorien['KGfairteilt'];
 		$B2hidden = "";
 	}
-	if ($NachHerkunft['RowNumber'] == "3") {
-		if ($NachHerkunft['Herkunft'] != NULL) {
-			$Herkunft3Name = $NachHerkunft['Herkunft'];
+	if ($NachKategorien['RowNumber'] == "3") {
+		if ($NachKategorien['OberKategorie'] != NULL) {
+			$Kategorien3Name = $NachKategorien['OberKategorie'];
 		} else {
-			$Herkunft3Name = "Unbekannt";
+			$Kategorien3Name = "Unbekannt";
 		}
-		$Herkunft3kg = $NachHerkunft['KGfairteilt'];
+		$Kategorien3kg = $NachKategorien['KGfairteilt'];
 		$B3hidden = "";
 	}
-	if ($NachHerkunft['RowNumber'] == "4") {
-		if ($NachHerkunft['Herkunft'] != NULL) {
-			$Herkunft4Name = $NachHerkunft['Herkunft'];
+	if ($NachKategorien['RowNumber'] == "4") {
+		if ($NachKategorien['OberKategorie'] != NULL) {
+			$Kategorien4Name = $NachKategorien['OberKategorie'];
 		} else {
-			$Herkunft4Name = "Unbekannt";
+			$Kategorien4Name = "Unbekannt";
 		}
-		$Herkunft4kg = $NachHerkunft['KGfairteilt'];
+		$Kategorien4kg = $NachKategorien['KGfairteilt'];
 		$B4hidden = "";
 	}
-	if ($NachHerkunft['RowNumber'] == "5") {
-		if ($NachHerkunft['Herkunft'] != NULL) {
-			$Herkunft5Name = $NachHerkunft['Herkunft'];
+	if ($NachKategorien['RowNumber'] == "5") {
+		if ($NachKategorien['OberKategorie'] != NULL) {
+			$Kategorien5Name = $NachKategorien['OberKategorie'];
 		} else {
-			$Herkunft5Name = "Unbekannt";
+			$Kategorien5Name = "Unbekannt";
 		}
-		$Herkunft5kg = $NachHerkunft['KGfairteilt'];
+		$Kategorien5kg = $NachKategorien['KGfairteilt'];
 		$B5hidden = "";
 	}
-	if ($NachHerkunft['RowNumber'] == "6") {
-		if ($NachHerkunft['Herkunft'] != NULL) {
-			$Herkunft6Name = $NachHerkunft['Herkunft'];
+	if ($NachKategorien['RowNumber'] == "6") {
+		if ($NachKategorien['OberKategorie'] != NULL) {
+			$Kategorien6Name = $NachKategorien['OberKategorie'];
 		} else {
-			$Herkunft6Name = "Unbekannt";
+			$Kategorien6Name = "Unbekannt";
 		}
-		$Herkunft6kg = $NachHerkunft['KGfairteilt'];
+		$Kategorien6kg = $NachKategorien['KGfairteilt'];
 		$B6hidden = "";
 	}
-	if ($NachHerkunft['RowNumber'] == "7") {
-		if ($NachHerkunft['Herkunft'] != NULL) {
-			$Herkunft7Name = $NachHerkunft['Herkunft'];
+	if ($NachKategorien['RowNumber'] == "7") {
+		if ($NachKategorien['OberKategorie'] != NULL) {
+			$Kategorien7Name = $NachKategorien['OberKategorie'];
 		} else {
-			$Herkunft7Name = "Unbekannt";
+			$Kategorien7Name = "Unbekannt";
 		}
-		$Herkunft7kg = $NachHerkunft['KGfairteilt'];
+		$Kategorien7kg = $NachKategorien['KGfairteilt'];
 		$B7hidden = "";
 	}
-	if ($NachHerkunft['RowNumber'] == "8") {
-		if ($NachHerkunft['Herkunft'] != NULL) {
-			$Herkunft8Name = $NachHerkunft['Herkunft'];
+	if ($NachKategorien['RowNumber'] == "8") {
+		if ($NachKategorien['OberKategorie'] != NULL) {
+			$Kategorien8Name = $NachKategorien['OberKategorie'];
 		} else {
-			$Herkunft8Name = "Unbekannt";
+			$Kategorien8Name = "Unbekannt";
 		}
-		$Herkunft8kg = $NachHerkunft['KGfairteilt'];
+		$Kategorien8kg = $NachKategorien['KGfairteilt'];
 		$B8hidden = "";
 	}
-
+	if ($NachKategorien['RowNumber'] == "9") {
+		if ($NachKategorien['OberKategorie'] != NULL) {
+			$Kategorien9Name = $NachKategorien['OberKategorie'];
+		} else {
+			$Kategorien9Name = "Unbekannt";
+		}
+		$Kategorien9kg = $NachKategorien['KGfairteilt'];
+		$B9hidden = "";
+	}
 }
 
 
@@ -231,64 +243,61 @@ foreach ($HerkunftMengen as $NachHerkunft) {
 //Prozentzahlen für Balkendiagramm ausrechnen
 //Fehlervermeidung: Kein Divide-by-Zero Error wenn Zeitraum ausgewähl, in dem nichts gerettet wurde
 if ($ZeitraumMenge == 0) {
-	$Herkunft1Prozent = 0;
-	$Herkunft2Prozent = 0;
-	$Herkunft3Prozent = 0;
-	$Herkunft4Prozent = 0;
-	$Herkunft5Prozent = 0;
-	$Herkunft6Prozent = 0;
-	$Herkunft7Prozent = 0;
-	$Herkunft8Prozent = 0;
+	$Kategorien1Prozent = 0;
+	$Kategorien2Prozent = 0;
+	$Kategorien3Prozent = 0;
+	$Kategorien4Prozent = 0;
+	$Kategorien5Prozent = 0;
+	$Kategorien6Prozent = 0;
+	$Kategorien7Prozent = 0;
+	$Kategorien8Prozent = 0;
+	$Kategorien9Prozent = 0;
 } else {
-	$Herkunft1Prozent = $Herkunft1kg / $ZeitraumMenge * 100;
-	$Herkunft2Prozent = $Herkunft2kg / $ZeitraumMenge * 100;
-	$Herkunft3Prozent = $Herkunft3kg / $ZeitraumMenge * 100;
-	$Herkunft4Prozent = $Herkunft4kg / $ZeitraumMenge * 100;
-	$Herkunft5Prozent = $Herkunft5kg / $ZeitraumMenge * 100;
-	$Herkunft6Prozent = $Herkunft6kg / $ZeitraumMenge * 100;
-	$Herkunft7Prozent = $Herkunft7kg / $ZeitraumMenge * 100;
-	$Herkunft8Prozent = $Herkunft8kg / $ZeitraumMenge * 100;
+	$Kategorien1Prozent = $Kategorien1kg / $ZeitraumMenge * 100;
+	$Kategorien2Prozent = $Kategorien2kg / $ZeitraumMenge * 100;
+	$Kategorien3Prozent = $Kategorien3kg / $ZeitraumMenge * 100;
+	$Kategorien4Prozent = $Kategorien4kg / $ZeitraumMenge * 100;
+	$Kategorien5Prozent = $Kategorien5kg / $ZeitraumMenge * 100;
+	$Kategorien6Prozent = $Kategorien6kg / $ZeitraumMenge * 100;
+	$Kategorien7Prozent = $Kategorien7kg / $ZeitraumMenge * 100;
+	$Kategorien8Prozent = $Kategorien8kg / $ZeitraumMenge * 100;
+	$Kategorien9Prozent = $Kategorien9kg / $ZeitraumMenge * 100;
+
 }
 
 //Zahlen in deutsche Formatierung konvertieren
-$Herkunft1kg_display = number_format($Herkunft1kg, 1, ",", ".");
-$Herkunft1Prozent_display = number_format($Herkunft1Prozent, 1, ",", ".");
+$Kategorien1kg_display = number_format($Kategorien1kg, 1, ",", ".");
+$Kategorien1Prozent_display = number_format($Kategorien1Prozent, 1, ",", ".");
 
-$Herkunft2kg_display = number_format($Herkunft2kg, 1, ",", ".");
-$Herkunft2Prozent_display = number_format($Herkunft2Prozent, 1, ",", ".");
+$Kategorien2kg_display = number_format($Kategorien2kg, 1, ",", ".");
+$Kategorien2Prozent_display = number_format($Kategorien2Prozent, 1, ",", ".");
 
-$Herkunft3kg_display = number_format($Herkunft3kg, 1, ",", ".");
-$Herkunft3Prozent_display = number_format($Herkunft3Prozent, 1, ",", ".");
+$Kategorien3kg_display = number_format($Kategorien3kg, 1, ",", ".");
+$Kategorien3Prozent_display = number_format($Kategorien3Prozent, 1, ",", ".");
 
-$Herkunft4kg_display = number_format($Herkunft4kg, 1, ",", ".");
-$Herkunft4Prozent_display = number_format($Herkunft4Prozent, 1, ",", ".");
+$Kategorien4kg_display = number_format($Kategorien4kg, 1, ",", ".");
+$Kategorien4Prozent_display = number_format($Kategorien4Prozent, 1, ",", ".");
 
-$Herkunft5kg_display = number_format($Herkunft5kg, 1, ",", ".");
-$Herkunft5Prozent_display = number_format($Herkunft5Prozent, 1, ",", ".");
+$Kategorien5kg_display = number_format($Kategorien5kg, 1, ",", ".");
+$Kategorien5Prozent_display = number_format($Kategorien5Prozent, 1, ",", ".");
 
-$Herkunft6kg_display = number_format($Herkunft6kg, 1, ",", ".");
-$Herkunft6Prozent_display = number_format($Herkunft6Prozent, 1, ",", ".");
+$Kategorien6kg_display = number_format($Kategorien6kg, 1, ",", ".");
+$Kategorien6Prozent_display = number_format($Kategorien6Prozent, 1, ",", ".");
 
-$Herkunft7kg_display = number_format($Herkunft7kg, 1, ",", ".");
-$Herkunft7Prozent_display = number_format($Herkunft7Prozent, 1, ",", ".");
+$Kategorien7kg_display = number_format($Kategorien7kg, 1, ",", ".");
+$Kategorien7Prozent_display = number_format($Kategorien7Prozent, 1, ",", ".");
 
+$Kategorien8kg_display = number_format($Kategorien8kg, 1, ",", ".");
+$Kategorien8Prozent_display = number_format($Kategorien8Prozent, 1, ",", ".");
 
-/*
-//SQL für Balkendiagramm (in Adminer getestet)
-SELECT HerkunftName AS Herkunft, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY KGfairteilt DESC) AS RowNumber
-FROM 
-(SELECT Bestand_Bewegung.LMKey, BewegMenge, BewegDatum, HerkunftName
-FROM (Bestand_Bewegung LEFT JOIN Lebensmittel ON Bestand_Bewegung.LMKey=Lebensmittel.LMKey)
-LEFT JOIN HerkunftsKategorie ON Lebensmittel.HerkunftKey=HerkunftsKategorie.HerkunftKey
-WHERE LStatusKey=2) AS FairteiltesHerk
-GROUP BY HerkunftName
-ORDER BY KGfairteilt DESC
-*/
+$Kategorien9kg_display = number_format($Kategorien9kg, 1, ",", ".");
+$Kategorien9Prozent_display = number_format($Kategorien9Prozent, 1, ",", ".");
 
 // Login Session
 $login = $_SESSION['login'];
 if ($login == true) {
 	?>
+
 
 	<script>
 		//Datumsauswahl an JavaScript übergeben
@@ -346,13 +355,13 @@ if ($login == true) {
 					<!-- Button close the page -->
 
 					<a
-						href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
+						href="<?php echo '12_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
 						<div class="button-previous-page"></div>
 					</a>
 
 					<!-- Titel -->
 					<div class="font-fira">
-						<h2>Lebensmittel nach Herkunft</h2>
+						<h2>Lebensmittel nach Kategorien</h2>
 					</div>
 					<!-- Bar Diagram -->
 
@@ -361,16 +370,16 @@ if ($login == true) {
 							<tr <?php echo $B1hidden; ?>>
 								<!-- Category name -->
 								<td class="font-fira category-name">
-									<?php echo $Herkunft1Name; ?>
+									<?php echo $Kategorien1Name; ?>
 								</td>
 								<!-- Bar and info -->
 								<td class="bar">
 									<div class="bar-container">
 										<div class="category-bar" id="bar1"
-											data-percentage="<?php echo $Herkunft1Prozent; ?>"></div>
+											data-percentage="<?php echo $Kategorien1Prozent; ?>"></div>
 										<div class="font-fira percentage">
-											<?php echo $Herkunft1Prozent_display; ?>% (
-											<?php echo $Herkunft1kg_display; ?> Kg)
+											<?php echo $Kategorien1Prozent_display; ?>% (
+											<?php echo $Kategorien1kg_display; ?> Kg)
 										</div>
 									</div>
 								</td>
@@ -378,16 +387,16 @@ if ($login == true) {
 							<tr <?php echo $B2hidden; ?>>
 								<!-- Category name -->
 								<td class="font-fira category-name">
-									<?php echo $Herkunft2Name; ?>
+									<?php echo $Kategorien2Name; ?>
 								</td>
 								<!-- Bar and info -->
 								<td class="bar">
 									<div class="bar-container">
 										<div class="category-bar" id="bar2"
-											data-percentage="<?php echo $Herkunft2Prozent; ?>"></div>
+											data-percentage="<?php echo $Kategorien2Prozent; ?>"></div>
 										<div class="font-fira percentage">
-											<?php echo $Herkunft2Prozent_display; ?>% (
-											<?php echo $Herkunft2kg_display; ?> Kg)
+											<?php echo $Kategorien2Prozent_display; ?>% (
+											<?php echo $Kategorien2kg_display; ?> Kg)
 										</div>
 									</div>
 								</td>
@@ -395,16 +404,16 @@ if ($login == true) {
 							<tr <?php echo $B3hidden; ?>>
 								<!-- Category name -->
 								<td class="font-fira category-name">
-									<?php echo $Herkunft3Name; ?>
+									<?php echo $Kategorien3Name; ?>
 								</td>
 								<!-- Bar and info -->
 								<td class="bar">
 									<div class="bar-container">
 										<div class="category-bar" id="bar3"
-											data-percentage="<?php echo $Herkunft3Prozent; ?>"></div>
+											data-percentage="<?php echo $Kategorien3Prozent; ?>"></div>
 										<div class="font-fira percentage">
-											<?php echo $Herkunft3Prozent_display; ?>% (
-											<?php echo $Herkunft3kg_display; ?> Kg)
+											<?php echo $Kategorien3Prozent_display; ?>% (
+											<?php echo $Kategorien3kg_display; ?> Kg)
 										</div>
 									</div>
 								</td>
@@ -412,15 +421,16 @@ if ($login == true) {
 							<tr <?php echo $B4hidden; ?>>
 								<!-- Category name -->
 								<td class="font-fira category-name">
-									<?php echo $Herkunft4Name; ?>
+									<?php echo $Kategorien4Name; ?>
 								</td>
 								<!-- Bar and info -->
 								<td class="bar">
 									<div class="bar-container">
-										<div class="category-bar" data-percentage="<?php echo $Herkunft4Prozent; ?>"></div>
+										<div class="category-bar" data-percentage="<?php echo $Kategorien4Prozent; ?>">
+										</div>
 										<div class="font-fira percentage">
-											<?php echo $Herkunft4Prozent_display; ?>% (
-											<?php echo $Herkunft4kg_display; ?> Kg)
+											<?php echo $Kategorien4Prozent_display; ?>% (
+											<?php echo $Kategorien4kg_display; ?> Kg)
 										</div>
 									</div>
 								</td>
@@ -428,15 +438,16 @@ if ($login == true) {
 							<tr <?php echo $B5hidden; ?>>
 								<!-- Category name -->
 								<td class="font-fira category-name">
-									<?php echo $Herkunft5Name; ?>
+									<?php echo $Kategorien5Name; ?>
 								</td>
 								<!-- Bar and info -->
 								<td class="bar">
 									<div class="bar-container">
-										<div class="category-bar" data-percentage="<?php echo $Herkunft5Prozent; ?>"></div>
+										<div class="category-bar" data-percentage="<?php echo $Kategorien5Prozent; ?>">
+										</div>
 										<div class="font-fira percentage">
-											<?php echo $Herkunft5Prozent_display; ?>% (
-											<?php echo $Herkunft5kg_display; ?> Kg)
+											<?php echo $Kategorien5Prozent_display; ?>% (
+											<?php echo $Kategorien5kg_display; ?> Kg)
 										</div>
 									</div>
 								</td>
@@ -444,15 +455,16 @@ if ($login == true) {
 							<tr <?php echo $B6hidden; ?>>
 								<!-- Category name -->
 								<td class="font-fira category-name">
-									<?php echo $Herkunft6Name; ?>
+									<?php echo $Kategorien6Name; ?>
 								</td>
 								<!-- Bar and info -->
 								<td class="bar">
 									<div class="bar-container">
-										<div class="category-bar" data-percentage="<?php echo $Herkunft6Prozent; ?>"></div>
+										<div class="category-bar" data-percentage="<?php echo $Kategorien6Prozent; ?>">
+										</div>
 										<div class="font-fira percentage">
-											<?php echo $Herkunft6Prozent_display; ?>% (
-											<?php echo $Herkunft6kg_display; ?> Kg)
+											<?php echo $Kategorien6Prozent_display; ?>% (
+											<?php echo $Kategorien6kg_display; ?> Kg)
 										</div>
 									</div>
 								</td>
@@ -460,15 +472,50 @@ if ($login == true) {
 							<tr <?php echo $B7hidden; ?>>
 								<!-- Category name -->
 								<td class="font-fira category-name">
-									<?php echo $Herkunft7Name; ?>
+									<?php echo $Kategorien7Name; ?>
 								</td>
 								<!-- Bar and info -->
 								<td class="bar">
 									<div class="bar-container">
-										<div class="category-bar" data-percentage="<?php echo $Herkunft7Prozent; ?>"></div>
+										<div class="category-bar" data-percentage="<?php echo $Kategorien7Prozent; ?>">
+										</div>
 										<div class="font-fira percentage">
-											<?php echo $Herkunft7Prozent_display; ?>% (
-											<?php echo $Herkunft7kg_display; ?> Kg)
+											<?php echo $Kategorien7Prozent_display; ?>% (
+											<?php echo $Kategorien7kg_display; ?> Kg)
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr <?php echo $B8hidden; ?>>
+								<!-- Category name -->
+								<td class="font-fira category-name">
+									<?php echo $Kategorien8Name; ?>
+								</td>
+								<!-- Bar and info -->
+								<td class="bar">
+									<div class="bar-container">
+										<div class="category-bar" data-percentage="<?php echo $Kategorien8Prozent; ?>">
+										</div>
+										<div class="font-fira percentage">
+											<?php echo $Kategorien8Prozent_display; ?>% (
+											<?php echo $Kategorien8kg_display; ?> Kg)
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr <?php echo $B9hidden; ?>>
+								<!-- Category name -->
+								<td class="font-fira category-name">
+									<?php echo $Kategorien9Name; ?>
+								</td>
+								<!-- Bar and info -->
+								<td class="bar">
+									<div class="bar-container">
+										<div class="category-bar" data-percentage="<?php echo $Kategorien9Prozent; ?>">
+										</div>
+										<div class="font-fira percentage">
+											<?php echo $Kategorien9Prozent_display; ?>% (
+											<?php echo $Kategorien9kg_display; ?> Kg)
 										</div>
 									</div>
 								</td>
@@ -481,7 +528,7 @@ if ($login == true) {
 			<!-- Footer -->
 			<div class="action-container">
 				<div class="time-button">
-					<a href='<?php echo '08_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=herkunft'; ?>'
+					<a href='<?php echo '13_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=kategorien'; ?>'
 						class="link-button">
 						<i class='fa fa-clock-o' style="font-size:34px; color: #99BB44;"></i>
 						<div class="button-text">
@@ -492,7 +539,7 @@ if ($login == true) {
 					</a>
 				</div>
 				<div class="footer-btn font-fira">
-					<a href="<?php echo '08_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>"
+					<a href="<?php echo '12_interne_wirkungsmessung_dashboard.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>"
 						class="cancel-button">Zurück</a>
 				</div>
 			</div>

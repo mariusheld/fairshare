@@ -18,13 +18,13 @@ if (!$camefrom) {
 
 
 if ($camefrom == "dashboard") {
-    $filterleadsto = "08_interne_wirkungsmessung_dashboard.php";
+    $filterleadsto = "12_interne_wirkungsmessung_dashboard.php";
 }
 if ($camefrom == "herkunft") {
-    $filterleadsto = "08_interne_wirkungsmessung_herkunft.php";
+    $filterleadsto = "15_interne_wirkungsmessung_herkunft.php";
 }
 if ($camefrom == "kategorien") {
-    $filterleadsto = "08_interne_wirkungsmessung_kategorien.php";
+    $filterleadsto = "14_interne_wirkungsmessung_kategorien.php";
 }
 
 
@@ -89,7 +89,7 @@ $lastyear = $thisyear - 1;
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="../script/datepicker-de.js"></script>
+    <script type="text/javascript" src="../script/13.js"></script>
 </head>
 
 <body>

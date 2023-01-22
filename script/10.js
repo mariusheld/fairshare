@@ -175,8 +175,8 @@ function addToMehrfachauswahl(element, menge, prelmkey) {
 
 function mfwFairteilen() {
   window.location.href =
-    "./014_admin_skript.php?mfwArrayFairteilen=" + mfwArray;
+    "./11_lageruebersicht_skript.php?mfwArrayFairteilen=" + mfwArray;
 }
 function mfwEntsorgen() {
-  window.location.href = "./014_admin_skript.php?mfwArrayEntsorgen=" + mfwArray;
+  window.location.href = "./11_lageruebersicht_skript.php?mfwArrayEntsorgen=" + mfwArray;
 }

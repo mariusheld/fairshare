@@ -102,7 +102,7 @@ if ($seitencheck) {
         $_SESSION["tel"] = $_POST["tel"];
         $_SESSION["foodsaverLogin"] = true;
         $_SESSION["bekannt"] = $bekannt;
-        header("Location: ./012_foodsaver_anmeldung_feedback.php");
+        header("Location: ./03_foodsaver_anmeldung_feedback.php");
     } else {
         //wenn bekannt, dann Daten aus der Datenbankabfrage vom bekannten Nutzer in die Session 
         if ($dbmail == "1") {
@@ -115,7 +115,7 @@ if ($seitencheck) {
             $_SESSION['FSkey'] = $resultmail[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = $bekannt;
-            header("Location: ./02_foodsaver_start.php");
+            header("Location: ./05_foodsaver_start.php");
             // echo $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["foodID"], $_SESSION["email"], $_SESSION["tel"];
         } else if ($dbtel == "1") {
             $_SESSION["vorname"] = $resulttel[0]["Vorname"];
@@ -126,7 +126,7 @@ if ($seitencheck) {
             $_SESSION['FSkey'] = $resulttel[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = $bekannt;
-            header("Location: ./02_foodsaver_start.php");
+            header("Location: ./05_foodsaver_start.php");
             // echo $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["foodID"], $_SESSION["email"], $_SESSION["tel"];
         } else if ($dbID == "1") {
             $_SESSION["vorname"] = $resultID[0]["Vorname"];
@@ -137,7 +137,7 @@ if ($seitencheck) {
             $_SESSION['FSkey'] = $resultID[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = $bekannt;
-            header("Location: ./02_foodsaver_start.php");
+            header("Location: ./05_foodsaver_start.php");
             //echo $_SESSION["vorname"], $_SESSION["nachname"], $_SESSION["foodID"], $_SESSION["email"], $_SESSION["tel"];
         }
     }
@@ -171,7 +171,7 @@ if ($seitencheck) {
 
         if ($anzahl == 0) {
             $_SESSION["userstatus"] = "unbekannt";
-            header("Location: ./011_foodsaver_anmeldung.php");
+            header("Location: ./02_foodsaver_anmeldung.php");
         } else {
             $_SESSION["vorname"] = $resultmail[0]["Vorname"];
             $_SESSION["nachname"] = $resultmail[0]["Nachname"];
@@ -181,7 +181,7 @@ if ($seitencheck) {
             $_SESSION['FSkey'] = $resultmail[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = true;
-            header("Location: ./02_foodsaver_start.php");
+            header("Location: ./05_foodsaver_start.php");
 
         }
 
@@ -202,7 +202,7 @@ if ($seitencheck) {
         $anzahl = count($resulttel);
         if ($anzahl == 0) {
             $_SESSION["userstatus"] = "unbekannt";
-            header("Location: ./011_foodsaver_anmeldung.php");
+            header("Location: ./02_foodsaver_anmeldung.php");
         } else {
             $_SESSION["vorname"] = $resulttel[0]["Vorname"];
             $_SESSION["nachname"] = $resulttel[0]["Nachname"];
@@ -212,7 +212,7 @@ if ($seitencheck) {
             $_SESSION['FSkey'] = $resulttel[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = true;
-            header("Location: ./02_foodsaver_start.php");
+            header("Location: ./05_foodsaver_start.php");
         }
 
         //Fehlertest
@@ -233,7 +233,7 @@ if ($seitencheck) {
 
         if ($anzahl == 0) {
             $_SESSION["userstatus"] = "unbekannt";
-            header("Location: ./011_foodsaver_anmeldung.php");
+            header("Location: ./02_foodsaver_anmeldung.php");
         } else {
             $_SESSION["vorname"] = $resultID[0]["Vorname"];
             $_SESSION["nachname"] = $resultID[0]["Nachname"];
@@ -243,7 +243,7 @@ if ($seitencheck) {
             $_SESSION['FSkey'] = $resultID[0]["FSkey"];
             $_SESSION["foodsaverLogin"] = true;
             $_SESSION["bekannt"] = true;
-            header("Location: ./02_foodsaver_start.php");
+            header("Location: ./05_foodsaver_start.php");
         }
 
         //Fehlertest

@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="author" content="Marius Held" />
     <title>Abgabeübersicht</title>
     <link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
     <link rel="stylesheet" href="../css/adminstyle.css" />
@@ -29,7 +28,7 @@
             In Zukunft kannst Du dich ganz bequem mit einem der von Dir angegeben Kontaktwege anmelden. <br> <br>
             Merke Dir dafür bitte welche E-Mail-Adresse, Telefonnummer oder Foodsaver-ID Du angegeben hast.
         </p>
-        <button id="btnallesklar" onclick="document.location.href='02_foodsaver_start.php'" type="button">Alles
+        <button id="btnallesklar" onclick="document.location.href='05_foodsaver_start.php'" type="button">Alles
             klar</button>
     </div>
     <!--Seiteninhalt-->

@@ -546,7 +546,7 @@ if ($login == true) {
         <div class="column-2">
           <!-- Block für Kategorien -->
           <a
-            href="<?php echo '08_interne_wirkungsmessung_kategorien.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
+            href="<?php echo '14_interne_wirkungsmessung_kategorien.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
             <div class="block flx-container-sm" style="min-height: 239px;">
               <!-- Liste der Kategorien -->
               <div style="display: inline;">
@@ -651,7 +651,7 @@ if ($login == true) {
           </a>
           <!-- Liste der Herkünfte -->
           <a
-            href="<?php echo '08_interne_wirkungsmessung_herkunft.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
+            href="<?php echo '15_interne_wirkungsmessung_herkunft.php?date1=' . $date1formatted . '&date2=' . $date2formatted; ?>">
             <div class="block" style="min-height: 225px;">
               <div style="display: inline-block;">
                 <p class="font-fira description" style="float:left;"><strong>Nach Herkunft</strong>
@@ -702,7 +702,7 @@ if ($login == true) {
       <!-- Footer -->
       <div class="action-container">
         <div class="time-button">
-          <a href='<?php echo '08_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=dashboard'; ?>'
+          <a href='<?php echo '13_interne_wirkungsmessung_zeitraum_waehlen.php?date1=' . $date1formatted . '&date2=' . $date2formatted . '&camefrom=dashboard'; ?>'
             class="link-button">
             <i class='fa fa-clock-o' style="font-size:34px; color: #99BB44;"></i>
             <div class="button-text">
@@ -769,8 +769,7 @@ if ($login == true) {
 
     var csv_button = document.getElementById("csv-export");
     csv_button.addEventListener("click", function () {
-      console.log('export');
-      location.href = "08_interne_wirkungsmessung_csvexport.php";
+      location.href = "16_interne_wirkungsmessung_csvexport.php";
     });
 
     var ctx = document.getElementById('myChart').getContext('2d');

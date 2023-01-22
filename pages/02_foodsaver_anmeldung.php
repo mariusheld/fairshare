@@ -19,12 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Login auf True setzen 
         $_SESSION['login'] = true;
         // Weiterleiten
-        header("Location: ./admin.php");
+        header("Location: ./10_lageruebersicht.php");
     } else if (test_input($_POST["password"]) == "raupenkönigin") {
         // Login auf True setzen 
         $_SESSION['login'] = true;
         // Weiterleiten
-        header("Location: ./08_interne_wirkungsmessung_dashboard.php");
+        header("Location: ./12_interne_wirkungsmessung_dashboard.php");
     } else {
         $_SESSION['passwordErr'] = true;
         header("Location: ./011_foodsaver_anmeldung.php?error=true");
@@ -89,7 +89,6 @@ if ($userunbekannt == "unbekannt") {
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="author" content="Lena Binder & Marius Held" />
     <title>FAIRSHARE</title>
     <link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
     <link rel="stylesheet" href="../css/adminstyle.css" />
@@ -158,7 +157,7 @@ if ($userunbekannt == "unbekannt") {
             <div class="header">
                 Zum ersten mal hier?
             </div>
-            <a href="01_foodsaver_anmeldung.php">
+            <a href="01_foodsaver_registrierung.php">
                 <button class="reg">Registrieren</button>
             </a>
         </div>
@@ -173,7 +172,7 @@ if ($userunbekannt == "unbekannt") {
             </div>
         </form>
         <div class="formvariabel" style="text-align: left;">
-            <form id="anmeldung" class="anmeldung" method="POST" action="013_foodsaver_anmeldung_skript.php">
+            <form id="anmeldung" class="anmeldung" method="POST" action="04_foodsaver_anmeldung_skript.php">
                 <div class="anmeldungmail" id="anmail">
                     <label for="mail">Deine E-Mail</label></br>
                     <input type="email" id="mail" placeholder="raupe@immersatt.de" name="mail"

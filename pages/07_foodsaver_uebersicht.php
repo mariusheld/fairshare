@@ -75,14 +75,14 @@ function sendList($dbeintragArray, $conn)
 // Datenbank Query Trigger
 if (isset($_GET['send'])) {
   sendList($dbeintragArray, $conn);
-  header("Location: ./05_foodsaver_finalcheck.php");
+  header("Location: ./08_foodsaver_finalcheck.php");
 }
 
 // Lebensmitteleintrag aus Übersicht löschen
 if (isset($_GET['key'])) {
   unset($_SESSION["array"][$_GET['key']]);
   unset($_SESSION["dbeintragArray"][$_GET['key']]);
-  header("Location: ./04_foodsaver_uebersicht.php");
+  header("Location: ./07_foodsaver_uebersicht.php");
 }
 
 // ---- KategorieIcons 
@@ -215,7 +215,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                   <!-- Overlay fs-lm-optionen -->
                   <div class="fs-uebersicht-bearbeiten popup">
                     <div class="popup-uebersicht-bearbeiten">
-                      <a class="bearbeiten" href="03_foodsaver_hinzufuegen.php?editieren=<?php echo $key; ?> ">
+                      <a class="bearbeiten" href="06_foodsaver_hinzufuegen.php?editieren=<?php echo $key; ?> ">
                         <img src="../media/bearbeiten.svg" alt="Stift zum Bearbeiten">
                         <h5>Bearbeiten</h5>
                       </a>
@@ -245,7 +245,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
                         <a class="exitButton" href="">
                           <h5>Abbrechen</h5>
                         </a>
-                        <a class="deleteButton" href="04_foodsaver_uebersicht.php?key=<?php echo $key ?>">
+                        <a class="deleteButton" href="07_foodsaver_uebersicht.php?key=<?php echo $key ?>">
                           <h5>Löschen</h5>
                         </a>
                       </div>
@@ -261,7 +261,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         </table>
         <div class="add-icon">
           <!-- WEITERLEITUNG zur 03_foodsaver_hinzufuegen Seite, um ein neues Element anzulegen -->
-          <a href="03_foodsaver_hinzufuegen.php?hinzufuegen=<?php echo $key; ?>">
+          <a href="06_foodsaver_hinzufuegen.php?hinzufuegen=<?php echo $key; ?>">
             <img src="../media/add_icon.svg" alt="add_icon" />
           </a>
         </div>
@@ -277,7 +277,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         <!-- OVERLAY Trigger Hinzufügen Abbrechen -->
         <a id="openUebersichtAbbr">Abbrechen</a>
         <!-- Datenbank schreiben und WEITERLEITUNG zum Final Check -->
-        <a href='04_foodsaver_uebersicht.php?send=true' class="continue-button">Abschließen</a>
+        <a href='07_foodsaver_uebersicht.php?send=true' class="continue-button">Abschließen</a>
       </div>
     </div>
   </div>
@@ -396,7 +396,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
 
   <!-- Script Overlays -->
   <?php
-  echo '<script type="text/javascript" src="../script/04.js">
+  echo '<script type="text/javascript" src="../script/07.js">
         </script>
         ';
   ?>
