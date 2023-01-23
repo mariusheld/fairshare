@@ -140,16 +140,14 @@ footer {
     /* width: 1024px; */
     width: 100%;
     margin: auto;
+    z-index: 1;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
 }
 
 .action-container {
     height: 94px;
-    z-index: 1;
     /* white */
     background: #FFFDFD;
-    /* button_hover */
-    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-
     display: flex;
     justify-content: space-between;
     align-items: center;
