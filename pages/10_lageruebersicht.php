@@ -476,7 +476,7 @@ if (isset($_GET['entsorgen'])) {
                                             <div class="block">
                                                 <div class="zeile">
                                                     <div>Geliefert von:</div>
-                                                    <div><?php echo $zeile['Vorname'] ?></div>
+                                                    <div><?php echo "" . $zeile['Vorname'] ." ". $zeile['Nachname'] . ""?></div>
                                                 </div>
                                                 <div class="zeile">
                                                     <div>E-Mail:</div>
