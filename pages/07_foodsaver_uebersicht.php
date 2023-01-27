@@ -365,7 +365,7 @@ $icon_sonstiges_url = '../media/kategorien/sonstiges.svg';
         <a class="exitButton" id="exit-uebersicht">
           <h5>Nein, doch nicht</h5>
         </a>
-        <a class="nextButton" href="../index.php">
+        <a class="nextButton" href="../index.php?logout">
           <h5>Ja, zur Startseite</h5>
         </a>
       </div>

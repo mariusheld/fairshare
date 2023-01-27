@@ -1,17 +1,16 @@
 <?php
-//Session 
 session_start();
 $_SESSION['passwordErr'] = false;
-$_SESSION['login'] = false;
 $_SESSION["foodsaverLogin"] = false;
 $_SESSION["latestLMkey"] = 0;
 $_SESSION["userstatus"] = "";
 $_SESSION["bekannt"] = false;
 
-$_SESSION['lmkey'] = "";
-$_SESSION['bewegMenge'] = "";
-$_SESSION['bezeichnung'] = "";
-$_SESSION['okatkey'] = "";
+if (isset($_GET['logout'])) {
+  $_SESSION["login"] = false;
+  $_SESSIOn["foodsaverLogin"] = false;
+}
+
 //Datenbankverbindung aufbauen
 require_once("dbconnect/dbconnect.inc.php");
 
@@ -24,7 +23,6 @@ $result = $query->fetchColumn();
 
 $gewicht = intval($result);
 $gewicht = round($gewicht / 1000, $precision = 2) + 50;
-
 
 //Fehlertest
 if (!$erfolg) {
@@ -53,47 +51,6 @@ if (!$erfolg) {
     <div id="gif">
         <img src="media/startscreen.gif" alt="Wackelnde Lebensmittel GIF" class="gif">
     </div>
-    <!--Overlay-->
-    <div class="helper" id="overtrigger" <?php if ($login == true) {
-        echo "style='display:flex;'";
-    } ?>>
-        <div class="overlayparent">
-            <div class="overlaychild">
-                <p class="olhead">
-                    Kennwort
-                </p>
-                <div class="eingabe">
-                    <form action="pages/10_lageruebersicht.php" method="POST" autocomplete="off">
-                        <input class="eingabefeld" name="password" id="eingabe" type="password"
-                            style="text-align: center; font-size: 20px;" <?php if ($login == true) {
-                                echo "style='border:
-                            2px solid red; width: 468; height: 42px;'";
-                            } ?>>
-                        <p class="vergessen" id="vergessen" <?php if ($login == true) {
-                            echo "style='color: red; display:
-                            block;'";
-                        } ?>>
-                            Kennwort falsch
-                        </p>
-                        <div class="buttonscontainer" id="bcontainer" <?php if ($login == true) {
-                            echo
-                                "style='padding-top: 24px'";
-                        } ?>>
-                            <div class="buttonwhite" id="breakup">
-                                <p class="buttontext" style="color: #99BB44">
-                                    Abrechen
-                                </p>
-                            </div>
-                            <div class="buttongreen">
-                                <input type="submit" class="buttongreen" style="color: white" value="Anmelden">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Overlay-->
     <div id="startscreen-header">
         <img id="logo" src="media/logo.svg" alt="fairshare">
     </div>

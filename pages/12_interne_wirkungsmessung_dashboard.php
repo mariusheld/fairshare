@@ -470,8 +470,8 @@ if ($login == true) {
     var erstesMessdatum = "<?php echo $erstesMessdatum_dmY; ?>";
     var date1formatted = "<?php echo $date1formatted; ?>";
 
-      // Test:
-      //alert("date1="+gotdate1+" & date2="+gotdate2);
+        // Test:
+        //alert("date1="+gotdate1+" & date2="+gotdate2);
 
   </script>
 
@@ -593,63 +593,63 @@ if ($login == true) {
               </div>
               <!-- Bilder der Kategorien -->
               <div class="img-block">
-              <?php if (!empty($kategorien[0])){ ?>
-                <img src="<?php if ($kategorien[0]['katkey'] == 1) {
-                  echo $kat_icon_1;
-                } else if ($kategorien[0]['katkey'] == 2) {
-                  echo $kat_icon_2;
-                } else if ($kategorien[0]['katkey'] == 3) {
-                  echo $kat_icon_3;
-                } else if ($kategorien[0]['katkey'] == 4) {
-                  echo $kat_icon_4;
-                } else if ($kategorien[0]['katkey'] == 5) {
-                  echo $kat_icon_5;
-                } else if ($kategorien[0]['katkey'] == 6) {
-                  echo $kat_icon_6;
-                } else if ($kategorien[0]['katkey'] == 7) {
-                  echo $kat_icon_7;
-                } else if ($kategorien[0]['katkey'] == 8) {
-                  echo $kat_icon_8;
-                } ?>" class="img-category" style="width: 70px;"><br>
-              <?php } 
-              if (!empty($kategorien[1])){ ?>
-                <img src="<?php if ($kategorien[1]['katkey'] == 1) {
-                  echo $kat_icon_1;
-                } else if ($kategorien[1]['katkey'] == 2) {
-                  echo $kat_icon_2;
-                } else if ($kategorien[1]['katkey'] == 3) {
-                  echo $kat_icon_3;
-                } else if ($kategorien[1]['katkey'] == 4) {
-                  echo $kat_icon_4;
-                } else if ($kategorien[1]['katkey'] == 5) {
-                  echo $kat_icon_5;
-                } else if ($kategorien[1]['katkey'] == 6) {
-                  echo $kat_icon_6;
-                } else if ($kategorien[1]['katkey'] == 7) {
-                  echo $kat_icon_7;
-                } else if ($kategorien[1]['katkey'] == 8) {
-                  echo $kat_icon_8;
-                } ?>" class="img-category" style="width: 50px;"><br>
-              <?php } 
-              if (!empty($kategorien[2])){ ?>
-                <img src="<?php if ($kategorien[2]['katkey'] == 1) {
-                  echo $kat_icon_1;
-                } else if ($kategorien[2]['katkey'] == 2) {
-                  echo $kat_icon_2;
-                } else if ($kategorien[2]['katkey'] == 3) {
-                  echo $kat_icon_3;
-                } else if ($kategorien[2]['katkey'] == 4) {
-                  echo $kat_icon_4;
-                } else if ($kategorien[2]['katkey'] == 5) {
-                  echo $kat_icon_5;
-                } else if ($kategorien[2]['katkey'] == 6) {
-                  echo $kat_icon_6;
-                } else if ($kategorien[2]['katkey'] == 7) {
-                  echo $kat_icon_7;
-                } else if ($kategorien[2]['katkey'] == 8) {
-                  echo $kat_icon_8;
-                } ?>" class="img-category" style="width: 40px;">
-              <?php } ?>
+                <?php if (!empty($kategorien[0])) { ?>
+                  <img src="<?php if ($kategorien[0]['katkey'] == 1) {
+                    echo $kat_icon_1;
+                  } else if ($kategorien[0]['katkey'] == 2) {
+                    echo $kat_icon_2;
+                  } else if ($kategorien[0]['katkey'] == 3) {
+                    echo $kat_icon_3;
+                  } else if ($kategorien[0]['katkey'] == 4) {
+                    echo $kat_icon_4;
+                  } else if ($kategorien[0]['katkey'] == 5) {
+                    echo $kat_icon_5;
+                  } else if ($kategorien[0]['katkey'] == 6) {
+                    echo $kat_icon_6;
+                  } else if ($kategorien[0]['katkey'] == 7) {
+                    echo $kat_icon_7;
+                  } else if ($kategorien[0]['katkey'] == 8) {
+                    echo $kat_icon_8;
+                  } ?>" class="img-category" style="width: 70px;"><br>
+                <?php }
+                if (!empty($kategorien[1])) { ?>
+                  <img src="<?php if ($kategorien[1]['katkey'] == 1) {
+                    echo $kat_icon_1;
+                  } else if ($kategorien[1]['katkey'] == 2) {
+                    echo $kat_icon_2;
+                  } else if ($kategorien[1]['katkey'] == 3) {
+                    echo $kat_icon_3;
+                  } else if ($kategorien[1]['katkey'] == 4) {
+                    echo $kat_icon_4;
+                  } else if ($kategorien[1]['katkey'] == 5) {
+                    echo $kat_icon_5;
+                  } else if ($kategorien[1]['katkey'] == 6) {
+                    echo $kat_icon_6;
+                  } else if ($kategorien[1]['katkey'] == 7) {
+                    echo $kat_icon_7;
+                  } else if ($kategorien[1]['katkey'] == 8) {
+                    echo $kat_icon_8;
+                  } ?>" class="img-category" style="width: 50px;"><br>
+                <?php }
+                if (!empty($kategorien[2])) { ?>
+                  <img src="<?php if ($kategorien[2]['katkey'] == 1) {
+                    echo $kat_icon_1;
+                  } else if ($kategorien[2]['katkey'] == 2) {
+                    echo $kat_icon_2;
+                  } else if ($kategorien[2]['katkey'] == 3) {
+                    echo $kat_icon_3;
+                  } else if ($kategorien[2]['katkey'] == 4) {
+                    echo $kat_icon_4;
+                  } else if ($kategorien[2]['katkey'] == 5) {
+                    echo $kat_icon_5;
+                  } else if ($kategorien[2]['katkey'] == 6) {
+                    echo $kat_icon_6;
+                  } else if ($kategorien[2]['katkey'] == 7) {
+                    echo $kat_icon_7;
+                  } else if ($kategorien[2]['katkey'] == 8) {
+                    echo $kat_icon_8;
+                  } ?>" class="img-category" style="width: 40px;">
+                <?php } ?>
               </div>
             </div>
           </a>
@@ -761,7 +761,7 @@ if ($login == true) {
     }
     //User drückt auf Abmelden
     abmeldenBtn.onclick = function () {
-      window.location.href = '../index.php'
+      window.location.href = '../index.php?logout'
     }
     // Fenster schließen beim Klick außerhalb des Fensters
     window.onclick = function (event) {

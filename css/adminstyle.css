@@ -212,7 +212,7 @@ p.buttontext {
 
 /*Logout Buttons*/
 /*Formatierung der Buttons*/
-button.buttongreen {
+.buttongreen {
 	height: 54px;
 	width: 228px;
 	background: #99BB44;
@@ -224,9 +224,12 @@ button.buttongreen {
 	font-weight: 600;
 	font-size: 18px;
 	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-button.buttongreen:hover {
+.buttongreen:hover {
 	background-color: #7F9D32;
 	color: white;
 }

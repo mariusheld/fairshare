@@ -170,7 +170,7 @@ if ($_SESSION["bekannt"] == false) {
         <a class="exitButton">
           <h5>Nein, doch nicht</h5>
         </a>
-        <a class="nextButton" href="../index.php">
+        <a class="nextButton" href="../index.php?logout">
           <h5>Ja, zur Startseite</h5>
         </a>
       </div>

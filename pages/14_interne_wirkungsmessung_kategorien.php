@@ -304,8 +304,8 @@ if ($login == true) {
 		var gotdate1 = "<?php echo $date1_ISO8601; ?>";
 		var gotdate2 = "<?php echo $date2_ISO8601; ?>";
 
-	// Test:
-	//alert("date1="+gotdate1+" & date2="+gotdate2);
+		// Test:
+		//alert("date1="+gotdate1+" & date2="+gotdate2);
 
 	</script>
 
@@ -598,7 +598,7 @@ if ($login == true) {
 		}
 		//User drückt auf Abmelden
 		abmeldenBtn.onclick = function () {
-			window.location.href = '../index.php'
+			window.location.href = '../index.php?logout'
 		}
 		// Fenster schließen beim Klick außerhalb des Fensters
 		window.onclick = function (event) {

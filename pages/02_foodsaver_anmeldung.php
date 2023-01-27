@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['login'] = false;
 $passwordErr = false;
 if (isset($_GET['error'])) {
     $passwordErr = true;
@@ -16,12 +17,12 @@ function test_input($data)
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (test_input($_POST["password"]) == "raupe") {
-        // Login auf True setzen 
+        // Login auf True setzen
         $_SESSION['login'] = true;
         // Weiterleiten
         header("Location: ./10_lageruebersicht.php");
     } else if (test_input($_POST["password"]) == "raupenkönigin") {
-        // Login auf True setzen 
+        // Login auf True setzen
         $_SESSION['login'] = true;
         // Weiterleiten
         header("Location: ./12_interne_wirkungsmessung_dashboard.php");
