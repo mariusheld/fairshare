@@ -5,7 +5,7 @@ require_once("../dbconnect/dbconnect.inc.php");
 $db_handle = new DBController();
 $conn = $db_handle->connectDB();
 
-$csv = $conn->query("SELECT LM.LMkey, LM.Bezeichnung, OK.OKatName, SUM(BB.BewegMenge) AS menge, HK.HerkunftName, LI.LieferDatum, BB.BewegDatum AS Fairteildatum
+$csv = $conn->query("SELECT LM.LMkey, LM.Bezeichnung, OK.OKatName, SUM(BB.BewegMenge) AS menge, HK.HerkunftName, ANY_VALUE(LI.LieferDatum), ANY_VALUE(BB.BewegDatum) AS Fairteildatum
                     FROM Lebensmittel LM
                     INNER JOIN OberKategorie OK ON LM.OKatKey = OK.OKatKey
                     INNER JOIN Bestand_Bewegung BB ON LM.LMkey = BB.LMkey

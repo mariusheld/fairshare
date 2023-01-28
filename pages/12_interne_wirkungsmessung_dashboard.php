@@ -163,14 +163,14 @@ if ($ZeitraumMenge < 1000) {
 }
 
 // ---- Menge Lebensmittel nach Kategorien
-$KategorieQuery = "SELECT SUM(BB.BewegMenge) AS menge, OK.OKatName AS katname, OK.OKatKey AS katkey
-      FROM Bestand_Bewegung BB
-      INNER JOIN Lebensmittel L ON BB.LMkey = L.LMkey
-      INNER JOIN OberKategorie OK ON L.OKatKey = OK.OKatKey
-      WHERE LStatusKey='2'
-      AND BewegDatum BETWEEN '$date1_ISO8601' AND '$date2_ISO8601'
-      GROUP BY OK.OKatName
-      ORDER BY SUM(BB.BewegMenge) DESC";
+$KategorieQuery = "SELECT SUM(BB.BewegMenge) AS menge, ANY_VALUE(OK.OKatKey) AS katkey, OK.OKatName AS katname
+FROM Bestand_Bewegung BB
+INNER JOIN Lebensmittel L ON BB.LMkey = L.LMkey
+INNER JOIN OberKategorie OK ON L.OKatKey = OK.OKatKey
+WHERE LStatusKey='2'
+AND BewegDatum BETWEEN '$date1_ISO8601' AND '$date2_ISO8601'
+GROUP BY OK.OKatName
+ORDER BY SUM(BB.BewegMenge) DESC";
 $KategorieResult = mysqli_query($conn, $KategorieQuery);
 while ($row = mysqli_fetch_assoc($KategorieResult)) {
   $kategorieresultset[] = $row;
@@ -192,13 +192,13 @@ $kat_icon_8 = '../media/kategorien/sonstiges.svg';
 // ---- Menge Lebensmittel nach Herkunft
 
 $HerkunftQuery = "SELECT SUM(BB.BewegMenge) AS menge, HK.HerkunftName AS herkunftname
-      FROM Bestand_Bewegung BB
-      INNER JOIN Lebensmittel L ON BB.LMkey = L.LMkey
-      INNER JOIN HerkunftsKategorie HK ON L.HerkunftKey = HK.HerkunftKey
-      WHERE LStatusKey='2'
-      AND BewegDatum BETWEEN '$date1_ISO8601' AND '$date2_ISO8601'
-      GROUP BY HK.HerkunftName
-      ORDER BY SUM(BB.BewegMenge) DESC";
+FROM Bestand_Bewegung BB
+INNER JOIN Lebensmittel L ON BB.LMkey = L.LMkey
+INNER JOIN HerkunftsKategorie HK ON L.HerkunftKey = HK.HerkunftKey
+WHERE LStatusKey='2'
+AND BewegDatum BETWEEN '$date1_ISO8601' AND '$date2_ISO8601'
+GROUP BY HK.HerkunftName
+ORDER BY SUM(BB.BewegMenge) DESC";
 $HerkunftResult = mysqli_query($conn, $HerkunftQuery);
 while ($row = mysqli_fetch_assoc($HerkunftResult)) {
   $herkunftresultset[] = $row;
@@ -219,11 +219,11 @@ $abschnittmengen = [12, 19, 3, 5, 2, 3, 20, 33, 23, 12, 33, 10];
 
 
 // ---- Alle geretteten Lebensmittel pro Tag innerhalb des gewählten Zeitraumes abfragen ----
-$MengeByDayQuery = "SELECT SUM(BewegMenge) AS menge, BewegDatum AS `date`
-      FROM Bestand_Bewegung 
-      WHERE LStatusKey='2'
-      AND BewegDatum BETWEEN '$date1_ISO8601' AND '$date2_ISO8601'
-      GROUP BY DATE(BewegDatum)";
+$MengeByDayQuery = "SELECT SUM(BewegMenge) AS menge, ANY_VALUE(BewegDatum) AS date
+FROM Bestand_Bewegung 
+WHERE LStatusKey='2'
+AND BewegDatum BETWEEN '$date1_ISO8601' AND '$date2_ISO8601'
+GROUP BY DATE(BewegDatum)";
 $MengeByDayResult = mysqli_query($conn, $MengeByDayQuery);
 while ($row = mysqli_fetch_assoc($MengeByDayResult)) {
 

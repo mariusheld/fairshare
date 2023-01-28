@@ -117,7 +117,7 @@ $erfolg = $select_ZeitraumMenge->execute($daten_zeitraum);
 
 
 //Mengen geretteter Lebensmittel im Zeitraum nach Herkunft 
-$select_HerkunftMengen = $db->prepare("SELECT HerkunftName AS Herkunft, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY KGfairteilt DESC) AS RowNumber
+$select_HerkunftMengen = $db->prepare("SELECT HerkunftName AS Herkunft, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY SUM(BewegMenge) DESC) AS RowNumber
 		FROM (SELECT Bestand_Bewegung.LMKey, BewegMenge, BewegDatum, HerkunftName 
 		FROM (Bestand_Bewegung LEFT JOIN Lebensmittel ON Bestand_Bewegung.LMKey=Lebensmittel.LMKey)
 		LEFT JOIN HerkunftsKategorie ON Lebensmittel.HerkunftKey=HerkunftsKategorie.HerkunftKey

@@ -117,7 +117,7 @@ $erfolg = $select_ZeitraumMenge->execute($daten_zeitraum);
 
 
 //Mengen geretteter Lebensmittel im Zeitraum nach Kategorien 
-$select_KategorienMengen = $db->prepare("SELECT OKatName AS OberKategorie, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY KGfairteilt DESC) AS RowNumber
+$select_KategorienMengen = $db->prepare("SELECT OKatName AS OberKategorie, SUM(BewegMenge) AS KGfairteilt, ROW_NUMBER() OVER(ORDER BY SUM(BewegMenge) DESC) AS RowNumber
 		FROM (SELECT Bestand_Bewegung.LMKey, BewegMenge, BewegDatum, OKatName 
 		FROM (Bestand_Bewegung LEFT JOIN Lebensmittel ON Bestand_Bewegung.LMKey=Lebensmittel.LMKey)
 		LEFT JOIN OberKategorie ON Lebensmittel.OKatKey=OberKategorie.OKatKey
